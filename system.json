@@ -2,7 +2,7 @@
     "id": "SofH",
     "title": "Secret of Hogwats",
     "description": "Stół do playtestów gtry Secret of Hogwart na silniku PBTA ",
-    "version": "0.0.1",
+    "version": "0.1",
     "compatibility": {
       "minimum": "12",
       "verified": "12"
@@ -30,6 +30,8 @@
         }
       ],
       
-      "socket": true
+      "socket": true,
+      "manifest":"https://raw.githubusercontent.com/bb46003/sofh/refs/heads/main/system.json",
+      "download":"https://github.com/bb46003/sofh/archive/refs/heads/main.zip"
 
 }
