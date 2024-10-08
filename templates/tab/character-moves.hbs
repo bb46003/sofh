@@ -1,0 +1,47 @@
+<div class="moves-sheet">
+    {{#if (ne basicMoves.length 0)}}
+        <h1 class="move_type" id="{{basicMoves.[0].type}}">{{localize (concat 'TYPES.Item.' basicMoves.[0].type )}}</h1>
+         <div class="all-moves {{basicMoves.[0].type}} " >
+        {{#each basicMoves as |item itemId|}}
+           {{> "systems/SofH/templates/tab/partial/move-title.hbs"  item=item}}
+        {{/each}}
+        </div>
+    {{/if}}
+
+    {{#if (ne houseMoves.length 0)}}
+        <h1 class="move_type" id="{{houseMoves.[0].type}}">{{localize (concat 'TYPES.Item.' houseMoves.[0].type )}}</h1>
+        <div class="all-moves {{houseMoves.[0].type}} " >
+        {{#each houseMoves as |item itemId|}}
+            {{> "systems/SofH/templates/tab/partial/move-title.hbs"  item=item}}
+        {{/each}}
+        </div>
+    {{/if}}
+
+    {{#if (ne peripheralMoves.length 0)}}
+        <h1 class="move_type" id="{{peripheralMoves.[0].type}}">{{localize (concat 'TYPES.Item.' peripheralMoves.[0].type )}}</h1>
+        <div class="all-moves {{peripheralMoves.[0].type}} " >
+        {{#each peripheralMoves as |item itemId|}}
+            {{> "systems/SofH/templates/tab/partial/move-title.hbs"  item=item}}
+        {{/each}}
+        </div>
+    {{/if}}
+
+    {{#if (ne specialPlaybookMoves.length 0)}}
+        <h1 class="move_type" id="{{specialPlaybookMoves.[0].type}}" >{{localize (concat 'TYPES.Item.' specialPlaybookMoves.[0].type )}}</h1>
+        <div class="all-moves {{specialPlaybookMoves.[0].type}} " >
+        {{#each specialPlaybookMoves as |item itemId|}}
+            {{> "systems/SofH/templates/tab/partial/move-title.hbs"  item=item}}
+        {{/each}}
+        </div>
+    {{/if}}
+
+    {{#if (ne endOfSessionMoves.length 0)}}
+        <h1 class="move_type" id="{{endOfSessionMoves.[0].type}}">{{localize (concat 'TYPES.Item.' endOfSessionMoves.[0].type )}}</h1>
+        <div class="all-moves {{endOfSessionMoves.[0].type}} " >
+        {{#each endOfSessionMoves as |item itemId|}}
+           {{> "systems/SofH/templates/tab/partial/move-title.hbs"  item=item}}
+        {{/each}}
+        </div>
+    {{/if}}
+</div>
+

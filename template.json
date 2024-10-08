@@ -1,0 +1,149 @@
+{
+  "Actor": {
+    "types": ["character", "npc"],
+      "character":{
+        "bloodType":0,
+        "favoriteTopic":"",
+        "secondaryTopic":"",
+        "personagoal":"",
+        "schoolyear":{
+          "value":1,
+          "max":7,
+          "min":1
+        },
+        "condition":{
+          "1":{
+            "type":"",
+            "text":"",
+            "fixed":false
+            },
+          "2":{
+            "type":"",
+            "text":"",
+            "fixed":false
+            },
+          "3":{
+            "type":"",
+            "text":"",
+            "fixed":false
+            },
+          "4":{
+            "type":"",
+            "text":"",
+            "fixed":false
+            },
+          "5":{
+            "type":"",
+            "text":"",
+            "fixed":false
+            },
+          "6":{
+            "type":"",
+            "text":"",
+            "fixed":false
+            },
+          "7":{
+            "type":"",
+            "text":"",
+            "fixed":false
+            }
+               
+        },
+        "is7conditions":false,
+        "home":"",
+        "gosip":"",
+        "xp":{
+          "value":{
+            "1":false,
+            "2": false,
+            "3": false,
+            "4": false,
+            "5": false,
+            "6": false,
+            "7": false}
+        },
+        "relation":{
+          "name1":"",
+          "value1":0,
+          "max":3,
+          "min":-2,
+          "name2":"",
+          "value2":0,
+          "name3":"",
+          "value3":0,
+
+          "name4":"",
+          "value4":0
+
+        },
+        "reputation":{
+          "value":{
+            "1":false,
+            "2": false,
+            "3": false,
+            "4": false,
+            "5": false,
+            "6": false,
+            "7": false},
+          "rank":0
+        },
+        "goal":"",
+        "housequestion":"",
+        "equipment":"",
+        "strings":[
+          {
+            "name":"",
+            "description":""
+          }
+        ]    
+      }
+  },    
+  "Item": {
+    "types": [
+      "basicMoves",
+      "houseMoves",
+      "peripheralMoves",
+      "endOfSessionMoves",
+      "specialPlaybookMoves"
+    ],
+      "templates":{
+        "base":{
+          "triggers":"",
+          "housequestion":false,
+          "description":"",
+          "houserelated":false,
+          "relationrelated":false,
+          "havequestion":false,
+          "realtedtoothermoves":false,
+          "isrolled":false,
+          "stringsrelated":false
+        }
+      },
+      "basicMoves":{
+        "templates": [
+				  "base"
+			  ]
+      },
+      "houseMoves":{
+        "templates": [
+				  "base"
+			  ]
+      },
+      "peripheralMoves":{
+        "templates": [
+				  "base"
+			  ]
+      },
+      "endOfSessionMoves":{
+        "templates": [
+				  "base"
+			  ]
+      },
+      "specialPlaybookMoves":{
+        "templates": [
+				  "base"
+			  ]
+      }     
+    }
+  }
+  

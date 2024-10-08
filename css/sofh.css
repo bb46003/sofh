@@ -1,0 +1,621 @@
+.sofh .main-sheet {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Adds spacing between sections */
+}
+
+.sofh .title-section {
+    display: flex;
+    flex-direction: column;
+    background: transparent;
+}
+
+.sofh .main-info {
+    display: grid;
+    grid-template-columns: 140px 150px 140px; /* 3 columns: image, form grid, empty */
+    border: 10px solid black;
+    align-items: start; /* Align items to the top */
+}
+
+.sofh .borderless {
+    border: 1px solid transparent;
+}
+
+.sofh .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    row-gap: 5px;
+    column-gap: 0px;
+    padding: 5px;
+    align-items: end;
+    width: 300px;
+
+}
+
+.sofh .stat-grid {
+    display: contents; /* Ensure individual elements follow the grid structure */
+}
+
+.sofh .stat-grid label {
+    font-weight: bold;
+    align-self: center; /* Align labels vertically to the center */
+}
+
+.sofh .stat-grid select,
+.sofh .stat-grid input{
+    text-align: right;
+}
+.sofh .stat-grid textarea{
+    width: 100%; /* Make the inputs full width within their grid area */
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: transparent;
+    resize: none;
+}
+.sofh .stat-grid .checkboxes {
+    width: 100%; /* Make the inputs full width within their grid area */
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: transparent;
+}
+
+.sofh .title-section div {
+    margin-bottom: 10px;
+}
+
+.sofh .title-section label {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.sofh .title-section textarea#goal {
+     flex: 1;
+     padding: 5px;
+     border: 1px solid black;
+     border-radius: 4px;
+     margin-right: 20px;
+     text-align: right;
+     resize: none;
+     height: 1px;
+     background: rgba(0, 0, 0, 0.05);
+     resize: none;
+}
+.sofh .characteristic-sheet{
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two columns: labels and inputs */
+    gap: 5px; /* Space between columns */
+    padding: 5px;
+    border: 10px solid black;
+
+}
+.sofh .char-grid-feature {
+    padding: 5px;
+    border: 1px solid black;
+}
+
+.sofh .char-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr; /* Two columns: labels and inputs */
+    gap: 5px; /* Space between columns */
+    padding: 5px;
+
+}
+
+.sofh .checkboxes {
+    background-color: lightgray; /* Background color */
+    border-radius: 50%; /* Make it circular */
+    display: inline-block; /* Inline-block to set size */
+    cursor: pointer; /* Pointer cursor on hover */
+    margin-right: 20px;
+}
+
+/* Style select dropdowns */
+.sofh .stat-grid select {
+    height: auto;
+    text-align: right;
+}
+
+/* Reputation rank styling */
+.sofh .reputation-rank {
+    grid-column: 1 / 3; /* Span across both columns */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: normal;
+}
+
+.sofh .ranks {
+    font-style: oblique;
+    font-size: small;
+}
+
+.sofh .decrease-btn {
+    width: 20px;
+    font-size: x-large;
+    margin-left: auto;
+    background-color: transparent;
+    border: 1px solid #ccc;
+}
+
+/* XP checkbox container */
+.sofh .stat-grid .checkboxes {
+    display: flex;
+    justify-content: flex-end;
+    background: transparent;
+}
+
+.xp-options {
+    padding: 2px;
+}
+
+button.dialog-button.OK.default.bright {
+    margin-top: 10px;
+}
+.sofh .stat-grid-condition-headers {
+    display: grid;
+    grid-template-columns: 1fr 2fr 0.2fr; /* Adjust the column sizes as needed */
+    gap: 10px; /* Space between the columns */
+    margin-bottom: 10px;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Container for each condition row */
+.sofh .stat-grid-condition {
+    display: grid;
+    grid-template-columns: 1fr 2fr 0.2fr; /* Same column layout as headers */
+    gap: 10px; /* Space between the columns */
+    margin-bottom: 10px;
+}
+
+/* Align input text and checkbox */
+.sofh .condition-text {
+    width: 100%; /* Make the input take up full width */
+}
+
+.sofh .circle-checkbox-condition {
+    margin: auto; /* Center the checkbox in its grid cell */
+}
+.sofh .char-grid-condition {
+    padding: 5px;
+    border: 1px solid black;
+}
+.sofh label.conditions-label {
+    display: flex;
+    border: 1px solid black;
+    justify-content: center;
+}
+.sofh .seventhconditions {
+    color: red; /* Set the text color to red */
+    animation: blink 5s infinite; /* Apply the blink animation */
+}
+
+@keyframes blink {
+    0%, 100% {
+        opacity: 1; /* Fully visible at the start and end */
+    }
+    50% {
+        opacity: 0.3; /* Invisible in the middle of the animation */
+    }
+}
+.sofh .bottom-panel{
+    display: flex;
+    flex: 1;
+    width: 100%;
+}
+.sofh .sheet-body,
+.sofh .sheet-body .tab,
+.sofh .sheet-body .tab{
+    min-height: 50px;
+
+}
+
+.sofh .hover-label-question {
+    display: inline-block;
+  }
+  
+ .sofh .hover-label-question:hover {
+    text-shadow: 
+    -0.2px -0.2px 0 red,
+    0.2px -0.2px 0 red,
+    -0.2px 0.2px 0 red,
+    0.2px 0.2px 0 red; 
+  }
+
+  .diamond {
+    width: 100px; /* 1/2 of 200px */
+    height: 50px; /* 1/2 of 100px */
+    transform: rotate(45deg);
+}
+
+.diamond div {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px; /* 1/2 of 24px */
+    font-weight: bold;
+    color: black;
+    cursor: pointer;
+    border: 1px solid #D4A017; /* 1/2 of 2px */
+    background-color: white;
+    transition: background-color 0.3s ease;
+}
+
+/* Center (Square Button) */
+.center {
+    width: 25px; /* 1/2 of 50px */
+    height: 25px; /* 1/2 of 50px */
+    top: 35%; /* Keep the original percentage */
+    left: 55%; /* Keep the original percentage */
+    box-shadow: 0 0 0 2.5px #D4A017; /* 1/2 of 5px */
+    background-color: white;
+}
+
+/* Top Trapezoidal Button */
+.left-bottom {
+    top: 44%; /* Keep the original percentage */
+    left: 0%; /* Keep the original percentage */
+    width: 60px; /* 1/2 of 120px */
+    height: 15px; /* 1/2 of 30px */
+    z-index: -1;
+    transform: translateX(100%) rotate(-90deg);
+    background-color: transparent;
+    border: 2px solid #000; /* 1/2 of 4px */
+    clip-path: polygon(25% 0%, 75% 0%, 100% 100%, 0% 100%);
+}
+
+/* Bottom Trapezoidal Button */
+.right-bottom {
+    bottom: -18%; /* Keep the original percentage */
+    left: 38%; /* Keep the original percentage */
+    width: 60px; /* 1/2 of 120px */
+    height: 15px; /* 1/2 of 30px */
+    transform: translateX(0%) rotate(0deg);
+    clip-path: polygon(25% 0%, 75% 0%, 100% 100%, 0% 100%);
+}
+
+/* Left Trapezoidal Button */
+.left-top {
+    top: 13%; /* Keep the original percentage */
+    left: 16%; /* Keep the original percentage */
+    width: 60px; /* 1/2 of 120px */
+    height: 15px; /* 1/2 of 30px */
+    transform: translateY(100%) rotate(90deg);
+    clip-path: polygon(25% 0%, 75% 0%, 100% 100%, 0% 100%);
+}
+
+/* Right Trapezoidal Button */
+.right-top {
+    top: 0%; /* Keep the original percentage */
+    right: 2%; /* Keep the original percentage */
+    width: 60px; /* 1/2 of 120px */
+    height: 15px; /* 1/2 of 30px */
+    transform: translateY(0%) rotate(-180deg);
+    clip-path: polygon(25% 0%, 75% 0%, 100% 100%, 0% 100%);
+}
+
+/* On click, change background color */
+.diamond div.clicked {
+    background-color: #f0d74f;
+}
+
+/* Adjust text inside the buttons */
+.minustwo {
+    transform: translateY(0%) rotate(180deg);
+}
+
+.two {
+    transform: translateY(0%) rotate(180deg);
+}
+
+.zero {
+    transform: translateY(0%) rotate(-45deg);
+}
+.clicked {
+    background-color: #007bff; /* Change this to your desired color */
+    color: white; /* Optional: change text color for better contrast */
+    transition: background-color 0.3s ease; /* Smooth transition */
+}
+.relation{
+    height: 90px;
+    display: grid;
+    grid-template-columns: 0.75fr 2fr;
+    align-items: flex-start;
+}
+input.relation-name {
+    position: relative;
+    bottom: -30%;
+    left: 1%;
+    width: 200px;
+}
+.reputation-sheet {
+    display: grid;
+    flex-wrap: wrap;
+
+    grid-template-columns: 1fr 1fr;
+
+}
+.sofh .sheet-body, .sofh .sheet-body .tab, .sofh .sheet-body .tab{
+    min-height: 350px;
+    width: 100%;
+}
+
+
+.relation-name{
+    margin-top: 6%;
+}
+.descriptionm-relations {
+    border-right: 2px solid black;
+    padding-right: 2px;
+}
+.value-relations {
+    padding-left: 2px;
+}
+
+.string-item {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+.strings-inputs {
+    display: grid;
+    grid-template-columns: 0.2fr 1fr 0.1fr;
+    align-items: center;
+    column-gap: 5px;
+    row-gap: 10px;
+}
+
+.strings-inputs input.strings {
+    flex: 1;
+    width: 100%; /* Ensure input takes full width */
+    box-sizing: border-box; /* Include padding/border in the width */
+    margin-right: 2px;
+    height: 30px;
+}
+
+.strings-inputs button.remove-string-btn {
+    flex-shrink: 0;
+    margin-left: 5px;
+    height: 30px;
+}
+textarea.strings {
+    min-height: 30px;
+    max-height: 30px;
+    resize: none;
+}
+textarea.house-question{
+    resize: none;
+}
+.moves-top-grid {
+    display: grid;
+    grid-template-columns: 0.5fr  1fr;
+    grid-template-rows: repeat(5, auto); /* 5 rows for all form elements */
+    align-items: center;
+    border-bottom: 1px solid black;
+    gap: 10px; /* Optional: adds space between elements */
+}
+.moves-question-inputs {
+    display: grid;
+}
+.moves-question-labels {
+    display: grid;
+}
+
+.moves-top-grid img {
+    grid-row: 1 / 6; /* Spans all 5 rows */
+    grid-column: 1; /* Image in the first column */
+}
+
+
+
+.move-questions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: calc(100% - 15px);
+}
+.moves-realtedtoothermoves {
+    width: calc(100% - 15px);
+}
+.move_type {
+    text-align: center;
+  }
+
+.description-sheet {
+    height: auto;
+    display: flex;
+    flex-direction: column;
+}
+ .sheet .editor {
+    height: auto;
+  }
+   .sheet .editor .editor-content {
+    height: 100%;
+  }
+
+   .description-field .editor {
+    height: 100%;
+  }
+ .editor .editor-content {
+    width: 100%;
+    height: 100%;
+    min-height: 10rem;
+    flex: 1;
+  }
+  .editor-container {
+    min-height: 350px;
+}
+.editor.prosemirror {
+    border: 1px solid;
+}
+textarea.question {
+    height: 100%;
+}
+.question-sheet {
+    display: grid;
+    grid-template-columns: 2fr 0.2fr 0.2fr;
+    height: 60px;
+    column-gap: 5px;
+    padding: 5px;
+}
+select#question-type {
+    height: 100%;
+}
+button#\30 {
+    height: 100%;
+    
+}
+.move-image {
+
+    width: 40%;
+    border: none;
+}
+input.fake-box{
+    visibility: hidden;
+}
+form.moves-tab {
+    overflow: hidden;
+}
+.body-move {
+    height: calc(100% - 310px);
+    width: 100%;
+    overflow: auto;
+}
+.moves-isrolled {
+    display: grid;
+    grid-template-columns: 0.5fr 1fr;
+    min-height: 330px;
+}
+.roll-resuilt-label {
+    display: grid;
+}
+.sheet-table-data.item.draggable-item {
+    display: flex;
+    justify-content: center;
+}
+.sheet-table-data {
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px dashed;
+}
+
+.first-row {
+    display: grid;
+    margin-bottom: 10px;
+   
+
+    grid-template-columns: 0.3fr 1fr 0.3fr;
+    align-items: center;
+    justify-items: center;
+}
+
+.first-row img {
+    margin-right: 40%; /* Space between the image and the text */
+}
+
+.first-row a {
+    margin-right: 10px; /* Space between the link and the button */
+    font-size: 25px;
+}
+
+
+
+.second-row {
+    display: flex;
+    flex-direction: column;
+    width: 100%; /* Same width as the first row */
+    margin-bottom: 5px;
+}
+
+/* Optional: Ensures the second row doesn't expand beyond the first */
+.first-row, .second-row {
+    max-width: 100%;
+}
+.second-row {
+    max-width: 100%;
+    max-height: 200px;
+    overflow: auto;
+    border: 1px solid;
+}
+.buttons-moves {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 5px;
+}
+
+.conditions-roll-toprow {
+    display: flex;
+    justify-content: space-between;
+
+}
+label.condittion-isallpy {
+    margin-left: auto;
+}
+
+.conditions-roll-detail {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.question-sheet-roll--toprow {
+    display: flex;
+    /* flex-direction: row; */
+    justify-content: space-between;
+}
+.question-sheet-roll {
+    display: grid;
+    align-items: center;
+    grid-template-columns: 1fr 1fr 0.3fr;
+}
+select.question-impact {
+    
+    width: 50%;
+    justify-self: center;
+    margin-right: 20%;
+}
+.relation-roll, .strings-sheet-roll{
+    display: flex;
+    justify-content: space-around;
+}
+.others-mods{
+    display: flex;
+    justify-content: space-between;
+
+}
+.house-question-application {
+    display: flex;
+    align-items: center;
+}
+.roll-mod-other {
+    padding-top: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+h2.h2-roll {
+    display: flex;
+    justify-content: center;
+}
+.editor-content.roll-resoult-above10, .editor-content.roll-resoult-below7, .editor-content.roll-resoult-7to9  {
+    border: 1px solid;
+    min-height: 100px;
+}
+.roll-resoult-text {
+    display: flex;
+    row-gap: 5px;
+    flex-direction: column;
+    height: 100%;
+}
+.editor-content.roll-resoult-above10.ProseMirror,.editor-content.roll-resoult-below7.ProseMirror, .editor-content.roll-resoult-7to9.ProseMirror   {
+    border: none;
+}
+.dialog-custom {
+    max-width: 600px; /* Set a max width for the dialog */
+    width: auto; /* Allow width to adjust based on content */
+}
+
+.dialog {
+    /* Automatically adjust height to fit content */
+    height: auto !important;
+    overflow: visible !important; /* Prevent scrollbar, if necessary */
+}

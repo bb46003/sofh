@@ -1,0 +1,53 @@
+<form class="moves-tab">
+  <section class="main-move tab">
+    <div class="moves-top-grid">
+    <img class="borderless" src="{{item.img}}" data-edit="img" height=100% width=100%>
+    
+   
+    <div class="move-questions">
+      <div class="moves-question-labels">
+          <label for="name">{{localize "sofh.ui.moves.name"}}</label>         
+          <label for="house">{{localize 'sofh.ui.move.isRaltedToHouse'}}</label> 
+          {{#if system.houserelated}}
+            
+            <label for="home">{{localize "sofh.ui.actor.house"}}</label>
+            
+     
+          {{/if}}  
+          <label for="house-question">{{localize 'sofh.move.isRaltedToHouseQuestion'}}</label>   
+          <label for="relation">{{localize 'sofh.move.isRelationRelated'}}</label>
+          <label for="strings">{{localize 'sofh.move.isStringsRelated'}}</label>
+          <label for="question">{{localize 'sofh.move.haveQuestion'}}</label>          
+          <label for="movies">{{localize 'sofh.move.isRelatedToOtherMoves'}}</label>
+          <label for="roll">{{localize 'sofh.move.canBeRolled'}}</label>
+         </div>
+         <div class="moves-question-inputs">          
+          <input id="name" name="name" type="text" value="{{item.name}}">
+          <input type="checkbox" id="house" name="system.houserelated" {{#if system.houserelated}}checked{{/if}}>
+          {{#if system.houserelated}}
+
+         <select name="system.home" class="move-house">
+                {{selectOptions House selected=system.home localize=true}}
+            </select>
+    
+          {{/if}}
+          <input type="checkbox" id="house-question" name="system.housequestion" {{#if system.housequestion}}checked{{/if}}>
+          <input type="checkbox" id="relation" name="system.relationrelated" {{#if system.relationrelated}}checked{{/if}}>
+           <input type="checkbox" id="strings" name="system.stringsrelated" {{#if system.stringsrelated}}checked{{/if}}>
+          <input type="checkbox" id="question" name="system.havequestion" {{#if system.havequestion}}checked{{/if}}>    
+          <input type="checkbox" id="movies" name="system.realtedtoothermoves" {{#if system.realtedtoothermoves}}checked{{/if}}>    
+          <input type="checkbox" id="roll" name="system.isrolled" {{#if system.isrolled}}checked{{/if}}>
+        </div>
+        </div>
+    
+</div>
+
+    <h1 class="move_type">{{localize (concat 'TYPES.Item.' item.type )}}</h1>
+  </section>
+  <section class="body-move tab">
+    <div class="min-move-body" data-group="primary" data-tab="relations">
+    {{> "systems/SofH/templates/tab/partial/moves-body.hbs"}}
+   </div>
+   </section>
+    
+</form>

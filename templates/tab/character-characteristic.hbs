@@ -1,0 +1,110 @@
+<form class="{{cssClass}}" autocomplete="off">
+    <div class="characteristic-sheet">
+        
+         
+      <div class="char-grid-feature">
+        <label class="conditions-label">{{localize "sofh.ui.actor.features"}}</label>
+      
+        <div class="char-grid">
+      
+          <div class="stat-grid">
+          <label for="status-krwi">{{localize "sofh.ui.actor.blood"}}</label>
+          <select name="system.bloodType" class="status-krwi" value="{{system.bloodType}}">
+            {{selectOptions bloodType selected=system.bloodType localize=true}}
+          </select>
+
+          </div>
+
+          <div class="stat-grid">
+          <label for="glowny-przedmiot">{{localize "sofh.ui.actor.favoritesubject"}}</label>
+          <select name="system.favoriteTopic" class="glowny-przedmiot">
+            {{selectOptions favoriteTopic selected=system.favoriteTopic localize=true}}
+          </select>
+          </div>
+
+          <div class="stat-grid">
+          <label for="dodatkowy-przedmiot">{{localize "sofh.ui.actor.favoritesubject2"}}</label>
+          <select name="system.secondaryTopic" class="dodatkowy-przedmiot">
+            {{selectOptions favoriteTopic2 selected=system.secondaryTopic localize=true}}
+          </select>
+          </div>
+
+          <div class="stat-grid">
+          <label for="goal">{{localize "sofh.ui.actor.goal"}}</label>
+          <textarea class="goal" id="goal" name="system.goal" style="width: 100%;" rows="4" value="system.goal">{{system.goal}}</textarea>
+          </div>
+
+          <div class="stat-grid">
+          <label for="reputation">{{localize "sofh.ui.actor.reputation"}}</label>
+          <div class="checkboxes">
+            {{#each system.reputation.value as |value index|}}
+            <input type="checkbox" id="{{@index}}" class="circle-checkbox-reputation" name="system.reputation.value.{{@index}}" {{#if value}}checked{{/if}}/>
+            {{/each}}
+          </div>
+          </div>
+
+          {{#if (gt system.reputation.rank 0)}}
+          <div class="stat-grid reputation-rank">
+          <label class="ranks">{{localize (concat 'sofh.ui.actor.reputationrank.' system.reputation.rank)}}</label>
+          <button type="button" class="decrease-btn">-</button>
+          </div>
+          {{/if}}
+
+          <div class="stat-grid">
+          <label for="xp">{{localize "sofh.ui.actor.xp"}}</label>
+          <div class="checkboxes">
+            {{#each system.xp.value as |value index|}}
+           <input type="checkbox" id="{{@index}}" class="circle-checkbox-xp" name="system.xp.value.{{@index}}" {{#if value}}checked{{/if}} />
+            {{/each}}
+          </div>
+          </div>
+        </div>
+      </div>
+      <div class="char-grid-condition">
+        <label class="conditions-label">{{localize "sofh.ui.actor.conditionslabel"}}</label>
+
+
+        <div class="stat-grid-condition-headers">
+          <span class="header-type">{{localize 'sofh.ui.actor.condition.type'}}</span>
+          <span class="header-name">{{localize 'sofh.ui.actor.condition.name'}}</span>
+          <span class="header-fixed">{{localize 'sofh.ui.actor.condition.fixed'}}</span>
+        </div>
+
+        {{#each system.condition as |condition key|}}
+        <div class="stat-grid-condition" id="{{@key}}">
+          <select name="system.condition.{{@key}}.type" class="condition-type">
+            <option value="" {{#if (eq condition.type "")}}selected{{/if}}></option>
+            <option value="mental" {{#if (eq condition.type 'mental')}}selected{{/if}}>
+              {{localize "sofh.ui.actor.mental"}}
+            </option>
+            <option value="physical" {{#if (eq condition.type 'physical')}}selected{{/if}}>
+              {{localize "sofh.ui.actor.physical"}}
+            </option>
+            <option value="social" {{#if (eq condition.type 'social')}}selected{{/if}}>
+              {{localize "sofh.ui.actor.social"}}
+            </option>
+          </select>
+          <input class="condition-text" id="{{@key}}" name="system.condition.{{@key}}.text" type="text" value="{{condition.text}}">
+          <input type="checkbox" id="{{@key}}" class="circle-checkbox-condition" name="system.condition.{{@key}}.fixed" {{#if condition.fixed}}checked{{/if}} />
+        </div>   
+        {{/each}}
+           {{#if system.is7conditions}}
+      <label class="seventhconditions">{{localize (concat 'sofh.ui.actor.seventhconditions')}}</label>
+
+      {{/if}}
+      
+      </div>
+      
+        
+
+    
+      
+    </div>
+<div class="list-of-triggers">
+      <h2>Your movement triggers</h2>
+          {{#trigerlist actor}}
+          {{/trigerlist}}        
+    </div>
+    
+
+</form>

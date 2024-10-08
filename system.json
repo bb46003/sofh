@@ -1,0 +1,35 @@
+{
+    "id": "SofH",
+    "title": "Secret of Hogwats",
+    "description": "Stół do playtestów gtry Secret of Hogwart na silniku PBTA ",
+    "version": "0.0.1",
+    "compatibility": {
+      "minimum": "12",
+      "verified": "12"
+    },
+    "authors": [
+        {
+          "name": "Bartek",
+          "flags": {}
+        }
+    ],
+    "esmodules": [
+        "module/sofh.mjs"
+      ],
+      "styles": ["css/sofh.css"],
+      "languages": [
+        {
+          "lang": "pl",
+          "name": "Polski",
+          "path": "lang/pl.json"
+        },
+        {
+          "lang": "en",
+          "name": "PolEnglishski",
+          "path": "lang/en.json"
+        }
+      ],
+      
+      "socket": true
+
+}

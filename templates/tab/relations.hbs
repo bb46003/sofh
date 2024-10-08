@@ -1,0 +1,64 @@
+<div class="reputation-sheet"> 
+    <div class="descriptionm-relations">
+    <h2>{{localize "sofh.ui.relationships.title"}}</h2>
+    <p class="instruction">{{localize "sofh.ui.instructions.fill_in_with_players"}}</p>
+
+    <div class="relationship">
+        <p>● {{localize "sofh.ui.relationships.caught_breaking_rules_with"}}</p>
+    </div>
+
+    <div class="relationship">
+        <p>● {{localize "sofh.ui.relationships.trying_to_impress"}}</p>
+    </div>
+
+    <div class="relationship">
+        <p>● {{localize "sofh.ui.relationships.feel_compelled_to_protect"}}</p>
+    </div>
+
+    <div class="relationship">
+        <p>● {{localize "sofh.ui.relationships.snuck_into_forest_with"}}</p>
+    </div>
+
+    <p class="instruction">{{localize "sofh.ui.instructions.fill_in_with_characters"}}</p>
+
+    <div class="relationship">
+        <p>● {{localize "sofh.ui.relationships.best_friend"}}</p>
+    </div>
+
+    <div class="relationship">
+        <p>● {{localize "sofh.ui.relationships.worst_enemy_or_rival"}}</p>
+    </div>
+
+    <div class="relationship">
+        <p>● {{localize "sofh.ui.relationships.current_crush"}}</p>
+    </div>
+
+    
+</div>
+<div class="value-relations">
+    <div class="relation-score-title">
+    <h2>{{localize "sofh.ui.relationships.scores_title"}}</h2>
+    <p>
+        {{localize "sofh.ui.relationships.score_instructions"}}
+    </p>
+    </div>
+    <div class="relation">
+        {{> "systems/SofH/templates/tab/partial/dimond-button.hbs" value=system.relation.value1 id="1"}}
+        <textarea class="relation-name" type="text" name="system.relation.name1" id="1" value="{{system.relation.name1}}">{{system.relation.name1}}</textarea>
+    </div>
+    <div class="relation">
+        {{> "systems/SofH/templates/tab/partial/dimond-button.hbs" value=system.relation.value2 id="2" }}
+        <textarea class="relation-name" type="text" name="system.relation.name2" id="2" value="{{system.relation.name2}}">{{system.relation.name2}}</textarea>
+    </div>
+    <div class="relation">
+        {{> "systems/SofH/templates/tab/partial/dimond-button.hbs" value=system.relation.value3 id="3"}}
+        <textarea class="relation-name" type="text" name="system.relation.name3" id="3" value="{{system.relation.name3}}">{{system.relation.name3}}</textarea>
+    </div>
+    <div class="relation">
+        {{> "systems/SofH/templates/tab/partial/dimond-button.hbs" value=system.relation.value4 id="4"}}
+        <textarea class="relation-name" type="text" name="system.relation.name4" id="4" value="{{system.relation.name4}}">{{system.relation.name4}} </textarea>
+    </div>
+    
+
+</div>
+</div>

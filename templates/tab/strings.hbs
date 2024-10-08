@@ -1,0 +1,25 @@
+<div class="strings-tab">
+    <h2>{{localize "sofh.ui.actor.stringsheader"}}</h2>
+    <button id="add-string-btn" style="margin-left: 10px; padding: 5px 10px;">{{localize "sofh.ui.actor.stringsaddbutton"}}</button>
+    
+    <div class="strings-grid" id="strings-container">
+        <div class="string-item">
+            <div class="strings-names">
+                <label class="strings-names-label">{{localize "sofh.ui.actor.stringsnames"}}</label>
+            </div>
+             <div class="strings-description">
+                <label class="strings-description-label">{{localize  "sofh.ui.actor.stringsdescriptuon"}}</label>
+             </div>
+         </div>
+        <div class="strings-inputs">
+            
+               {{#each system.strings as |string index|}}
+
+                    <input type="text" class="strings" name="system.strings.{{@index}}.name" value="{{string.name}}" />
+                    <textarea class="strings" name="system.strings.{{@index}}.description">{{string.description}}</textarea>
+                    <button class="remove-string-btn" id="{{@index}}" style="margin-left: 5px;">🗑️</button>
+                {{/each}}
+             
+        </div>
+    </div>
+</div>

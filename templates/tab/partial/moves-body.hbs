@@ -1,0 +1,41 @@
+      <div class="move-elements">
+        <div class="trigers-sheet"> 
+           <h2 class="move_type trigger-label ">{{localize "sofh.item.trigerlabel"}}</h2>       
+            {{editor system.triggers target="system.triggers" engine="prosemirror" button=true owner=owner editable=editable}}
+        </div>        
+        <div class="description-sheet"> 
+           <h2 class="move_type description-label ">{{localize "sofh.item.descriptionlabel"}}</h2>       
+            {{editor system.description target="system.description" engine="prosemirror" button=true owner=owner editable=editable}}
+        </div>
+    </div>
+    {{#if (eq system.havequestion true)}} 
+        <div class="moves-question">
+            {{> "systems/SofH/templates/tab/partial/moves-question.hbs"}}
+        </div>
+    {{/if}}
+    {{#if (eq system.realtedtoothermoves true)}} 
+    
+            <h2 class="move_type description-label ">{{localize "sofh.item.realtedtoothermoves"}}</h2>
+        <div class="moves-realtedtoothermoves">
+            <textarea class="relatedmoves" name="system.relatedmoves">{{system.relatedmoves}}</textarea>
+
+        </div>
+    {{/if}}
+    {{#if (eq system.isrolled true)}} 
+    <h2 class="move_type description-label ">{{localize "sofh.item.isrolled"}}</h2>
+        <div class="moves-isrolled">
+            
+            <div class="roll-resuilt-label">
+            <label for="above10">{{localize 'sofh.ui.move.resultAbove10'}}</label>
+            <label for="7to9">{{localize 'sofh.ui.move.result7to9'}}</label>
+            <label for="below7">{{localize 'sofh.ui.move.resultBelow7'}}</label>             
+           
+            </div>
+            <div class="roll-resoult-text">
+                {{editor system.above10 target="system.above10"  engine="prosemirror" button=true owner=owner editable=editable class="roll-resoult-above10"}}
+                {{editor system.7to9 target="system.7to9"  engine="prosemirror" button=true owner=owner editable=editable class="roll-resoult-7to9"}}
+                {{editor system.below7 target="system.below7" engine="prosemirror" button=true owner=owner editable=editable  class="roll-resoult-below7"}}
+     
+            </div>
+        </div>
+    {{/if}}

@@ -1,0 +1,71 @@
+<form class="{{cssClass}}" autocomplete="off">
+  <section class="main-sheet">
+    <section class="title-section">
+      <div class="main-info">
+        <img class="borderless" src="{{actor.img}}" data-edit="img" height="140" width="140">
+        <div class="form-grid">
+          <div class="stat-grid">
+            <label for="name">{{localize "sofh.ui.actor.name"}}</label>
+            <input id="name" name="name" type="text" value="{{actor.name}}">
+          </div>
+          <div class="stat-grid">
+            <label for="home">{{localize "sofh.ui.actor.house"}}</label>
+            <select name="system.home" class="house">
+              <option value="">None</option>
+                {{selectOptions House selected=system.home localize=true}}
+            </select>
+          </div>
+          <div class="stat-grid">
+            <label for="year">{{localize "sofh.ui.actor.years"}}</label>
+            <input id="schoolyear" name="system.schoolyear.value" type="number" value="{{system.schoolyear.value}}" min="1" max="7" step="1">
+          </div>
+          <div class="stat-grid"></div>
+            <label for="house-question" class="hover-label-question">{{localize "sofh.ui.house-questionlabel"}}</label>
+            <textarea class="house-question" name="system.housequestion" type="text" value="{{system.housequestion}}" disabled>{{system.housequestion}}</textarea>
+
+          </div>
+        </div>
+        <div class="empty-column">
+
+        </div> 
+      </div>
+    </section>
+
+    <nav class="sheet-tabs tabs" data-group="primary">
+    <a class="characteristic" data-tab="characteristic">{{localize "sofh.ui.actor.characteristic"}}</a>
+    <a class="relations" data-tab="relations">{{localize "sofh.ui.actor.relationships"}}</a>
+    <a class="strings" data-tab="strings">{{localize "sofh.ui.actor.strings"}}</a>
+    <a class="moves" data-tab="moves">{{localize "sofh.ui.actor.moves"}}</a>
+    <a class="equipment" data-tab="equipment">{{localize "sofh.ui.actor.eq"}}</a>
+    
+</nav>
+<section class="bottom-panel">
+    <section class="sheet-body">
+        {{!-- Characteristic Tab --}}
+         <div class="tab characteristic flexcol" data-group="primary" data-tab="characteristic">
+            {{> "systems/SofH/templates/tab/character-characteristic.hbs"}}
+        </div>
+        
+        {{!-- Relation Tab --}}
+        <div class="tab relations flexcol" data-group="primary" data-tab="relations">
+            {{> "systems/SofH/templates/tab/relations.hbs"}}
+        </div>
+        {{!-- Strings Tab --}}
+        <div class="tab strings flexcol" data-group="primary" data-tab="strings">
+            {{> "systems/SofH/templates/tab/strings.hbs"}}
+        </div>
+        {{!-- Moves Tab --}}
+        <div class="tab moves flexcol" data-group="primary" data-tab="moves">
+            {{> "systems/SofH/templates/tab/character-moves.hbs"}}
+        </div>
+        {{!-- Equipment Tab --}}
+        <div class="tab equipment flexcol" data-group="primary" data-tab="equipment">
+            {{> "systems/SofH/templates/tab/equipment.hbs"}}
+        </div>
+    </section>
+</section>
+
+
+    </section>
+  </section>
+</form>
