@@ -28,13 +28,7 @@
 
 <div class="item">
     {{#if item.system.havequestion}}
-    <h2 class="h2-roll">{{localize 'sofh.ui.rolldialog.moveQuestionTitle'}}</h2>
-    <div class="question-sheet-roll--toprow">
-        <label class="question-description">{{localize 'sofh.ui.rolldialog.conditionDescriptionLabel'}}</label>
-        <label class="question-impact">{{localize 'sofh.ui.rolldialog.questionImpactLabel'}}</label>
-        <label class="question-isapply">{{localize 'sofh.ui.rolldialog.isApplyLabel'}}</label>
-    </div>
-    {{/if}}
+    <h2 class="h2-roll">{{localize 'sofh.ui.rolldialog.moveQuestionTitle'}}</h2>   
     {{#each item.system.question as |question index|}}
     <div class="question-sheet-roll">
         <div class="question description">{{question.description}}</div>
@@ -42,10 +36,13 @@
             <option value="true" {{#if (eq question.impact "true")}}selected{{/if}}>{{localize 'sofh.ui.rolldialog.positiveOption'}}</option>
             <option value="false" {{#if (eq question.impact "false")}}selected{{/if}}>{{localize 'sofh.ui.rolldialog.negativeOption'}}</option>
         </select>
+        <div class="questionc- hcekbox">
+        <label class="question-isapply">{{localize 'sofh.ui.rolldialog.isApplyLabel'}}</label>
         <input type="checkbox" class="circle-checkbox-isapply">
+        </div>
     </div>
     {{/each}}
-
+    {{/if}}
     {{#if item.system.relationrelated}}
     <h2 class="h2-roll">{{localize 'sofh.ui.rolldialog.relevantRelationTitle'}}</h2>
     <div class="relation-roll">
@@ -71,12 +68,7 @@
 
     <h2 class="h2-roll">{{localize 'sofh.ui.rolldialog.otherModsTitle'}}</h2>
     <div class="others-mods">
-        <div class="labels-others">
-            <label class="modyficator">{{localize 'sofh.ui.rolldialog.numericModifierLabel'}}</label>
-        </div>
-        <div class="inputs-others">
-            <input type="number" class="numeric-mod">
-        </div>
+        
     </div>
 
     <div class="roll-mod-other">

@@ -130,7 +130,7 @@
     "sofh.ui.moves.name":"Name of move:",
     "sofh.item.descriptionlabel":"Move description",
     "sofh.ui.rolldialog.houseQuestionTitle": "House Question",
-    "sofh.ui.rolldialog.isApplyLabel": "Is apply?",
+    "sofh.ui.rolldialog.isApplyLabel": "Yes?",
     "sofh.ui.rolldialog.conditionImpactTitle": "Condition impact",
     "sofh.ui.rolldialog.conditionDescriptionLabel": "Condition description",
     "sofh.ui.rolldialog.moveQuestionTitle": "Move question",
@@ -174,8 +174,13 @@
     "sofh.ui.move.isRaltedToHouseQuestion": "Aplly house question?",
     "sofh.ui.move.isRaltedToHouse":"Move is related do House",
     "sofh.item.question":"Move questions:",
-    "sofh.ui.rolldialog.isApplyLabelHouse": "Tick if the answer is \"yes\"",
-    "sofh.chat.rollesult":"Roll resoult is:"
+    "sofh.ui.rolldialog.isApplyLabelHouse": "Yes?",
+    "sofh.chat.rollesult":"Roll resoult is:",
+    "sofh.item.trigerlabel":"Triggers to move",
+    "sofh.item.realtedtoothermoves":"Ralated moves to this one",
+    "sofh.item.isrolled":"Description of roll results"
+
+    
 
 
 }

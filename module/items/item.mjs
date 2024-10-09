@@ -38,6 +38,8 @@ export class sofhMovesSheet extends ItemSheet {
         html.on("click", ".remove-question-btn", (ev) => this.removequestion(ev));
         html.on("change", ".relatedmoves", (ev) => this.relatedmoves(ev));
         html.on("change", ".relatedmoves", (ev) => this.rollingguestions(ev));
+        html.on("click",".isrolled",(ev) => this.changeRollingoption(ev))
+
        
     }
 
@@ -80,5 +82,17 @@ export class sofhMovesSheet extends ItemSheet {
         const updateData = { [ev.target.name]: ev.target.value };
         this.item.update(updateData)
 
+    }
+    async changeRollingoption(ev){
+        if (!ev.target.checked){
+            const updateData = {
+            ["system.housequestion"] : false,
+            ["system.relationrelated"] : false,
+            ["system.stringsrelated"] :false,
+            ["system.havequestion"] :false,
+           ["system.realtedtoothermoves"]:false
+            }
+            this.item.update(updateData)
+        }
     }
 }
