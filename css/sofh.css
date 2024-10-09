@@ -566,7 +566,10 @@ label.condittion-isallpy {
 .question-sheet-roll {
     display: grid;
     align-items: center;
-    grid-template-columns: 1fr 1fr 0.3fr;
+    grid-template-columns: 1fr 1fr 1fr;
+    padding-bottom: 10px;
+    padding-top: 10px;
+
 }
 select.question-impact {
     
@@ -618,4 +621,23 @@ h2.h2-roll {
     /* Automatically adjust height to fit content */
     height: auto !important;
     overflow: visible !important; /* Prevent scrollbar, if necessary */
+}
+label.question-isapply {
+    text-wrap: wrap;
+    max-width: 110px;
+    text-align: right;
+}
+label.question-impact {
+    margin-left: 20px;
+}
+label.question-description {
+    min-width: 140px;
+}
+select.question-impact:disabled {
+    width: 80%;
+    margin-left: 10px;
+}
+.min-move-body {
+    display: grid;
+    row-gap: 25px;
 }

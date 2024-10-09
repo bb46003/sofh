@@ -131,7 +131,7 @@
   "sofh.item.descriptionlabel":"Move description",
   "sofh.ui.moves.questionaddbutton":"Add move qiestion",
   "sofh.ui.rolldialog.houseQuestionTitle": "House Question",
-  "sofh.ui.rolldialog.isApplyLabel": "Is apply?",
+  "sofh.ui.rolldialog.isApplyLabel": "Yes?",
   "sofh.ui.rolldialog.conditionImpactTitle": "Condition impact",
   "sofh.ui.rolldialog.conditionDescriptionLabel": "Condition description",
   "sofh.ui.rolldialog.moveQuestionTitle": "Move question",
@@ -139,8 +139,8 @@
   "sofh.ui.rolldialog.positiveOption": "Positive",
   "sofh.ui.rolldialog.negativeOption": "Negative",
   "sofh.ui.rolldialog.noneOption": "None",
-  "sofh.ui.rolldialog.relevantRelationTitle": "Relevant relation",
-  "sofh.ui.rolldialog.relevantStringsTitle": "Relevant strings",
+  "sofh.ui.rolldialog.relevantRelationTitle": "Relevant Relation",
+  "sofh.ui.rolldialog.relevantStringsTitle": "Relevant Strings",
   "sofh.ui.rolldialog.otherModsTitle": "Other mods",
   "sofh.ui.rolldialog.numericModifierLabel": "Numeric modifier",
   "sofh.ui.rolldialog.disadvantageLabel": "Disadvantage",
@@ -175,8 +175,11 @@
   "sofh.move.isRaltedToHouseQuestion": "Aplly house question?",
   "sofh.ui.move.isRaltedToHouse":"Move is related do House",
   "sofh.item.question":"Move questions:",
-  "sofh.ui.rolldialog.isApplyLabelHouse": "Tick if the answer is \"yes\"",
-  "sofh.chat.rollesult":"Roll resoult is:"
+  "sofh.ui.rolldialog.isApplyLabelHouse": "Yes?",
+  "sofh.chat.rollesult":"Roll resoult is:",
+  "sofh.item.trigerlabel":"Triggers to move",
+  "sofh.item.realtedtoothermoves":"Ralated moves to this one",
+  "sofh.item.isrolled":"Description of roll results"
 
 
 

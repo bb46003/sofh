@@ -5,7 +5,7 @@ export class sofhCharacterSheet extends ActorSheet {
             classes: ["sofh", "sheet", "actor", "character"],
             template: "systems/SofH/templates/character-sheet.hbs",
             width: 800,
-            height: 800,
+            height: 890,
             tabs: [
                 {
                     navSelector: ".sheet-tabs",
@@ -677,7 +677,7 @@ export class sofhCharacterSheet extends ActorSheet {
             default: "close",
            
         })
-        d.render(true,{height:800,width:"auto"});
+        d.render(true,{height:800,width:450});
     }
     }
 } 
