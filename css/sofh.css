@@ -547,6 +547,7 @@ form.moves-tab {
 .conditions-roll-toprow {
     display: flex;
     justify-content: space-between;
+    padding-bottom: 15px;
 
 }
 label.condittion-isallpy {
@@ -640,4 +641,129 @@ select.question-impact:disabled {
 .min-move-body {
     display: grid;
     row-gap: 25px;
+}
+.oponent-have-condition {
+    display: flex;
+    justify-content: space-between;
+}
+.house-scores-container{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 900px;
+    scale: 0.45;
+    position: absolute;
+    margin: 5px;
+    bottom: -150px !important;
+    right: 70px !important;
+    /* Skalą się pobaw bom pewny nie jest */
+  }
+  
+  .red{
+    --outline:#690000;
+    --background_1:#FF5858;
+    --background_11:#FF585850;
+    --background_2:#993535;
+    --line_color:#440000;
+    --background_image: url(../img/gryfstripes.jpg);
+  }
+  .green{
+    --outline:#006911;
+    --background_1:#58FF87;
+    --background_11:#58FF8750;
+    --background_2:#359957;
+    --line_color:#00440F;
+    --background_image: url(../img/slystripes.png);
+  }
+  .yellow{
+    --outline:#695800;
+    --background_1:#FCFF58;
+    --background_11:#FCFF5850;
+    --background_2:#999535;
+    --line_color:#443100;
+    --background_image: url(../img/huffstripes.png);
+  }
+  .blue{
+    --outline:#003769;
+    --background_1:#58A5FF;
+    --background_11:#58A5FF50;
+    --background_2:#356399;
+    --line_color:#002B44;
+    --background_image: url(../img/ravestripes.png);
+  }
+  
+  .score-Column{
+    width:200px;
+  }
+  
+  .score{
+    width: 200px !important;
+    border-width:10px !important; 
+    color:white !important;
+    font-size: 50px !important;
+    box-shadow:  7px 14px 7px #00000025,inset 5px 10px 5px #00000025 !important;
+  }
+  
+  .modify-section{
+    width: 200px;
+    height: 140px;
+    background-image:var(--background_image);
+    text-align: center;
+    background-size:cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column;
+  }
+  .input-score[type="number"]{
+    background-color: var(--background_11);
+    color:var(--outline);
+    text-align: center;
+    font-style: italic;
+    border: none;
+    border-style: none;
+    height: 50px;
+    width:150px;
+    font-size: 60px;
+    margin-top: 20px;
+  }
+  .modify-section > hr{
+    border: 4px solid var(--line_color);
+    width:160px;
+  }
+  .some-box{
+    width: 150px;
+    padding: 5px 0;
+    border:6px solid var(--outline);
+    box-sizing: border-box;
+  
+    color: var(--outline);
+    font-size: 25px;
+    font-weight: 600;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+  
+    box-shadow:  5px 10px 5px #00000025,inset 3px 6px 3px #00000025;
+    
+    background-image: linear-gradient(to bottom right, var(--background_1) , var(--background_2));
+  }
+  .just-black-space{
+    width:200px;
+    height:20px;
+    background-color: black;
+  }
+  .score-Column> img{
+    width:200px;
+  }
+  
+  .are-Ya-Winning-Son{
+    width: 200px;
+    height: 200px;
+    background-size: cover;
+  }
+  .imgflag{
+    border: none;
+  }
+  dialog#reload-world-confirm {
+    max-height: 200px;
 }
