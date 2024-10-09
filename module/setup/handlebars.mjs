@@ -45,6 +45,9 @@ export  function registerHandlebarsHelpers() {
         return htmlOutput; // Return safe HTML string
     }
     });
+    Handlebars.registerHelper('checkIfOnLead', async function (leadVar, options) {
+        return leadVar ? '' : 'display:none';
+      });
     
 
     }

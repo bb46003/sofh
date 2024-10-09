@@ -132,7 +132,7 @@
     "sofh.ui.rolldialog.houseQuestionTitle": "House Question",
     "sofh.ui.rolldialog.isApplyLabel": "Yes?",
     "sofh.ui.rolldialog.conditionImpactTitle": "Condition impact",
-    "sofh.ui.rolldialog.conditionDescriptionLabel": "Condition description",
+    "sofh.ui.rolldialog.conditionDescriptionLabel": "Condition description of your character",
     "sofh.ui.rolldialog.moveQuestionTitle": "Move question",
     "sofh.ui.rolldialog.questionImpactLabel": "Question impact",
     "sofh.ui.rolldialog.positiveOption": "Positive",
@@ -178,9 +178,15 @@
     "sofh.chat.rollesult":"Roll resoult is:",
     "sofh.item.trigerlabel":"Triggers to move",
     "sofh.item.realtedtoothermoves":"Ralated moves to this one",
-    "sofh.item.isrolled":"Description of roll results"
+    "sofh.item.isrolled":"Description of roll results",
+    "sofh.ui.dialog.youroponenthavecondidtion":"Did target of move have any condition?",
+    "sofh.ui.warrning.cannotactduetoconditions":"You cannot act doue to having 7 condidtions",
+    "sofh.ui.cancel":"Cancel",
+    "sofh.ui.submit":"Submit",
+    "sofh.ui.close":"Close",
+    "sofh.SETTINGS.showHousePoint":"Display House Points",
+    "sofh.SETTINGS.showHousePointHint":"When this option is enabled, House points are displayed on the table. Only the host can change the points. Positive points are entered without a sign, while negative points require a minus before the number. Confirm by clicking the Apply button."
 
-    
 
 
 }

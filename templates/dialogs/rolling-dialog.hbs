@@ -6,10 +6,15 @@
     <input type="checkbox" class="circle-checkbox-housequestion">
 </div>
 {{/if}}
-
-{{#if (ifCondition actor.system.condition) }}
 <div class="condition-impact">
     <h2 class="h2-roll">{{localize 'sofh.ui.rolldialog.conditionImpactTitle'}}</h2>
+    <div class="oponent-have-condition">
+        <label class="oponent-have-condition-label">{{localize "sofh.ui.dialog.youroponenthavecondidtion"}}</label>
+        <input type="checkbox" class="oponent-have-condition-checkbox">
+    </div>
+    <h3></h3>
+{{#if (ifCondition actor.system.condition) }}
+
     <div class="conditions-roll-toprow">
         <label class="condition-description">{{localize 'sofh.ui.rolldialog.conditionDescriptionLabel'}}</label>
         <label class="condition-isapply">{{localize 'sofh.ui.rolldialog.isApplyLabel'}}</label>
@@ -23,8 +28,9 @@
         </div>
         {{/if}}
     {{/each}}
-</div>
+
 {{/if}}
+</div>
 
 <div class="item">
     {{#if item.system.havequestion}}
@@ -77,5 +83,5 @@
         <label class="advantage">{{localize 'sofh.ui.rolldialog.advantageLabel'}}</label>
     </div>
 
-    {{rangePicker name="ad-disad" value=bar min=-1 max=1 step=1 span=none}}
+    {{rangePicker name="ad-disad" value=bar min=-2 max=2 step=1 span=none}}
 </div>

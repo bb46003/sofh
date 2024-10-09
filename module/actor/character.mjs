@@ -281,7 +281,7 @@ export class sofhCharacterSheet extends ActorSheet {
             content: content,
             buttons: {
                 submit: {
-                    label: "Submit",
+                    label: game.i18n.localize("sofh.ui.submit"),
                     callback: async (html) => {
                         const selectedOptions = html.find('input[type="checkbox"]:checked');
                         const selectedValues = [];
@@ -304,10 +304,7 @@ export class sofhCharacterSheet extends ActorSheet {
                     }
                 },
                 cancel: {
-                    label: "Cancel",
-                    callback: () => {
-                        ui.notifications.info("Selection canceled.");
-                    }
+                    label: game.i18n.localize("sofh.ui.cancel")
                 }
             },
             default: "submit",
@@ -496,7 +493,7 @@ export class sofhCharacterSheet extends ActorSheet {
         }).render(true);
     }
     else{
-        ui.notifications.warn(game.i18n.localize("You cannot act doue to having 7 condidtions"));
+        ui.notifications.warn(game.i18n.localize(game.i18n.localization("sofh.ui.warrning.cannotactduetoconditions")));
     }
 
     }
@@ -511,6 +508,7 @@ export class sofhCharacterSheet extends ActorSheet {
             relevantString: null,
             numericModifier: null,
             otherrolltype: 0,
+            oponentcondition: 0
         };
         let rollmod = 0;
         let dicenumber = 0;
@@ -524,7 +522,13 @@ export class sofhCharacterSheet extends ActorSheet {
                 rollmod = rollmod+1
             }
         }
-    
+        const oponentcondition = ocument.querySelector('.oponent-have-condition-checkbox');
+        if(oponentcondition){
+            selections.oponentcondition = houseCheckbox.oponentcondition;
+            if (selections.oponentcondition){
+                dicenumber=dicenumber+1;
+            }
+        }
  
         const conditionElements = document.querySelectorAll('.conditions-roll-detail');
         conditionElements.forEach(condition => {
@@ -669,7 +673,7 @@ export class sofhCharacterSheet extends ActorSheet {
             content: content,
             buttons: {
                 close: {
-                    label: "Close",
+                    label: game.i18n.localize("sofh.ui.close"),
                     callback: () => {
                     }
                 }
