@@ -522,7 +522,7 @@ export class sofhCharacterSheet extends ActorSheet {
                 rollmod = rollmod+1
             }
         }
-        const oponentcondition = ocument.querySelector('.oponent-have-condition-checkbox');
+        const oponentcondition = document.querySelector('.oponent-have-condition-checkbox').checked;
         if(oponentcondition){
             selections.oponentcondition = houseCheckbox.oponentcondition;
             if (selections.oponentcondition){
