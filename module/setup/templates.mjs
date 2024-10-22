@@ -9,7 +9,12 @@ export const preloadHandlebarsTemplates = async function(){
         "systems/SofH/templates/tab/partial/moves-question.hbs",
         "systems/SofH/templates/tab/partial/moves-body.hbs",
         "systems/SofH/templates/tab/partial/moves-body-limited.hbs",
-        "systems/SofH/templates/tab/partial/move-title.hbs"
+        "systems/SofH/templates/tab/partial/move-title.hbs",
+        "systems/SofH/templates/tab/partial/relation-slytherin.hbs",
+        "systems/SofH/templates/tab/partial/relation-griffindor.hbs",
+        "systems/SofH/templates/tab/partial/relation-hufflepuff.hbs",
+        "systems/SofH/templates/tab/partial/relation-ravenclaw.hbs"
+
 
 
     ])

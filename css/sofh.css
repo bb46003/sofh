@@ -314,6 +314,13 @@ button.dialog-button.OK.default.bright {
 .zero {
     transform: translateY(0%) rotate(-45deg);
 }
+.one {
+    transform: translateY(0%) rotate(-0deg);
+}
+.minusone{
+    transform: translateY(0%) rotate(-0deg);
+
+}
 .clicked {
     background-color: #007bff; /* Change this to your desired color */
     color: white; /* Optional: change text color for better contrast */
@@ -766,4 +773,8 @@ select.question-impact:disabled {
   }
   dialog#reload-world-confirm {
     max-height: 200px;
+}
+.instruction{
+    font-style: oblique;
+    font-weight: 1000;
 }
