@@ -51,3 +51,6 @@ export  function registerHandlebarsHelpers() {
     
 
     }
+    Handlebars.registerHelper('lowercase', function (str) {
+        return str.toLowerCase();
+    });

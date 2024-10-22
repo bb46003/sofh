@@ -5,7 +5,7 @@ export class sofhCharacterSheet extends ActorSheet {
             classes: ["sofh", "sheet", "actor", "character"],
             template: "systems/SofH/templates/character-sheet.hbs",
             width: 800,
-            height: 890,
+            height: 960,
             tabs: [
                 {
                     navSelector: ".sheet-tabs",
@@ -130,11 +130,15 @@ export class sofhCharacterSheet extends ActorSheet {
     }
 
     async handleHouseChange(ev) {
+
         const house = ev.target.value;
+        console.log(house)
+        if(house !== ""){
         await this.assignGoal(house);
         const changeHouse = true;
         await this.assignHouseQuestions(house,changeHouse);
         await this.addEq(house)
+        }
     }
 
     async handleConditionChange(ev) {
@@ -369,8 +373,12 @@ export class sofhCharacterSheet extends ActorSheet {
 
     async addEq(house){
         const baseEq = game.i18n.localize(CONFIG.SOFHCONFIG.equipment[house]);
-        const formattedStr = baseEq.replace(/, /g, ',<br>');
+        let formattedStr = baseEq.replace(/, /g, ',<br>');
         const actor=this.actor;
+        const oldEq = actor.system.equipment;
+        if (oldEq !== ""){
+            formattedStr = formattedStr+'<br>'+oldEq;
+        }
         let updateData={};
         updateData['system.equipment']=formattedStr;
         actor.update(updateData);

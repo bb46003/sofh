@@ -184,8 +184,25 @@
     "sofh.ui.submit":"Zastosuj",
     "sofh.ui.close":"Zamknij",
     "sofh.SETTINGS.showHousePoint":"Wyświetlanie punktacji Domów",
-    "sofh.SETTINGS.showHousePointHint":"Gdy opcja jest włączona na stole wyświetla się punkacja domów, punkty zmienia wtlko osoba prowadząca. Punkty dodatnie wpisujemy bez znaku, ujemnie potrzebują minsa przed liczbą, zatwierdzamy likając przycisk Zastosuj"
-
+    "sofh.SETTINGS.showHousePointHint":"Gdy opcja jest włączona na stole wyświetla się punkacja domów, punkty zmienia wtlko osoba prowadząca. Punkty dodatnie wpisujemy bez znaku, ujemnie potrzebują minsa przed liczbą, zatwierdzamy likając przycisk Zastosuj",
+    "sofh.ui.relationships.long_time_crush": "You have a huge, long-time crush on:",
+    "sofh.ui.relationships.survived_with_help": "You wouldn't have survived that dangerous adventure if it wasn't for:",
+    "sofh.ui.relationships.snuck_out_with": "They saw you sneaking out after curfew, but kept quiet:",
+    "sofh.ui.relationships.trust_with_secrets": "You always trust them with your biggest secrets:",
+    "sofh.ui.relationships.closest_confidant": "Your closest confidant and partner-in-crime:",
+    "sofh.ui.relationships.fiercest_rival": "Your fiercest rival, always trying to one-up you:",
+    "sofh.ui.relationships.life_savior": "The person who saved your life, and you feel you owe them:",
+    "sofh.ui.relationships.biggest_crush": "Your biggest crush, even though you don't know how they feel about you:",
+    "sofh.ui.relationships.betrayed_trust": "Someone who betrayed your trust and you're still not over it:",
+    "sofh.ui.relationships.study_buddy": "Your study buddy is:",
+    "sofh.ui.relationships.sneaked_into_library": "You convinced them to sneak into the restricted section of the library with you:",
+    "sofh.ui.relationships.caught_cheating": "They once caught you cheating, but didn't turn you in:",
+    "sofh.ui.relationships.helped_with_invention": "They helped you with one of your inventions when you were stuck:",
+    "sofh.ui.relationships.deepest_secret_known_by": "Your deepest, darkest secret is known by:",
+    "sofh.ui.relationships.insulted_but_given_chance": "You once badly insulted them, but they gave you a second chance:",
+    "sofh.ui.relationships.lost_valuable_returned": "You once lost something valuable, but they returned it to you:",
+    "sofh.ui.relationships.comforted_in_vulnerability": "They once comforted you in a moment of extreme vulnerability:",
+    "sofh.ui.relationships.worst_enemy": "Your worst enemy or rival:"
 
 
 }
