@@ -202,7 +202,9 @@
     "sofh.ui.relationships.insulted_but_given_chance": "You once badly insulted them, but they gave you a second chance:",
     "sofh.ui.relationships.lost_valuable_returned": "You once lost something valuable, but they returned it to you:",
     "sofh.ui.relationships.comforted_in_vulnerability": "They once comforted you in a moment of extreme vulnerability:",
-    "sofh.ui.relationships.worst_enemy": "Your worst enemy or rival:"
+    "sofh.ui.relationships.worst_enemy": "Your worst enemy or rival:",
+    "sofh.ui.actor.pesonaleq":"Twój osobisty ekwipunek",
+    "sofh.ui.actor.baseshooleq":"Startowy ekwipunek z twojego domu"
 
 
 }

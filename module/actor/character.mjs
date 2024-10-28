@@ -375,10 +375,6 @@ export class sofhCharacterSheet extends ActorSheet {
         const baseEq = game.i18n.localize(CONFIG.SOFHCONFIG.equipment[house]);
         let formattedStr = baseEq.replace(/, /g, ',<br>');
         const actor=this.actor;
-        const oldEq = actor.system.equipment;
-        if (oldEq !== ""){
-            formattedStr = formattedStr+'<br>'+oldEq;
-        }
         let updateData={};
         updateData['system.equipment']=formattedStr;
         actor.update(updateData);
