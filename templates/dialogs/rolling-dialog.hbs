@@ -13,6 +13,26 @@
         <input type="checkbox" class="oponent-have-condition-checkbox">
     </div>
     <h3></h3>
+    <div class="item">
+        {{#if item.system.havequestion}}
+    <h2 class="h2-roll">{{localize 'sofh.ui.rolldialog.moveQuestionTitle'}}</h2>   
+    {{#each item.system.question as |question index|}}
+    <div class="question-sheet-roll">
+        <div class="question description">{{question.description}}</div>
+        <select class="question-impact" name="system.question.{{@index}}.impact" disabled>
+            <option value="true" {{#if (eq question.impact "true")}}selected{{/if}}>{{localize 'sofh.ui.rolldialog.positiveOption'}}</option>
+            <option value="false" {{#if (eq question.impact "false")}}selected{{/if}}>{{localize 'sofh.ui.rolldialog.negativeOption'}}</option>
+        </select>
+        <div class="questionc- hcekbox">
+        <label class="question-isapply">{{localize 'sofh.ui.rolldialog.isApplyLabel'}}</label>
+        <input type="checkbox" class="circle-checkbox-isapply">
+        </div>
+    </div>
+    {{/each}}
+    {{/if}}
+    </div>
+    <h3 class="other-factor">{{localize "sofh.ui.dialog.other_factor"}}</h3>
+    <div class="other-factor" style="display: none">
 {{#if (ifCondition actor.system.condition) }}
 
     <div class="conditions-roll-toprow">
@@ -30,25 +50,9 @@
     {{/each}}
 
 {{/if}}
-</div>
+
 
 <div class="item">
-    {{#if item.system.havequestion}}
-    <h2 class="h2-roll">{{localize 'sofh.ui.rolldialog.moveQuestionTitle'}}</h2>   
-    {{#each item.system.question as |question index|}}
-    <div class="question-sheet-roll">
-        <div class="question description">{{question.description}}</div>
-        <select class="question-impact" name="system.question.{{@index}}.impact" disabled>
-            <option value="true" {{#if (eq question.impact "true")}}selected{{/if}}>{{localize 'sofh.ui.rolldialog.positiveOption'}}</option>
-            <option value="false" {{#if (eq question.impact "false")}}selected{{/if}}>{{localize 'sofh.ui.rolldialog.negativeOption'}}</option>
-        </select>
-        <div class="questionc- hcekbox">
-        <label class="question-isapply">{{localize 'sofh.ui.rolldialog.isApplyLabel'}}</label>
-        <input type="checkbox" class="circle-checkbox-isapply">
-        </div>
-    </div>
-    {{/each}}
-    {{/if}}
     {{#if item.system.relationrelated}}
     <h2 class="h2-roll">{{localize 'sofh.ui.rolldialog.relevantRelationTitle'}}</h2>
     <div class="relation-roll">
@@ -84,4 +88,5 @@
     </div>
 
     {{rangePicker name="ad-disad" value=bar min=-2 max=2 step=1 span=none}}
+</div>
 </div>

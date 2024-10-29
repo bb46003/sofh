@@ -186,9 +186,9 @@
     "sofh.SETTINGS.showHousePoint":"Wyświetlanie punktacji Domów",
     "sofh.SETTINGS.showHousePointHint":"Gdy opcja jest włączona na stole wyświetla się punkacja domów, punkty zmienia wtlko osoba prowadząca. Punkty dodatnie wpisujemy bez znaku, ujemnie potrzebują minsa przed liczbą, zatwierdzamy likając przycisk Zastosuj",
     "sofh.ui.relationships.long_time_crush": "You have a huge, long-time crush on:",
-    "sofh.ui.relationships.survived_with_help": "You wouldn't have survived that dangerous adventure if it wasn't for:",
-    "sofh.ui.relationships.snuck_out_with": "They saw you sneaking out after curfew, but kept quiet:",
-    "sofh.ui.relationships.trust_with_secrets": "You always trust them with your biggest secrets:",
+    "sofh.ui.relationships.survived_with_help": "You never would have passed your classes if it wasn't for:",
+    "sofh.ui.relationships.snuck_out_with": "They caught you smoking gillyweed, but didn't tell:",
+    "sofh.ui.relationships.trust_with_secrets": "You always share your sweets with each other:",
     "sofh.ui.relationships.closest_confidant": "Your closest confidant and partner-in-crime:",
     "sofh.ui.relationships.fiercest_rival": "Your fiercest rival, always trying to one-up you:",
     "sofh.ui.relationships.life_savior": "The person who saved your life, and you feel you owe them:",
@@ -202,7 +202,10 @@
     "sofh.ui.relationships.insulted_but_given_chance": "You once badly insulted them, but they gave you a second chance:",
     "sofh.ui.relationships.lost_valuable_returned": "You once lost something valuable, but they returned it to you:",
     "sofh.ui.relationships.comforted_in_vulnerability": "They once comforted you in a moment of extreme vulnerability:",
-    "sofh.ui.relationships.worst_enemy": "Your worst enemy or rival:"
+    "sofh.ui.relationships.worst_enemy": "Your worst enemy or rival:",
+    "sofh.ui.actor.pesonaleq":"Twój osobisty ekwipunek",
+    "sofh.ui.actor.baseshooleq":"Startowy ekwipunek z twojego domu",
+    "sofh.ui.send_to_chat":"Send to chat"
 
 
 }

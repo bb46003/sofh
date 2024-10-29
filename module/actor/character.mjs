@@ -79,7 +79,7 @@ export class sofhCharacterSheet extends ActorSheet {
         
     }
 
-    activateListeners(html) {
+    async activateListeners(html) {
         super.activateListeners(html);
 
         html.on("change", ".circle-checkbox-reputation", (ev) => this.handleReputationChange(ev));
@@ -98,6 +98,8 @@ export class sofhCharacterSheet extends ActorSheet {
         html.find(".moves-edit").on("click contextmenu", this.openMoves.bind(this))
         html.find(".roll-moves-btn").on("click", this.rollForMove.bind(this));
         html.find(".moves-description-open").on("click", this.openMovesFromTriggers.bind(this))
+        html.find(".other-factor").on("click",this.collapsOtherFactor(this))
+        
 
 
 
@@ -375,10 +377,6 @@ export class sofhCharacterSheet extends ActorSheet {
         const baseEq = game.i18n.localize(CONFIG.SOFHCONFIG.equipment[house]);
         let formattedStr = baseEq.replace(/, /g, ',<br>');
         const actor=this.actor;
-        const oldEq = actor.system.equipment;
-        if (oldEq !== ""){
-            formattedStr = formattedStr+'<br>'+oldEq;
-        }
         let updateData={};
         updateData['system.equipment']=formattedStr;
         actor.update(updateData);
@@ -455,13 +453,23 @@ export class sofhCharacterSheet extends ActorSheet {
     }
 
     async collapsAllMoves(event) {
-        const tatget = event.target.classList.value;
-        if(tatget === "moves active"){
-          const movesElement = $(".all-moves");
-          movesElement.css("display", "none");
+        const target = event.target.classList.value;
+        if (target === "moves active") {
+            // Select all elements with .all-moves class, excluding those with .basicMoves
+            const movesElements = $(".all-moves").not(".basicMoves");
+            
+            // Collapse only the selected elements
+            movesElements.css("display", "none");
+        }
+    }
+    
+    
+    async collapsOtherFactor(event) {
+       
+          const movesElement = $(".other-factor");
+         movesElement.css("display", "");
         }
 
-    }
     
     async removeMoves(event){
         const button = event.target; 
@@ -485,6 +493,7 @@ export class sofhCharacterSheet extends ActorSheet {
         const is7conditions=actor.system.is7conditions
         if(!is7conditions){
         const content = await renderTemplate("systems/SofH/templates/dialogs/rolling-dialog.hbs", { item: item, actor:actor });
+       
         new Dialog({
             title: game.i18n.localize("sofh.ui.rolling"),
             content,
@@ -550,10 +559,11 @@ export class sofhCharacterSheet extends ActorSheet {
 
         const questionElements = document.querySelectorAll('.question-sheet-roll');
         questionElements.forEach(question => {
-            const impact = question.querySelector('.question-impact').value; 
+        const impact = question.querySelector('.question-impact').value === "true"
             const isApply = question.querySelector('.circle-checkbox-isapply').checked;
             if (isApply) {
                 selections.questions.push({impact, isApply });
+                console.log(impact)
                 if(impact && isApply){
                     rollmod = rollmod + 1
                 }
@@ -674,8 +684,13 @@ export class sofhCharacterSheet extends ActorSheet {
         const ID = event.currentTarget.id;
         const item = this.actor.items.get(ID);
         const title = item.name;        
-        const content = await renderTemplate("systems/SofH/templates/dialogs/moves-body-limited.hbs", { item });
+        const content = await renderTemplate("systems/SofH/templates/dialogs/moves-body-limited.hbs", item );
+        const actor = this.actor;
        
+        const moveToChat = `<div class="description-sheet"> 
+           <h2 class="move_type description-label ">${item.name}</h2>       
+            ${item.system.description}
+        </div>`
         const d= new Dialog({
             title: title,
             content: content,
@@ -684,6 +699,18 @@ export class sofhCharacterSheet extends ActorSheet {
                     label: game.i18n.localize("sofh.ui.close"),
                     callback: () => {
                     }
+                },
+                sendToChat:{
+                    label: game.i18n.localize("sofh.ui.send_to_chat"),
+                    callback:()=>{
+                        ChatMessage.create({
+                            user: game.user.id,
+                            speaker: ChatMessage.getSpeaker({ actor }),
+                            content: moveToChat,
+                        });
+
+                    }
+                  
                 }
             },
             default: "close",
