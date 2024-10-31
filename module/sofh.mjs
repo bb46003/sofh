@@ -3,6 +3,9 @@ import {SOFHCONFIG} from "./config.mjs";
 import { registerHandlebarsHelpers } from "./setup/handlebars.mjs";
 import { preloadHandlebarsTemplates } from "./setup/templates.mjs";
 import { HomeScore } from "./app/home_score.mjs";
+import {moveRoll} from "./dialog/move-dialog.mjs";
+import {characterRelation}  from './config.mjs';
+
 
 export default function registerSettings() {
 	// -------------------
@@ -89,8 +92,9 @@ Hooks.once('init', async function () {
     registerSheets()
     registerHandlebarsHelpers();
     registerSettings();
+   
     CONFIG.SOFHCONFIG = SOFHCONFIG;
-    game.sofh = {HomeScore}
+    game.sofh = {HomeScore, moveRoll}
    
     return preloadHandlebarsTemplates();
 })
@@ -120,6 +124,42 @@ Hooks.once("ready", async function() {
           })
           
     }
-          // Hide all images with class 'imgflag'
+    characterRelation()
+    CONFIG.SOFHCONFIG = SOFHCONFIG;
          
     })
+
+    Hooks.on('createActor', async function (actor) {
+      if (actor.type === "character"){
+        characterRelation()
+        CONFIG.SOFHCONFIG = SOFHCONFIG;
+        console.log(SOFHCONFIG)
+             
+      }
+    })
+
+    Hooks.on("updateActor", (actor, updateData) => {
+     if(actor.type === "character"){
+      if (updateData.name) {
+          // Call all hooks related to the name change
+          Hooks.callAll("actorNameChanged");
+      }
+      }
+  });
+  Hooks.on("actorNameChanged", () => {
+    const actors = game.actors;
+    const characters = game.actors.filter(a => a.type === "character");
+
+    
+    characters.forEach(async (character) => {
+       if(character.sheet.rendered){
+                await character.sheet.render(true); 
+       }
+            
+        
+    
+    });
+
+
+    
+});

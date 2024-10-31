@@ -22,19 +22,32 @@
     </div>
     <div class="relation">
         {{> "systems/SofH/templates/tab/partial/dimond-button.hbs" value=system.relation.value1 id="1"}}
-        <input class="relation-name" type="text" name="system.relation.name1" id="1" value="{{system.relation.name1}}">{{system.relation.name1}}</textarea>
+        <select name="system.relation.name1" class="relation-sleection">
+            <option value="">None</option>
+         {{selectOptions (checkRelation characterRelation actor 1) selected=system.relation.name1 localize=false}}
+         </select>
+        
     </div>
     <div class="relation">
         {{> "systems/SofH/templates/tab/partial/dimond-button.hbs" value=system.relation.value2 id="2" }}
-        <input class="relation-name" type="text" name="system.relation.name2" id="2" value="{{system.relation.name2}}">{{system.relation.name2}}</textarea>
+        <select name="system.relation.name2" class="relation-sleection">
+            <option value="">None</option>
+         {{selectOptions (checkRelation characterRelation actor 2) selected=system.relation.name2 localize=false}}
+         </select>
     </div>
     <div class="relation">
         {{> "systems/SofH/templates/tab/partial/dimond-button.hbs" value=system.relation.value3 id="3"}}
-        <input class="relation-name" type="text" name="system.relation.name3" id="3" value="{{system.relation.name3}}">{{system.relation.name3}}</textarea>
+        <select name="system.relation.name3" class="relation-sleection">
+            <option value="">None</option>
+         {{selectOptions (checkRelation characterRelation actor 3) selected=system.relation.name3 localize=false}}
+         </select>
     </div>
     <div class="relation">
         {{> "systems/SofH/templates/tab/partial/dimond-button.hbs" value=system.relation.value4 id="4"}}
-        <input class="relation-name" type="text" name="system.relation.name4" id="4" value="{{system.relation.name4}}">{{system.relation.name4}} </textarea>
+        <select name="system.relation.name4" class="relation-sleection">
+            <option value="">None</option>
+         {{selectOptions (checkRelation characterRelation actor 4) selected=system.relation.name4 localize=false}}
+         </select>
     </div>
     
 

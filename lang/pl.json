@@ -186,9 +186,9 @@
     "sofh.SETTINGS.showHousePoint":"Wyświetlanie punktacji Domów",
     "sofh.SETTINGS.showHousePointHint":"Gdy opcja jest włączona na stole wyświetla się punkacja domów, punkty zmienia wtlko osoba prowadząca. Punkty dodatnie wpisujemy bez znaku, ujemnie potrzebują minsa przed liczbą, zatwierdzamy likając przycisk Zastosuj",
     "sofh.ui.relationships.long_time_crush": "You have a huge, long-time crush on:",
-    "sofh.ui.relationships.survived_with_help": "You wouldn't have survived that dangerous adventure if it wasn't for:",
-    "sofh.ui.relationships.snuck_out_with": "They saw you sneaking out after curfew, but kept quiet:",
-    "sofh.ui.relationships.trust_with_secrets": "You always trust them with your biggest secrets:",
+    "sofh.ui.relationships.survived_with_help": "You never would have passed your classes if it wasn't for:",
+    "sofh.ui.relationships.snuck_out_with": "They caught you smoking gillyweed, but didn't tell:",
+    "sofh.ui.relationships.trust_with_secrets": "You always share your sweets with each other:",
     "sofh.ui.relationships.closest_confidant": "Your closest confidant and partner-in-crime:",
     "sofh.ui.relationships.fiercest_rival": "Your fiercest rival, always trying to one-up you:",
     "sofh.ui.relationships.life_savior": "The person who saved your life, and you feel you owe them:",
@@ -202,7 +202,19 @@
     "sofh.ui.relationships.insulted_but_given_chance": "You once badly insulted them, but they gave you a second chance:",
     "sofh.ui.relationships.lost_valuable_returned": "You once lost something valuable, but they returned it to you:",
     "sofh.ui.relationships.comforted_in_vulnerability": "They once comforted you in a moment of extreme vulnerability:",
-    "sofh.ui.relationships.worst_enemy": "Your worst enemy or rival:"
+    "sofh.ui.relationships.worst_enemy": "Your worst enemy or rival:",
+    "sofh.ui.actor.pesonaleq":"Twój osobisty ekwipunek",
+    "sofh.ui.actor.baseshooleq":"Startowy ekwipunek z twojego domu",
+    "sofh.ui.send_to_chat":"Send to chat",
+    "sofh.ui.chat.use_move":"Character use move",
+    "sofh.ui.dialog.other_factor":"Other factor impacting roll, click to open",
+    "sofh.ui.dialog.other_factor_close":"Other factor impacting roll, click to close",
+    "sofh.ui.actor.timeToShine":"Your time to shine",
+    "sofh.ui.actor.gryffindorTimeToShine":"This is your moment to be a hero, to be the center of attention, and have everyone remember your name. Nothing can stop you or stand in your way. You blast through every barrier, defy all odds, stand courageous and valiant, and emerge victorious. You stop every enemy and save everyone, and you look awesome doing it!",
+    "sofh.ui.actor.hufflepuffTimeToShine":"This is the moment where all your hard work and dedication pays off. You may be frequently overlooked and undervalued, but not right now. You're the one making the calls, because you're the one who believes in justice and fairness, and you won't stand by and let the bad guys win. You do what it takes to save the day, and you do it your way, the right way.",
+    "sofh.ui.actor.ravenclawTimeToShine":"You finally reveal the true extent of your genius—a spell, invention, or piece of knowledge that gives you exactly what you need to save the day. You take control, defeating even impossible odds with your wit and skill. Everyone sees exactly what you're capable of, and even your enemies are impressed.",
+    "sofh.ui.actor.slytherinTimeToShine":"This is the moment when all your plans come to fruition—or everything falls apart and you're forced to act with all the desperation and willpower you have. Are you calm and in control or raw and laid bare for all to see? Either way, the situation bends to your will, exactly how you want it."
+
 
 
 }

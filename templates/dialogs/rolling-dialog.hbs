@@ -1,18 +1,42 @@
 {{#if item.system.housequestion}}
 <h2 class="h2-roll">{{localize 'sofh.ui.rolldialog.houseQuestionTitle'}}</h2>
-<div class="actor">{{actor.system.housequestion}}</div>
+
 <div class="house-question-application">
+    <div class="actor">{{actor.system.housequestion}}</div>
+    <div class="is-apply">
     <label class="housequestion-isapply">{{localize 'sofh.ui.rolldialog.isApplyLabelHouse'}}</label>
     <input type="checkbox" class="circle-checkbox-housequestion">
+    </div>
 </div>
 {{/if}}
-<div class="condition-impact">
-    <h2 class="h2-roll">{{localize 'sofh.ui.rolldialog.conditionImpactTitle'}}</h2>
+
+ 
+    <div class="item">
+        {{#if item.system.havequestion}}
+    <h2 class="h2-roll">{{localize 'sofh.ui.rolldialog.moveQuestionTitle'}}</h2>   
+    {{#each item.system.question as |question index|}}
+    <div class="question-sheet-roll">
+        <div class="question description">{{question.description}}</div>
+        <select class="question-impact" name="system.question.{{@index}}.impact" disabled>
+            <option value="true" {{#if (eq question.impact "true")}}selected{{/if}}>{{localize 'sofh.ui.rolldialog.positiveOption'}}</option>
+            <option value="false" {{#if (eq question.impact "false")}}selected{{/if}}>{{localize 'sofh.ui.rolldialog.negativeOption'}}</option>
+        </select>
+        <div class="questionc- hcekbox">
+        <label class="question-isapply">{{localize 'sofh.ui.rolldialog.isApplyLabel'}}</label>
+        <input type="checkbox" class="circle-checkbox-isapply">
+        </div>
+    </div>
+    {{/each}}
+    {{/if}}
+    </div>
+    <h3 class="other-factor-h3">{{localize "sofh.ui.dialog.other_factor"}}</h3>
+    <div class="other-factor" style="display: none">
+        <div class="condition-impact">
+    <h2 class="h2-roll-first">{{localize 'sofh.ui.rolldialog.conditionImpactTitle'}}</h2>
     <div class="oponent-have-condition">
         <label class="oponent-have-condition-label">{{localize "sofh.ui.dialog.youroponenthavecondidtion"}}</label>
         <input type="checkbox" class="oponent-have-condition-checkbox">
     </div>
-    <h3></h3>
 {{#if (ifCondition actor.system.condition) }}
 
     <div class="conditions-roll-toprow">
@@ -30,34 +54,16 @@
     {{/each}}
 
 {{/if}}
-</div>
+
 
 <div class="item">
-    {{#if item.system.havequestion}}
-    <h2 class="h2-roll">{{localize 'sofh.ui.rolldialog.moveQuestionTitle'}}</h2>   
-    {{#each item.system.question as |question index|}}
-    <div class="question-sheet-roll">
-        <div class="question description">{{question.description}}</div>
-        <select class="question-impact" name="system.question.{{@index}}.impact" disabled>
-            <option value="true" {{#if (eq question.impact "true")}}selected{{/if}}>{{localize 'sofh.ui.rolldialog.positiveOption'}}</option>
-            <option value="false" {{#if (eq question.impact "false")}}selected{{/if}}>{{localize 'sofh.ui.rolldialog.negativeOption'}}</option>
-        </select>
-        <div class="questionc- hcekbox">
-        <label class="question-isapply">{{localize 'sofh.ui.rolldialog.isApplyLabel'}}</label>
-        <input type="checkbox" class="circle-checkbox-isapply">
-        </div>
-    </div>
-    {{/each}}
-    {{/if}}
     {{#if item.system.relationrelated}}
     <h2 class="h2-roll">{{localize 'sofh.ui.rolldialog.relevantRelationTitle'}}</h2>
     <div class="relation-roll">
         <select class="relation-chosen">
             <option value="">{{localize 'sofh.ui.rolldialog.noneOption'}}</option>
-            <option value="{{actor.system.relation.value1}}">{{actor.system.relation.name1}}</option>
-            <option value="{{actor.system.relation.value2}}">{{actor.system.relation.name2}}</option>
-            <option value="{{actor.system.relation.value3}}">{{actor.system.relation.name3}}</option>
-            <option value="{{actor.system.relation.value4}}">{{actor.system.relation.name4}}</option>
+            {{selectOptions (selectRelevantRelation actor)  localize=false}}
+            
         </select>
     </div>
     {{/if}}
@@ -84,4 +90,5 @@
     </div>
 
     {{rangePicker name="ad-disad" value=bar min=-2 max=2 step=1 span=none}}
+</div>
 </div>

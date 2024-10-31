@@ -1,3 +1,6 @@
+
+import {moveRoll} from "../dialog/move-dialog.mjs"
+
 export class sofhCharacterSheet extends ActorSheet {
 
     static get defaultOptions() {
@@ -20,8 +23,9 @@ export class sofhCharacterSheet extends ActorSheet {
         const context = super.getData();
         const actorData = this.actor.toObject(false);
         context.system = actorData.system;
-        const { bloodType, favoriteTopic, favoriteTopic2, House, conditionstype, equipment, houseeq } = CONFIG.SOFHCONFIG;
-        Object.assign(context, { bloodType, favoriteTopic, favoriteTopic2, House, conditionstype, equipment, houseeq });
+        const { bloodType, favoriteTopic, favoriteTopic2, House, conditionstype, equipment, houseeq, characterRelation } = CONFIG.SOFHCONFIG;
+        
+        Object.assign(context, { bloodType, favoriteTopic, favoriteTopic2, House, conditionstype, equipment, houseeq, characterRelation });
        
         async function enrich(html) {
             if (html) {
@@ -79,7 +83,7 @@ export class sofhCharacterSheet extends ActorSheet {
         
     }
 
-    activateListeners(html) {
+    async activateListeners(html) {
         super.activateListeners(html);
 
         html.on("change", ".circle-checkbox-reputation", (ev) => this.handleReputationChange(ev));
@@ -98,6 +102,9 @@ export class sofhCharacterSheet extends ActorSheet {
         html.find(".moves-edit").on("click contextmenu", this.openMoves.bind(this))
         html.find(".roll-moves-btn").on("click", this.rollForMove.bind(this));
         html.find(".moves-description-open").on("click", this.openMovesFromTriggers.bind(this))
+        html.on("click",".time_to_shine",(ev => this.showTimeToShine(ev)));
+     
+        
 
 
 
@@ -132,7 +139,6 @@ export class sofhCharacterSheet extends ActorSheet {
     async handleHouseChange(ev) {
 
         const house = ev.target.value;
-        console.log(house)
         if(house !== ""){
         await this.assignGoal(house);
         const changeHouse = true;
@@ -161,6 +167,7 @@ export class sofhCharacterSheet extends ActorSheet {
         const updateData = {};
         const index2 = Number(index);
         const currentRank = actor.system.reputation.rank;
+        const currentTS = actor.system.reputation.timeToShine;
 
         if (currentRank !== 5) {
             if (index2 === 7 && value) {
@@ -171,6 +178,7 @@ export class sofhCharacterSheet extends ActorSheet {
                     updateData[`system.reputation.value.${i}`] = false;
                 }
                 updateData['system.reputation.rank'] = currentRank + 1;
+                updateData['system.reputation.timeToShine'] = currentTS + 1;
             } else {
                 this.updateReputationValues(updateData, index2, value);
             }
@@ -375,10 +383,6 @@ export class sofhCharacterSheet extends ActorSheet {
         const baseEq = game.i18n.localize(CONFIG.SOFHCONFIG.equipment[house]);
         let formattedStr = baseEq.replace(/, /g, ',<br>');
         const actor=this.actor;
-        const oldEq = actor.system.equipment;
-        if (oldEq !== ""){
-            formattedStr = formattedStr+'<br>'+oldEq;
-        }
         let updateData={};
         updateData['system.equipment']=formattedStr;
         actor.update(updateData);
@@ -455,227 +459,30 @@ export class sofhCharacterSheet extends ActorSheet {
     }
 
     async collapsAllMoves(event) {
-        const tatget = event.target.classList.value;
-        if(tatget === "moves active"){
-          const movesElement = $(".all-moves");
-          movesElement.css("display", "none");
-        }
-
-    }
-    
-    async removeMoves(event){
-        const button = event.target; 
-        const ID = button.id; 
-        const item = this.actor.items.get(ID);
-        await this.actor.deleteEmbeddedDocuments("Item", [ID]);
-        const movesElement = $(".all-moves." + item.type); 
-        await movesElement.css("display", "");
-
-        
-
-    }
-    async rollForMove(event){
-        const button = event.target; 
-        let ID = button.id;
-        if(ID === ""){
-            ID =event.currentTarget.id
-        } 
-        const item = this.actor.items.get(ID);
-        const actor = this.actor;
-        const is7conditions=actor.system.is7conditions
-        if(!is7conditions){
-        const content = await renderTemplate("systems/SofH/templates/dialogs/rolling-dialog.hbs", { item: item, actor:actor });
-        new Dialog({
-            title: game.i18n.localize("sofh.ui.rolling"),
-            content,
-            buttons: {
-                OK: {
-                    icon: '<i class="fa fa-check"></i>',
-                    label: game.i18n.localize("sofh.UI.Roll"),
-                    callback: async (html) => {
-                        await this.defnieRollingFormula(html, actor, item)
-                    }
-                },
-            },
-            default: game.i18n.localize("sofh.UI.Roll"),
-        }).render(true);
-    }
-    else{
-        ui.notifications.warn(game.i18n.localize(game.i18n.localization("sofh.ui.warrning.cannotactduetoconditions")));
-    }
-
-    }
-    async defnieRollingFormula(html, actor, item){
-
-
-        const selections = {
-            houseApply: null,
-            conditions: [],
-            questions: [],
-            relevantRelation: null,
-            relevantString: null,
-            numericModifier: null,
-            otherrolltype: 0,
-            oponentcondition: 0
-        };
-        let rollmod = 0;
-        let dicenumber = 0;
-       
-    
-  
-        const houseCheckbox = document.querySelector('.circle-checkbox-housequestion');
-        if(houseCheckbox){
-            selections.houseApply = houseCheckbox.checked;
-            if (selections.houseApply){
-                rollmod = rollmod+1
-            }
-        }
-        const oponentcondition = document.querySelector('.oponent-have-condition-checkbox').checked;
-        if(oponentcondition){
-            selections.oponentcondition = houseCheckbox.oponentcondition;
-            if (selections.oponentcondition){
-                dicenumber=dicenumber+1;
-            }
-        }
- 
-        const conditionElements = document.querySelectorAll('.conditions-roll-detail');
-        conditionElements.forEach(condition => {
-            const isApply = condition.querySelector('.circle-checkbox-isapply').checked;
-            if (isApply) {
-                selections.conditions.push({isApply });
-                dicenumber=dicenumber-1;
-            }
-        });
-    
-
-        const questionElements = document.querySelectorAll('.question-sheet-roll');
-        questionElements.forEach(question => {
-            const impact = question.querySelector('.question-impact').value; 
-            const isApply = question.querySelector('.circle-checkbox-isapply').checked;
-            if (isApply) {
-                selections.questions.push({impact, isApply });
-                if(impact && isApply){
-                    rollmod = rollmod + 1
-                }
-                else if(!impact && isApply){
-                    rollmod = rollmod - 1
-                }
-            }
-        });
-    
-        const relationSelect = document.querySelector('.relation-chosen');
-        if (relationSelect) {
-            selections.relevantRelation = relationSelect.value;
-            rollmod = rollmod + Number(relationSelect.value)
-        }
-    
-
-        const stringsSelect = document.querySelector('.roll-strings');
-        if (stringsSelect) {
-            selections.relevantString = stringsSelect.value;
-            if(stringsSelect.value !== ""){
-                dicenumber = dicenumber + 1;          
-
-            }
-        }
-
-        const numericInput = document.querySelector('.numeric-mod');
-        selections.numericModifier = numericInput ? numericInput.value : null;
-        const otherMod = Number(selections.numericModifier);
-        rollmod = rollmod + otherMod;
-        selections.otherrolltype = document.querySelector('[name="ad-disad"]').value;
-        let diceMod = Number(selections.otherrolltype);
-        if (diceMod > 3){
-            diceMod =3
-        }
-        else if(diceMod < -3){
-            diceMod = -3
-        }
-
-        dicenumber = dicenumber + diceMod;
-         let formula = "2d6";
-        if(rollmod.toString() > 0 ){
-             formula = "2d6 + " +rollmod.toString() 
-        }
-        else if(rollmod.toString() < 0 ){
-            formula = "2d6" + rollmod.toString() 
-        }
+        const target = event.target.classList.value;
+        if (target === "moves active") {
+            // Select all elements with .all-moves class, excluding those with .basicMoves
+            const movesElements = $(".all-moves").not(".basicMoves");
             
-        if(dicenumber > 0){
-             formula = "3d6kh2" 
-             if(rollmod.toString() > 0 ){
-                formula = "3d6kh2 +" +rollmod.toString() 
-           }
-           else if(rollmod.toString() < 0 ){
-               formula = "3d6kh2" + rollmod.toString() 
-           }
+            // Collapse only the selected elements
+            movesElements.css("display", "none");
         }
-        else if(dicenumber < 0){
-            formula = "3d6kl2" + rollmod.toString()
-            if(rollmod.toString() > 0 ){
-                formula = "3d6kl2 +" +rollmod.toString() 
-           }
-           else if(rollmod.toString() < 0 ){
-               formula = "3d6kl2" + rollmod.toString() 
-           }
-        }
-        await this.rolling(actor,item,formula)
-        if(stringsSelect.value !== ""){
-            this.removeStrinAfterRoll(stringsSelect.value)
-        }
-    }  
+    } 
 
-    async rolling(actor, item, formula){
-          const rollResult = await new Roll(formula).evaluate();
-        const total = rollResult.total;
-
-       
-        const label = item.name;
-        let content = "";
-        if (total >= 10) {
-            content = item.system?.above10 || "No content for above 10.";
-        } else if (total >= 7 && total <= 9) {
-            content = item.system?.['7to9'] || "No content for 7 to 9.";
-        } else {
-            content = item.system?.below7 || "No content for below 7.";
-        }
-
-      
-        content = `
-        <h3>Move Name: ${label}</h3><br>
-        <h2 class="move_type description-label ">${game.i18n.localize("sofh.item.descriptionlabel")}</h2>  
-        <div class="move-description-chat">${item.system.description}</div><br>
-        <h2 class="move_type description-label ">${game.i18n.localize("sofh.chat.rollesult")}</h2>  
-        <div class="roll-results">${content}</div><br>
-    `;
-      
-        rollResult.toMessage({
-            user: game.user.id,
-            speaker: ChatMessage.getSpeaker({ actor }),
-            flavor: content
-        });
-    }
-    async removeStrinAfterRoll(stringName){
-
-        const strings = this.actor.system.strings;
-        for (const key in strings) {
-            if (strings[key].name === stringName) {
-              delete strings[key];
-              break; 
-            }
-          }
-        
-        await this.actor.update({ 'system.strings': [{}] });
-        await this.actor.update({ 'system.strings': strings });
-    }
     async openMovesFromTriggers(event){
         if(event.currentTarget.className === "moves-description-open"){
 
         const ID = event.currentTarget.id;
         const item = this.actor.items.get(ID);
         const title = item.name;        
-        const content = await renderTemplate("systems/SofH/templates/dialogs/moves-body-limited.hbs", { item });
+        const content = await renderTemplate("systems/SofH/templates/dialogs/moves-body-limited.hbs", item );
+        const actor = this.actor;
        
+        const moveToChat = `<div class="description-sheet"> 
+           <h2 class="move_type description-label-notrrolabe">${game.i18n.localize("sofh.ui.chat.use_move")}<br>
+           ${item.name}</h2>       
+            ${item.system.description}
+        </div>`
         const d= new Dialog({
             title: title,
             content: content,
@@ -684,12 +491,80 @@ export class sofhCharacterSheet extends ActorSheet {
                     label: game.i18n.localize("sofh.ui.close"),
                     callback: () => {
                     }
+                },
+                sendToChat:{
+                    label: game.i18n.localize("sofh.ui.send_to_chat"),
+                    callback:()=>{
+                        ChatMessage.create({
+                            user: game.user.id,
+                            speaker: ChatMessage.getSpeaker({ actor }),
+                            content: moveToChat,
+                        });
+
+                    }
+                  
                 }
             },
             default: "close",
-           
+            
         })
         d.render(true,{height:800,width:450});
     }
+    }
+ async rollForMove(event){
+        const button = event.target; 
+            let ID = button.id;
+            if(ID === ""){
+                ID =event.currentTarget.id
+            } 
+            const item = this.actor.items.get(ID);
+            const actor = this.actor;
+            const dialogInstance = new moveRoll(actor, item);
+            dialogInstance.rollForMove(actor, item);
+    }
+    async showTimeToShine(ev){
+        const actor = this.actor;
+        const updateData = {};
+        const currentTS = actor.system.reputation.timeToShine;
+        const house = actor.system.home.toLowerCase();
+        const content = `<h2>${game.i18n.localize('sofh.ui.actor.timeToShine')}</h2>
+        <p>${game.i18n.localize(`sofh.ui.actor.${house}TimeToShine`)}</p>
+        `
+        const title = game.i18n.localize('sofh.ui.actor.timeToShine');
+        const moveToChat = `<div class="description-sheet"> 
+           <h2 class="move_type description-label-notrrolabe">${game.i18n.localize("sofh.ui.chat.use_move")}<br>
+           ${game.i18n.localize('sofh.ui.actor.timeToShine')}</h2>       
+            ${game.i18n.localize(`sofh.ui.actor.${house}TimeToShine`)}
+        </div>`
+        const d= new Dialog({
+            title: title,
+            content: content,
+            buttons: {
+                close: {
+                    label: game.i18n.localize("sofh.ui.close"),
+                    callback: () => {
+                    }
+                },
+                sendToChat:{
+                    label: game.i18n.localize("sofh.ui.send_to_chat"),
+                    callback:()=>{
+                        ChatMessage.create({
+                            user: game.user.id,
+                            speaker: ChatMessage.getSpeaker({ actor }),
+                            content: moveToChat,
+                        });
+                        updateData['system.reputation.timeToShine'] = currentTS -1;
+                        actor.update(updateData);
+
+                    }
+                  
+                }
+            },
+            default: "close",
+            
+        })
+        d.render(true,{height:800,width:450});
+
+        
     }
 } 
