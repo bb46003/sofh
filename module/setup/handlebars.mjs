@@ -29,12 +29,12 @@ export  function registerHandlebarsHelpers() {
     
         // Iterate through each item
         itemsArray.forEach(item => {
-            const triggers = item.system.triggers; // Assuming system.triggers is available
-    
-            // Check if triggers exist and are not empty
+            let triggers = item.system.triggers; // Assuming system.triggers is available
+            const tooltipAttribute = `data-tooltip="${item.system.description}" data-tooltip-direction="RIGHT" style="width: fit-content"`;
+            triggers = triggers.replace(/<p(.*?)>/g, `<p ${tooltipAttribute}>`);
             if (triggers && triggers.length > 0) {
                 if (item.system.isrolled){
-                htmlOutput += `<a class="roll-moves-btn" id="${item._id}">${triggers}</a>`;
+                htmlOutput += `<a class="roll-moves-btn" id="${item._id}" >${triggers}</a>`;
                 }
                 else{
                     htmlOutput += `<a class="moves-description-open" id="${item._id}">${triggers}</a>`;
@@ -54,3 +54,50 @@ export  function registerHandlebarsHelpers() {
     Handlebars.registerHelper('lowercase', function (str) {
         return str.toLowerCase();
     });
+
+    Handlebars.registerHelper('checkRelation', function (characterRelation, actor, ID) {
+        const filteredRelations = {};
+    
+        for (let [id, name] of Object.entries(characterRelation)) {
+           
+          
+                if (name !== actor.name) {
+                  
+                    filteredRelations[id] = game.actors.get(id).name; 
+                }
+            
+                for(let j = 1; j<5;j++){
+                    if(j !== ID){
+                        if (id === actor.system.relation[`name${j}`]) {
+                            delete filteredRelations[id]
+                            break
+                        }
+                        else if(name !== actor.name){
+                            filteredRelations[id] = game.actors.get(id).name; 
+                        }
+                    }
+                }
+            }
+        
+    
+        return filteredRelations;
+    });
+    Handlebars.registerHelper('selectRelevantRelation', function (thisCharacter) {
+
+        const actors = game.actors;
+        const character = Array.from(actors.entries()).filter(([key, actor]) => actor.type === "character");
+    
+        let characterWithRelationtoMe = {};
+        const myCharacterID = thisCharacter._id;
+        character.forEach(([key, actor]) => {
+            for(let i=1; i<5; i++ ){
+                let relationID = actor.system.relation[`name${i}`];
+                let relationName=actor.name
+                if(relationID=== myCharacterID){
+                    characterWithRelationtoMe[actor.system.relation[`value${i}`]]=relationName
+                }
+            }
+        })
+        return characterWithRelationtoMe
+    })
+    

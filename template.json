@@ -65,8 +65,6 @@
         "relation":{
           "name1":"",
           "value1":0,
-          "max":3,
-          "min":-2,
           "name2":"",
           "value2":0,
           "name3":"",
@@ -85,7 +83,8 @@
             "5": false,
             "6": false,
             "7": false},
-          "rank":0
+          "rank":0,
+          "timeToShine":0
         },
         "goal":"",
         "housequestion":"",

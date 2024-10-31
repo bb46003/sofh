@@ -205,7 +205,16 @@
     "sofh.ui.relationships.worst_enemy": "Your worst enemy or rival:",
     "sofh.ui.actor.pesonaleq":"Twój osobisty ekwipunek",
     "sofh.ui.actor.baseshooleq":"Startowy ekwipunek z twojego domu",
-    "sofh.ui.send_to_chat":"Send to chat"
+    "sofh.ui.send_to_chat":"Send to chat",
+    "sofh.ui.chat.use_move":"Character use move",
+    "sofh.ui.dialog.other_factor":"Other factor impacting roll, click to open",
+    "sofh.ui.dialog.other_factor_close":"Other factor impacting roll, click to close",
+    "sofh.ui.actor.timeToShine":"Your time to shine",
+    "sofh.ui.actor.gryffindorTimeToShine":"This is your moment to be a hero, to be the center of attention, and have everyone remember your name. Nothing can stop you or stand in your way. You blast through every barrier, defy all odds, stand courageous and valiant, and emerge victorious. You stop every enemy and save everyone, and you look awesome doing it!",
+    "sofh.ui.actor.hufflepuffTimeToShine":"This is the moment where all your hard work and dedication pays off. You may be frequently overlooked and undervalued, but not right now. You're the one making the calls, because you're the one who believes in justice and fairness, and you won't stand by and let the bad guys win. You do what it takes to save the day, and you do it your way, the right way.",
+    "sofh.ui.actor.ravenclawTimeToShine":"You finally reveal the true extent of your genius—a spell, invention, or piece of knowledge that gives you exactly what you need to save the day. You take control, defeating even impossible odds with your wit and skill. Everyone sees exactly what you're capable of, and even your enemies are impressed.",
+    "sofh.ui.actor.slytherinTimeToShine":"This is the moment when all your plans come to fruition—or everything falls apart and you're forced to act with all the desperation and willpower you have. Are you calm and in control or raw and laid bare for all to see? Either way, the situation bends to your will, exactly how you want it."
+
 
 
 }
