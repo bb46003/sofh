@@ -47,7 +47,11 @@
           <div class="stat-grid reputation-rank">
           <label class="ranks">{{localize (concat 'sofh.ui.actor.reputationrank.' system.reputation.rank)}}</label>
           <button type="button" class="decrease-btn">-</button>
+          {{#if (gt system.reputation.timeToShine 0)}}
+          <button type="button" class="time_to_shine">{{localize "sofh.ui.actor.timeToShine"}}</button>
+          {{/if}}
           </div>
+          
           {{/if}}
 
           <div class="stat-grid">

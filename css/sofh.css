@@ -124,6 +124,7 @@
     justify-content: space-between;
     align-items: center;
     font-weight: normal;
+    flex-wrap: wrap;
 }
 
 .sofh .ranks {
@@ -574,7 +575,7 @@ label.condittion-isallpy {
 .question-sheet-roll {
     display: grid;
     align-items: center;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 9rem 1.2fr 1fr;
     padding-bottom: 10px;
     padding-top: 10px;
 
@@ -778,3 +779,47 @@ select.question-impact:disabled {
     font-style: oblique;
     font-weight: 1000;
 }
+.is-apply {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+}
+.questionc-.hcekbox {
+    margin-left: auto;
+}
+.h2-roll{ 
+     border-top: 1px solid var(--color-underline-header);
+     border-bottom: none;
+     margin-top: 5px;
+}
+.other-factor-h3{
+    border-top: 1px solid var(--color-underline-header);
+     border-bottom: none;
+     margin-top: 5px;
+
+}
+.h2-roll-first{
+    border-bottom: none;
+    margin-top: 5px;
+}
+h2.move_type.description-label-notrrolabe {
+    font-size: large;
+}
+.tooltip {
+    position: absolute;
+    background-color: #333;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    white-space: nowrap;
+    pointer-events: none; /* Prevent tooltip from interfering with mouse events */
+    opacity: 0;
+    transition: opacity 0.2s;
+    z-index: 1000;
+  }
+  
+  /* Tooltip visible */
+  .tooltip.visible {
+    opacity: 1;
+  }
