@@ -1,12 +1,12 @@
 <div class="second-row">
     <div class="move-elements">
-        <div class="trigers-sheet"> 
+        <div class="trigers-sheet-limited"> 
            <h2 class="move_type trigger-label ">{{localize "sofh.item.trigerlabel"}}</h2>       
-            {{editor system.triggers target="system.triggers" engine="prosemirror" button=true owner=owner editable=false}}
+            {{injectHtml system.triggers}}
         </div>     
-        <div class="description-sheet"> 
+        <div class="description-sheet-limited"> 
            <h2 class="move_type description-label ">{{localize "sofh.item.descriptionlabel"}}</h2>       
-            {{editor system.description target="system.description" engine="prosemirror" button=true owner=owner editable=false}}
+            {{#injectHtml system.description}}{{/injectHtml}}
         </div>
         {{#if system.housequestion}}
         <div class="move-is-ralted-to-house-guestion">
