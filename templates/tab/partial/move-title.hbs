@@ -9,7 +9,9 @@
                                 <i class="fas fa-dice" id="{{item._id}}"></i>
                             </button>
                             {{else}}
-                            <div></div>
+                            <div><button class="send-to-chat-moves-btn" id="{{item._id}}">
+                                <i class="fas fa-comments" id="{{item._id}}"></i>
+                            </button></div>
                             {{/if}}
                             <button class="remove-moves-btn" id="{{item._id}}" >🗑️</button>
                         </div>
