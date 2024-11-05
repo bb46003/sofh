@@ -331,7 +331,7 @@ export class  sofhCharacterSheet extends ActorSheet {
 
       content += `
                 <div class="sofh">
-                    <label>
+                    <label class="select-eq">
                         <input type="checkbox" name="equipment${i}" value="${eq}" class="equipment-option">
                         ${eq}
                     </label>
