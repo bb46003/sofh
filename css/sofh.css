@@ -17,14 +17,23 @@
 }
 
 .sofh .main-info {
-    display: grid;
-    grid-template-columns: 140px 150px 140px; /* 3 columns: image, form grid, empty */
+    display: flex;
     border: 10px solid black;
-    align-items: start; /* Align items to the top */
+    column-gap: 25px;
+
+}
+
+.home-flag{
+    width: 100px;
+    border: none;
+    margin-top: 10px;
+    margin-left: 30px;
 }
 
 .sofh .borderless {
     border: 1px solid transparent;
+    height: 200px;
+
 }
 
 .sofh .form-grid {
@@ -870,4 +879,11 @@ h2.move_type.description-label-notrrolabe {
 .dice-roll .dice-total {
     font-family: 'IM Fell English', serif;
     font-size: x-large;
+}
+.roll-results,
+.move-description-chat {
+    font-size: large;
+}
+.list-of-triggers {
+    font-size: larger;
 }

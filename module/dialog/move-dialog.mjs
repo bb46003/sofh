@@ -178,7 +178,7 @@ export class moveRoll extends Dialog {
 
     content = `
           <div class="sofh">
-          <h3 style="font-family: 'IM Fell English SC', serif;">${label}</h3><br>
+          <h3 style="font-family: 'IM Fell English SC', serif;font-size: large;">${label}</h3><br>
           <div class="move-description-chat">${item.system.description}</div><br>
           <h2 class="move_type description-label ">${game.i18n.localize("sofh.chat.rollesult")}</h2>  
           <div class="roll-results">${content}</div><br>
