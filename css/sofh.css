@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IM+Fell+English+SC&family=IM+Fell+English:ital@0;1&family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+.sofh {
+    font-family: 'IM Fell English', serif;
+}
 .sofh .main-sheet {
     display: flex;
     flex-direction: column;
@@ -428,6 +434,8 @@ textarea.house-question{
 }
 .move_type {
     text-align: center;
+    font-family: 'IM Fell English', serif;
+
   }
 
 .description-sheet {
@@ -437,25 +445,31 @@ textarea.house-question{
 }
  .sheet .editor {
     height: auto;
+    font-family: 'IM Fell English', serif;
   }
    .sheet .editor .editor-content {
     height: 100%;
+    font-family: 'IM Fell English', serif;
   }
 
    .description-field .editor {
     height: 100%;
+    font-family: 'IM Fell English', serif;
   }
  .editor .editor-content {
     width: 100%;
     height: 100%;
     min-height: 10rem;
     flex: 1;
+    font-family: 'IM Fell English', serif;
   }
   .editor-container {
     min-height: 350px;
+    font-family: 'IM Fell English', serif;
 }
 .editor.prosemirror {
     border: 1px solid;
+    font-family: 'IM Fell English', serif;
 }
 textarea.question {
     height: 100%;
@@ -607,10 +621,12 @@ select.question-impact {
 h2.h2-roll {
     display: flex;
     justify-content: center;
+    font-family: 'IM Fell English SC', serif;
 }
 .editor-content.roll-resoult-above10, .editor-content.roll-resoult-below7, .editor-content.roll-resoult-7to9  {
     border: 1px solid;
     min-height: 100px;
+    font-family: 'IM Fell English', serif;
 }
 .roll-resoult-text {
     display: flex;
@@ -620,6 +636,7 @@ h2.h2-roll {
 }
 .editor-content.roll-resoult-above10.ProseMirror,.editor-content.roll-resoult-below7.ProseMirror, .editor-content.roll-resoult-7to9.ProseMirror   {
     border: none;
+    font-family: 'IM Fell English', serif;
 }
 .dialog-custom {
     max-width: 600px; /* Set a max width for the dialog */
@@ -791,19 +808,23 @@ select.question-impact:disabled {
      border-top: 1px solid var(--color-underline-header);
      border-bottom: none;
      margin-top: 5px;
+     font-family: 'IM Fell English SC', serif;
 }
 .other-factor-h3{
     border-top: 1px solid var(--color-underline-header);
      border-bottom: none;
      margin-top: 5px;
+     font-family: 'IM Fell English SC', serif;
 
 }
 .h2-roll-first{
     border-bottom: none;
     margin-top: 5px;
+    font-family: 'IM Fell English SC', serif;
 }
 h2.move_type.description-label-notrrolabe {
     font-size: large;
+    font-family: 'IM Fell English SC', serif;
 }
 .tooltip {
     position: absolute;
@@ -813,13 +834,32 @@ h2.move_type.description-label-notrrolabe {
     border-radius: 5px;
     font-size: 12px;
     white-space: nowrap;
-    pointer-events: none; /* Prevent tooltip from interfering with mouse events */
+    pointer-events: none; 
     opacity: 0;
     transition: opacity 0.2s;
     z-index: 1000;
   }
   
-  /* Tooltip visible */
+
   .tooltip.visible {
     opacity: 1;
   }
+
+  .move_type.description-label-notrrolabe,
+  .chat-description,
+  .question.description,
+  .question-isapply,
+  .my-button,
+  .sofh-button{
+    font-family: 'IM Fell English', serif;
+  }
+  button.dialog-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.dice-formula,
+.dice-roll .dice-total {
+    font-family: 'IM Fell English', serif;
+    font-size: x-large;
+}

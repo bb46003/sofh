@@ -1,9 +1,9 @@
 import { moveRoll } from "../dialog/move-dialog.mjs";
 
-export class sofhCharacterSheet extends ActorSheet {
+export class  sofhCharacterSheet extends ActorSheet {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
-      classes: ["sofh", "sheet", "actor", "character"],
+      classes: ["sofh", "sheet", "actor", "character", "dialog-button"],
       template: "systems/SofH/templates/character-sheet.hbs",
       width: 800,
       height: 960,
@@ -58,6 +58,8 @@ export class sofhCharacterSheet extends ActorSheet {
     this._prepareMoves(context);
     return context;
   }
+ 
+
   _prepareMoves(context) {
     const basicMoves = [];
     const houseMoves = [];
@@ -148,7 +150,8 @@ export class sofhCharacterSheet extends ActorSheet {
         buttons: {
           OK: {
             icon: '<i class="fa fa-check"></i>',
-            label: game.i18n.localize("sofh.UI.OK"),
+            label:`<div class ="sofh-button">${game.i18n.localize("sofh.UI.OK")}</div>`
+        
           },
         },
         default: "OK",
@@ -281,17 +284,29 @@ export class sofhCharacterSheet extends ActorSheet {
       buttons: {
         OK: {
           icon: '<i class="fa fa-check"></i>',
-          label: game.i18n.localize("sofh.UI.OK"),
+          label: `<div class="sofh-button">${game.i18n.localize("sofh.UI.OK")}</div>`,
           callback: (html) => {
+            const selectedQuestion = html.find('input[name="housequestion"]:checked');
+            
+            // Check if an option is selected
+            if (selectedQuestion.length === 0) {
+              ui.notifications.warn(game.i18n.localize("sofh.ui.notSelectedHouseQuestion"));
+              this.assignHouseQuestions(house,changeHouse)
+              
+                    }
+            else{
             this.handleHouseQuestionSelection(html);
             if (changeHouse) {
               this.spefificHousEq(house);
             }
+          }
+           
           },
         },
       },
       default: "OK",
     }).render(true);
+    
   }
 
   async handleHouseQuestionSelection(html) {
@@ -308,14 +323,14 @@ export class sofhCharacterSheet extends ActorSheet {
     const houseEq = CONFIG.SOFHCONFIG.houseeq[house];
     const actor = this.actor;
     const header = game.i18n.localize("sofh.ui.eqquestion");
-    let content = `<h2>${header}</h2><form id="equipmentForm">`;
+    let content = `<h2 style="font-family: 'IM Fell English SC', serif;">${header}</h2><form id="equipmentForm">`;
     let i = 0;
     Object.keys(houseEq).forEach((key) => {
       const value = houseEq[key];
       const eq = game.i18n.localize(value);
 
       content += `
-                <div>
+                <div class="sofh">
                     <label>
                         <input type="checkbox" name="equipment${i}" value="${eq}" class="equipment-option">
                         ${eq}
@@ -332,7 +347,7 @@ export class sofhCharacterSheet extends ActorSheet {
       content: content,
       buttons: {
         submit: {
-          label: game.i18n.localize("sofh.ui.submit"),
+          label: `<div class ="sofh-button">${game.i18n.localize("sofh.ui.submit")}</div>`,
           callback: async (html) => {
             const selectedOptions = html.find('input[type="checkbox"]:checked');
             const selectedValues = [];
@@ -357,9 +372,11 @@ export class sofhCharacterSheet extends ActorSheet {
               game.i18n.localize("sofh.ui.dialog.addeqconfirmation"),
             );
           },
+          class: "my-button",
         },
         cancel: {
-          label: game.i18n.localize("sofh.ui.cancel"),
+          label: `<div class ="sofh-button">${game.i18n.localize("sofh.ui.cancel")}</div>`,
+          class: "my-button",
         },
       },
       default: "submit",
@@ -529,25 +546,26 @@ export class sofhCharacterSheet extends ActorSheet {
       const moveToChat = `<div class="description-sheet"> 
            <h2 class="move_type description-label-notrrolabe">${game.i18n.localize("sofh.ui.chat.use_move")}<br>
            ${item.name}</h2>       
-            ${item.system.description}
+            <div class="chat-description">${item.system.description}</div>
         </div>`;
       const d = new Dialog({
         title: title,
         content: content,
         buttons: {
           close: {
-            label: game.i18n.localize("sofh.ui.close"),
+            label: `<div class ="sofh-button">${game.i18n.localize("sofh.ui.close")}</div>`,
             callback: () => {},
+            class: "my-button",
           },
           sendToChat: {
-            label: game.i18n.localize("sofh.ui.send_to_chat"),
+            label: `<div class ="sofh-button">${game.i18n.localize("sofh.ui.send_to_chat")}</div>`,
             callback: () => {
               ChatMessage.create({
                 user: game.user.id,
                 speaker: ChatMessage.getSpeaker({ actor }),
                 content: moveToChat,
               });
-            },
+            }
           },
         },
         default: "close",
@@ -571,11 +589,11 @@ export class sofhCharacterSheet extends ActorSheet {
     const updateData = {};
     const currentTS = actor.system.reputation.timeToShine;
     const house = actor.system.home.toLowerCase();
-    const content = `<h2>${game.i18n.localize("sofh.ui.actor.timeToShine")}</h2>
-        <p>${game.i18n.localize(`sofh.ui.actor.${house}TimeToShine`)}</p>
+    const content = `<div class="sofh"><h2 style="font-family: 'IM Fell English', serif;">${game.i18n.localize("sofh.ui.actor.timeToShine")}</h2>
+        <p>${game.i18n.localize(`sofh.ui.actor.${house}TimeToShine`)}</p></div>
         `;
     const title = game.i18n.localize("sofh.ui.actor.timeToShine");
-    const moveToChat = `<div class="description-sheet"> 
+    const moveToChat = `<div class="sofh description-sheet"> 
            <h2 class="move_type description-label-notrrolabe">${game.i18n.localize("sofh.ui.chat.use_move")}<br>
            ${game.i18n.localize("sofh.ui.actor.timeToShine")}</h2>       
             ${game.i18n.localize(`sofh.ui.actor.${house}TimeToShine`)}
@@ -585,11 +603,11 @@ export class sofhCharacterSheet extends ActorSheet {
       content: content,
       buttons: {
         close: {
-          label: game.i18n.localize("sofh.ui.close"),
-          callback: () => {},
+          label: `<div class ="sofh-button">${game.i18n.localize("sofh.ui.close")}</div>`,
+          callback: () => {}
         },
         sendToChat: {
-          label: game.i18n.localize("sofh.ui.send_to_chat"),
+          label:`<div class ="sofh-button">${game.i18n.localize("sofh.ui.send_to_chat")}</div>`,
           callback: () => {
             ChatMessage.create({
               user: game.user.id,
@@ -598,7 +616,7 @@ export class sofhCharacterSheet extends ActorSheet {
             });
             updateData["system.reputation.timeToShine"] = currentTS - 1;
             actor.update(updateData);
-          },
+          }
         },
       },
       default: "close",
