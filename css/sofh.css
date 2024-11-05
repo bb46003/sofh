@@ -38,12 +38,12 @@
 
 .sofh .form-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1.5fr;
     row-gap: 5px;
     column-gap: 0px;
     padding: 5px;
     align-items: center;
-    width: 330px;
+    width: 350px;
     justify-items: stretch;
 }
 
@@ -886,4 +886,8 @@ h2.move_type.description-label-notrrolabe {
 }
 .list-of-triggers {
     font-size: larger;
+}
+.select-eq{
+    display: flex;
+    align-items: center;
 }
