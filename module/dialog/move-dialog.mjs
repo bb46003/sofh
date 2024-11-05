@@ -177,10 +177,12 @@ export class moveRoll extends Dialog {
     }
 
     content = `
-          <h3>${label}</h3><br>
+          <div class="sofh">
+          <h3 style="font-family: 'IM Fell English SC', serif;font-size: large;">${label}</h3><br>
           <div class="move-description-chat">${item.system.description}</div><br>
           <h2 class="move_type description-label ">${game.i18n.localize("sofh.chat.rollesult")}</h2>  
           <div class="roll-results">${content}</div><br>
+          </div>
       `;
 
     rollResult.toMessage({
@@ -205,13 +207,14 @@ export class moveRoll extends Dialog {
         buttons: {
           OK: {
             icon: '<i class="fa fa-check"></i>',
-            label: game.i18n.localize("sofh.UI.Roll"),
+            label:`<div class="sofh-button">${game.i18n.localize("sofh.UI.Roll")}</div>`,
             callback: async () => {
               await this.defnieRollingFormula(actor, item);
             },
-          },
+          }
+       
         },
-        default: game.i18n.localize("sofh.UI.Roll"),
+        default: `<div class="sofh-button">${game.i18n.localize("sofh.UI.Roll")}</div>`,
       }).render(true);
     } else {
       ui.notifications.warn(

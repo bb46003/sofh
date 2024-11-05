@@ -108,6 +108,7 @@ Handlebars.registerHelper("selectRelevantRelation", function (thisCharacter) {
   return characterWithRelationtoMe;
 });
 Handlebars.registerHelper("injectHtml", function (htmlContent) {
-  // Use SafeString to render raw HTML without escaping
-  return new Handlebars.SafeString(htmlContent);
+  // Wrap content in a styled div with IM Fell English as the font
+  const styledContent = `<div style="font-family: 'IM Fell English', serif;">${htmlContent}</div>`;
+  return new Handlebars.SafeString(styledContent);
 });
