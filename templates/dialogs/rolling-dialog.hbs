@@ -30,6 +30,16 @@
     {{/each}}
     {{/if}}
     </div>
+    {{#if item.system.relationrelated}}
+    <h2 class="h2-roll">{{localize 'sofh.ui.rolldialog.relevantRelationTitle'}}</h2>
+    <div class="relation-roll">
+        <select class="relation-chosen">
+            <option value="">{{localize 'sofh.ui.rolldialog.noneOption'}}</option>
+            {{selectOptions (selectRelevantRelation actor)  localize=false}}
+            
+        </select>
+    </div>
+    {{/if}}
     <h3 class="other-factor-h3">{{localize "sofh.ui.dialog.other_factor"}}</h3>
     <div class="other-factor" style="display: none">
         <div class="condition-impact">
@@ -58,16 +68,7 @@
 
 
 <div class="item">
-    {{#if item.system.relationrelated}}
-    <h2 class="h2-roll">{{localize 'sofh.ui.rolldialog.relevantRelationTitle'}}</h2>
-    <div class="relation-roll">
-        <select class="relation-chosen">
-            <option value="">{{localize 'sofh.ui.rolldialog.noneOption'}}</option>
-            {{selectOptions (selectRelevantRelation actor)  localize=false}}
-            
-        </select>
-    </div>
-    {{/if}}
+    
 
     {{#if item.system.stringsrelated}}
     <h2 class="h2-roll">{{localize 'sofh.ui.rolldialog.relevantStringsTitle'}}</h2>
@@ -78,7 +79,13 @@
         </select>
     </div>
     {{/if}}
+    {{#if item.system.culerelated}}
+    <h2 class="h2-roll">{{localize 'sofh.ui.rolldialog.relatedClue'}}</h2>
+    <div class="known-clue">
+    {{showAllKnownClue}}
+    </div>
 
+    {{/if}}
     <h2 class="h2-roll">{{localize 'sofh.ui.rolldialog.otherModsTitle'}}</h2>
     <div class="others-mods">
         

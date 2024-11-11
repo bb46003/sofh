@@ -521,10 +521,7 @@ export class  sofhCharacterSheet extends ActorSheet {
   async collapsAllMoves(event) {
     const target = event.target.classList.value;
     if (target === "moves active") {
-      // Select all elements with .all-moves class, excluding those with .basicMoves
       const movesElements = $(".all-moves").not(".basicMoves");
-
-      // Collapse only the selected elements
       movesElements.css("display", "none");
     }
   }
@@ -624,3 +621,4 @@ export class  sofhCharacterSheet extends ActorSheet {
     d.render(true, { height: 800, width: 450 });
   }
 }
+

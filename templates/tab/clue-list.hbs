@@ -1,0 +1,27 @@
+ <div class="clue-list">
+ <table class="sofh character-table" border="1" cellpadding="5" cellspacing="0">
+          <thead classs="clue-table">
+            <tr>
+              
+              <th >
+                <div class="clue-label">
+                  {{localize "sofh.ui.actor.clue"}}<button class="add-clue" data-tooltip="{{localize "sofh.ui.add_clue"}}"><i class="fa fa-plus clue"></i></button>
+                </div>
+              </th>
+               {{#addCharacters actor}}{{/addCharacters}}            
+            </tr>
+          
+          </thead>
+            {{#each system.clue as |clue index|}}
+            <tr>
+              <th>
+                <div class="clue-description">
+                <textarea class="clue-description-text" name="system.clue.{{@index}}.description" value="system.clue.{{@index}}.description">{{clue.description}}</textarea>               
+                <button class="remove-clue" id="{{@index}}" data-tooltip="{{localize "sofh.ui.remove_clue"}}"><i class="fa fa-minus clue" id="{{@index}}"></i></button>
+               </div>
+              </th>
+              {{addCharactersKnownsClue @index ../actor}}
+            </tr>
+            {{/each}}
+    <table>
+    </div>

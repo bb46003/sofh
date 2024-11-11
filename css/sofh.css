@@ -863,3 +863,89 @@ h2.move_type.description-label-notrrolabe {
     font-family: 'IM Fell English', serif;
     font-size: x-large;
 }
+button.add-clue {
+    border: none;
+    background: #a7a68d;
+    width: 2rem;
+  
+    display: grid;
+    justify-content: center;
+    margin-left: 20px;
+
+
+}
+.clue-label {
+    display: flex;
+    justify-content: center;
+}
+th.actor-known-clue {
+    width: 6rem;
+}
+.clue-description {
+    display: flex;
+    align-items: center;
+}
+button.remove-clue {
+    width: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+textarea.clue-description-text{
+    resize: none;
+    min-width: 20rem;
+
+}
+.complexity,.single-clue  {
+    
+    display: flex;
+    justify-content: space-between;
+}
+input[type="number"] {
+   
+    max-width: 2rem;
+}
+.party-list-header {
+    font-size: 1.25em;
+    border-bottom: 1px solid var(--color-underline-header);
+    display: flex;
+    margin-bottom: 10px;
+}
+h3.party-list {
+    border: none;
+}
+button.add-character {
+    margin-bottom: 5px;
+    width: 30px;
+    margin-left: auto;
+}
+.single-party-member {
+    font-size: xxx-large;
+    margin-left: auto;
+}
+.remove-single-party-member {
+    margin-left: auto;
+}
+.party-member {
+    display: flex;
+    align-items: center;
+    border-bottom: solid 1px blue;
+}
+
+a.party-list,
+a.cule-list{
+    font-size: x-large;
+}
+
+nav.sheet-tabs.tabs.clue {
+    margin-bottom: 20px;
+}
+.cule-actor-name {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+.party-memeber-add {
+    display: flex;
+    justify-content: space-between;
+}
