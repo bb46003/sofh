@@ -2,7 +2,7 @@
   <section class="main-sheet">
     <section class="title-section">
       <div class="main-info">
-        <img class="borderless" src="{{actor.img}}" data-edit="img" height="140" width="140">
+        <img class="borderless" src="{{actor.img}}" data-edit="img">
         <div class="form-grid">
           <div class="stat-grid">
             <label for="name">{{localize "sofh.ui.actor.name"}}</label>
@@ -24,10 +24,22 @@
             <textarea class="house-question" name="system.housequestion" type="text" value="{{system.housequestion}}" disabled>{{system.housequestion}}</textarea>
 
           </div>
-        </div>
+        
         <div class="empty-column">
-
+           {{#if (eq system.home (lowercase (localize "sofh.ui.actor.gryffindor")))}}
+              <img class="home-flag" src="systems/sofh/img/gryfbanner.png">  
+            {{/if}}
+            {{#if (eq system.home (lowercase (localize "sofh.ui.actor.hufflepuff")))}}
+              <img class="home-flag" src="systems/sofh/img/huffbanner.png">
+            {{/if}}
+            {{#if (eq system.home (lowercase (localize "sofh.ui.actor.ravenclaw")))}}
+              <img class="home-flag" src="systems/sofh/img/ravebanner.png">  
+            {{/if}}
+            {{#if (eq system.home (lowercase (localize "sofh.ui.actor.slytherin")))}}
+              <img class="home-flag" src="systems/sofh/img/slybanner.png">   
+            {{/if}}        
         </div> 
+        </div>
       </div>
     </section>
 

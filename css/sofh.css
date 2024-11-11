@@ -17,25 +17,34 @@
 }
 
 .sofh .main-info {
-    display: grid;
-    grid-template-columns: 140px 150px 140px; /* 3 columns: image, form grid, empty */
+    display: flex;
     border: 10px solid black;
-    align-items: start; /* Align items to the top */
+    column-gap: 25px;
+
+}
+
+.home-flag{
+    width: 100px;
+    border: none;
+    margin-top: 10px;
+    margin-left: 30px;
 }
 
 .sofh .borderless {
     border: 1px solid transparent;
+    height: 200px;
+
 }
 
 .sofh .form-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1.5fr;
     row-gap: 5px;
     column-gap: 0px;
     padding: 5px;
-    align-items: end;
-    width: 300px;
-
+    align-items: center;
+    width: 350px;
+    justify-items: stretch;
 }
 
 .sofh .stat-grid {
@@ -58,6 +67,7 @@
     border-radius: 4px;
     background: transparent;
     resize: none;
+    font-family: 'IM Fell English', serif;
 }
 .sofh .stat-grid .checkboxes {
     width: 100%; /* Make the inputs full width within their grid area */
@@ -87,6 +97,7 @@
      height: 1px;
      background: rgba(0, 0, 0, 0.05);
      resize: none;
+     font-family: 'IM Fell English', serif;
 }
 .sofh .characteristic-sheet{
     display: grid;
@@ -379,6 +390,7 @@ input.relation-name {
     align-items: center;
     column-gap: 5px;
     row-gap: 10px;
+    font-family: 'IM Fell English', serif;
 }
 
 .strings-inputs input.strings {
@@ -398,9 +410,11 @@ textarea.strings {
     min-height: 30px;
     max-height: 30px;
     resize: none;
+    font-family: 'IM Fell English', serif;
 }
 textarea.house-question{
     resize: none;
+    font-family: 'IM Fell English', serif;
 }
 .moves-top-grid {
     display: grid;
@@ -415,6 +429,7 @@ textarea.house-question{
 }
 .moves-question-labels {
     display: grid;
+    align-items: flex-end;
 }
 
 .moves-top-grid img {
@@ -473,6 +488,7 @@ textarea.house-question{
 }
 textarea.question {
     height: 100%;
+    font-family: 'IM Fell English', serif;
 }
 .question-sheet {
     display: grid;
@@ -850,7 +866,8 @@ h2.move_type.description-label-notrrolabe {
   .question.description,
   .question-isapply,
   .my-button,
-  .sofh-button{
+  .sofh-button,
+  textarea.relatedmoves {
     font-family: 'IM Fell English', serif;
   }
   button.dialog-button {
