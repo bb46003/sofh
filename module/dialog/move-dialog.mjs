@@ -13,8 +13,27 @@ export class moveRoll extends Dialog {
     const movesElement = $(".other-factor");
     if (movesElement.css("display") === "none") {
       movesElement.css("display", "");
+      $(".window-app").each(function () {
+        const windowTitle = $(this).find(".window-title").text().trim();
+        if (windowTitle === game.i18n.localize("sofh.ui.rolling")) {
+          // Move the window up by 200px
+          $(this).css("top", (index, currentTop) => {
+            return `${parseInt(currentTop, 10) - 200}px`;
+          });
+        }
+      });
     } else {
       movesElement.css("display", "none");
+      $(".window-app").each(function () {
+        const windowTitle = $(this).find(".window-title").text().trim();
+        if (windowTitle === game.i18n.localize("sofh.ui.rolling")) {
+          // Move the window up by 200px
+          $(this).css("top", (index, currentTop) => {
+            return `${parseInt(currentTop, 10) + 200}px`;
+          });
+        }
+      });
+
     }
 
     const h3Element = event.currentTarget;
@@ -106,6 +125,15 @@ export class moveRoll extends Dialog {
         dicenumber = dicenumber + 1;
       }
     }
+    const knownClue = document.querySelectorAll(".circle-checkbox-isapply-clue");
+    knownClue.forEach((knowClue)=>{
+      const isApply = knowClue.checked;
+      if(isApply){
+        rollmod = rollmod + 1;
+      }
+    })
+    const complexityValue =  document.querySelector(".complexity-numer").value;
+    rollmod = rollmod - Number(complexityValue)
 
     const numericInput = document.querySelector(".numeric-mod");
     selections.numericModifier = numericInput ? numericInput.value : null;

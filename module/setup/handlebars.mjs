@@ -1,3 +1,5 @@
+
+
 export function registerHandlebarsHelpers() {
   Handlebars.registerHelper({
     eq: (v1, v2) => v1 === v2,
@@ -112,3 +114,78 @@ Handlebars.registerHelper("injectHtml", function (htmlContent) {
   const styledContent = `<div style="font-family: 'IM Fell English', serif;">${htmlContent}</div>`;
   return new Handlebars.SafeString(styledContent);
 });
+
+Handlebars.registerHelper("addCharacters",function(actor){
+
+  const characters = actor.system.actorID;
+  let html=``;
+  Object.keys(characters).forEach((actorId) => {
+
+    const name = characters[actorId].name;
+    html += `<th class="actor-known-clue">${name}</th>`;
+  });
+  
+
+return html
+
+})
+
+Handlebars.registerHelper("addCharactersKnownsClue", function (index, actor) {
+  if (!actor || !actor.system || !actor.system.actorID) {
+    return ''; // Return an empty string if data is missing
+  }
+
+  const characters = actor.system.actorID;
+  let html = ``;
+
+  // Iterate over each actor ID and create the input HTML
+  Object.keys(characters).forEach((actorId) => {
+    const name = characters[actorId].name;
+    const isChecked = characters[actorId][`have${index}`] ? 'checked' : '';
+    
+    html += `<th class="actor-known-clue"><input type="checkbox" class="circle-checkbox-condition" name="system.actorID.${actorId}.have${index}" ${isChecked} /></th>`;
+  });
+
+  // Return the generated HTML as a SafeString
+  return new Handlebars.SafeString(html);
+});
+
+Handlebars.registerHelper("showAllKnownClue", function () {
+  const actor = this.actor;
+  const actorId = actor._id;
+  const allActors = game.actors;
+  let html = "";
+  const clueactors = Array.from(allActors.entries()).filter(
+    ([key, actor]) => actor.type === "clue",
+  ); 
+  const clueSheet = clueactors[0][1];
+  const clueDescription = clueSheet.system.clue;
+  const actorClue = clueSheet.system.actorID[actorId];
+  Object.keys(actorClue).forEach(key => {
+  if (key.startsWith('have') && actorClue[key] === true) {
+    const index = key.slice(4); 
+    if (clueDescription.hasOwnProperty(index)) {
+      html += ` 
+        <div class="single-clue">
+          <label class="known-clue-label">${clueDescription[index].description}</label>
+          <input type="checkbox" class="circle-checkbox-isapply-clue">
+        </div>`
+    }
+  }
+});
+if (html !== ""){
+  html += `
+    <div class="complexity">
+      <label class="complexity-label">${game.i18n.localize("sofh.ui.complexity_value")}</label>
+      <input type="number" class="complexity-numer"></input>
+    </div>
+  `
+
+}
+return new Handlebars.SafeString(html);
+ 
+})
+
+Handlebars.registerHelper("extractAcrotID", function(ID){
+  console.log(ID)
+})

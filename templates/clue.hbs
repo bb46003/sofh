@@ -1,0 +1,23 @@
+<form class="{{cssClass}}" autocomplete="off">
+  <div class="cule-actor-name">
+    <label for="name">{{localize "sofh.ui.clue.name"}}</label>
+    <input id="name" name="name" type="text" value="{{actor.name}}">
+
+  </div>
+  <nav class="sheet-tabs tabs clue" data-group="primary">
+      <a class="party-list" data-tab="party-list">{{localize "sofh.ui.cule.party_list"}}</a>
+      <a class="cule-list" data-tab="cule-list">{{localize "sofh.ui.cule.clue_table"}}</a>
+ 
+    </nav>
+   <section class="sheet-body">
+        {{!-- Characteristic Tab --}}
+         <div class="tab characteristic flexcol" data-group="primary" data-tab="party-list">
+            {{> "systems/SofH/templates/tab/party-list.hbs"}}
+        </div>
+        
+        {{!-- Relation Tab --}}
+        <div class="tab relations flexcol" data-group="primary" data-tab="cule-list">
+            {{> "systems/SofH/templates/tab/clue-list.hbs"}}
+        </div>
+        </section>
+</form>

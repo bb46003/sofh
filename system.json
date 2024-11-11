@@ -1,8 +1,8 @@
 {
     "id": "SofH",
     "title": "Secrets of Hogwarts",
-    "description": "Stół do playtestów gry Secrets of Hogwarts na silniku PBTA ",
-    "version": "0.1.6",
+    "description": "Stół do playtestów gtry Secrets of Hogwarts na silniku PBTA ",
+    "version": "0.1.7",
     "compatibility": {
       "minimum": "12",
       "verified": "12"
@@ -29,6 +29,21 @@
           "path": "lang/en.json"
         }
       ],
+      "packs": [
+    {
+      "name": "moves",
+      "label": "Bsic Moves",
+      "path": "packs/moves",
+      "type": "Item",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      },
+      "system": "sofh",
+      "flags": {}
+    }
+  ],
+
       
       "socket": true,
       "manifest":"https://raw.githubusercontent.com/bb46003/sofh/refs/heads/main/system.json",

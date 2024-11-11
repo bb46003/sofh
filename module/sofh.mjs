@@ -5,6 +5,8 @@ import { preloadHandlebarsTemplates } from "./setup/templates.mjs";
 import { HomeScore } from "./app/home_score.mjs";
 import { moveRoll } from "./dialog/move-dialog.mjs";
 import { characterRelation } from "./config.mjs";
+import {sofhActor} from "./actor/actors.mjs";
+
 
 export default function registerSettings() {
   // -------------------
@@ -87,9 +89,11 @@ Hooks.once("init", async function () {
   registerSheets();
   registerHandlebarsHelpers();
   registerSettings();
-
+  
+  CONFIG.Actor.documentClass = sofhActor;
   CONFIG.SOFHCONFIG = SOFHCONFIG;
   game.sofh = { HomeScore, moveRoll };
+
 
   return preloadHandlebarsTemplates();
 });
@@ -133,12 +137,31 @@ Hooks.once("ready", async function () {
     });
   }
   characterRelation();
+  // Check if an actor of type "clue" exists, if not, create a new one
+  const allActors = game.actors;
+  const isClueExist = Array.from(allActors.entries()).some(
+    ([key, actor]) => actor.type === "clue"
+  );
+
+  if (!isClueExist) {
+    const newActorData = {
+      name: game.i18n.localize("sofh.cule"),
+      type: "clue",
+      ownership: {default: 3}
+    };
+
+    await Actor.create(newActorData);
+    console.log("Created new clue actor: ", newActorData.name);
+  }
+
   CONFIG.SOFHCONFIG = SOFHCONFIG;
+  
 });
 
 Hooks.on("createActor", async function (actor) {
   if (actor.type === "character") {
     characterRelation();
+
     CONFIG.SOFHCONFIG = SOFHCONFIG;
     const characters = game.actors.filter((a) => a.type === "character");
 
@@ -147,6 +170,7 @@ Hooks.on("createActor", async function (actor) {
         await character.sheet.render(true);
       }
     });
+
   }
 });
 
@@ -165,4 +189,26 @@ Hooks.on("actorNameChanged", () => {
       await character.sheet.render(true);
     }
   });
+ 
+
 });
+Hooks.on("deleteActor", async function (actor) {
+  if (actor.type === "character") {
+    characterRelation();
+    
+    CONFIG.SOFHCONFIG = SOFHCONFIG;
+    const characters = game.actors.filter((a) => a.type === "character");
+
+    characters.forEach(async (character) => {
+      if (character.sheet.rendered) {
+        await character.sheet.render(true);
+      }
+    })
+
+  }
+
+  
+});
+
+
+

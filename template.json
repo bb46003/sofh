@@ -1,6 +1,6 @@
 {
   "Actor": {
-    "types": ["character", "npc"],
+    "types": ["character", "npc","clue"],
       "character":{
         "bloodType":0,
         "favoriteTopic":"",
@@ -95,7 +95,9 @@
             "description":""
           }
         ]    
-      }
+      },
+      "clue":{}
+
   },    
   "Item": {
     "types": [
@@ -115,7 +117,8 @@
           "havequestion":false,
           "realtedtoothermoves":false,
           "isrolled":false,
-          "stringsrelated":false
+          "stringsrelated":false,
+          "culerelated":false
         }
       },
       "basicMoves":{
