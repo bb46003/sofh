@@ -224,12 +224,14 @@
     "sofh.ui.remove_clue":"Remove clue",
     "sofh.ui.cule.clue_table":"Clues and who knows about them",
     "sofh.ui.cule.party_list": "Group members",
-    "sofh.ui.clue.name": "group name",
+    "sofh.ui.clue.name": "Mystery title",
     "sofh.ui.clue.add_member": "Add group member",
     "sofh.move.isRelatedToClue":"Move is related to clue?",
-     "sofh.ui.clue.add-party-member":"Add group member",
-     "sofh.ui.complexity_value":"Question Complexity (ask the MC)",
-     "sofh.ui.rolldialog.relatedClue":"Known Clues"
+    "sofh.ui.clue.add-party-member":"Add group member",
+    "sofh.ui.complexity_value":"Question Complexity (ask the MC)",
+    "sofh.ui.rolldialog.relatedClue":"Known Clues",
+    "sofh.ui.war.you_are_not_owner": "You are not an owner of this character",
+    "sofh.ui.lack_of_move":"do not have move related to clues"
 
 
 

@@ -1,13 +1,5 @@
-2024/11/12-09:18:15.392 3480 Recovering log #6
-2024/11/12-09:18:15.394 3480 Delete type=0 #6
-2024/11/12-09:18:15.394 3480 Delete type=3 #4
-2024/11/12-09:19:13.261 65bc Level-0 table #10: started
-2024/11/12-09:19:13.261 65bc Level-0 table #10: 0 bytes OK
-2024/11/12-09:19:13.262 65bc Delete type=0 #8
-2024/11/12-09:19:13.265 65bc Manual compaction at level-0 from '!folders!rpsZkYAwjLDJYoVm' @ 72057594037927935 : 1 .. '!items!y5o2FNl5olGkf8KL' @ 0 : 0; will stop at '!items!y5o2FNl5olGkf8KL' @ 15 : 1
-2024/11/12-09:19:13.265 65bc Compacting 1@0 + 0@1 files
-2024/11/12-09:19:13.267 65bc Generated table #11@0: 15 keys, 16124 bytes
-2024/11/12-09:19:13.267 65bc Compacted 1@0 + 0@1 files => 16124 bytes
-2024/11/12-09:19:13.268 65bc compacted to: files[ 0 1 0 0 0 0 0 ]
-2024/11/12-09:19:13.268 65bc Delete type=2 #5
-2024/11/12-09:19:13.279 65bc Manual compaction at level-0 from '!items!y5o2FNl5olGkf8KL' @ 15 : 1 .. '!items!y5o2FNl5olGkf8KL' @ 0 : 0; will stop at (end)
+2024/11/12-11:06:07.195 21f8 Log #13: 0 ops saved to Table #14 OK
+2024/11/12-11:06:07.195 21f8 Archiving C:\Users\bb46003\AppData\Local\FoundryVTT\Data\systems\SofH\packs\moves/000013.log: OK
+2024/11/12-11:06:07.195 21f8 Table #11: 15 entries OK
+2024/11/12-11:06:07.197 21f8 Archiving C:\Users\bb46003\AppData\Local\FoundryVTT\Data\systems\SofH\packs\moves/MANIFEST-000012: OK
+2024/11/12-11:06:07.200 21f8 **** Repaired leveldb C:\Users\bb46003\AppData\Local\FoundryVTT\Data\systems\SofH\packs\moves; recovered 1 files; 16124 bytes. Some data may have been lost. ****

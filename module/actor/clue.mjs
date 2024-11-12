@@ -1,3 +1,5 @@
+import { moveRoll } from "../dialog/move-dialog.mjs";
+
 export class SofhClue extends ActorSheet {
 
   static get defaultOptions() {
@@ -31,6 +33,7 @@ export class SofhClue extends ActorSheet {
     super.activateListeners(html);
     html.on("click", ".add-clue", this.addClue.bind(this));
     html.on("click",".remove-clue", this.removeClue.bind(this))
+    html.on("click",".theorize-move-roll", this.rollForTheorize.bind(this))
   
 
 
@@ -169,7 +172,6 @@ async addPartyMember(event) {
   const actors = game.actors.filter(actor => actor.type === "character");
   const currentMember = this.actor.system.actorID;
   const filteredActors = actors.filter(actor => !Object.keys(currentMember).includes(actor.id));
-  console.log(filteredActors)
   const html = await renderTemplate("systems/SofH/templates/dialogs/add-patry-member.hbs", { actors: filteredActors});
   
   new Dialog({
@@ -187,8 +189,8 @@ async addPartyMember(event) {
   }).render(true, {width:200});
   
 }
-async addMembets(html){
-  event.preventDefault();
+async addMembets(event){
+ 
   const containers = document.querySelectorAll('.party-memeber-add');
    
     const clue = this.actor;
@@ -226,6 +228,21 @@ async addMembets(html){
     await clue.render(true)
   }
   
-    
+  async rollForTheorize(event){
+    event.preventDefault();
+    const user = game.user._id;
+    const actor = game.actors.get(event.target.offsetParent.id)
+    const ownership = actor.ownership
+    const hasAccess = ownership[user] === 3;
+
+    if(hasAccess){
+    const item = actor.items.filter(move => move.id === event.target.id)[0];  
+    const dialogInstance = new moveRoll(actor, item);
+    dialogInstance.rollForMove(actor, item);
+    }
+    else{
+      ui.notifications.warn(game.i18n.localize("sofh.ui.war.you_are_not_owner"))
+    }
+  }
 
 }

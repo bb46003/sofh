@@ -132,8 +132,10 @@ export class moveRoll extends Dialog {
         rollmod = rollmod + 1;
       }
     })
-    const complexityValue =  document.querySelector(".complexity-numer").value;
+    const complexityValue =  document.querySelector(".complexity-numer")?.value;
+    if (complexityValue !== undefined){
     rollmod = rollmod - Number(complexityValue)
+    }
 
     const numericInput = document.querySelector(".numeric-mod");
     selections.numericModifier = numericInput ? numericInput.value : null;
@@ -172,9 +174,11 @@ export class moveRoll extends Dialog {
       }
     }
     await this.rolling(actor, item, formula);
+    if(stringsSelect !== null){
     if (stringsSelect.value !== "") {
       this.removeStrinAfterRoll(stringsSelect.value);
     }
+  }
   }
 
   async removeStrinAfterRoll(stringName) {
@@ -245,10 +249,8 @@ export class moveRoll extends Dialog {
         default: `<div class="sofh-button">${game.i18n.localize("sofh.UI.Roll")}</div>`,
       }).render(true);
     } else {
-      ui.notifications.warn(
-        game.i18n.localize(
-          game.i18n.localization("sofh.ui.warrning.cannotactduetoconditions"),
-        ),
+      ui.notifications.warn(game.i18n.localization("sofh.ui.warrning.cannotactduetoconditions")
+        
       );
     }
   }
