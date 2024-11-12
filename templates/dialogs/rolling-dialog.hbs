@@ -40,6 +40,13 @@
         </select>
     </div>
     {{/if}}
+    {{#if item.system.culerelated}}
+    <h2 class="h2-roll">{{localize 'sofh.ui.rolldialog.relatedClue'}}</h2>
+    <div class="known-clue">
+    {{showAllKnownClue}}
+    </div>
+
+    {{/if}}
     <h3 class="other-factor-h3">{{localize "sofh.ui.dialog.other_factor"}}</h3>
     <div class="other-factor" style="display: none">
         <div class="condition-impact">
@@ -79,13 +86,7 @@
         </select>
     </div>
     {{/if}}
-    {{#if item.system.culerelated}}
-    <h2 class="h2-roll">{{localize 'sofh.ui.rolldialog.relatedClue'}}</h2>
-    <div class="known-clue">
-    {{showAllKnownClue}}
-    </div>
-
-    {{/if}}
+    
     <h2 class="h2-roll">{{localize 'sofh.ui.rolldialog.otherModsTitle'}}</h2>
     <div class="others-mods">
         

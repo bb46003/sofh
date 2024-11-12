@@ -35,6 +35,10 @@
     height: 200px;
 
 }
+.borderless-partymember{
+    border: none;
+
+}
 
 .sofh .form-grid {
     display: grid;

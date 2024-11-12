@@ -215,16 +215,20 @@
     "sofh.ui.actor.ravenclawTimeToShine":"You finally reveal the true extent of your genius—a spell, invention, or piece of knowledge that gives you exactly what you need to save the day. You take control, defeating even impossible odds with your wit and skill. Everyone sees exactly what you're capable of, and even your enemies are impressed.",
     "sofh.ui.actor.slytherinTimeToShine":"This is the moment when all your plans come to fruition—or everything falls apart and you're forced to act with all the desperation and willpower you have. Are you calm and in control or raw and laid bare for all to see? Either way, the situation bends to your will, exactly how you want it.",
     "sofh.ui.notSelectedHouseQuestion":"Please select one House question",
-    "sofh.ui.actor.clue":"Mistery cule description",
+    "sofh.ui.actor.clue":"Clue description",
     "sofh.ui.add_clue":"Add new mistery clue",
     "sofh.ui.warning.cule_sheet_exist":"Only one cule sheet can exist",
     "sofh.cule":"Clue",
     "sofh.ui.remove_clue":"Remove clue",
-    "sofh.ui.cule.clue_table":"Table with clues and who knows them",
+    "sofh.ui.cule.clue_table":"Clues and who knows about them",
     "sofh.ui.cule.party_list": "Group members",
-    "sofh.ui.clue.name": "Grup name",
+    "sofh.ui.clue.name": "group name",
+    "sofh.ui.clue.add_member": "Add group member",
     "sofh.move.isRelatedToClue":"Move is related to clue?",
-    "sofh.ui.clue.add-party-member":"Add group member"
+     "sofh.ui.clue.add-party-member":"Add group member",
+     "sofh.ui.complexity_value":"Question Complexity (ask the MC)",
+     "sofh.ui.rolldialog.relatedClue":"Known Clues"
+
 
 
 
