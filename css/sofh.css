@@ -915,6 +915,7 @@ button.remove-clue {
 textarea.clue-description-text{
     resize: none;
     min-width: 20rem;
+    font-family: 'IM Fell English', serif;
 
 }
 .complexity,.single-clue  {
@@ -941,7 +942,7 @@ button.add-character {
     margin-left: auto;
 }
 .single-party-member {
-    font-size: xxx-large;
+    font-size: xx-large;
     margin-left: auto;
 }
 .remove-single-party-member {
@@ -969,4 +970,23 @@ nav.sheet-tabs.tabs.clue {
 .party-memeber-add {
     display: flex;
     justify-content: space-between;
+}
+button.theorize-move-roll {
+
+    width: fit-content;
+    background-color: #c7c2b5;
+    border-color: black;
+    font-family: 'IM Fell English', serif;
+}
+.actor-clue-headr {
+    display: grid;
+    flex-direction: column;
+    min-height: 90px;
+}
+.cule-move-button,
+.clue-header-name {
+    margin-top: auto;
+}
+h3.clue-line {
+    border-bottom: 1px solid var(--color-text-light-highlight);
 }
