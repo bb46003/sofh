@@ -53,13 +53,16 @@ export class  sofhCharacterSheet extends ActorSheet {
         return html;
       }
     }
+    
 
     context.system.equipment = await enrich(context.system.equipment);
     this._prepareMoves(context);
+    
     return context;
   }
  
-
+ 
+  
   _prepareMoves(context) {
     const basicMoves = [];
     const houseMoves = [];
@@ -510,12 +513,14 @@ export class  sofhCharacterSheet extends ActorSheet {
 
   async showMoves(event) {
     const moveType = event.target.id;
+    if(moveType !== ""){
     const movesElement = $(".all-moves." + moveType);
     if (movesElement.css("display") === "none") {
       movesElement.css("display", "");
     } else {
       movesElement.css("display", "none");
     }
+  }
   }
 
   async collapsAllMoves(event) {

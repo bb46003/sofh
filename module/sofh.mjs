@@ -89,7 +89,7 @@ Hooks.once("init", async function () {
   registerSheets();
   registerHandlebarsHelpers();
   registerSettings();
-  
+  loadPolishLocalization()
   CONFIG.Actor.documentClass = sofhActor;
   CONFIG.SOFHCONFIG = SOFHCONFIG;
   game.sofh = { HomeScore, moveRoll };
@@ -97,6 +97,16 @@ Hooks.once("init", async function () {
 
   return preloadHandlebarsTemplates();
 });
+
+async function loadPolishLocalization() {
+  const response = await fetch('/systems/SofH/lang/pl.json');
+  if (!response.ok) {
+    console.error('Failed to load pl.json');
+    return;
+  }
+  const plStrings = await response.json();
+  return plStrings;
+}
 
 Hooks.once("ready", async function () {
   const SYSTEM_ID = "sofh";
@@ -210,5 +220,93 @@ Hooks.on("deleteActor", async function (actor) {
   
 });
 
+Hooks.on('renderActorSheet', async function name(data) {
+ 
+    const actor = data.object
+    const goal = actor.system.goal;
+    const housequestion = actor.system.housequestion;
+    const equipment = actor.system.equipment
+    const eqArray=equipment.split('<br>')
+   
+    const searchKeyGoal = 'goal'; 
+    const searchKeyQuestion = "question";
+    const searchKeyEq = "actor";
+    let updateData = {};
+      let otherTrans = game.i18n._fallback?.sofh;
+      if (otherTrans === undefined){
+        const url = 'systems/SofH/lang/pl.json'
+        const response = await fetch(url);
+        const rowJason = await response.json();
+        otherTrans = await nestObject(rowJason);
+        otherTrans = otherTrans.sofh;
+      }
+       Object.entries(otherTrans.ui.actor).forEach(([key, value]) => {
+        // Check if the key contains the 'searchKey' substring
+        if (key.includes(searchKeyGoal)) {
+          if(value === goal){
+            updateData=({['system.goal']: game.i18n.localize(`sofh.ui.actor.${key}`)})
+            
+          }
+        }
+      });
+  Object.entries(otherTrans.ui.actor).forEach(([key, value]) => {
+  // Check if the key contains the 'searchKey' substring
+  if (key.includes(searchKeyQuestion)) {
+    if(value === housequestion){
+      updateData=({['system.housequestion']: game.i18n.localize(`sofh.ui.actor.${key}`)})
+    }
+  }
+})
+  let transEq =""
+  eqArray.forEach(item => {Object.entries(otherTrans.ui.actor).forEach(([key, value]) => {
+    // Check if the key contains the 'searchKey' substring
+      let searchString = item.replace(/<[^>]*>/g, '');
+       if (typeof value !== 'object'){
+        if(searchString !== ""){
+        const regex = new RegExp(`^${searchString}`);
+    
+      if(regex.test(value)){
+      
+        transEq += game.i18n.localize(`sofh.ui.actor.${key}`);
+        
+     
+      
+      }
+    }
+  }
+  
+  })
+})
+if (transEq !== ""){
+  let formattedStr = transEq.replace(/, /g, ",<br>");
+  updateData={['system.equipment']:formattedStr}
+}
+  
+  if(Object.keys(updateData).length !== 0){
+    actor.update(updateData)
+  }
 
+  
+  
+  
+})
+
+
+async function nestObject(flatObj) {
+  const nestedObj = {};
+
+  for (const key in flatObj) {
+      const keys = key.split('.');
+      keys.reduce((acc, part, index) => {
+          if (index === keys.length - 1) {
+              acc[part] = flatObj[key];
+          } else {
+              acc[part] = acc[part] || {};
+          }
+          return acc[part];
+      }, nestedObj);
+  }
+
+  return nestedObj;
+}
 

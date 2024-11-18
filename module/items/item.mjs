@@ -26,6 +26,8 @@ export class sofhMovesSheet extends ItemSheet {
     }
 
     context.system.description = await enrich(context.system.description);
+    context.system.triggers = await enrich(context.system.triggers);
+    context.system.relatedmoves = await enrich(context.system.relatedmoves);
     return context;
   }
   activateListeners(html) {
@@ -35,7 +37,34 @@ export class sofhMovesSheet extends ItemSheet {
     html.on("change", ".relatedmoves", (ev) => this.relatedmoves(ev));
     html.on("change", ".relatedmoves", (ev) => this.rollingguestions(ev));
     html.on("click", ".isrolled", (ev) => this.changeRollingoption(ev));
+    html.on('drop', async (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+
+      // Get the data from the drop event
+      const data = JSON.parse(event.originalEvent.dataTransfer.getData('text/plain'));
+
+      const targetItem = this.item;
+      if (data.type === "Item" && targetItem.system.realtedtoothermoves === true) {
+        const droppedItem = await fromUuid(data.uuid);
+        if (droppedItem) {
+          const droppedItemUuid = droppedItem.uuid;
+
+          // Logic to handle the target item (the current item sheet's item)
+         
+          const linkToDroppedItem = `@UUID[${droppedItemUuid}]{${droppedItem.name}}`;
+       
+          let updateData = {};
+          updateData["system.relatedmoves"] = linkToDroppedItem;
+          targetItem.update(updateData);
+
+
+          console.log(linkToDroppedItem);
+        } 
+      }
+    });
   }
+
 
   async addquestion() {
     const item = this.item;
@@ -43,7 +72,7 @@ export class sofhMovesSheet extends ItemSheet {
     let i = Object.keys(question).length;
     const questionElement = {
       impact: "false",
-      description: "",
+      description: ""
     };
     question[i] = questionElement;
     await item.update({ "system.question": question });
@@ -85,4 +114,5 @@ export class sofhMovesSheet extends ItemSheet {
       this.item.update(updateData);
     }
   }
+ 
 }

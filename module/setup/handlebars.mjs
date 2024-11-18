@@ -204,6 +204,12 @@ return new Handlebars.SafeString(html);
  
 })
 
-Handlebars.registerHelper("extractAcrotID", function(ID){
-  console.log(ID)
+Handlebars.registerHelper("numberOfQuestion", function(data){
+  const numberOfQuestion = Object.keys(data.question).length;
+  if(numberOfQuestion > 2){
+    return true
+  }
+  else{
+    return false
+  }
 })
