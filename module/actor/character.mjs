@@ -583,8 +583,22 @@ export class  sofhCharacterSheet extends ActorSheet {
     }
     const item = this.actor.items.get(ID);
     const actor = this.actor;
-    const dialogInstance = new moveRoll(actor, item);
-    dialogInstance.rollForMove(actor, item);
+    const clueRelated = item.system.culerelated;
+    const clueID = [];
+    if(clueRelated){
+      const clueActors = Array.from(game.actors.entries()).filter(
+        ([key, actor]) => actor.type === "clue");
+      
+       clueActors.forEach(ID =>{
+        let hasMatchingKey = Object.keys(ID[1].system.actorID).some(key => key === actor._id);
+        if(hasMatchingKey){
+        clueID.push(ID[0])
+        }
+       })
+      
+    }
+    const dialogInstance = new moveRoll(actor, item, clueID);
+    dialogInstance.rollForMove(actor, item, clueID);
   }
   async showTimeToShine(ev) {
     const actor = this.actor;

@@ -995,3 +995,9 @@ button.theorize-move-roll {
 h3.clue-line {
     border-bottom: 1px solid var(--color-text-light-highlight);
 }
+.clue-slector {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  
+}

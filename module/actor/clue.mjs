@@ -34,6 +34,7 @@ export class SofhClue extends ActorSheet {
     html.on("click", ".add-clue", this.addClue.bind(this));
     html.on("click",".remove-clue", this.removeClue.bind(this))
     html.on("click",".theorize-move-roll", this.rollForTheorize.bind(this))
+
   
 
 
@@ -42,6 +43,7 @@ export class SofhClue extends ActorSheet {
     html.find('.character-sheet').on("drop", this._onDrop.bind(this));
     html.find(`.remove-single-party-member`).on("click", this.removePartyMember.bind(this))
     html.find(`.add-character`).on("click", this.addPartyMember.bind(this))
+
 }
 
 _onDragOver(event) {
@@ -150,7 +152,6 @@ _onDrop(event) {
     }
     
   }
-
   async removePartyMember(event) {
     event.preventDefault();
     const target = event.target.id;
@@ -166,9 +167,8 @@ _onDrop(event) {
  
   
     await actor.render(true);
-}
-
-async addPartyMember(event) {
+  }
+  async addPartyMember(event) {
   const actors = game.actors.filter(actor => actor.type === "character");
   const currentMember = this.actor.system.actorID;
   const filteredActors = actors.filter(actor => !Object.keys(currentMember).includes(actor.id));
@@ -188,8 +188,8 @@ async addPartyMember(event) {
       default: "Add",
   }).render(true, {width:200});
   
-}
-async addMembets(event){
+  }
+  async addMembets(event){
  
   const containers = document.querySelectorAll('.party-memeber-add');
    
@@ -227,7 +227,6 @@ async addMembets(event){
          
     await clue.render(true)
   }
-  
   async rollForTheorize(event){
     event.preventDefault();
     const user = game.user._id;
@@ -237,12 +236,12 @@ async addMembets(event){
 
     if(hasAccess){
     const item = actor.items.filter(move => move.id === event.target.id)[0];  
-    const dialogInstance = new moveRoll(actor, item);
-    dialogInstance.rollForMove(actor, item);
+    const dialogInstance = new moveRoll(actor, item, this.actor.id);
+    dialogInstance.rollForMove(actor, item, this.actor.id);
     }
     else{
       ui.notifications.warn(game.i18n.localize("sofh.ui.war.you_are_not_owner"))
     }
   }
-
+  
 }
