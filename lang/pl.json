@@ -230,6 +230,7 @@
   "sofh.ui.rolldialog.relatedClue": "Known Clues",
   "sofh.ui.war.you_are_not_owner": "You are not an owner of this character",
   "sofh.ui.lack_of_move": "do not have move related to clues",
-  "sofh.ui.rolldialog.pickOneAproach": "Choose one approach from the following:"
+  "sofh.ui.rolldialog.pickOneAproach": "Choose one approach from the following:",
+    "sofh.dialog.knownMisery":"Select Mistery"
  
 }

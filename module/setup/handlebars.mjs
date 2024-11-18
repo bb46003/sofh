@@ -168,15 +168,33 @@ Handlebars.registerHelper("addCharactersKnownsClue", function (index, actor) {
   return new Handlebars.SafeString(html);
 });
 
-Handlebars.registerHelper("showAllKnownClue", function () {
-  const actor = this.actor;
-  const actorId = actor._id;
-  const allActors = game.actors;
-  let html = "";
-  const clueactors = Array.from(allActors.entries()).filter(
-    ([key, actor]) => actor.type === "clue",
-  ); 
-  const clueSheet = clueactors[0][1];
+Handlebars.registerHelper("showAllKnownClue", function (clueID) {
+  if (Array.isArray(clueID)) {
+let clueNames= [];
+clueID.forEach(ID =>
+  clueNames.push(game.actors.get(ID).name)
+)
+
+let selectElement = document.createElement('select'); 
+selectElement.classList.add('selection-mistery');
+let blankOption = document.createElement('option');
+blankOption.value = ''; 
+blankOption.textContent = ''; 
+selectElement.appendChild(blankOption); 
+clueNames.forEach((name, index) => {
+  let optionElement = document.createElement('option'); 
+  optionElement.value = name; 
+  optionElement.textContent = name; 
+  optionElement.id = clueID[index]
+  selectElement.appendChild(optionElement); 
+});
+return new Handlebars.SafeString(selectElement.outerHTML);
+  }
+  else{
+    const actor = this.actor;
+  const actorId = actor._id; 
+  let html = "";  
+  const clueSheet = game.actors.get(clueID)
   const clueDescription = clueSheet.system.clue;
   const actorClue = clueSheet.system.actorID[actorId];
   Object.keys(actorClue).forEach(key => {
@@ -201,6 +219,8 @@ if (html !== ""){
 
 }
 return new Handlebars.SafeString(html);
+
+  }
  
 })
 
@@ -213,3 +233,6 @@ Handlebars.registerHelper("numberOfQuestion", function(data){
     return false
   }
 })
+
+
+

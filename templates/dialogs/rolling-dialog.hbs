@@ -80,7 +80,10 @@
     {{#if item.system.culerelated}}
     <h2 class="h2-roll">{{localize 'sofh.ui.rolldialog.relatedClue'}}</h2>
     <div class="known-clue">
-    {{showAllKnownClue}}
+        <div class="clue-slector">
+        <label class="known-clue">{{localize "sofh.dialog.knownMisery"}}</label>
+    {{showAllKnownClue clueID}}
+    </div>
     </div>
 
     {{/if}}

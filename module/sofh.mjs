@@ -223,6 +223,7 @@ Hooks.on("deleteActor", async function (actor) {
 Hooks.on('renderActorSheet', async function name(data) {
  
     const actor = data.object
+    if(actor.type === "character"){
     const goal = actor.system.goal;
     const housequestion = actor.system.housequestion;
     const equipment = actor.system.equipment
@@ -287,7 +288,7 @@ if (transEq !== ""){
   }
 
   
-  
+}
   
 })
 
