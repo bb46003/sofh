@@ -14,11 +14,10 @@
         </div>
     {{/if}}
     {{#if (eq system.realtedtoothermoves true)}} 
-    
+      <div class="moves-realtedtoothermoves">
             <h2 class="move_type description-label ">{{localize "sofh.item.realtedtoothermoves"}}</h2>
-        <div class="moves-realtedtoothermoves">
-            <textarea class="relatedmoves" name="system.relatedmoves">{{system.relatedmoves}}</textarea>
-
+      
+            {{editor system.relatedmoves target="system.relatedmoves" engine="prosemirror" button=true owner=owner editable=editable class="relatedmoves"}}
         </div>
     {{/if}}
     {{#if (eq system.isrolled true)}} 

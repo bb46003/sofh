@@ -6,6 +6,23 @@ export class moveRoll extends Dialog {
   async activateListeners(html) {
     super.activateListeners(html);
     html.on("click", ".other-factor-h3", this.collapsOtherFactor.bind(this));
+    html.on("change", ".question-sheet-roll-muptiple .circle-checkbox-isapply", this.allowOnlyOneAproach.bind(this));
+  }
+  async allowOnlyOneAproach(){
+    const checkboxes = document.querySelectorAll(".question-sheet-roll-muptiple .circle-checkbox-isapply");
+
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener("change", function () {
+                if (this.checked) {
+                    // Uncheck all other checkboxes in 'question-sheet-roll-muptiple' group
+                    checkboxes.forEach(cb => {
+                        if (cb !== this) {
+                            cb.checked = false;
+                        }
+                    })
+                }
+            })
+        })
   }
 
   async collapsOtherFactor(event) {
@@ -103,7 +120,24 @@ export class moveRoll extends Dialog {
       ).checked;
       if (isApply) {
         selections.questions.push({ impact, isApply });
-        console.log(impact);
+
+        if (impact && isApply) {
+          rollmod = rollmod + 1;
+        } else if (!impact && isApply) {
+          rollmod = rollmod - 1;
+        }
+      }
+    });
+    const aproachElements = document.querySelectorAll(".question-sheet-roll-muptiple");
+    aproachElements.forEach((question) => {
+      const impact =
+        question.querySelector(".question-impact").value === "true";
+      const isApply = question.querySelector(
+        ".circle-checkbox-isapply",
+      ).checked;
+      if (isApply) {
+        selections.questions.push({ impact, isApply });
+       
         if (impact && isApply) {
           rollmod = rollmod + 1;
         } else if (!impact && isApply) {
