@@ -1,0 +1,17 @@
+<div class="solution-list">
+    <div class="header-solution">
+        <label class="solution-label">{{localize "sofh.clue.list_of_mistery_solution"}}</label>
+        <button class="solution-add" ><i class="fa fa-plus clue"></i></button>
+    </div>
+    <div class="list-of-solutions">
+        {{#each syste.solutions as |solution index|}}
+            <div class="solution">
+                <input type="text" name="system.solutions.{{@index}}.question" value="system.solutions.{{@index}}.question">
+                <input  class="complexity" type="number"  name="system.solutions.{{@index}}.complexity" value="system.solutions.{{@index}}.complexity">
+                <textarea class="solution" name="system.solutions.{{@index}}.solution">{{solution.solution}}</textarea>
+                <input type="checkbox" name="system.solutions.{{@index}}.showToPlayer" {{#if solution.showToPlayer}}checked{{/if}} >
+            </div>
+        {{/each}}
+
+    </div>
+</div>

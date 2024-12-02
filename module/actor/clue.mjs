@@ -34,6 +34,7 @@ export class SofhClue extends ActorSheet {
     html.on("click", ".add-clue", this.addClue.bind(this));
     html.on("click",".remove-clue", this.removeClue.bind(this))
     html.on("click",".theorize-move-roll", this.rollForTheorize.bind(this))
+    html.on("click",".solution-add", this.addSolution.bind(this))
 
   
 
@@ -51,12 +52,10 @@ _onDragOver(event) {
     // Optionally, you can add a class to show some visual feedback
     event.currentTarget.classList.add('drag-over');
 }
-
 _onDragLeave(event) {
     // Remove the visual feedback when the drag leaves the area
     event.currentTarget.classList.remove('drag-over');
 }
-
 _onDrop(event) {
     event.preventDefault();
     
@@ -82,10 +81,8 @@ _onDrop(event) {
 
     // Remove any visual feedback after the drop
     event.currentTarget.classList.remove('drag-over');
-}
-
-  
-  async addClue(event) { 
+}  
+async addClue(event) { 
     event.preventDefault();
     
     const clues = this.actor.system.clue;
@@ -117,8 +114,8 @@ _onDrop(event) {
     this.actor.update(updateData)
     this.actor.render(true);
     
-  }
-  async removeClue(ev){
+}
+async removeClue(ev){
     const button = ev.target;
     const ID = Number(button.id);
     let clue = this.actor.system.clue;
@@ -151,8 +148,8 @@ _onDrop(event) {
     
     }
     
-  }
-  async removePartyMember(event) {
+}
+async removePartyMember(event) {
     event.preventDefault();
     const target = event.target.id;
     const actor = this.actor;
@@ -167,8 +164,8 @@ _onDrop(event) {
  
   
     await actor.render(true);
-  }
-  async addPartyMember(event) {
+}
+async addPartyMember(event) {
   const actors = game.actors.filter(actor => actor.type === "character");
   const currentMember = this.actor.system.actorID;
   const filteredActors = actors.filter(actor => !Object.keys(currentMember).includes(actor.id));
@@ -188,8 +185,8 @@ _onDrop(event) {
       default: "Add",
   }).render(true, {width:200});
   
-  }
-  async addMembets(event){
+}
+async addMembets(event){
  
   const containers = document.querySelectorAll('.party-memeber-add');
    
@@ -226,8 +223,8 @@ _onDrop(event) {
     });
          
     await clue.render(true)
-  }
-  async rollForTheorize(event){
+}
+async rollForTheorize(event){
     event.preventDefault();
     const user = game.user._id;
     const actor = game.actors.get(event.target.offsetParent.id)
@@ -242,6 +239,25 @@ _onDrop(event) {
     else{
       ui.notifications.warn(game.i18n.localize("sofh.ui.war.you_are_not_owner"))
     }
+}
+async addSolution(event){
+  const clue = this.actor;
+  const solutions = clue.system.solutions;
+  let solutionsNumbers = 0;
+  if (solutions && typeof solutions === 'object') {
+    solutionsNumbers = Object.keys(solutions).length;
   }
+  let updateData={}; 
+  updateData[`system.solutions.${solutionsNumbers}.solution`] = "";
+  updateData[`system.solutions.${solutionsNumbers}.question`] = "";
+  updateData[`system.solutions.${solutionsNumbers}.complexity`] = 0;
+  updateData[`system.solutions.${solutionsNumbers}.showToPlayer`] = false
   
+  await clue.update(updateData)
+
+
+
+  
+}
+
 }

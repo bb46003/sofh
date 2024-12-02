@@ -217,11 +217,11 @@
   "sofh.ui.notSelectedHouseQuestion": "Please select one House question",
   "sofh.ui.actor.clue": "Clue description",
   "sofh.ui.add_clue": "Add new mistery clue",
-  "sofh.ui.warning.cule_sheet_exist": "Only one cule sheet can exist",
-  "sofh.cule": "Mistery",
+  "sofh.ui.warning.clue_sheet_exist": "Only one clue sheet can exist",
+  "sofh.clue": "Mistery",
   "sofh.ui.remove_clue": "Remove clue",
-  "sofh.ui.cule.clue_table": "Clues and who knows about them",
-  "sofh.ui.cule.party_list": "Group members",
+  "sofh.ui.clue.clue_table": "Clues and who knows about them",
+  "sofh.ui.clue.party_list": "Group members",
   "sofh.ui.clue.name": "Mystery title",
   "sofh.ui.clue.add_member": "Add group member",
   "sofh.move.isRelatedToClue": "Move is related to clue?",
@@ -232,6 +232,7 @@
   "sofh.ui.lack_of_move": "do not have move related to clues",
   "sofh.ui.rolldialog.pickOneAproach": "Choose one approach from the following:",
   "sofh.dialog.knownMisery":"Select Mistery",
-  "sofh.ui.cule.solution_table": "Solutions table"
+  "sofh.ui.clue.solution_table": "Solutions table"
+ 
  
 }

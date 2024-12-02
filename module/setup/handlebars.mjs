@@ -234,5 +234,15 @@ Handlebars.registerHelper("numberOfQuestion", function(data){
   }
 })
 
+Handlebars.registerHelper("chekSolution", function(){
+  const User = game.user.isGM;
+  if(User){
+    return true
+  }
+  else{
+    return false
+  }
+})
+
 
 

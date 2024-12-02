@@ -960,7 +960,8 @@ button.add-character {
 }
 
 a.party-list,
-a.cule-list{
+a.cule-list,
+a.solution-list{
     font-size: x-large;
 }
 
