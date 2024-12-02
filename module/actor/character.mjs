@@ -583,7 +583,7 @@ export class  sofhCharacterSheet extends ActorSheet {
     }
     const item = this.actor.items.get(ID);
     const actor = this.actor;
-    const clueRelated = item.system.culerelated;
+    const clueRelated = item.system.cluerelated;
     const clueID = [];
     if(clueRelated){
       const clueActors = Array.from(game.actors.entries()).filter(

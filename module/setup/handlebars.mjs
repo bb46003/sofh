@@ -123,8 +123,8 @@ Handlebars.registerHelper("addCharacters",function(actor){
     if(actorId !== "0"){
     const name = characters[actorId].name;
     const actor = game.actors.get(actorId);
-    const culerelatedMoves = actor?.items.filter(move => move.system.culerelated === true);
-    const theorize = culerelatedMoves[0];
+    const cluerelatedMoves = actor?.items.filter(move => move.system.cluerelated === true);
+    const theorize = cluerelatedMoves[0];
    if(theorize === undefined){
     html += `<th class="actor-known-clue" id="${actorId}">${name}<p>${game.i18n.localize("Character")} ${game.i18n.localize("sofh.ui.lack_of_move")}</p></th>`;
    }
@@ -133,7 +133,7 @@ Handlebars.registerHelper("addCharacters",function(actor){
     <th class="actor-known-clue" id="${actorId}">
       <div class="actor-clue-headr">
         <div class="clue-header-name">${name}</div>
-        <div class="cule-move-button">
+        <div class="clue-move-button">
         <h3 class="clue-line"></h3>
           <button class="theorize-move-roll" id="${theorize._id}">${theorize.name}</button>
         </div>

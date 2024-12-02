@@ -155,7 +155,7 @@ Hooks.once("ready", async function () {
 
   if (!isClueExist) {
     const newActorData = {
-      name: game.i18n.localize("sofh.cule"),
+      name: game.i18n.localize("sofh.clue"),
       type: "clue",
       ownership: {default: 3}
     };

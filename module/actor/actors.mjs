@@ -12,7 +12,7 @@ export class sofhActor extends Actor {
           "img":"icons/sundries/documents/document-sealed-signatures-red.webp"
       })
     }
-    else if(this.type === "character" || this.type === "cule"){
+    else if(this.type === "character" || this.type === "clue"){
       await this.updateSource({
         "prototypeToken.actorLink": true,
       })

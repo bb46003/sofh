@@ -12,7 +12,7 @@ export class SofhClue extends ActorSheet {
         {
           navSelector: ".sheet-tabs",
           contentSelector: ".sheet-body",
-          initial: "cule-list",
+          initial: "clue-list",
         },
       ],
       

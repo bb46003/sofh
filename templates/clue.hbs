@@ -1,12 +1,12 @@
 <form class="{{cssClass}}" autocomplete="off">
-  <div class="cule-actor-name">
+  <div class="clue-actor-name">
     <label for="name">{{localize "sofh.ui.clue.name"}}</label>
     <input id="name" name="name" type="text" value="{{actor.name}}">
 
   </div>
   <nav class="sheet-tabs tabs clue" data-group="primary">
       <a class="party-list" data-tab="party-list">{{localize "sofh.ui.clue.party_list"}}</a>
-      <a class="cule-list" data-tab="cule-list">{{localize "sofh.ui.clue.clue_table"}}</a>
+      <a class="clue-list" data-tab="clue-list">{{localize "sofh.ui.clue.clue_table"}}</a>
       <a class="solution-list" data-tab="solution-list">{{localize "sofh.ui.clue.solution_table"}}</a>
     
  
@@ -17,7 +17,7 @@
             {{> "systems/SofH/templates/tab/party-list.hbs"}}
         </div>        
         {{!-- Relation Tab --}}
-        <div class="tab cule flexcol" data-group="primary" data-tab="cule-list">
+        <div class="tab clue flexcol" data-group="primary" data-tab="clue-list">
             {{> "systems/SofH/templates/tab/clue-list.hbs"}}
         </div>
         {{!-- Relation Tab --}}

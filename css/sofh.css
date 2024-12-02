@@ -960,7 +960,7 @@ button.add-character {
 }
 
 a.party-list,
-a.cule-list,
+a.clue-list,
 a.solution-list{
     font-size: x-large;
 }
@@ -968,7 +968,7 @@ a.solution-list{
 nav.sheet-tabs.tabs.clue {
     margin-bottom: 20px;
 }
-.cule-actor-name {
+.-uactor-name {
     display: flex;
     align-items: center;
     margin-bottom: 15px;
@@ -989,7 +989,7 @@ button.theorize-move-roll {
     flex-direction: column;
     min-height: 90px;
 }
-.cule-move-button,
+.clue-move-button,
 .clue-header-name {
     margin-top: auto;
 }
