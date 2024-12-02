@@ -234,7 +234,8 @@
   "sofh.ui.lack_of_move": "do not have move related to clues",
   "sofh.move.isRaltedToHouseQuestion": "House Question",
   "sofh.ui.rolldialog.pickOneAproach": "Choose one approach from the following:",
-  "sofh.dialog.knownMisery":"Select Mistery"
+  "sofh.dialog.knownMisery":"Select Mistery",
+  "sofh.ui.cule.solution_table": "Solutions table"
  
     
   

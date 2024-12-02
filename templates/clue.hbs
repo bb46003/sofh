@@ -7,17 +7,24 @@
   <nav class="sheet-tabs tabs clue" data-group="primary">
       <a class="party-list" data-tab="party-list">{{localize "sofh.ui.cule.party_list"}}</a>
       <a class="cule-list" data-tab="cule-list">{{localize "sofh.ui.cule.clue_table"}}</a>
+      {{#chekSolution}}
+        <a class="solution-list" data-tab="solution-list">{{localize "sofh.ui.cule.solution_table"}}</a>
+      {{/checkSolution}}
  
     </nav>
    <section class="sheet-body">
         {{!-- Characteristic Tab --}}
          <div class="tab characteristic flexcol" data-group="primary" data-tab="party-list">
             {{> "systems/SofH/templates/tab/party-list.hbs"}}
-        </div>
-        
+        </div>        
         {{!-- Relation Tab --}}
         <div class="tab relations flexcol" data-group="primary" data-tab="cule-list">
             {{> "systems/SofH/templates/tab/clue-list.hbs"}}
         </div>
+        {{!-- Relation Tab --}}
+        <div class="tab relations flexcol" data-group="primary" data-tab="solution-list">
+            {{> "systems/SofH/templates/tab/solution-list.hbs"}}
+        </div>
+
         </section>
 </form>
