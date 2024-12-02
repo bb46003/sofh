@@ -5,7 +5,7 @@
     </div>
     <div class="list-of-solutions">
         {{#each syste.solutions as |solution index|}}
-            <div class="solution">
+            <div class="solution-group">
                 <input type="text" name="system.solutions.{{@index}}.question" value="system.solutions.{{@index}}.question">
                 <input  class="complexity" type="number"  name="system.solutions.{{@index}}.complexity" value="system.solutions.{{@index}}.complexity">
                 <textarea class="solution" name="system.solutions.{{@index}}.solution">{{solution.solution}}</textarea>

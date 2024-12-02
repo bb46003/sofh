@@ -216,7 +216,7 @@ export class moveRoll extends Dialog {
         formula = "3d6kh2" + rollmod.toString();
       }
     } else if (dicenumber < 0) {
-      formula = "3d6kl2" + rollmod.toString();
+      formula = "3d6kl2";
       if (rollmod.toString() > 0) {
         formula = "3d6kl2 +" + rollmod.toString();
       } else if (rollmod.toString() < 0) {
