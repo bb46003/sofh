@@ -5,11 +5,11 @@ export class sofhActor extends Actor {
     await super._preCreate(data, options, user);
     
     if (this.type === "clue") {
-    
-      
+     
       await this.updateSource({
           "system.actorID": {},
-          "img":"icons/sundries/documents/document-sealed-signatures-red.webp"
+          "img":"icons/sundries/documents/document-sealed-signatures-red.webp",
+     
       })
     }
     else if(this.type === "character" || this.type === "clue"){

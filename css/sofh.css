@@ -1002,3 +1002,41 @@ h3.clue-line {
     justify-content: space-between;
   
 }
+
+textarea.solution {
+    resize: none;
+    width: 100%;
+    height: 100%;
+}
+.solution-group, .list-pf-solutuion-labels {
+    display: grid;
+    align-items: center;
+    grid-template-columns: 1.5fr 0.2fr 1fr 0.2fr 0.2fr;
+    grid-column-gap: 5px;
+    margin-bottom: 15px;
+    justify-items: center;
+}
+input.complexity {
+    width: 100%;
+    height: 100%;
+    align-content: center;
+    text-align: center;
+    font-size: xx-large;
+}
+.header-solution {
+    display: flex;
+    max-height: 50px;
+    align-items: center;
+    margin-bottom: 15px;
+}
+input.solution-question {
+    height: 100%;
+}
+input.show-to-player {
+    width: 70%;
+    height: 70%;
+    margin: 3px 5px;
+}
+button.remove-solution{
+    height:100%
+}

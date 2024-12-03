@@ -35,7 +35,8 @@ export class SofhClue extends ActorSheet {
     html.on("click",".remove-clue", this.removeClue.bind(this))
     html.on("click",".theorize-move-roll", this.rollForTheorize.bind(this))
     html.on("click",".solution-add", this.addSolution.bind(this))
-
+    html.on("click",".remove-solution", this.removeSolution.bind(this))
+    html.on("click",".theorize-solution-roll", this.solutionRollForTheorize.bind(this))
   
 
 
@@ -83,6 +84,7 @@ _onDrop(event) {
     event.currentTarget.classList.remove('drag-over');
 }  
 async addClue(event) { 
+
     event.preventDefault();
     
     const clues = this.actor.system.clue;
@@ -116,6 +118,7 @@ async addClue(event) {
     
 }
 async removeClue(ev){
+ 
     const button = ev.target;
     const ID = Number(button.id);
     let clue = this.actor.system.clue;
@@ -147,6 +150,7 @@ async removeClue(ev){
          });
     
     }
+  
     
 }
 async removePartyMember(event) {
@@ -194,10 +198,10 @@ async addMembets(event){
     const currentClues = clue.system?.clue ? Object.keys(clue.system.clue).length : 0;
     let updateData = {};
     containers.forEach(async container => {
-        // Find the checkbox within the container
+        
         const checkbox = container.querySelector('input[type="checkbox"]');
         
-        // Check if the checkbox is checked
+    
         if (checkbox && checkbox.checked) {
        
             let newMember = game.actors.get(container.id);
@@ -208,22 +212,38 @@ async addMembets(event){
               }
              
           };
+          
           for (let i = 0; i < currentClues; i++) {
-            // Dynamically set the property name using computed property syntax
+        
             updateData[container.id] = {
-                ...updateData[container.id],  // Preserve existing properties in container.id
-                [`have${i}`]: false // Dynamically set the property `haveX` where X is i
+                ...updateData[container.id],  
+                [`have${i}`]: false
             };
         }
-     
+        this.addOwnership(container.id)
        
             }
             await clue.update({
-              'system.actorID': updateData});
+              'system.actorID': updateData,
+             });
+             
     });
          
     await clue.render(true)
 }
+
+async addOwnership(characterID){
+  const users = Array.from(game.users.values());
+  const filteredUsers = users.filter(user => 
+    user.role !== 4 && user?.character?.id === characterID
+);
+const filteredUser = filteredUsers[0];
+const actor = this.actor;
+await actor.update({ [`ownership.${filteredUser._id}`]: 3 });
+
+
+}
+
 async rollForTheorize(event){
     event.preventDefault();
     const user = game.user._id;
@@ -241,6 +261,7 @@ async rollForTheorize(event){
     }
 }
 async addSolution(event){
+  if(game.user.isGM){
   const clue = this.actor;
   const solutions = clue.system.solutions;
   let solutionsNumbers = 0;
@@ -253,11 +274,49 @@ async addSolution(event){
   updateData[`system.solutions.${solutionsNumbers}.complexity`] = 0;
   updateData[`system.solutions.${solutionsNumbers}.showToPlayer`] = false
   
-  await clue.update(updateData)
+  await clue.update(updateData)  
+}
+}
+
+async removeSolution(ev){
+  ev.preventDefault();
+  if(game.user.isGM){
+  const target = ev.target.id;
+  const actor = this.actor;
+  let allSolution = actor.system.solutions;
+  if (allSolution.hasOwnProperty(target)) {
+      delete allSolution[target]; 
+  }
+  const updateData = allSolution;
+  await actor.update({ 'system.solutions': [{}]});
+ 
+  await actor.update({ 'system.solutions': updateData});
+
+
+  await actor.render(true);}
+}
 
 
 
-  
+async solutionRollForTheorize(ev){
+  ev.preventDefault();
+  const user = game.user._id;
+  const actor = game.user.character;
+  const ownership = actor.ownership
+  const hasAccess = ownership[user] === 3;
+  const solutionGroup = event.target.closest('.solution-group');  
+  const complexityInput = solutionGroup.querySelector('.complexity');
+  const complexity = complexityInput ? parseFloat(complexityInput.value) : undefined
+
+
+  if(hasAccess){
+  const item = actor.items.filter(move => move.id === ev.target.id)[0];  
+  const dialogInstance = new moveRoll(actor, item, this.actor.id);
+  dialogInstance.rollForMove(actor, item, this.actor.id, complexity);
+  }
+  else{
+    ui.notifications.warn(game.i18n.localize("sofh.ui.war.you_are_not_owner"))
+  }
 }
 
 }

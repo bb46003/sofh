@@ -1,3 +1,5 @@
-2024/12/02-23:26:56.463 33b8 Recovering log #30
-2024/12/02-23:26:56.466 33b8 Delete type=0 #30
-2024/12/02-23:26:56.466 33b8 Delete type=3 #28
+2024/12/03-08:24:57.846 4f98 Log #36: 0 ops saved to Table #37 OK
+2024/12/03-08:24:57.847 4f98 Archiving C:\Users\bb46003\AppData\Local\FoundryVTT\Data\systems\SofH\packs\moves/000036.log: OK
+2024/12/03-08:24:57.847 4f98 Table #32: 16 entries OK
+2024/12/03-08:24:57.849 4f98 Archiving C:\Users\bb46003\AppData\Local\FoundryVTT\Data\systems\SofH\packs\moves/MANIFEST-000035: OK
+2024/12/03-08:24:57.852 4f98 **** Repaired leveldb C:\Users\bb46003\AppData\Local\FoundryVTT\Data\systems\SofH\packs\moves; recovered 1 files; 17906 bytes. Some data may have been lost. ****

@@ -182,6 +182,7 @@ Hooks.on("createActor", async function (actor) {
     });
 
   }
+
 });
 
 Hooks.on("updateActor", (actor, updateData) => {

@@ -309,13 +309,15 @@ export class moveRoll extends Dialog {
 
   }
 
-  async rollForMove(actor, item, clueID) {
+  async rollForMove(actor, item, clueID, complexity) {
     const is7conditions = actor.system.is7conditions;
-
+    if(complexity === undefined){
+      complexity = 0
+    }
     if (!is7conditions) {
       const content = await renderTemplate(
         "systems/SofH/templates/dialogs/rolling-dialog.hbs",
-        { item: item, actor: actor, clueID: clueID},
+        { item: item, actor: actor, clueID: clueID, complexity:complexity},
       );
 
       new moveRoll({

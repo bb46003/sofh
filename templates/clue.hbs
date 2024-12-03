@@ -7,23 +7,25 @@
   <nav class="sheet-tabs tabs clue" data-group="primary">
       <a class="party-list" data-tab="party-list">{{localize "sofh.ui.clue.party_list"}}</a>
       <a class="clue-list" data-tab="clue-list">{{localize "sofh.ui.clue.clue_table"}}</a>
-      <a class="solution-list" data-tab="solution-list">{{localize "sofh.ui.clue.solution_table"}}</a>
-    
- 
-    </nav>
+      {{#if (chekSolution)}}
+      <a class="mistery-solve-list" data-tab="misterysolve">{{localize "sofh.ui.clue.solution_table"}}</a> 
+      {{/if}} 
+   </nav>
+
    <section class="sheet-body">
-        {{!-- Characteristic Tab --}}
+      <div class="tab mistery-solve flexcol" data-group="primary" data-tab="misterysolve">
+            {{> "systems/SofH/templates/tab/mistery-solve-list.hbs"}}
+        </div>
+ 
          <div class="tab party flexcol" data-group="primary" data-tab="party-list">
             {{> "systems/SofH/templates/tab/party-list.hbs"}}
         </div>        
-        {{!-- Relation Tab --}}
-        <div class="tab clue flexcol" data-group="primary" data-tab="clue-list">
-            {{> "systems/SofH/templates/tab/clue-list.hbs"}}
-        </div>
-        {{!-- Relation Tab --}}
-        <div class="tab solution flexcol" data-group="primary" data-tab="solution-list">
-            {{> "systems/SofH/templates/tab/solution-list.hbs"}}
-        </div>
 
-        </section>
+        <div class="tab clue flexcol" data-group="primary" data-tab="clue-list">
+            {{> "systems/SofH/templates/tab/clue-list.hbs"}}`
+        </div>
+ 
+        
+ 
+    </section> 
 </form>

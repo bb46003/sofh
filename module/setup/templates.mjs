@@ -16,7 +16,7 @@ export const preloadHandlebarsTemplates = async function () {
     "systems/SofH/templates/tab/partial/relation-ravenclaw.hbs",
     "systems/SofH/templates/tab/party-list.hbs",
     "systems/SofH/templates/tab/clue-list.hbs",
-    "systems/SofH/templates/tab/solution-list.hbs",
+    "systems/SofH/templates/tab/mistery-solve-list.hbs",
     
   ]);
 };

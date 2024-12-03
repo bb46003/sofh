@@ -1,0 +1,34 @@
+
+    <div class="header-solution">
+        <label class="solution-label">{{localize "sofh.clue.list_of_mistery_solution"}}</label>
+        <button class="solution-add" ><i class="fa fa-plus clue"></i></button>
+    </div>
+    <div class="list-of-solutions">
+        <div class="list-pf-solutuion-labels">
+        <label class="solution-label">{{localize "sofh.clue.solution_question"}}</label>
+        <label class="solution-label">{{localize "sofh.clue.solution_complecity"}}</label>
+        <label class="solution-label">{{localize "sofh.clue.solution_solution"}}{{game.user.isGM}}</label>
+         {{#if (isGM)}}
+        <label class="solution-label">{{localize "sofh.clue.solution_shopwtoplayers"}}</label>
+         <label class="solution-label">{{localize "sofh.clue.solution_remove"}}</label>
+          {{/if}}
+        </div>
+        {{#each system.solutions as |solution index|}}
+            {{#if (showSingleSolution solution)}}
+            <div class="solution-group" id="{{@index}}">
+                <input class="solution-question" type="text" name="system.solutions.{{@index}}.question" value="{{solution.question}}" {{#if (eq (isGM)false)}}disabled{{/if}}>
+                <input  class="complexity" type="number"  name="system.solutions.{{@index}}.complexity" value="{{solution.complexity}}"{{#if (eq (isGM) false)}}disabled{{/if}}>
+                <textarea class="solution" name="system.solutions.{{@index}}.solution"{{#if (eq (isGM) false)}}disabled{{/if}}>{{solution.solution}}</textarea>
+                 {{#if (isGM)}}
+                <input class="show-to-player"type="checkbox" name="system.solutions.{{@index}}.showToPlayer" {{#if solution.showToPlayer}}checked{{/if}} >
+              
+                <button class="remove-solution" id="{{@index}}">
+                    <i class="fa fa-minus" id="{{@index}}"></i>
+                </button>
+                  {{/if}}
+                {{#addTheretizeButton}}{{/addTheretizeButton}}
+            </div>
+            {{/if}}
+        {{/each}}
+
+    </div>
