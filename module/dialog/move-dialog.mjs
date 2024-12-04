@@ -245,7 +245,7 @@ export class moveRoll extends Dialog {
     await this.actor.update({ "system.strings": strings });
   }
 
-  async rolling(actor, item, formula, clueID, question, solution) {
+  async rolling(actor, item, formula, clueID, question) {
     const rollResult = await new Roll(formula).evaluate();
     const total = rollResult.total;
     const label = item.name;
@@ -257,7 +257,7 @@ export class moveRoll extends Dialog {
     } else {
       content = item.system?.below7 || "No content for below 7.";
     }
-    if(question === undefined || solution===undefined){
+    if(solution===undefined){
     content = `
           <div class="sofh">
           <h3 style="font-family: 'IM Fell English SC', serif;font-size: large;">${label}</h3><br>
@@ -269,7 +269,7 @@ export class moveRoll extends Dialog {
     }
     else{
       const questionlabel = game.i18n.localize("sofh.chat.mystery_question")
-      const solutionlabel = game.i18n.localize("sofh.chat.mystery_solution")
+      
       content = `
           <div class="sofh">
         
@@ -278,7 +278,6 @@ export class moveRoll extends Dialog {
           <h3></h3>
           <div class="mistery-question_solution">
             <p>${questionlabel}${question}</p>
-            <p>${solutionlabel}${solution}</p>
           </div>
           <h2 class="move_type description-label ">${game.i18n.localize("sofh.chat.rollesult")}</h2>  
           <div class="roll-results">${content}</div><br>
