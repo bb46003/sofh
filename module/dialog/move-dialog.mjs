@@ -68,7 +68,7 @@ export class moveRoll extends Dialog {
       h3Element.textContent = originalText;
     }
   }
-  async defnieRollingFormula(actor, item, clueID) {
+  async defnieRollingFormula(actor, item, clueID, question, solution) {
     const selections = {
       houseApply: null,
       conditions: [],
@@ -224,7 +224,7 @@ export class moveRoll extends Dialog {
       }
     }
     
-    await this.rolling(actor, item, formula, clueIDs);
+    await this.rolling(actor, item, formula, clueIDs, question, solution);
     if(stringsSelect !== null){
     if (stringsSelect.value !== "") {
       this.removeStrinAfterRoll(stringsSelect.value);
@@ -245,7 +245,7 @@ export class moveRoll extends Dialog {
     await this.actor.update({ "system.strings": strings });
   }
 
-  async rolling(actor, item, formula, clueID) {
+  async rolling(actor, item, formula, clueID, question, solution) {
     const rollResult = await new Roll(formula).evaluate();
     const total = rollResult.total;
     const label = item.name;
@@ -257,7 +257,7 @@ export class moveRoll extends Dialog {
     } else {
       content = item.system?.below7 || "No content for below 7.";
     }
-
+    if(question === undefined || solution===undefined){
     content = `
           <div class="sofh">
           <h3 style="font-family: 'IM Fell English SC', serif;font-size: large;">${label}</h3><br>
@@ -266,6 +266,25 @@ export class moveRoll extends Dialog {
           <div class="roll-results">${content}</div><br>
           </div>
       `;
+    }
+    else{
+      const questionlabel = game.i18n.localize("sofh.chat.mystery_question")
+      const solutionlabel = game.i18n.localize("sofh.chat.mystery_solution")
+      content = `
+          <div class="sofh">
+        
+          <h3 style="font-family: 'IM Fell English SC', serif;font-size: large;">${label}</h3><br>
+          <div class="move-description-chat">${item.system.description}</div><br>
+          <h3></h3>
+          <div class="mistery-question_solution">
+            <p>${questionlabel}${question}</p>
+            <p>${solutionlabel}${solution}</p>
+          </div>
+          <h2 class="move_type description-label ">${game.i18n.localize("sofh.chat.rollesult")}</h2>  
+          <div class="roll-results">${content}</div><br>
+          </div>
+      `;
+    }
 
     rollResult.toMessage({
       user: game.user.id,
@@ -309,7 +328,7 @@ export class moveRoll extends Dialog {
 
   }
 
-  async rollForMove(actor, item, clueID, complexity) {
+  async rollForMove(actor, item, clueID, complexity,question, solution) {
     const is7conditions = actor.system.is7conditions;
     if(complexity === undefined){
       complexity = 0
@@ -329,7 +348,7 @@ export class moveRoll extends Dialog {
             icon: '<i class="fa fa-check"></i>',
             label:`<div class="sofh-button">${game.i18n.localize("sofh.UI.Roll")}</div>`,
             callback: async () => {
-              await this.defnieRollingFormula(actor, item);
+              await this.defnieRollingFormula(actor, item,clueID, solution, question);
             },
           }
        

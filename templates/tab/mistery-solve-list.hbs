@@ -1,16 +1,16 @@
 
     <div class="header-solution">
-        <label class="solution-label">{{localize "sofh.clue.list_of_mistery_solution"}}</label>
+        <label class="solution-label">{{localize "sofh.ui.clue.list_of_mistery_solutions"}}</label>
         <button class="solution-add" ><i class="fa fa-plus clue"></i></button>
     </div>
     <div class="list-of-solutions">
         <div class="list-pf-solutuion-labels">
-        <label class="solution-label">{{localize "sofh.clue.solution_question"}}</label>
-        <label class="solution-label">{{localize "sofh.clue.solution_complecity"}}</label>
-        <label class="solution-label">{{localize "sofh.clue.solution_solution"}}{{game.user.isGM}}</label>
+        <label class="solution-label">{{localize "sofh.ui.clue.solution_question"}}</label>
+        <label class="solution-label">{{localize "sofh.ui.clue.solution_complecity"}}</label>
+        <label class="solution-label">{{localize "sofh.ui.clue.solution_solution"}}{{game.user.isGM}}</label>
          {{#if (isGM)}}
-        <label class="solution-label">{{localize "sofh.clue.solution_shopwtoplayers"}}</label>
-         <label class="solution-label">{{localize "sofh.clue.solution_remove"}}</label>
+        <label class="solution-label">{{localize "sofh.ui.clue.solution_shopwtoplayers"}}</label>
+         <label class="solution-label">{{localize "sofh.ui.clue.solution_remove"}}</label>
           {{/if}}
         </div>
         {{#each system.solutions as |solution index|}}

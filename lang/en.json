@@ -235,6 +235,14 @@
   "sofh.move.isRaltedToHouseQuestion": "House Question",
   "sofh.ui.rolldialog.pickOneAproach": "Choose one approach from the following:",
   "sofh.dialog.knownMisery":"Select Mistery",
-  "sofh.ui.clue.solution_table": "Solutions table"
+  "sofh.ui.clue.solution_table": "Mystery Questions",
+  "sofh.chat.mystery_solution":"Your solution to Mistery - ",
+  "sofh.chat.mystery_question": "Your question to Mistery - ",
+  "sofh.ui.clue.list_of_mistery_solutions":"List o Mistery solutions",
+  "sofh.ui.clue.solution_question": "Question to solution",
+  "sofh.ui.clue.solution_complecity":"Complexity of solution",
+  "sofh.ui.clue.solution_solution": "Solution to Mistery",
+  "sofh.ui.clue.solution_shopwtoplayers": "Show solution to Players",
+  "sofh.ui.clue.solution_remove":"Remove solution"
   
 }

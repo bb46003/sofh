@@ -73,7 +73,7 @@ _onDrop(event) {
             updateData[`system.actorID.${droppedActor._id}`]={"name":droppedActor.name, "img":droppedActor.img}
 
             this.actor.update(updateData)
-            // This will print the actor ID
+            this.addOwnership(droppedActor._id)
           }
       }
         }
@@ -165,7 +165,7 @@ async removePartyMember(event) {
     await actor.update({ 'system.actorID': [{}]});
    
     await actor.update({ 'system.actorID': updateData});
- 
+    await this.removeOwnership(target)
   
     await actor.render(true);
 }
@@ -240,8 +240,15 @@ async addOwnership(characterID){
 const filteredUser = filteredUsers[0];
 const actor = this.actor;
 await actor.update({ [`ownership.${filteredUser._id}`]: 3 });
-
-
+}
+async removeOwnership(characterID){
+  const users = Array.from(game.users.values());
+  const filteredUsers = users.filter(user => 
+    user.role !== 4 && user?.character?.id === characterID
+);
+const filteredUser = filteredUsers[0];
+const actor = this.actor;
+await actor.update({ [`ownership.${filteredUser._id}`]: 0 });
 }
 
 async rollForTheorize(event){
@@ -304,15 +311,17 @@ async solutionRollForTheorize(ev){
   const actor = game.user.character;
   const ownership = actor.ownership
   const hasAccess = ownership[user] === 3;
-  const solutionGroup = event.target.closest('.solution-group');  
+  const solutionGroup = ev.target.closest('.solution-group');  
   const complexityInput = solutionGroup.querySelector('.complexity');
   const complexity = complexityInput ? parseFloat(complexityInput.value) : undefined
-
+  const question = solutionGroup.querySelector('.solution-question').value;
+  const solution = solutionGroup.querySelector('.solution').textContent;
+  
 
   if(hasAccess){
   const item = actor.items.filter(move => move.id === ev.target.id)[0];  
   const dialogInstance = new moveRoll(actor, item, this.actor.id);
-  dialogInstance.rollForMove(actor, item, this.actor.id, complexity);
+  dialogInstance.rollForMove(actor, item, this.actor.id, complexity, question, solution);
   }
   else{
     ui.notifications.warn(game.i18n.localize("sofh.ui.war.you_are_not_owner"))
