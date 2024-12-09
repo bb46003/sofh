@@ -3,21 +3,25 @@ export class moveRoll extends Dialog {
     super(actor, item, clueID);
     (this.actor = actor), (this.item = item), (this.clueID = clueID);
   }
+
   async activateListeners(html) {
     super.activateListeners(html);
     html.on("click", ".other-factor-h3", this.collapsOtherFactor.bind(this));
     html.on("change", ".question-sheet-roll-muptiple .circle-checkbox-isapply", this.allowOnlyOneAproach.bind(this));
     html.on("change", ".selection-mistery", (event) => {
-      this.showKnowClue(event); // Pass `this.actor` to the method
+      this.showKnowClue(event); 
+    });
+    html.on("change", ".selection-mistery-solutions", (event) => {
+      this.assigneComplexity(event); 
     });
   }
+
   async allowOnlyOneAproach(){
-    const checkboxes = document.querySelectorAll(".question-sheet-roll-muptiple .circle-checkbox-isapply");
+    const checkboxes = document?.querySelectorAll(".question-sheet-roll-muptiple .circle-checkbox-isapply");
 
         checkboxes.forEach(checkbox => {
             checkbox.addEventListener("change", function () {
                 if (this.checked) {
-                    // Uncheck all other checkboxes in 'question-sheet-roll-muptiple' group
                     checkboxes.forEach(cb => {
                         if (cb !== this) {
                             cb.checked = false;
@@ -36,7 +40,6 @@ export class moveRoll extends Dialog {
       $(".window-app").each(function () {
         const windowTitle = $(this).find(".window-title").text().trim();
         if (windowTitle === game.i18n.localize("sofh.ui.rolling")) {
-          // Move the window up by 200px
           $(this).css("top", (index, currentTop) => {
             return `${parseInt(currentTop, 10) - 200}px`;
           });
@@ -47,7 +50,6 @@ export class moveRoll extends Dialog {
       $(".window-app").each(function () {
         const windowTitle = $(this).find(".window-title").text().trim();
         if (windowTitle === game.i18n.localize("sofh.ui.rolling")) {
-          // Move the window up by 200px
           $(this).css("top", (index, currentTop) => {
             return `${parseInt(currentTop, 10) + 200}px`;
           });
@@ -60,14 +62,13 @@ export class moveRoll extends Dialog {
 
     const originalText = game.i18n.localize("sofh.ui.dialog.other_factor");
     const newText = game.i18n.localize("sofh.ui.dialog.other_factor_close");
-
-    // Step 4: Check current content and toggle
     if (h3Element.textContent === originalText) {
       h3Element.textContent = newText;
     } else {
       h3Element.textContent = originalText;
     }
   }
+
   async defnieRollingFormula(actor, item, clueID, question, solution) {
     const selections = {
       houseApply: null,
@@ -81,8 +82,11 @@ export class moveRoll extends Dialog {
     };
     let rollmod = 0;
     let dicenumber = 0;
+    if(question === undefined){
+      question = document?.querySelector(".selection-mistery-solutions")?.value;
+    }
 
-    const houseCheckbox = document.querySelector(
+    const houseCheckbox = document?.querySelector(
       ".circle-checkbox-housequestion",
     );
     if (houseCheckbox) {
@@ -91,9 +95,9 @@ export class moveRoll extends Dialog {
         rollmod = rollmod + 1;
       }
     }
-    const oponentcondition = document.querySelector(
+    const oponentcondition = document?.querySelector(
       ".oponent-have-condition-checkbox",
-    ).checked;
+    )?.checked;
     if (oponentcondition) {
       selections.oponentcondition = houseCheckbox.oponentcondition;
       if (selections.oponentcondition) {
@@ -101,7 +105,7 @@ export class moveRoll extends Dialog {
       }
     }
 
-    const conditionElements = document.querySelectorAll(
+    const conditionElements = document?.querySelectorAll(
       ".conditions-roll-detail",
     );
     conditionElements.forEach((condition) => {
@@ -114,7 +118,7 @@ export class moveRoll extends Dialog {
       }
     });
 
-    const questionElements = document.querySelectorAll(".question-sheet-roll");
+    const questionElements = document?.querySelectorAll(".question-sheet-roll");
     questionElements.forEach((question) => {
       const impact =
         question.querySelector(".question-impact").value === "true";
@@ -131,7 +135,7 @@ export class moveRoll extends Dialog {
         }
       }
     });
-    const aproachElements = document.querySelectorAll(".question-sheet-roll-muptiple");
+    const aproachElements = document?.querySelectorAll(".question-sheet-roll-muptiple");
     aproachElements.forEach((question) => {
       const impact =
         question.querySelector(".question-impact").value === "true";
@@ -149,20 +153,20 @@ export class moveRoll extends Dialog {
       }
     });
 
-    const relationSelect = document.querySelector(".relation-chosen");
+    const relationSelect = document?.querySelector(".relation-chosen");
     if (relationSelect) {
       selections.relevantRelation = relationSelect.value;
       rollmod = rollmod + Number(relationSelect.value);
     }
 
-    const stringsSelect = document.querySelector(".roll-strings");
+    const stringsSelect = document?.querySelector(".roll-strings");
     if (stringsSelect) {
       selections.relevantString = stringsSelect.value;
       if (stringsSelect.value !== "") {
         dicenumber = dicenumber + 1;
       }
     }
-    const knownClue = document.querySelectorAll(".circle-checkbox-isapply-clue");
+    const knownClue = document?.querySelectorAll(".circle-checkbox-isapply-clue");
     knownClue.forEach((knowClue)=>{
       const isApply = knowClue.checked;
       if(isApply){
@@ -171,7 +175,7 @@ export class moveRoll extends Dialog {
     })
     let clueIDs = "";
     if (knownClue.length > 0) {
-      const selection = document.querySelector(".selection-mistery"); 
+      const selection = document?.querySelector(".selection-mistery"); 
       if(selection !== null){
       const selectedOption = selection.querySelector("option:checked"); 
       clueIDs =selectedOption.id
@@ -182,17 +186,17 @@ export class moveRoll extends Dialog {
     
     }
 
-    const complexityValue =  document.querySelector(".complexity-numer")?.value;
+    const complexityValue =  document?.querySelector(".complexity-numer")?.value;
     if (complexityValue !== undefined){
     rollmod = rollmod - Number(complexityValue)
     }
 
-    const numericInput = document.querySelector(".numeric-mod");
+    const numericInput = document?.querySelector(".numeric-mod");
     selections.numericModifier = numericInput ? numericInput.value : null;
     const otherMod = Number(selections.numericModifier);
     rollmod = rollmod + otherMod;
     selections.otherrolltype =
-      document.querySelector('[name="ad-disad"]').value;
+      document?.querySelector('[name="ad-disad"]')?.value;
     let diceMod = Number(selections.otherrolltype);
     if (diceMod > 3) {
       diceMod = 3;
@@ -257,7 +261,7 @@ export class moveRoll extends Dialog {
     } else {
       content = item.system?.below7 || "No content for below 7.";
     }
-    if(solution===undefined){
+    if(question===undefined){
     content = `
           <div class="sofh">
           <h3 style="font-family: 'IM Fell English SC', serif;font-size: large;">${label}</h3><br>
@@ -293,7 +297,6 @@ export class moveRoll extends Dialog {
     if(rollResult.total< 6 && clueID !== ""){
       const clue = game.actors.get(clueID);
       for (let actorKey in clue.system.actorID) {
-        // Get the corresponding actor object using the key
         const memberActor = game.actors.get(actorKey);
         const xpValues = memberActor.system.xp.value;
         let lastTrueKey = null;
@@ -333,11 +336,19 @@ export class moveRoll extends Dialog {
       complexity = 0
     }
     if (!is7conditions) {
-      const content = await renderTemplate(
+      let content = await renderTemplate(
         "systems/SofH/templates/dialogs/rolling-dialog.hbs",
-        { item: item, actor: actor, clueID: clueID, complexity:complexity},
+        { item: item, actor: actor, clueID: clueID, complexity:complexity, question:question},
       );
-
+      if (typeof clueID === "string" && question === undefined){
+      const clueSheet = game.actors.get(clueID);
+      const selectElementSolution = await addQuestionSelector(clueSheet, document);
+      const selectElementSolutionHTML = selectElementSolution.outerHTML;
+      content = content.replace(
+        '<div class="complexity">',
+        `${selectElementSolutionHTML}<div class="complexity">`
+      );
+    }
       new moveRoll({
         data:{actor,item,clueID},
         title: game.i18n.localize("sofh.ui.rolling"),
@@ -360,41 +371,91 @@ export class moveRoll extends Dialog {
       );
     }
   }
+
   async showKnowClue(event){
     const existingClueElements = event.currentTarget.closest('.dialog').querySelectorAll('.single-clue, .complexity');
     existingClueElements.forEach(element => element.remove());
     const target = event.currentTarget.selectedOptions[0].id
-
+    let selectElementSolution = null;
     const actorId = this.data.data.actor._id;
     const clueSheet = game.actors.get(target)
     if(clueSheet !== undefined){
-  const clueDescription = clueSheet.system.clue;
-  const actorClue = clueSheet.system.actorID[actorId];
-  let html = "";
-  Object.keys(actorClue).forEach(key => {
-  if (key.startsWith('have') && actorClue[key] === true) {
-    const index = key.slice(4); 
-    if (clueDescription.hasOwnProperty(index)) {
-      html += ` 
-        <div class="single-clue">
-          <label class="known-clue-label">${clueDescription[index].description}</label>
-          <input type="checkbox" class="circle-checkbox-isapply-clue">
-        </div>`
-    }
-  }
-});
-if (html !== ""){
-  html += `
-    <div class="complexity">
-      <label class="complexity-label">${game.i18n.localize("sofh.ui.complexity_value")}</label>
-      <input type="number" class="complexity-numer"></input>
-    </div>
-  `
+      const clueDescription = clueSheet.system.clue;
+      const actorClue = clueSheet.system.actorID[actorId];
+      let html = "";
+      Object.keys(actorClue).forEach(key => {
+        if (key.startsWith('have') && actorClue[key] === true) {
+          const index = key.slice(4); 
+          if (clueDescription.hasOwnProperty(index)) {
+            html += ` 
+              <div class="single-clue">
+                <label class="known-clue-label">${clueDescription[index].description}</label>
+                <input type="checkbox" class="circle-checkbox-isapply-clue">
+              </div>`
+          }
+        }
+      });
+      if (html !== ""){
+        selectElementSolution = await addQuestionSelector(clueSheet);
 
-}
-const clueSelector = event.currentTarget.closest('.clue-slector'); 
-  clueSelector.insertAdjacentHTML('afterend', html); 
+        
+          
+        html += `
+          <div class="complexity">
+            <label class="complexity-label">${game.i18n.localize("sofh.ui.complexity_value")}</label>
+            <input type="number" class="complexity-numer" value="0"></input>
+          </div>`;
+      }
+      html = selectElementSolution?.outerHTML + html;
+      const clueSelector = event.currentTarget.closest('.dialog').querySelector('.clue-slector');     
+      clueSelector.insertAdjacentHTML('afterend', html); 
+     
     }
   } 
 
+  async assigneComplexity(event){
+    event.preventDefault();
+    const selestedQuestion = event.target.options[event.target.selectedIndex];
+    const complexity = Number(selestedQuestion.id)
+    const complexityInput = event.target.closest('.known-clue').querySelector('.complexity-numer');
+    complexityInput.value = complexity
+
+  }
+}
+
+async function addQuestionSelector(clueSheet) {
+
+
+  const solutions =clueSheet.system.solutions;
+  const playerSolutions = Object.keys(solutions)
+    .filter(key => solutions[key].showToPlayer === true)
+    .map(key => solutions[key]);
+  let selectElementSolution = document.createElement('select'); 
+  selectElementSolution.classList.add('selection-mistery-solutions');
+
+  playerSolutions.forEach((solution, index) => {
+    let optionElement = document.createElement('option'); 
+    optionElement.value = solution.question; 
+    optionElement.textContent = solution.question; 
+    optionElement.id = solution.complexity
+    selectElementSolution.appendChild(optionElement); 
+  });
+  let blankOption = document.createElement('option');
+  blankOption.value = ''; 
+  blankOption.textContent = ''; 
+  blankOption.selected = true;
+  selectElementSolution.prepend(blankOption); 
+  
+
+  let misteryQuestionDiv = document.createElement('div');
+  misteryQuestionDiv.classList.add('mistery-question');
+
+  const misteryLabel = document.createElement('label');
+        misteryLabel.textContent = game.i18n.localize("sofh.dialog.select_mistery_question");
+        misteryLabel.classList.add('mistery-label'); 
+        misteryQuestionDiv.appendChild(misteryLabel);
+        misteryQuestionDiv.appendChild(selectElementSolution);
+
+  return misteryQuestionDiv
+  
 }

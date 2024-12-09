@@ -1,15 +1,15 @@
 <form class="sofh{{cssClass}}" autocomplete="off">
-{{#if item.system.housequestion}}
-<h2 class="h2-roll">{{localize 'sofh.ui.rolldialog.houseQuestionTitle'}}</h2>
+    {{#if item.system.housequestion}}
+    <h2 class="h2-roll">{{localize 'sofh.ui.rolldialog.houseQuestionTitle'}}</h2>
 
-<div class="house-question-application">
-    <div class="actor">{{actor.system.housequestion}}</div>
-    <div class="is-apply">
-    <label class="housequestion-isapply">{{localize 'sofh.ui.rolldialog.isApplyLabelHouse'}}</label>
-    <input type="checkbox" class="circle-checkbox-housequestion">
+    <div class="house-question-application">
+        <div class="actor">{{actor.system.housequestion}}</div>
+        <div class="is-apply">
+            <label class="housequestion-isapply">{{localize 'sofh.ui.rolldialog.isApplyLabelHouse'}}</label>
+            <input type="checkbox" class="circle-checkbox-housequestion">
+        </div>
     </div>
-</div>
-{{/if}}
+    {{/if}}
 
  
     <div class="item">
@@ -68,77 +68,64 @@
     {{/if}}
     </div>
     {{#if item.system.relationrelated}}
-    <h2 class="h2-roll">{{localize 'sofh.ui.rolldialog.relevantRelationTitle'}}</h2>
-    <div class="relation-roll">
-        <select class="relation-chosen">
-            <option value="">{{localize 'sofh.ui.rolldialog.noneOption'}}</option>
-            {{selectOptions (selectRelevantRelation actor)  localize=false}}
+        <h2 class="h2-roll">{{localize 'sofh.ui.rolldialog.relevantRelationTitle'}}</h2>
+        <div class="relation-roll">
+            <select class="relation-chosen">
+                <option value="">{{localize 'sofh.ui.rolldialog.noneOption'}}</option>
+                {{selectOptions (selectRelevantRelation actor)  localize=false}}
             
-        </select>
-    </div>
+            </select>
+        </div>
     {{/if}}
     {{#if item.system.cluerelated}}
-    <h2 class="h2-roll">{{localize 'sofh.ui.rolldialog.relatedClue'}}</h2>
-    <div class="known-clue">
-        <div class="clue-slector">
-        <label class="known-clue">{{localize "sofh.dialog.knownMisery"}}</label>
-    {{showAllKnownClue clueID complexity}}
-    </div>
-    </div>
-
-    {{/if}}
-    <h3 class="other-factor-h3">{{localize "sofh.ui.dialog.other_factor"}}</h3>
-    <div class="other-factor" style="display: none">
-        <div class="condition-impact">
-    <h2 class="h2-roll-first">{{localize 'sofh.ui.rolldialog.conditionImpactTitle'}}</h2>
-    <div class="oponent-have-condition">
-        <label class="oponent-have-condition-label">{{localize "sofh.ui.dialog.youroponenthavecondidtion"}}</label>
-        <input type="checkbox" class="oponent-have-condition-checkbox">
-    </div>
-{{#if (ifCondition actor.system.condition) }}
-
-    <div class="conditions-roll-toprow">
-        <label class="condition-description">{{localize 'sofh.ui.rolldialog.conditionDescriptionLabel'}}</label>
-        <label class="condition-isapply">{{localize 'sofh.ui.rolldialog.isApplyLabel'}}</label>
-    </div>
-
-    {{#each actor.system.condition as |condition index|}}
-        {{#if (and (ne condition.text "") (ne condition.type "") (ne condition.name ""))}}
-        <div class="conditions-roll-detail">
-            <div class="question description">{{condition.text}}</div>
-            <input type="checkbox" class="circle-checkbox-isapply">
+        <h2 class="h2-roll">{{localize 'sofh.ui.rolldialog.relatedClue'}}</h2>
+        <div class="known-clue">
+            
+            {{showAllKnownClue clueID complexity}}
         </div>
-        {{/if}}
-    {{/each}}
-
-{{/if}}
-
-
-<div class="item">
-    
-
-    {{#if item.system.stringsrelated}}
-    <h2 class="h2-roll">{{localize 'sofh.ui.rolldialog.relevantStringsTitle'}}</h2>
-    <div class="strings-sheet-roll">
-        <select class="roll-strings">
-            <option value="">{{localize 'sofh.ui.rolldialog.noneOption'}}</option>
-            {{selectOptions actor.system.strings valueAttr="name"}}
-        </select>
-    </div>
     {{/if}}
-    
-    <h2 class="h2-roll">{{localize 'sofh.ui.rolldialog.otherModsTitle'}}</h2>
-    <div class="others-mods">
-        
-    </div>
-
-    <div class="roll-mod-other">
-        <label class="disadvantage">{{localize 'sofh.ui.rolldialog.disadvantageLabel'}}</label>
-        <label class="normal">{{localize 'sofh.ui.rolldialog.normalLabel'}}</label>
-        <label class="advantage">{{localize 'sofh.ui.rolldialog.advantageLabel'}}</label>
-    </div>
-
-    {{rangePicker name="ad-disad" value=bar min=-2 max=2 step=1 span=none}}
-</div>
-</div>
+    {{#if (eq item.system.cluerelated false)}}
+        <h3 class="other-factor-h3">{{localize "sofh.ui.dialog.other_factor"}}</h3>
+        <div class="other-factor" style="display: none">
+            <div class="condition-impact">
+                <h2 class="h2-roll-first">{{localize 'sofh.ui.rolldialog.conditionImpactTitle'}}</h2>
+                <div class="oponent-have-condition">
+                    <label class="oponent-have-condition-label">{{localize "sofh.ui.dialog.youroponenthavecondidtion"}}</label>
+                    <input type="checkbox" class="oponent-have-condition-checkbox">
+                </div>
+                {{#if (ifCondition actor.system.condition) }}
+                    <div class="conditions-roll-toprow">
+                        <label class="condition-description">{{localize 'sofh.ui.rolldialog.conditionDescriptionLabel'}}</label>
+                        <label class="condition-isapply">{{localize 'sofh.ui.rolldialog.isApplyLabel'}}</label>
+                    </div>
+                    {{#each actor.system.condition as |condition index|}}
+                        {{#if (and (ne condition.text "") (ne condition.type "") (ne condition.name ""))}}
+                            <div class="conditions-roll-detail">
+                                <div class="question description">{{condition.text}}</div>
+                                <input type="checkbox" class="circle-checkbox-isapply">
+                            </div>
+                        {{/if}}
+                    {{/each}}
+                {{/if}}
+                <div class="item">
+                {{#if item.system.stringsrelated}}
+                    <h2 class="h2-roll">{{localize 'sofh.ui.rolldialog.relevantStringsTitle'}}</h2>
+                    <div class="strings-sheet-roll">
+                        <select class="roll-strings">
+                            <option value="">{{localize 'sofh.ui.rolldialog.noneOption'}}</option>
+                            {{selectOptions actor.system.strings valueAttr="name"}}
+                        </select>
+                    </div>
+                {{/if}}
+                <h2 class="h2-roll">{{localize 'sofh.ui.rolldialog.otherModsTitle'}}</h2>
+                <div class="others-mods"></div>
+                <div class="roll-mod-other">
+                    <label class="disadvantage">{{localize 'sofh.ui.rolldialog.disadvantageLabel'}}</label>
+                    <label class="normal">{{localize 'sofh.ui.rolldialog.normalLabel'}}</label>
+                    <label class="advantage">{{localize 'sofh.ui.rolldialog.advantageLabel'}}</label>
+                </div>
+                {{rangePicker name="ad-disad" value=bar min=-2 max=2 step=1 span=none}}
+            </div>
+        </div>
+    {{/if}}
 </form>

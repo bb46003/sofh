@@ -1040,3 +1040,24 @@ input.show-to-player {
 button.remove-solution{
     height:100%
 }
+.mistery-question {
+    display: flex;
+    align-items: center;
+}
+.known-clue {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    row-gap: 5px;
+}
+
+.clue-slector {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    row-gap: 5px;
+}
+.single-clue {
+    display: flex;
+    align-items: center;
+}

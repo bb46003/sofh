@@ -170,58 +170,60 @@ Handlebars.registerHelper("addCharactersKnownsClue", function (index, actor) {
 
 Handlebars.registerHelper("showAllKnownClue", function (clueID, complexity) {
   if (Array.isArray(clueID)) {
-let clueNames= [];
-clueID.forEach(ID =>
-  clueNames.push(game.actors.get(ID).name)
-)
+    let clueNames= [];
+    clueID.forEach(ID =>
+      clueNames.push(game.actors.get(ID).name)
+    )
 
-let selectElement = document.createElement('select'); 
-selectElement.classList.add('selection-mistery');
-let blankOption = document.createElement('option');
-blankOption.value = ''; 
-blankOption.textContent = ''; 
-selectElement.appendChild(blankOption); 
-clueNames.forEach((name, index) => {
-  let optionElement = document.createElement('option'); 
-  optionElement.value = name; 
-  optionElement.textContent = name; 
-  optionElement.id = clueID[index]
-  selectElement.appendChild(optionElement); 
-});
-return new Handlebars.SafeString(selectElement.outerHTML);
+    let selectElement = document.createElement('select'); 
+    selectElement.classList.add('selection-mistery');
+    let blankOption = document.createElement('option');
+    blankOption.value = ''; 
+    blankOption.textContent = ''; 
+    selectElement.appendChild(blankOption); 
+    clueNames.forEach((name, index) => {
+      let optionElement = document.createElement('option'); 
+      optionElement.value = name; 
+      optionElement.textContent = name; 
+      optionElement.id = clueID[index]
+      selectElement.appendChild(optionElement); 
+    });
+
+    let html = `<div class="clue-slector">
+                <label class="known-clue">${game.i18n.localize( "sofh.dialog.knownMisery")}</label>`;
+    html +=   selectElement.outerHTML
+    html += `</div>`                        
+            
+    return new Handlebars.SafeString(html);
   }
   else{
     const actor = this.actor;
-  const actorId = actor._id; 
-  let html = "";  
-  const clueSheet = game.actors.get(clueID)
-  const clueDescription = clueSheet.system.clue;
-  const actorClue = clueSheet.system.actorID[actorId];
-  Object.keys(actorClue).forEach(key => {
-  if (key.startsWith('have') && actorClue[key] === true) {
-    const index = key.slice(4); 
-    if (clueDescription.hasOwnProperty(index)) {
-      html += ` 
-        <div class="single-clue">
-          <label class="known-clue-label">${clueDescription[index].description}</label>
-          <input type="checkbox" class="circle-checkbox-isapply-clue">
-        </div>`
+    const actorId = actor._id; 
+    let html = "";  
+    const clueSheet = game.actors.get(clueID)
+    const clueDescription = clueSheet.system.clue;
+    const actorClue = clueSheet.system.actorID[actorId];
+    Object.keys(actorClue).forEach(key => {
+      if (key.startsWith('have') && actorClue[key] === true) {
+        const index = key.slice(4); 
+        if (clueDescription.hasOwnProperty(index)) {
+          html += ` 
+            <div class="single-clue">
+              <label class="known-clue-label">${clueDescription[index].description}</label>
+              <input type="checkbox" class="circle-checkbox-isapply-clue"></input>
+            </div>`
+        }
+      }
+    });
+    if (html !== ""){
+      html += `
+        <div class="complexity">
+          <label class="complexity-label">${game.i18n.localize("sofh.ui.complexity_value")}</label>
+          <input type="number" class="complexity-numer" value="${complexity}"></input>
+        </div>`      
     }
+    return new Handlebars.SafeString(html);
   }
-});
-if (html !== ""){
-  html += `
-    <div class="complexity">
-      <label class="complexity-label">${game.i18n.localize("sofh.ui.complexity_value")}</label>
-      <input type="number" class="complexity-numer" value="${complexity}"></input>
-    </div>
-  `
-
-}
-return new Handlebars.SafeString(html);
-
-  }
- 
 })
 
 Handlebars.registerHelper("numberOfQuestion", function(data){

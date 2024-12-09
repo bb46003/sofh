@@ -237,11 +237,12 @@
   "sofh.ui.clue.solution_table": "Mystery Questions",
   "sofh.chat.mystery_solution":"Opportunity - ",
   "sofh.chat.mystery_question": "Question - ",
-  "sofh.ui.clue.list_of_mistery_solutions":"List o Mistery solutions",
-  "sofh.ui.clue.solution_question": "Question to solution",
-  "sofh.ui.clue.solution_complecity":"Complexity of solution",
-  "sofh.ui.clue.solution_solution": "Solution to Mistery",
-  "sofh.ui.clue.solution_shopwtoplayers": "Show solution to Players",
-  "sofh.ui.clue.solution_remove":"Remove solution"
+  "sofh.ui.clue.list_of_mistery_solutions":"Add a Question",
+  "sofh.ui.clue.solution_question": "Questions",
+  "sofh.ui.clue.solution_complecity":"Complexity",
+  "sofh.ui.clue.solution_solution": "Opportunity",
+  "sofh.ui.clue.solution_shopwtoplayers": " Show Opportunity to players?",
+  "sofh.ui.clue.solution_remove":"Remove solution",
+  "sofh.dialog.select_mistery_question":"Choose Mystery Question"
   
 }
