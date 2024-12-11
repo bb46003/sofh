@@ -156,7 +156,7 @@ export class moveRoll extends Dialog {
     const relationSelect = document?.querySelector(".relation-chosen");
     if (relationSelect) {
       selections.relevantRelation = relationSelect.value;
-      rollmod = rollmod + Number(relationSelect.value);
+      rollmod = rollmod + Number(relationSelect.value.split(":")[0]);
     }
 
     const stringsSelect = document?.querySelector(".roll-strings");

@@ -70,7 +70,7 @@
     {{#if item.system.relationrelated}}
         <h2 class="h2-roll">{{localize 'sofh.ui.rolldialog.relevantRelationTitle'}}</h2>
         <div class="relation-roll">
-            <select class="relation-chosen">
+            <select class="relation-chosen" value="key" name="value">
                 <option value="">{{localize 'sofh.ui.rolldialog.noneOption'}}</option>
                 {{selectOptions (selectRelevantRelation actor)  localize=false}}
             

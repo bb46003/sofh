@@ -102,7 +102,8 @@ Handlebars.registerHelper("selectRelevantRelation", function (thisCharacter) {
       let relationID = actor.system.relation[`name${i}`];
       let relationName = actor.name;
       if (relationID === myCharacterID) {
-        characterWithRelationtoMe[actor.system.relation[`value${i}`]] =
+        let j = Object.keys(characterWithRelationtoMe).length;
+        characterWithRelationtoMe[`${actor.system.relation[`value${i}`]}`+`:${j}`] =
           relationName;
       }
     }
