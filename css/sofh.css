@@ -1061,3 +1061,7 @@ button.remove-solution{
     display: flex;
     align-items: center;
 }
+input.input-score {
+    min-width: 80%;
+    max-width: 80%;
+}
