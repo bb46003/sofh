@@ -13,7 +13,7 @@ export default function registerSettings() {
   //  INTERNAL SETTINGS
   // -------------------
   //
-  const SYSTEM_ID = "sofh";
+  const SYSTEM_ID = "SofH";
   game.settings.register(SYSTEM_ID, "points_slytherin", {
     name: "points_slytherin",
     scope: "world",
@@ -74,8 +74,8 @@ export default function registerSettings() {
     type: Boolean,
   });
   game.settings.register("SofH", "showHousePoints", {
-    name: "sofh.SETTINGS.showHousePoint",
-    hint: "sofh.SETTINGS.showHousePointHint",
+    name: "SofH.SETTINGS.showHousePoint",
+    hint: "SofH.SETTINGS.showHousePointHint",
     scope: "world",
     config: true,
     default: true,
@@ -92,7 +92,7 @@ Hooks.once("init", async function () {
   loadPolishLocalization()
   CONFIG.Actor.documentClass = sofhActor;
   CONFIG.SOFHCONFIG = SOFHCONFIG;
-  game.sofh = { HomeScore, moveRoll };
+  game.SofH = { HomeScore, moveRoll };
 
 
   return preloadHandlebarsTemplates();
@@ -109,26 +109,26 @@ async function loadPolishLocalization() {
 }
 
 Hooks.once("ready", async function () {
-  const SYSTEM_ID = "sofh";
+  const SYSTEM_ID = "SofH";
   if (game.settings.get("SofH", "showHousePoints")) {
-    await game.sofh.HomeScore.initialise();
+    await game.SofH.HomeScore.initialise();
 
     const houseSettings = [
       {
         name: "gryffindor",
-        value: game.sofh.HomeScore._instance.data.points_gryffindor || 0,
+        value: game.SofH.HomeScore._instance.data.points_gryffindor || 0,
       },
       {
         name: "slytherin",
-        value: game.sofh.HomeScore._instance.data.points_slytherin || 0,
+        value: game.SofH.HomeScore._instance.data.points_slytherin || 0,
       },
       {
         name: "hufflepuff",
-        value: game.sofh.HomeScore._instance.data.points_hufflepuff || 0,
+        value: game.SofH.HomeScore._instance.data.points_hufflepuff || 0,
       },
       {
         name: "ravenclaw",
-        value: game.sofh.HomeScore._instance.data.points_ravenclaw || 0,
+        value: game.SofH.HomeScore._instance.data.points_ravenclaw || 0,
       },
     ];
 
