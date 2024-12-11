@@ -14,12 +14,12 @@ export class HomeScore extends Application {
 
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
-      classes: ["sofh", "home-score-tracker"],
+      classes: ["SofH", "home-score-tracker"],
       height: "200",
       id: "home-score-app",
       popOut: false,
       resizable: false,
-      template: "systems/sofh/templates/app/home_score-tracker.hbs",
+      template: "systems/SofH/templates/app/home_score-tracker.hbs",
       title: "Home Score",
       width: "auto",
     });
@@ -27,7 +27,7 @@ export class HomeScore extends Application {
 
   getData() {
     super.getData();
-    const SYSTEM_ID = "sofh";
+    const SYSTEM_ID = "SofH";
     this.data.points_slytherin = game.settings.get(
       SYSTEM_ID,
       "points_slytherin",
@@ -96,19 +96,19 @@ export class HomeScore extends Application {
     let inputScore = parseInt(inputScoreElement.val(), 10) || 0;
 
     let currentPoints = game.settings.get(
-      "sofh",
+      "SofH",
       `points_${house.toLowerCase()}`,
     );
     let newPoints = currentPoints + inputScore;
 
-    await game.settings.set("sofh", `points_${house.toLowerCase()}`, newPoints);
+    await game.settings.set("SofH", `points_${house.toLowerCase()}`, newPoints);
     HomeScore._instance.data[`points_${house.toLowerCase()}`] = newPoints;
 
     await HomeScore.updatePoints();
   }
 
   static async updatePoints() {
-    const SYSTEM_ID = "sofh";
+    const SYSTEM_ID = "SofH";
     const houseSettings = [
       {
         name: "gryffindor",
@@ -143,12 +143,12 @@ export class HomeScore extends Application {
 
     HomeScore.renderHomeScore();
 
-    game.socket.emit("system.sofh", { operation: "updatePoints" });
+    game.socket.emit("system.SofH", { operation: "updatePoints" });
     return;
   }
 
   static async registerSocketEvents() {
-    game.socket.on("system.sofh", (ev) => {
+    game.socket.on("system.SofH", (ev) => {
       if (ev.operation === "updatePoints") {
         HomeScore.renderHomeScore();
       }
