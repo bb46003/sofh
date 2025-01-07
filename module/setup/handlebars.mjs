@@ -89,6 +89,7 @@ Handlebars.registerHelper(
     return filteredRelations;
   },
 );
+
 Handlebars.registerHelper("selectRelevantRelation", function (thisCharacter) {
   const actors = game.actors;
   const character = Array.from(actors.entries()).filter(
@@ -110,6 +111,7 @@ Handlebars.registerHelper("selectRelevantRelation", function (thisCharacter) {
   });
   return characterWithRelationtoMe;
 });
+
 Handlebars.registerHelper("injectHtml", function (htmlContent) {
   // Wrap content in a styled div with IM Fell English as the font
   const styledContent = `<div style="font-family: 'IM Fell English', serif;">${htmlContent}</div>`;
@@ -257,6 +259,7 @@ Handlebars.registerHelper("chekSolution", function(){
     }
   }
 })
+
 Handlebars.registerHelper("showSingleSolution", function(solution){
   const User = game.user.isGM;
 
@@ -274,6 +277,7 @@ Handlebars.registerHelper("showSingleSolution", function(solution){
     }
   }
 })
+
 Handlebars.registerHelper("isGM", function(){
   const User = game.user.isGM;
 
@@ -309,4 +313,43 @@ return html
   }
 
 })
+
+Handlebars.registerHelper("customIDStyle", function () {
+  const userID = game.user.id;
+  console.log(userID);
+
+  const right = game.settings.get("SofH", "HomeScorePositionX");
+  const bottom = game.settings.get("SofH", "HomeScorePositionY");
+  const scale = game.settings.get("SofH", "HomeScoreSize");
+  // Define the unique CSS for this userID
+  let css = `
+    .house-scores-container-${userID} {
+      display: flex;
+      align-items: center;
+      justify-content: space-evenly;
+      width: 900px;
+      transform: scale(${scale});
+      position: absolute;
+      margin: 5px;
+      bottom: ${bottom}px !important;
+      right: ${right}px !important;
+    }
+  `;
+
+  // Check if the style element already exists for this userID
+  const styleId = `custom-css-${userID}`;
+  if (!document.getElementById(styleId)) {
+    // Create and append a new style element to the document head
+    const styleElement = document.createElement("style");
+    styleElement.id = styleId;
+    styleElement.type = "text/css";
+    styleElement.appendChild(document.createTextNode(css));
+    document.head.appendChild(styleElement);
+  }
+
+  // Return the HTML with the unique class
+  const html = `<div class="house-scores-container-${userID}">`;
+  return html;
+});
+
 

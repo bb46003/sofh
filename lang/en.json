@@ -244,6 +244,14 @@
   "sofh.ui.clue.solution_solution": "Opportunity",
   "sofh.ui.clue.solution_shopwtoplayers": " Show Opportunity to players?",
   "sofh.ui.clue.solution_remove":"Remove solution",
-  "sofh.dialog.select_mistery_question":"Choose Mystery Question"
+  "sofh.dialog.select_mistery_question":"Choose Mystery Question",
+  "sofh.SETTINGS.homeScoreSize": "Defnie scale of House Point App",
+  "sofh.SETTINGS.homeScoreSizeHnt" : "Lower value shrink app, bigger enlage it",
+  "sofh.SETTINGS.HomeScorePositionY": "Defnie position in Top/Bottom orientation",
+  "sofh.SETTINGS.HomeScorePositionYHint": "Higher value move App to top, lower to bottom of screen",
+  "sofh.SETTINGS.HomeScorePositionX":"Defnie position in Left/Right orientation",
+  "sofh.SETTINGS.HomeScorePositionXHint": "Higher value move to Left, lower to Right"
+
+
   
 }

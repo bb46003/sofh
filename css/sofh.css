@@ -701,7 +701,7 @@ select.question-impact:disabled {
     align-items: center;
     justify-content: space-evenly;
     width: 900px;
-    scale: 0.45;
+    transform: scale(0.45);
     position: absolute;
     margin: 5px;
     bottom: -150px !important;

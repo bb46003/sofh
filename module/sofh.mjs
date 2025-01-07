@@ -6,6 +6,7 @@ import { HomeScore } from "./app/home_score.mjs";
 import { moveRoll } from "./dialog/move-dialog.mjs";
 import { characterRelation } from "./config.mjs";
 import {sofhActor} from "./actor/actors.mjs";
+import * as SofHMigrate from "./migrate.js";
 
 
 export default function registerSettings() {
@@ -74,25 +75,73 @@ export default function registerSettings() {
     type: Boolean,
   });
   game.settings.register("SofH", "showHousePoints", {
-    name: "SofH.SETTINGS.showHousePoint",
-    hint: "SofH.SETTINGS.showHousePointHint",
+    name: "sofh.SETTINGS.showHousePoint",
+    hint: "sofh.SETTINGS.showHousePointHint",
     scope: "world",
     config: true,
     default: true,
     requiresReload: true,
     type: Boolean,
   });
+    // Most recent data format version
+    game.settings.register("SofH", "systemMigrationVersion", {
+      config: false,
+      scope: "world",
+      type: String,
+      default: ""
+  });
+  if(game.settings.get("SofH", "showHousePoints")){
+  game.settings.register("SofH", "HomeScoreSize", {
+    name: "sofh.SETTINGS.homeScoreSize",
+    hint: "sofh.SETTINGS.homeScoreSizeHnt",
+    scope: "client",     
+    config: true,       
+    requiresReload: false, 
+    type: Number,  
+    default: 0.45,      
+    onChange: (newValue) => {
+      const type = "HomeScoreSize"
+      customStyle(type, newValue); // Automatically called whenever the value changes
+    }
+  });
+  game.settings.register("SofH", "HomeScorePositionY", {
+    name: "sofh.SETTINGS.HomeScorePositionY",
+    hint: "sofh.SETTINGS.HomeScorePositionYHint",
+    scope: "client",     
+    config: true,       
+    requiresReload: false, 
+    type: Number,  
+    default: -150,      
+    onChange: (newValue) => {
+      const type = "HomeScorePositionY"
+      customStyle(type, newValue); // Automatically called whenever the value changes
+    }
+  });
+  game.settings.register("SofH", "HomeScorePositionX", {
+    name: "sofh.SETTINGS.HomeScorePositionX",
+    hint: "sofh.SETTINGS.HomeScorePositionXHint",
+    scope: "client",     
+    config: true,       
+    requiresReload: false, 
+    type: Number,  
+    default: 70,      
+    onChange: (newValue) => {
+      const type = "HomeScorePositionX"
+      customStyle(type, newValue); // Automatically called whenever the value changes
+    }
+  });
+}
 }
 
 Hooks.once("init", async function () {
   console.log("Secret of Hogwarts Initialising");
   registerSheets();
   registerHandlebarsHelpers();
-  registerSettings();
+  registerSettings(); 
   loadPolishLocalization()
   CONFIG.Actor.documentClass = sofhActor;
   CONFIG.SOFHCONFIG = SOFHCONFIG;
-  game.SofH = { HomeScore, moveRoll };
+  game.SofH = { HomeScore, moveRoll,  migrateWorld: SofHMigrate.migrateWorld,};
 
 
   return preloadHandlebarsTemplates();
@@ -107,6 +156,11 @@ async function loadPolishLocalization() {
   const plStrings = await response.json();
   return plStrings;
 }
+Hooks.on('updateSetting', (setting) => {
+  if (['HomeScorePositionX', 'HomeScorePositionY', 'HomeScoreSize'].includes(setting.key)) {
+    customStyle();
+  }
+});
 
 Hooks.once("ready", async function () {
   const SYSTEM_ID = "SofH";
@@ -165,6 +219,19 @@ Hooks.once("ready", async function () {
   }
 
   CONFIG.SOFHCONFIG = SOFHCONFIG;
+
+  // Migration
+  if (game.user.isGM) {
+    const SYSTEM_MIGRATION_VERSION =game.world.systemVersion;
+    const currentVersion = game.settings.get("SofH", "systemMigrationVersion");
+    const needsMigration = !currentVersion || foundry.utils.isNewerVersion(SYSTEM_MIGRATION_VERSION, currentVersion);
+
+    if (needsMigration) {
+        SofHMigrate.migrateWorld();
+        game.settings.set("SofH", "systemMigrationVersion", SYSTEM_MIGRATION_VERSION);
+    }
+}
+
   
 });
 
@@ -310,5 +377,47 @@ async function nestObject(flatObj) {
   }
 
   return nestedObj;
+}
+
+async function customStyle(type, newValue) {
+  const userID = game.user.id;
+
+  // Find or create the <style> element
+  let styleTag = document.getElementById(`dynamic-styles-${userID}`);
+  if (!styleTag) {
+    styleTag = document.createElement('style');
+    styleTag.id = `dynamic-styles-${userID}`;
+    document.head.appendChild(styleTag);
+  }
+  
+  // Get updated settings
+  let right = game.settings.get("SofH", "HomeScorePositionX");
+  let bottom = game.settings.get("SofH", "HomeScorePositionY");
+  let scale = game.settings.get("SofH", "HomeScoreSize");
+  switch(type){
+    case "HomeScorePositionX":
+      right = newValue;
+      break
+    case "HomeScorePositionY":
+      bottom = newValue;
+      break
+    case "HomeScoreSize":
+      scale = newValue;
+      break
+  }
+  // Update the style content
+  styleTag.textContent = `
+    .house-scores-container-${userID} {
+      display: flex;
+      align-items: center;
+      justify-content: space-evenly;
+      width: 900px;
+      transform: scale(${scale}) !important;
+      position: absolute;
+      margin: 5px;
+      bottom: ${bottom}px !important;
+      right: ${right}px !important;
+    }
+  `;
 }
 

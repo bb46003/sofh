@@ -13,6 +13,7 @@ export class HomeScore extends Application {
   }
 
   static get defaultOptions() {
+  
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["SofH", "home-score-tracker"],
       height: "200",
@@ -81,7 +82,9 @@ export class HomeScore extends Application {
   static async renderHomeScore() {
     if (HomeScore._instance) {
       HomeScore._instance.render(true);
+     
     }
+
   }
 
   static async resolvePoints(house, html) {
@@ -142,15 +145,17 @@ export class HomeScore extends Application {
     }
 
     HomeScore.renderHomeScore();
-
-    game.socket.emit("system.SofH", { operation: "updatePoints" });
+      game.socket.emit("system.SofH", { operation: "updatePoints" });
+   
     return;
   }
+
 
   static async registerSocketEvents() {
     game.socket.on("system.SofH", (ev) => {
       if (ev.operation === "updatePoints") {
         HomeScore.renderHomeScore();
+ 
       }
     });
   }
