@@ -92,6 +92,12 @@ export class  sofhCharacterSheet extends ActorSheet {
           break;
       }
     }
+    basicMoves.sort((a, b) => a.name.localeCompare(b.name));
+    houseMoves.sort((a, b) => a.name.localeCompare(b.name));
+    peripheralMoves.sort((a, b) => a.name.localeCompare(b.name));
+    endOfSessionMoves.sort((a, b) => a.name.localeCompare(b.name));
+    specialPlaybookMoves.sort((a, b) => a.name.localeCompare(b.name));
+
 
     // After assigning the items to each array, assign these arrays to the context object
     context.basicMoves = basicMoves;
@@ -166,9 +172,36 @@ export class  sofhCharacterSheet extends ActorSheet {
     const button = event.target;
     const ID = button.id;
     const item = this.actor.items.get(ID);
-    await this.actor.deleteEmbeddedDocuments("Item", [ID]);
-    const movesElement = $(".all-moves." + item.type);
-    await movesElement.css("display", "");
+    
+    const innerText = game.i18n.format("sofh.ui.dialog.deleteMove",{name:item.name})
+    const d = new Dialog({
+      title: game.i18n.format("sofh.ui.dialog.deleteMoveTitle",{name:item.name}), 
+      content: `
+        <p>${innerText}</p>
+      `,
+      buttons: {
+        delete: {
+          label: game.i18n.localize("Delete"),
+          callback: async () => {
+
+            await this.actor.deleteEmbeddedDocuments("Item", [ID]);
+            const movesElement = $(".all-moves." + item.type);
+            await movesElement.css("display", "");
+          }
+        },
+        cancel: {
+          label: game.i18n.localize("Cancel"),
+          callback: () => {
+              ui.notifications.info("Deletion canceled.");
+          }
+        }
+      },
+      default: "cancel", 
+      close: () => {
+      }
+    });
+    d.render(true);
+    
   }
 
   async handleHouseChange(ev) {
@@ -182,7 +215,7 @@ export class  sofhCharacterSheet extends ActorSheet {
   }
 
   async handleConditionChange(ev) {
-    await this.updateActorCondition(ev, this.actor);
+    await this.updateActorConidtion(ev, this.actor);
   }
 
   async handleDiamondClick(ev) {

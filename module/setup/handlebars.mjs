@@ -23,23 +23,36 @@ export function registerHandlebarsHelpers() {
     return anycondition;
   });
   Handlebars.registerHelper("trigerlist", function (actor) {
-    // Ensure the actor and items exist
+
     if (!actor || !actor.items) return "";
 
     const items = actor.items;
     if (items.size !== 0) {
       const itemsArray = items._source;
+      itemsArray.sort((a, b) => a.name.localeCompare(b.name));
       let htmlOutput = "";
 
-      // Function to remove all HTML tags
       const stripHtmlTags = (html) => {
-        return html.replace(/<[^>]*>/g, ""); // Remove all HTML tags
+        return html.replace(/<[^>]*>/g, ""); 
       };
 
       // Iterate through each item
       itemsArray.forEach((item) => {
-        let triggers = item.system.triggers; // Assuming system.triggers is available
-        const descriptionText = stripHtmlTags(item.system.description); // Clean description text
+        let triggers = item.system.triggers; 
+        const moveName = item.name; 
+        if (triggers.includes("<span")) {
+          
+          triggers = triggers.replace(
+            /(<span\b[^>]*>)/,
+            `$1<b>${moveName}</b> - `
+          );
+        } else if (triggers.includes("<p>")) {
+          triggers = triggers.replace(
+            /(<p\b[^>]*>)/,
+            `$1<b>${moveName}</b> -  `
+          );
+        }
+        const descriptionText = stripHtmlTags(item.system.description); 
         const tooltipAttribute = `data-tooltip="${descriptionText}" data-tooltip-direction="RIGHT" style="width: fit-content"`;
         triggers = triggers.replace(/<p(.*?)>/g, `<p ${tooltipAttribute}>`);
 
@@ -64,8 +77,7 @@ Handlebars.registerHelper("lowercase", function (str) {
   return str.toLowerCase();
 });
 
-Handlebars.registerHelper(
-  "checkRelation",
+Handlebars.registerHelper("checkRelation",
   function (characterRelation, actor, ID) {
     const filteredRelations = {};
 

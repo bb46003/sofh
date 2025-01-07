@@ -22,7 +22,7 @@
   "sofh.ui.actor.xp": "Doświadczenie",
   "sofh.ui.actor.relationships": "Relacje",
   "sofh.ui.actor.moves": "Ruchy",
-  "sofh.ui.actor.eq": "Ekwipunek",
+  "sofh.ui.actor.eq": "Props & Note",
   "sofh.ui.actor.reputationrank.0": "",
   "sofh.ui.actor.reputationrank.1": "Ranga 1: Wszyscy w Hogwarcie słyszeli o tym, co zrobiłaś.",
   "sofh.ui.actor.reputationrank.2": "Ranga 2: Wszyscy w Hogwarcie rozpoznają Cię i znają Twoje imię.",
@@ -249,6 +249,8 @@
   "sofh.SETTINGS.HomeScorePositionY": "Defnie position in Top/Bottom orientation",
   "sofh.SETTINGS.HomeScorePositionYHint": "Higher value move App to top, lower to bottom of screen",
   "sofh.SETTINGS.HomeScorePositionX":"Defnie position in Left/Right orientation",
-  "sofh.SETTINGS.HomeScorePositionXHint": "Higher value move to Left, lower to Right"
-  
+  "sofh.SETTINGS.HomeScorePositionXHint": "Higher value move to Left, lower to Right",
+  "sofh.ui.actor.notes": "Notes",
+  "sofh.ui.dialog.deleteMove": "Are you sure you want to delete the move <strong>{name}</strong>?",
+  "sofh.ui.dialog.deleteMoveTitle": "Delete Move: {name}"
 }

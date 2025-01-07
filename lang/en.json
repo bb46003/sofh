@@ -22,7 +22,7 @@
   "sofh.ui.actor.xp": "Experience",
   "sofh.ui.actor.relationships": "Relation",
   "sofh.ui.actor.moves": "Moves",
-  "sofh.ui.actor.eq": "Equipment",
+  "sofh.ui.actor.eq": "Props & Note",
   "sofh.ui.actor.reputationrank.0": "",
   "sofh.ui.actor.reputationrank.1": "Rank 1: Everyone at Hogwarts hears about what you did.",
   "sofh.ui.actor.reputationrank.2": "Rank 2: Everyone at Hogwarts knows your face and name.",
@@ -234,24 +234,26 @@
   "sofh.ui.lack_of_move": "do not have move related to clues",
   "sofh.move.isRaltedToHouseQuestion": "House Question",
   "sofh.ui.rolldialog.pickOneAproach": "Choose one approach from the following:",
-  "sofh.dialog.knownMisery":"Select Mistery",
+  "sofh.dialog.knownMisery": "Select Mistery",
   "sofh.ui.clue.solution_table": "Mystery Questions",
-  "sofh.chat.mystery_solution":"Opportunity - ",
+  "sofh.chat.mystery_solution": "Opportunity - ",
   "sofh.chat.mystery_question": "Question - ",
-  "sofh.ui.clue.list_of_mistery_solutions":"Add a Question",
+  "sofh.ui.clue.list_of_mistery_solutions": "Add a Question",
   "sofh.ui.clue.solution_question": "Questions",
-  "sofh.ui.clue.solution_complecity":"Complexity",
+  "sofh.ui.clue.solution_complecity": "Complexity",
   "sofh.ui.clue.solution_solution": "Opportunity",
   "sofh.ui.clue.solution_shopwtoplayers": " Show Opportunity to players?",
-  "sofh.ui.clue.solution_remove":"Remove solution",
-  "sofh.dialog.select_mistery_question":"Choose Mystery Question",
+  "sofh.ui.clue.solution_remove": "Remove solution",
+  "sofh.dialog.select_mistery_question": "Choose Mystery Question",
   "sofh.SETTINGS.homeScoreSize": "Defnie scale of House Point App",
-  "sofh.SETTINGS.homeScoreSizeHnt" : "Lower value shrink app, bigger enlage it",
+  "sofh.SETTINGS.homeScoreSizeHnt": "Lower value shrink app, bigger enlage it",
   "sofh.SETTINGS.HomeScorePositionY": "Defnie position in Top/Bottom orientation",
   "sofh.SETTINGS.HomeScorePositionYHint": "Higher value move App to top, lower to bottom of screen",
-  "sofh.SETTINGS.HomeScorePositionX":"Defnie position in Left/Right orientation",
-  "sofh.SETTINGS.HomeScorePositionXHint": "Higher value move to Left, lower to Right"
-
-
+  "sofh.SETTINGS.HomeScorePositionX": "Defnie position in Left/Right orientation",
+  "sofh.SETTINGS.HomeScorePositionXHint": "Higher value move to Left, lower to Right",
+  "sofh.ui.actor.notes": "Notes",
+  "sofh.ui.dialog.deleteMove": "Are you sure you want to delete the move <strong>{name}</strong>?",
+  "sofh.ui.dialog.deleteMoveTitle": "Delete Move: {name}"
+    
   
 }
