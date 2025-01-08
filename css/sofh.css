@@ -405,7 +405,7 @@ input.relation-name {
     height: 30px;
 }
 
-.strings-inputs button.remove-string-btn {
+.strings-inputs {
     flex-shrink: 0;
     margin-left: 5px;
     height: 30px;
@@ -542,7 +542,6 @@ form.moves-tab {
 }
 .sheet-table-data {
     border-bottom: 1px dashed;
-    max-height: 30px;
 }
 
 .first-row {
