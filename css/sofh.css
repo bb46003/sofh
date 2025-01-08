@@ -514,8 +514,7 @@ button#\30 {
     
 }
 .move-image {
-
-    width: 40%;
+    width: 20%;
     border: none;
 }
 input.fake-box{
@@ -542,16 +541,12 @@ form.moves-tab {
     justify-content: center;
 }
 .sheet-table-data {
-    display: flex;
-    flex-direction: column;
     border-bottom: 1px dashed;
+    max-height: 30px;
 }
 
 .first-row {
-    display: grid;
-    margin-bottom: 10px;
-   
-
+    display: grid; 
     grid-template-columns: 0.3fr 1fr 0.3fr;
     align-items: center;
     justify-items: center;
@@ -563,7 +558,7 @@ form.moves-tab {
 
 .first-row a {
     margin-right: 10px; /* Space between the link and the button */
-    font-size: 25px;
+    font-size: 20px;
 }
 
 
@@ -1064,4 +1059,8 @@ button.remove-solution{
 input.input-score {
     min-width: 80%;
     max-width: 80%;
+}
+button#add-string-btn {
+    margin: auto;
+    width: 100%;
 }

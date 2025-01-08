@@ -117,7 +117,7 @@ export class  sofhCharacterSheet extends ActorSheet {
     html.on("click", ".decrease-btn", () => this.lowerReputationRank());
     html.on("change", ".house", (ev) => this.handleHouseChange(ev));
     html.on("change", ".condition-text, .condition-type", (ev) =>
-      this.handleConditionChange(ev),
+      this.updateActorCondition(ev),
     );
     html.on("click", ".hover-label-question", () =>
       this.assignHouseQuestions(this.actor.system.home, false),
@@ -214,9 +214,7 @@ export class  sofhCharacterSheet extends ActorSheet {
     }
   }
 
-  async handleConditionChange(ev) {
-    await this.updateActorConidtion(ev, this.actor);
-  }
+ 
 
   async handleDiamondClick(ev) {
     const element = ev.target.closest("div");
@@ -508,7 +506,8 @@ export class  sofhCharacterSheet extends ActorSheet {
     await this.actor.update({ "system.strings": newStrings });
   }
 
-  async updateActorCondition(ev, actor) {
+  async updateActorCondition(ev) {
+    const actor = this.actor;
     const updateData = { [ev.target.name]: ev.target.value };
     await actor.update(updateData);
     const allConditionsMet = Object.values(actor.system.condition).every(
@@ -528,8 +527,14 @@ export class  sofhCharacterSheet extends ActorSheet {
       const removeButton = document.querySelector(
         `.remove-moves-btn[id='${move.id}']`,
       );
-      const decription = document.querySelector(".second-row");
-      const titleDiv = document.querySelector(`.first-row[id='${move.id}']`);
+      let decription = document.querySelector(".second-row");
+      let titleDiv = document.querySelector(`.first-row[id='${move.id}']`);
+      if (!decription || !titleDiv) {
+        const closestWindowApp = $(event.currentTarget).closest(".window-app");
+        decription = closestWindowApp.find(".second-row")[0] || null; // Use the DOM element
+        titleDiv = closestWindowApp.find(`.first-row[id='${move.id}']`)[0]; // Use the DOM element
+      }
+
       if (decription === null) {
         const newElement = document.createElement("div");
         const moveBody = await renderTemplate(
@@ -546,23 +551,29 @@ export class  sofhCharacterSheet extends ActorSheet {
 
   async showMoves(event) {
     const moveType = event.target.id;
-    if(moveType !== ""){
-    const movesElement = $(".all-moves." + moveType);
-    if (movesElement.css("display") === "none") {
-      movesElement.css("display", "");
-    } else {
-      movesElement.css("display", "none");
+    if (moveType !== "") {
+      const closestWindowApp = $(event.currentTarget).closest(".window-app");
+      const movesElement = closestWindowApp.find(".all-moves." + moveType);
+  
+      if (movesElement.css("display") === "none") {
+        movesElement.css("display", "");
+      } else {
+        movesElement.css("display", "none");
+      }
     }
   }
-  }
+  
 
   async collapsAllMoves(event) {
     const target = event.target.classList.value;
+    const closestWindowApp = $(event.currentTarget).closest(".window-app");
+  
     if (target === "moves active") {
-      const movesElements = $(".all-moves").not(".basicMoves");
+      const movesElements = closestWindowApp.find(".all-moves").not(".basicMoves");
       movesElements.css("display", "none");
     }
   }
+  
 
   async openMovesFromTriggers(event) {
     if (
@@ -630,7 +641,7 @@ export class  sofhCharacterSheet extends ActorSheet {
        })
       
     }
-    const dialogInstance = new moveRoll(actor, item, clueID);
+   const dialogInstance = new moveRoll(actor, item, clueID);
     dialogInstance.rollForMove(actor, item, clueID);
   }
   async showTimeToShine(ev) {
