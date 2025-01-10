@@ -161,13 +161,13 @@ export class moveRoll extends Dialog {
       }
     });
 
-    const relationSelect =  html?.find(".relation-chosen");
+    const relationSelect =  html?.find(".relation-chosen")[0];
     if (relationSelect) {
       selections.relevantRelation = relationSelect.value;
       rollmod = rollmod + Number(relationSelect.value.split(":")[0]);
     }
 
-    const stringsSelect =  html?.find(".roll-strings");
+    const stringsSelect =  html?.find(".roll-strings")[0];
     if (stringsSelect) {
       selections.relevantString = stringsSelect.value;
       if (stringsSelect.value !== "") {
@@ -183,7 +183,7 @@ export class moveRoll extends Dialog {
     })
     let clueIDs = "";
     if (knownClue.length > 0) {
-      const selection =  html?.find(".selection-mistery"); 
+      const selection =  html?.find(".selection-mistery")[0]; 
       if(selection !== null){
       const selectedOption = selection.querySelector("option:checked"); 
       clueIDs =selectedOption.id
@@ -194,17 +194,17 @@ export class moveRoll extends Dialog {
     
     }
 
-    const complexityValue =   html?.find(".complexity-numer")?.value;
+    const complexityValue =   html?.find(".complexity-numer")[0]?.value;
     if (complexityValue !== undefined){
     rollmod = rollmod - Number(complexityValue)
     }
 
-    const numericInput = html?.find(".numeric-mod");
+    const numericInput = html?.find(".numeric-mod")[0];
     selections.numericModifier = numericInput ? numericInput.value : null;
     const otherMod = Number(selections.numericModifier);
     rollmod = rollmod + otherMod;
     selections.otherrolltype =
-      html?.find('[name="ad-disad"]')?.value;
+      html?.find('[name="ad-disad"]')[0]?.value;
     let diceMod = Number(selections.otherrolltype);
     if (diceMod > 3) {
       diceMod = 3;
