@@ -91,12 +91,12 @@ export class moveRoll extends Dialog {
     let dicenumber = 0;
     
     if(question === undefined){
-      question =  html?.find(".selection-mistery-solutions")?.value;
+      question =  html?.find(".selection-mistery-solutions")[0]?.value;
     }
 
     const houseCheckbox =  html?.find(
       ".circle-checkbox-housequestion",
-    );
+    )[0];
     if (houseCheckbox) {
       selections.houseApply = houseCheckbox.checked;
       if (selections.houseApply) {
@@ -105,9 +105,9 @@ export class moveRoll extends Dialog {
     }
     const oponentcondition =  html?.find(
       ".oponent-have-condition-checkbox",
-    )?.checked;
+    )[0]?.checked;
     if (oponentcondition) {
-      selections.oponentcondition = houseCheckbox.oponentcondition;
+      selections.oponentcondition = oponentcondition;
       if (selections.oponentcondition) {
         dicenumber = dicenumber + 1;
       }
@@ -184,7 +184,7 @@ export class moveRoll extends Dialog {
     let clueIDs = "";
     if (knownClue.length > 0) {
       const selection =  html?.find(".selection-mistery")[0]; 
-      if(selection !== null){
+      if(selection !== undefined){
       const selectedOption = selection.querySelector("option:checked"); 
       clueIDs =selectedOption.id
       }
@@ -237,7 +237,7 @@ export class moveRoll extends Dialog {
     }
     
     await this.rolling(actor, item, formula, clueIDs, question, solution);
-    if(stringsSelect !== null){
+    if(stringsSelect !== undefined){
     if (stringsSelect.value !== "") {
       this.removeStrinAfterRoll(stringsSelect.value);
     }
