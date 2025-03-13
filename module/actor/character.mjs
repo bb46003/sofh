@@ -583,39 +583,75 @@ export class  sofhCharacterSheet extends ActorSheet {
       const ID = event.currentTarget.id;
       const item = this.actor.items.get(ID);
       const title = item.name;
-      const content = await renderTemplate(
+      const actor = this.actor;
+      let content;
+      if(item.system.stringsrelated){
+        content = await renderTemplate(
+          "systems/SofH/templates/dialogs/moves-body-limited.hbs",
+          item, actor) 
+      }
+      else {
+        content = await renderTemplate(
         "systems/SofH/templates/dialogs/moves-body-limited.hbs",
         item,
       );
-      const actor = this.actor;
+    }
+ 
 
-      const moveToChat = `<div class="description-sheet"> 
+      let moveToChat = `<div class="description-sheet"> 
            <h2 class="move_type description-label-notrrolabe">${game.i18n.localize("sofh.ui.chat.use_move")}<br>
            ${item.name}</h2>       
             <div class="chat-description">${item.system.description}</div>
-        </div>`;
-      const d = new Dialog({
-        title: title,
-        content: content,
-        buttons: {
-          close: {
-            label: `<div class ="sofh-button">${game.i18n.localize("sofh.ui.close")}</div>`,
-            callback: () => {},
-            class: "my-button",
-          },
-          sendToChat: {
-            label: `<div class ="sofh-button">${game.i18n.localize("sofh.ui.send_to_chat")}</div>`,
-            callback: () => {
-              ChatMessage.create({
-                user: game.user.id,
-                speaker: ChatMessage.getSpeaker({ actor }),
-                content: moveToChat,
-              });
+        `;
+       
+        const d = new Dialog({
+          title: title,
+          content: content,
+          buttons: {
+            close: {
+              label: `<div class="sofh-button">${game.i18n.localize("sofh.ui.close")}</div>`,
+              callback: () => {},
+              cssClass: "my-button", 
+            },
+            sendToChat: {
+              label: `<div class="sofh-button">${game.i18n.localize("sofh.ui.send_to_chat")}</div>`,
+              callback: async () => {
+                
+        
+                if (item.system.stringsrelated) {
+                  const stringsSelect = document?.querySelector(".roll-strings"); 
+                  if (stringsSelect && stringsSelect.value !== "") {
+                    const stringName = stringsSelect.value;
+                    const strings = this.actor.system.strings;
+        
+                    for (const key in strings) {
+                      if (strings[key].name === stringName) {
+                        delete strings[key];
+                        break;
+                      }
+                    }
+        
+                    await actor.update({ "system.strings": [{}] });
+                    await actor.update({ "system.strings": strings });
+                    moveToChat += `<h3></h3><div class="used-strings">${game.i18n.localize("sofh.ui.chat.usignString")} ${stringName}</div></div>`
+                  }
+                  else{
+                    moveToChat += `</div>`
+                  }
+                  console.log(moveToChat)
+                  ChatMessage.create({
+                    user: game.user.id,
+                    speaker: ChatMessage.getSpeaker({ actor }),
+                    content: moveToChat,
+                  });
+                }
+              },
+              cssClass: "my-button", 
             }
           },
-        },
-        default: "close",
-      });
+          default: "close" 
+        })
+        
       d.render(true, { height: 800, width: 450 });
     }
   }
@@ -624,7 +660,7 @@ export class  sofhCharacterSheet extends ActorSheet {
     let ID = button.id;
     if (ID === "") {
       ID = event.currentTarget.id;
-    }
+    }//
     const item = this.actor.items.get(ID);
     const actor = this.actor;
     const clueRelated = item.system.cluerelated;

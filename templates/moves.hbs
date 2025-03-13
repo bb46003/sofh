@@ -15,10 +15,11 @@
      
           {{/if}}  
           <label for="roll">{{localize 'sofh.move.canBeRolled'}}</label>
+           <label for="strings">{{localize 'sofh.move.isStringsRelated'}}</label>
            {{#if system.isrolled}}
           <label for="house-question">{{localize 'sofh.move.isRaltedToHouseQuestion'}}</label>   
           <label for="relation">{{localize 'sofh.move.isRelationRelated'}}</label>
-          <label for="strings">{{localize 'sofh.move.isStringsRelated'}}</label>
+         
           <label for="question">{{localize 'sofh.move.haveQuestion'}}</label>          
           <label for="movies">{{localize 'sofh.move.isRelatedToOtherMoves'}}</label>
           <label for="clue">{{localize 'sofh.move.isRelatedToClue'}}</label>
@@ -35,10 +36,10 @@
     
           {{/if}}
           <input class="isrolled" type="checkbox" id="roll" name="system.isrolled" {{#if system.isrolled}}checked{{/if}}>
+          <input type="checkbox" id="strings" name="system.stringsrelated" {{#if system.stringsrelated}}checked{{/if}}>
           {{#if system.isrolled}}
           <input type="checkbox" id="house-question" name="system.housequestion" {{#if system.housequestion}}checked{{/if}}>
-          <input type="checkbox" id="relation" name="system.relationrelated" {{#if system.relationrelated}}checked{{/if}}>
-          <input type="checkbox" id="strings" name="system.stringsrelated" {{#if system.stringsrelated}}checked{{/if}}>
+          <input type="checkbox" id="relation" name="system.relationrelated" {{#if system.relationrelated}}checked{{/if}}>          
           <input type="checkbox" id="question" name="system.havequestion" {{#if system.havequestion}}checked{{/if}}>    
           <input type="checkbox" id="movies" name="system.realtedtoothermoves" {{#if system.realtedtoothermoves}}checked{{/if}}>
           <input type="checkbox" id="clue" name="system.cluerelated" {{#if system.cluerelated}}checked{{/if}}>

@@ -45,6 +45,15 @@
             </div>
         </div>
         {{/if}}
+         {{#if (eq system.stringsrelated true)}}
+                    <h2 class="h2-roll">{{localize 'sofh.ui.rolldialog.relevantStringsTitle'}}</h2>
+                    <div class="strings-sheet-roll">
+                        <select class="roll-strings">
+                            <option value="">{{localize 'sofh.ui.rolldialog.noneOption'}}</option>
+                           {{selectOptions actor.system.strings valueAttr="name"}}
+                        </select>
+                    </div>
+                {{/if}}
     </div>
 </div>
 

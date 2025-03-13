@@ -1,7 +1,5 @@
-2025/03/13-22:36:32.728 4600 Recovering log #89
-2025/03/13-22:36:32.730 4600 Delete type=0 #89
-2025/03/13-22:36:32.730 4600 Delete type=3 #88
-2025/03/13-23:07:55.542 41e4 Level-0 table #93: started
-2025/03/13-23:07:55.542 41e4 Level-0 table #93: 0 bytes OK
-2025/03/13-23:07:55.543 41e4 Delete type=0 #91
-2025/03/13-23:07:55.549 41e4 Manual compaction at level-0 from '!folders!rpsZkYAwjLDJYoVm' @ 72057594037927935 : 1 .. '!items!y5o2FNl5olGkf8KL' @ 0 : 0; will stop at (end)
+2025/03/13-23:50:28.335 5a80 Log #96: 0 ops saved to Table #97 OK
+2025/03/13-23:50:28.336 5a80 Archiving C:\Users\bartl\AppData\Local\FoundryVTT\Data\systems\SofH\packs\moves/000096.log: OK
+2025/03/13-23:50:28.336 5a80 Table #53: 16 entries OK
+2025/03/13-23:50:28.338 5a80 Archiving C:\Users\bartl\AppData\Local\FoundryVTT\Data\systems\SofH\packs\moves/MANIFEST-000094: OK
+2025/03/13-23:50:28.340 5a80 **** Repaired leveldb C:\Users\bartl\AppData\Local\FoundryVTT\Data\systems\SofH\packs\moves; recovered 1 files; 18162 bytes. Some data may have been lost. ****
