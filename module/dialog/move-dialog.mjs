@@ -304,6 +304,7 @@ export class moveRoll extends Dialog {
     });
     if(rollResult.total< 6 && clueID !== ""){
       const clue = game.actors.get(clueID);
+      if(game.user.isGM){
       for (let actorKey in clue.system.actorID) {
         const memberActor = game.actors.get(actorKey);
         const xpValues = memberActor.system.xp.value;
@@ -313,6 +314,7 @@ export class moveRoll extends Dialog {
                 lastTrueKey = key;
             }
             else{
+              
               memberActor.update({[`system.xp.value.${key}`]: true})
               break
             }
@@ -320,6 +322,10 @@ export class moveRoll extends Dialog {
         }
 
       }
+    }
+    else{
+      game.socket.emit("system.SofH", { operation: "updateXPfromCule", clue: clue });
+    }
     }
     else if(rollResult.total< 7){
       const xpValues = actor.system.xp.value;

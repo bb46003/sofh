@@ -22,52 +22,7 @@ export function registerHandlebarsHelpers() {
     );
     return anycondition;
   });
-  Handlebars.registerHelper("trigerlist", function (actor) {
 
-    if (!actor || !actor.items) return "";
-
-    const items = actor.items;
-    if (items.size !== 0) {
-      const itemsArray = items._source;
-      itemsArray.sort((a, b) => a.name.localeCompare(b.name));
-      let htmlOutput = "";
-
-      const stripHtmlTags = (html) => {
-        return html.replace(/<[^>]*>/g, ""); 
-      };
-
-      // Iterate through each item
-      itemsArray.forEach((item) => {
-        let triggers = item.system.triggers; 
-        const moveName = item.name; 
-        if (triggers.includes("<span")) {
-          
-          triggers = triggers.replace(
-            /(<span\b[^>]*>)/,
-            `$1<b>${moveName}</b> - `
-          );
-        } else if (triggers.includes("<p>")) {
-          triggers = triggers.replace(
-            /(<p\b[^>]*>)/,
-            `$1<b>${moveName}</b> -  `
-          );
-        }
-        const descriptionText = stripHtmlTags(item.system.description); 
-        const tooltipAttribute = `data-tooltip="${descriptionText}" data-tooltip-direction="RIGHT" style="width: fit-content"`;
-        triggers = triggers.replace(/<p(.*?)>/g, `<p ${tooltipAttribute}>`);
-
-        if (triggers && triggers.length > 0) {
-          if (item.system.isrolled) {
-            htmlOutput += `<a class="roll-moves-btn" id="${item._id}">${triggers}</a>`;
-          } else {
-            htmlOutput += `<a class="moves-description-open" id="${item._id}">${triggers}</a>`;
-          }
-        }
-      });
-
-      return htmlOutput; // Return safe HTML string
-    }
-  });
 
   Handlebars.registerHelper("checkIfOnLead", async function (leadVar, options) {
     return leadVar ? "" : "display:none";
