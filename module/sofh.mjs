@@ -360,6 +360,19 @@ if (transEq !== ""){
   
 })
 
+Hooks.on('preCreateScene', (scene) => {
+  scene.updateSource({
+    tokenVision: false, 
+    fog:{
+      exploration:false
+    },
+       grid:{
+        type: CONST.GRID_TYPES.GRIDLESS
+      }
+    })
+});
+
+
 
 async function nestObject(flatObj) {
   const nestedObj = {};
