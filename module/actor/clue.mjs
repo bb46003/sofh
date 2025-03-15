@@ -49,38 +49,29 @@ export class SofhClue extends ActorSheet {
 }
 
 _onDragOver(event) {
-    event.preventDefault(); // Necessary for the drop event to trigger
-    // Optionally, you can add a class to show some visual feedback
+    event.preventDefault();
     event.currentTarget.classList.add('drag-over');
 }
 _onDragLeave(event) {
-    // Remove the visual feedback when the drag leaves the area
     event.currentTarget.classList.remove('drag-over');
 }
 _onDrop(event) {
     event.preventDefault();
-    
-    // Get the data from the drop event, which could be a dragged object like an item or a character
     const data = event.dataTransfer;
     if (data) {
-      const droppedItem = JSON.parse(data.getData("text/plain"));  // Assuming plain text data is being dropped
+      const droppedItem = JSON.parse(data.getData("text/plain"));  
 
       const droppedType = droppedItem.type;
-      if (droppedType === "Actor") {  // Ensure 'Actor' is the correct type, not 'character'
+      if (droppedType === "Actor") {  
           const droppedActor = game.actors.get(droppedItem.uuid.split(".")[1]);
           if(droppedActor.type === 'character'){
             let updateData={};
             updateData[`system.actorID.${droppedActor._id}`]={"name":droppedActor.name, "img":droppedActor.img}
-
             this.actor.update(updateData)
             this.addOwnership(droppedActor._id)
           }
       }
         }
-        // Handle the dropped item here, for example, add it to the character sheet
-    
-
-    // Remove any visual feedback after the drop
     event.currentTarget.classList.remove('drag-over');
 }  
 async addClue(event) { 
@@ -122,15 +113,8 @@ async removeClue(ev){
     const button = ev.target;
     const ID = Number(button.id);
     let clue = this.actor.system.clue;
- 
-        const newClue = { ...clue };
-        console.log(newClue[ID])
-        delete newClue[ID];   
-       
-    
-    
-   
-
+    const newClue = { ...clue };
+    delete newClue[ID];   
     const actorsId = this.actor.system.actorID;
     if (actorsId && typeof actorsId === 'object') {
         for (const actorId in actorsId) {

@@ -199,6 +199,7 @@ Hooks.once("ready", async function () {
         await game.settings.set(SYSTEM_ID, `${house.name}_on_leed`, false);
       }
     });
+    
   }
   characterRelation();
   // Check if an actor of type "clue" exists, if not, create a new one

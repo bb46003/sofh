@@ -86,6 +86,7 @@ export class moveRoll extends Dialog {
       numericModifier: null,
       otherrolltype: 0,
       oponentcondition: 0,
+      advantages: 0,
     };
     let rollmod = 0;
     let dicenumber = 0;
@@ -174,6 +175,13 @@ export class moveRoll extends Dialog {
         dicenumber = dicenumber + 1;
       }
     }
+    const advantagesSelect =  html?.find(".roll-advantages")[0];
+    if (advantagesSelect) {
+      selections.relevantAdvantages = advantagesSelect.value;
+      if (advantagesSelect.value !== "") {
+        dicenumber = dicenumber + 1;
+      }
+    }
     const knownClue =  html?.find(".circle-checkbox-isapply-clue").toArray();
     knownClue.forEach((knowClue)=>{
       const isApply = knowClue.checked;
@@ -236,13 +244,18 @@ export class moveRoll extends Dialog {
       }
     }
     
-    await this.rolling(actor, item, formula, clueIDs, question, solution);
+    await this.rolling(actor, item, formula, clueIDs, question, solution, advantagesSelect?.value);
     if(stringsSelect !== undefined){
     if (stringsSelect.value !== "") {
       this.removeStrinAfterRoll(stringsSelect.value);
     }
+    if(advantagesSelect !== undefined){
+      if (advantagesSelect.value !== "") {
+        this.removeAdvantageAfterRoll(advantagesSelect.value);
+      }
+    }
   }
-  }
+}
 
   async removeStrinAfterRoll(stringName) {
     const strings = this.actor.system.strings;
@@ -252,12 +265,27 @@ export class moveRoll extends Dialog {
         break;
       }
     }
+    
 
     await this.actor.update({ "system.strings": [{}] });
     await this.actor.update({ "system.strings": strings });
   }
 
-  async rolling(actor, item, formula, clueID, question) {
+  async removeAdvantageAfterRoll(advanatageDes) {
+    const advanatage = this.actor.system.advanatage;
+    for (const key in advanatage) {
+      if (advanatage[key].description === advanatageDes) {
+        delete advanatage[key];
+        break;
+      }
+    }
+    
+
+    await this.actor.update({ "system.advanatage": [{}] });
+    await this.actor.update({ "system.advanatage": advanatage });
+  }
+
+  async rolling(actor, item, formula, clueID, question,solution, advantagesSelect) {
     const rollResult = await new Roll(formula).evaluate();
     const total = rollResult.total;
     const label = item.name;
@@ -285,16 +313,25 @@ export class moveRoll extends Dialog {
       content = `
           <div class="sofh">
         
-          <h3 style="font-family: 'IM Fell English SC', serif;font-size: large;">${label}</h3><br>
-          <div class="move-description-chat">${item.system.description}</div><br>
-          <h3></h3>
-          <div class="mistery-question_solution">
-            <p>${questionlabel}${question}</p>
-          </div>
-          <h2 class="move_type description-label ">${game.i18n.localize("sofh.chat.rollesult")}</h2>  
-          <div class="roll-results">${content}</div><br>
-          </div>
+            <h3 style="font-family: 'IM Fell English SC', serif;font-size: large;">${label}</h3><br>
+            <div class="move-description-chat">${item.system.description}</div><br>
+              <h3></h3>
+              <div class="mistery-question_solution">
+                <p>${questionlabel}${question}</p>
+              </div>
+              <h2 class="move_type description-label ">${game.i18n.localize("sofh.chat.rollesult")}</h2>  
+              <div class="roll-results">${content}</div><br>
+            </div>
       `;
+    }
+    if(advantagesSelect !== undefined){
+      content += `
+      <h3></h3>
+      <p style="font-family: 'IM Fell English SC', serif>${game.i18n.format("sofh.chat.actorUseAdvantages",{actor:actor.name, advantage: advantagesSelect})}</p>
+      </div>`
+    }
+    else{
+      content += `</div>`
     }
 
     rollResult.toMessage({

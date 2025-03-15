@@ -123,8 +123,10 @@ export class  sofhCharacterSheet extends ActorSheet {
       this.assignHouseQuestions(this.actor.system.home, false),
     );
     html.on("click", (ev) => this.handleDiamondClick(ev));
-    html.on("click", "#add-string-btn", (ev) => this.addStringItem(html));
+    html.on("click", "#add-string-btn", (ev) => this.addStringItem(ev));
     html.on("click", ".remove-string-btn", (ev) => this.removeStringItem(ev));
+    html.on("click", "#add-advantage-btn", (ev) => this.addAdvantagItem(ev));
+    html.on("click", ".remove-advanatage-btn", (ev) => this.removeAdvantageItem(ev));
     html.on("click", ".move_type", (ev) => this.showMoves(ev));
     html.on("click", ".moves", (ev) => this.collapsAllMoves(ev));
     html.on("click", ".remove-moves-btn", (ev) => this.removeMoves(ev));
@@ -484,26 +486,49 @@ export class  sofhCharacterSheet extends ActorSheet {
     actor.update(updateData);
   }
 
-  async addStringItem() {
+  async addStringItem(ev) {
     const actor = this.actor;
     let strings = actor.system.strings || [];
     let i = Object.keys(strings).length + 1;
     const stringElement = {
-      name: "",
-      description: "",
+        name: "",
+        description: "",
     };
     strings[i] = stringElement;
     await actor.update({ "system.strings": strings });
+}
+
+  async addAdvantagItem() {
+    const actor = this.actor;
+    let advanatage = actor.system.advanatage || [];
+    let i = Object.keys(advanatage).length + 1;
+    const advanatageElement = {
+      description: "",
+    };
+    advanatage[i] = advanatageElement;
+    await actor.update({ "system.advanatage": advanatage });
   }
 
   async removeStringItem(ev) {
-    const button = ev.target;
+    const button = ev.target.closest(".remove-string-btn");
     const ID = button.id;
+    console.log(ID, button)
     let strings = this.actor.system.strings;
     const newStrings = { ...strings };
     delete newStrings[ID];
     await this.actor.update({ "system.strings": [{}] });
     await this.actor.update({ "system.strings": newStrings });
+  
+  }
+  
+  async removeAdvantageItem(ev) {
+    const button = ev.target.closest(".remove-advanatage-btn");
+    const ID = button.id;
+    let advanatage = this.actor.system.advanatage;
+    const newAdvanatage = { ...advanatage };
+    delete newAdvanatage[ID];
+    await this.actor.update({ "system.advanatage": [{}] });
+    await this.actor.update({ "system.advanatage": newAdvanatage });
   }
 
   async updateActorCondition(ev) {

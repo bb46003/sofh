@@ -16,8 +16,13 @@ export async function migrateWorld() {
           err.message = `Failed system migration for Actor ${actor.name}: ${err.message}`;
           console.error(err);
         }
-    }
-
+        if(actor.type === "character"){
+            migrateMoves(actor);
+        }
+          
+        
+    
+        }
 }
 
 
@@ -41,6 +46,30 @@ function migrateActorData(actor) {
        
         return  {["system.condition"]: updatedConditions }
     }
-}
+    
 
+}
+async function migrateMoves(actor) {
+    // Fetch the move to change from the compendium
+    const moveTochange = await fromUuid("Compendium.SofH.moves.Item.6JbqdvytBqh1EIWV");
+    const moveTochangeName = moveTochange.name;
+
+    // Find the current move in the actor's items
+    const currentMove = actor.items.find(item => item.name === moveTochangeName);
+ 
+    // If the current move exists, replace it with the new move
+    if (currentMove) {
+        // Update the actor's items to replace the old move
+        await actor.updateEmbeddedDocuments("Item", [{
+            _id: currentMove.id, // Target the specific item to update
+            name: moveTochangeName, // Update its name or any other properties if needed
+            system: moveTochange.system // Copy over data (assuming moveTochange has data property)
+        }]);
+        console.log(`Replaced ${currentMove.name}`);
+    } else {
+        // If the move doesn't exist, you can add it as a new item
+        await actor.createEmbeddedDocuments("Item",moveTochange);
+        console.log(`Added new move: ${moveTochangeName}`);
+    }
+}
   

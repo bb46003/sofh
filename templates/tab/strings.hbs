@@ -1,4 +1,4 @@
-<div class="sofh strings-tab">
+<div class="sofh strings-tab" style="min-height:{{#calcMinHeight system.strings}}{{/calcMinHeight}}px">
     <h2>{{localize "sofh.ui.actor.stringsheader"}}</h2>
     <button id="add-string-btn" style="font-family: 'IM Fell English', serif;">{{localize "sofh.ui.actor.stringsaddbutton"}}</button>
     
@@ -18,6 +18,27 @@
                     <input type="text" class="strings" name="system.strings.{{@index}}.name" value="{{string.name}}" />
                     <textarea class="strings" name="system.strings.{{@index}}.description">{{string.description}}</textarea>
                     <button class="remove-string-btn" id="{{@index}}"><i class="fa fa-trash"></i></button>
+                {{/each}}
+             
+        </div>
+    </div>
+</div>
+
+<div class="sofh advantage-tab">
+    <h3></h3>
+    <h2>{{localize "sofh.ui.actor.yoursAdvantages"}}</h2>
+    <button id="add-advantage-btn" style="font-family: 'IM Fell English', serif;">{{localize "sofh.ui.actor.advantagesAddButton"}}</button>
+    
+    <div class="advanatage-grid" id="advanatage-container">
+        <div class="advanatage-item">
+            <div class="advanatage-description">
+                <label class="strings-description-label">{{localize  "sofh.ui.actor.advantageDescriptuon"}}</label>
+             </div>
+         </div>
+        <div class="advantage-inputs">            
+               {{#each system.advanatage as |advanatage index|}}
+                    <textarea class="strings" name="system.advanatage.{{@index}}.description">{{advanatage.description}}</textarea>
+                    <button class="remove-advanatage-btn" id="{{@index}}"><i class="fa fa-trash"></i></button>
                 {{/each}}
              
         </div>

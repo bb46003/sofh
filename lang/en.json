@@ -120,7 +120,7 @@
   "sofh.ui.dialog.houseeq": "House Equipment Selection",
   "sofh.ui.dialog.eqwarrning": "You can only select up to 3 options!",
   "sofh.ui.dialog.addeqconfirmation": "Equipment updated successfully.",
-  "sofh.ui.actor.strings": "Strings",
+  "sofh.ui.actor.strings": "Strings & Advantages",
   "sofh.ui.actor.stringsheader": "Your Strings on others",
   "sofh.ui.actor.stringsaddbutton": "+ Add Strings",
   "sofh.ui.actor.stringsnames": "Associated character",
@@ -254,7 +254,11 @@
   "sofh.ui.actor.notes": "Notes",
   "sofh.ui.dialog.deleteMove": "Are you sure you want to delete the move <strong>{name}</strong>?",
   "sofh.ui.dialog.deleteMoveTitle": "Delete Move: {name}",
-  "sofh.ui.chat.usignString":"Using String"
-    
+  "sofh.ui.chat.usignString": "Using String",
+  "sofh.ui.actor.yoursAdvantages": "Your Advantages",
+  "sofh.ui.actor.advantagesAddButton": "+ Add Advantage",
+  "sofh.ui.actor.advantageDescriptuon": "Advantage descriptuon",
+  "sofh.ui.rolldialog.relevantAdvantages": "Relevant Advantage",
+  "sofh.chat.actorUseAdvantages": "<strong>{actor}</strong> use Advantages defnie as <strong>{advantage}</strong>"
   
 }

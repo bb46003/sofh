@@ -252,5 +252,6 @@
   "sofh.SETTINGS.HomeScorePositionXHint": "Higher value move to Left, lower to Right",
   "sofh.ui.actor.notes": "Notes",
   "sofh.ui.dialog.deleteMove": "Are you sure you want to delete the move <strong>{name}</strong>?",
-  "sofh.ui.dialog.deleteMoveTitle": "Delete Move: {name}"
+  "sofh.ui.dialog.deleteMoveTitle": "Delete Move: {name}",
+  "sofh.ui.actor.yoursAdvantages":"Your Advantages"
 }

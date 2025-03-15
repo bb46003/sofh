@@ -117,6 +117,16 @@
                         </select>
                     </div>
                 {{/if}}
+                {{#if (haveAdvantages actor.system.advanatage)}}
+                <h2 class="h2-roll">{{localize 'sofh.ui.rolldialog.relevantAdvantages'}}</h2>
+                    <div class="advantages-sheet-roll">
+                        <select class="roll-advantages">
+                            <option value="">{{localize 'sofh.ui.rolldialog.noneOption'}}</option>
+                            {{selectOptions actor.system.advanatage valueAttr="description"}}
+                        </select>
+                    </div>
+
+                {{/if}}
                 <h2 class="h2-roll">{{localize 'sofh.ui.rolldialog.otherModsTitle'}}</h2>
                 <div class="others-mods"></div>
                 <div class="roll-mod-other">

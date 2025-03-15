@@ -383,10 +383,20 @@ input.relation-name {
 .value-relations {
     padding-left: 2px;
 }
-
+.advanatage-item {
+    margin-top: 10px;
+}
 .string-item {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    margin-top: 10px
+}
+.advantage-item {
+    display: grid;
+    grid-template-columns: 1fr;
+}
+.sofh.strings-tab {
+    margin-bottom: 10px;
 }
 .strings-inputs {
     display: grid;
@@ -396,6 +406,15 @@ input.relation-name {
     row-gap: 10px;
     font-family: 'IM Fell English', serif;
 }
+.advantage-inputs {
+    display: grid;
+    grid-template-columns: 1fr 0.1fr;
+    align-items: center;
+    column-gap: 5px;
+    row-gap: 10px;
+    font-family: 'IM Fell English', serif;
+}
+
 
 .strings-inputs input.strings {
     flex: 1;
@@ -619,7 +638,7 @@ select.question-impact {
     justify-self: center;
     margin-right: 20%;
 }
-.relation-roll, .strings-sheet-roll{
+.relation-roll, .strings-sheet-roll, .advantages-sheet-roll{
     display: flex;
     justify-content: space-around;
 }
@@ -1059,7 +1078,7 @@ input.input-score {
     min-width: 80%;
     max-width: 80%;
 }
-button#add-string-btn {
+button#add-string-btn, button#add-advantage-btn {
     margin: auto;
     width: 100%;
 }

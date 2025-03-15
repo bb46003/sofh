@@ -27,7 +27,7 @@ export function registerHandlebarsHelpers() {
   Handlebars.registerHelper("checkIfOnLead", async function (leadVar, options) {
     return leadVar ? "" : "display:none";
   });
-}
+
 Handlebars.registerHelper("lowercase", function (str) {
   return str.toLowerCase();
 });
@@ -319,4 +319,25 @@ Handlebars.registerHelper("customIDStyle", function () {
   return html;
 });
 
+Handlebars.registerHelper("calcMinHeight", function(strings){
+  const numberOfStrings = Object.keys(strings).length;
+  let minHeight;
+  if(numberOfStrings === 0){
+    minHeight =120;
+  }
+  else{
+    minHeight = 120+40*numberOfStrings
+  }
+  return minHeight
+})
 
+Handlebars.registerHelper("haveAdvantages", function(advantages){
+  const advanatage = Object.keys(advantages).length;
+  if(advanatage > 0){
+    return true
+  }
+  else{
+    return false
+  }
+})
+}
