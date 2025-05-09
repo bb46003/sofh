@@ -1,3 +1,5 @@
+
+
 export class HomeScore extends Application {
   constructor(options = {}) {
     if (HomeScore._instance) {

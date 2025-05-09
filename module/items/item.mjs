@@ -1,4 +1,6 @@
-export class sofhMovesSheet extends ItemSheet {
+
+const BaseItemSheet = (typeof foundry?.appv1?.sheets?.ItemSheet !== "undefined") ? foundry.appv1.sheets.ItemSheet : ItemSheet;
+export class sofhMovesSheet extends BaseItemSheet {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["sofh", "sheet", "item"],
@@ -16,12 +18,23 @@ export class sofhMovesSheet extends ItemSheet {
     Object.assign(context, { House });
     async function enrich(html) {
       if (html) {
-        return await TextEditor.enrichHTML(html, {
-          secrets: context.isOwner,
-          async: true,
-        });
-      } else {
-        return html;
+        if (html) {
+          if(game.release.generation < 13 ){
+            return await TextEditor.enrichHTML(html, {
+              secrets: context.owner,
+              async: true,
+            });
+  
+          }
+          else{
+          return await  foundry.applications.ux.TextEditor.enrichHTML(html, {
+            secrets: context.owner,
+            async: true,
+          });
+        }
+        } else {
+          return html;
+        }
       }
     }
 
@@ -32,7 +45,7 @@ export class sofhMovesSheet extends ItemSheet {
   }
   activateListeners(html) {
     super.activateListeners(html);
-    html.on("click", "#add-question-btn", (ev) => this.addquestion(html));
+    html.on("click", "#add-question-btn", (ev) => this.addquestion(ev));
     html.on("click", ".remove-question-btn", (ev) => this.removequestion(ev));
     html.on("change", ".relatedmoves", (ev) => this.relatedmoves(ev));
     html.on("change", ".relatedmoves", (ev) => this.rollingguestions(ev));
@@ -56,10 +69,7 @@ export class sofhMovesSheet extends ItemSheet {
        
           let updateData = {};
           updateData["system.relatedmoves"] = linkToDroppedItem;
-          targetItem.update(updateData);
-
-
-          console.log(linkToDroppedItem);
+          await targetItem.update(updateData);
         } 
       }
     });
@@ -76,6 +86,14 @@ export class sofhMovesSheet extends ItemSheet {
     };
     question[i] = questionElement;
     await item.update({ "system.question": question });
+    Hooks.once("renderItemSheet", (sheet, html) => {
+      if (sheet.item.id !== item.id) return;
+        const target = html[0].querySelector("#add-question-btn");
+        if (target) {
+          target.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    });
+  
   }
   async removequestion(ev) {
     const button = ev.target;
@@ -92,15 +110,22 @@ export class sofhMovesSheet extends ItemSheet {
       await this.item.update({ "system.question": [] });
       await this.item.update({ "system.question": newQuestion });
     }
+    Hooks.once("renderItemSheet", (sheet, html) => {
+      if (sheet.item.id !== item.id) return;
+        const target = html[0].querySelector("#add-question-btn");
+        if (target) {
+          target.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    });
   }
   async relatedmoves(ev) {
     const updateData = { [ev.target.name]: ev.target.value };
-    this.item.update(updateData);
+    await this.item.update(updateData);
   }
 
   async rollingguestions(ev) {
     const updateData = { [ev.target.name]: ev.target.value };
-    this.item.update(updateData);
+    await this.item.update(updateData);
   }
   async changeRollingoption(ev) {
     if (!ev.target.checked) {
@@ -111,7 +136,7 @@ export class sofhMovesSheet extends ItemSheet {
         ["system.havequestion"]: false,
         ["system.realtedtoothermoves"]: false,
       };
-      this.item.update(updateData);
+      await this.item.update(updateData);
     }
   }
  

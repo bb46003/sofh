@@ -22,7 +22,11 @@
     column-gap: 25px;
 
 }
-
+input#settings-config-SofH\.HomeScoreSize, 
+input#settings-config-SofH\.HomeScorePositionY, 
+input#settings-config-SofH\.HomeScorePositionX {
+    max-width: 4em;
+}
 .home-flag{
     width: 100px;
     border: none;

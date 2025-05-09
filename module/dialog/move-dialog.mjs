@@ -1,3 +1,5 @@
+import sofh_Utility from "../utility.mjs";
+
 export class moveRoll extends Dialog {
   constructor(actor, item, clueID) {
     super(actor, item, clueID);
@@ -387,7 +389,7 @@ export class moveRoll extends Dialog {
       complexity = 0
     }
     if (!is7conditions) {
-      let content = await renderTemplate(
+      let content = await sofh_Utility.renderTemplate(
         "systems/SofH/templates/dialogs/rolling-dialog.hbs",
         { item: item, actor: actor, clueID: clueID, complexity:complexity, question:question},
       );
@@ -418,7 +420,7 @@ export class moveRoll extends Dialog {
         default: `<div class="sofh-button">${game.i18n.localize("sofh.UI.Roll")}</div>`,
       }).render(true);
     } else {
-      ui.notifications.warn(game.i18n.localization("sofh.ui.warrning.cannotactduetoconditions")
+      ui.notifications.warn(game.i18n.localize("sofh.ui.warrning.cannotactduetoconditions")
         
       );
     }

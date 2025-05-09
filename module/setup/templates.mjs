@@ -1,5 +1,5 @@
 export const preloadHandlebarsTemplates = async function () {
-  return loadTemplates([
+   const templatePaths = [
     "systems/SofH/templates/tab/relations.hbs",
     "systems/SofH/templates/tab/equipment.hbs",
     "systems/SofH/templates/tab/partial/dimond-button.hbs",
@@ -18,5 +18,10 @@ export const preloadHandlebarsTemplates = async function () {
     "systems/SofH/templates/tab/clue-list.hbs",
     "systems/SofH/templates/tab/mistery-solve-list.hbs"
     
-  ]);
+  ];
+
+  if (game.release.generation < 13) {
+    return loadTemplates(templatePaths);
+}
+return foundry.applications.handlebars.loadTemplates(templatePaths);
 };

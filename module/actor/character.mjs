@@ -1,6 +1,9 @@
 import { moveRoll } from "../dialog/move-dialog.mjs";
+import sofh_Utility from "../utility.mjs";
 
-export class  sofhCharacterSheet extends ActorSheet {
+
+const BaseActorSheet = (typeof foundry?.appv1?.sheets?.ActorSheet !== "undefined") ? foundry.appv1.sheets.ActorSheet : ActorSheet;
+export class  sofhCharacterSheet extends BaseActorSheet {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["sofh", "sheet", "actor", "character", "dialog-button"],
@@ -45,10 +48,19 @@ export class  sofhCharacterSheet extends ActorSheet {
 
     async function enrich(html) {
       if (html) {
-        return await TextEditor.enrichHTML(html, {
+        if(game.release.generation < 13 ){
+          return await TextEditor.enrichHTML(html, {
+            secrets: context.actor.isOwner,
+            async: true,
+          });
+
+        }
+        else{
+        return await  foundry.applications.ux.TextEditor.enrichHTML(html, {
           secrets: context.actor.isOwner,
           async: true,
         });
+      }
       } else {
         return html;
       }
@@ -130,14 +142,10 @@ export class  sofhCharacterSheet extends ActorSheet {
     html.on("click", ".move_type", (ev) => this.showMoves(ev));
     html.on("click", ".moves", (ev) => this.collapsAllMoves(ev));
     html.on("click", ".remove-moves-btn", (ev) => this.removeMoves(ev));
-    html.find(".moves-edit").on("click contextmenu", this.openMoves.bind(this));
-    html.find(".roll-moves-btn").on("click", this.rollForMove.bind(this));
-    html
-      .find(".moves-description-open")
-      .on("click", this.openMovesFromTriggers.bind(this));
-    html
-      .find(".send-to-chat-moves-btn")
-      .on("click", this.openMovesFromTriggers.bind(this));
+    html.on("click contextmenu",".moves-edit",(ev) => this.openMoves(ev));
+    html.on("click",".roll-moves-btn",(ev) => this.rollForMove(ev));
+    html.on("click",".moves-description-open",(ev) => this.openMovesFromTriggers(ev));
+    html.on("click",".send-to-chat-moves-btn", (ev) => this.openMovesFromTriggers(ev));
     html.on("click", ".time_to_shine", (ev) => this.showTimeToShine(ev));
   }
 
@@ -152,7 +160,7 @@ export class  sofhCharacterSheet extends ActorSheet {
     const ID = ev.target.id[0];
     await this.updateXp(ID, isChecked);
     if (Number(ID) === 7 && isChecked) {
-      const content = await renderTemplate(
+      const content = await sofh_Utility.renderTemplate(
         "systems/SofH/templates/dialogs/xp.hbs",
       );
       new Dialog({
@@ -170,7 +178,7 @@ export class  sofhCharacterSheet extends ActorSheet {
     }
   }
 
-  async removeMoves(event) {
+  async removeMoves(ev) {
     const button = ev.target.closest(".remove-moves-btn");
     const ID = button.id;
     const item = this.actor.items.get(ID);    
@@ -309,7 +317,7 @@ export class  sofhCharacterSheet extends ActorSheet {
   }
 
   async assignHouseQuestions(house, changeHouse) {
-    const content = await renderTemplate(
+    const content = await sofh_Utility.renderTemplate(
       "systems/SofH/templates/dialogs/house-question.hbs",
       { home: house },
     );
@@ -544,8 +552,9 @@ export class  sofhCharacterSheet extends ActorSheet {
     const itemId = itemRow.getAttribute("data-item-id");
     const move = this.actor.items.get(itemId);
     if (event.type === "contextmenu") {
-      move.sheet.render(true);
-    } else {
+      await move.sheet.render(true);
+    } 
+    else {
       event.preventDefault(); // Prevent default anchor behavior
       const removeButton = document.querySelector(
         `.remove-moves-btn[id='${move.id}']`,
@@ -560,7 +569,7 @@ export class  sofhCharacterSheet extends ActorSheet {
 
       if (decription === null) {
         const newElement = document.createElement("div");
-        const moveBody = await renderTemplate(
+        const moveBody = await sofh_Utility.renderTemplate(
           "systems/SofH/templates/tab/partial/moves-body-limited.hbs",
           move,
         );
@@ -662,6 +671,51 @@ export class  sofhCharacterSheet extends ActorSheet {
       default: "close",
     });
     d.render(true, { height: 800, width: 450 });
+  }
+
+  async openMovesFromTriggers(event) {
+    if (
+      event.currentTarget.className === "moves-description-open" ||
+      event.currentTarget.className === "send-to-chat-moves-btn"
+    ) {
+      const ID = event.currentTarget.id;
+      const item = this.actor.items.get(ID);
+      const title = item.name;
+      const content = await sofh_Utility.renderTemplate(
+        "systems/SofH/templates/dialogs/moves-body-limited.hbs",
+        item,
+      );
+      const actor = this.actor;
+
+      const moveToChat = `<div class="description-sheet"> 
+           <h2 class="move_type description-label-notrrolabe">${game.i18n.localize("sofh.ui.chat.use_move")}<br>
+           ${item.name}</h2>       
+            <div class="chat-description">${item.system.description}</div>
+        </div>`;
+      const d = new Dialog({
+        title: title,
+        content: content,
+        buttons: {
+          close: {
+            label: `<div class ="sofh-button">${game.i18n.localize("sofh.ui.close")}</div>`,
+            callback: () => {},
+            class: "my-button",
+          },
+          sendToChat: {
+            label: `<div class ="sofh-button">${game.i18n.localize("sofh.ui.send_to_chat")}</div>`,
+            callback: () => {
+              ChatMessage.create({
+                user: game.user.id,
+                speaker: ChatMessage.getSpeaker({ actor }),
+                content: moveToChat,
+              });
+            }
+          },
+        },
+        default: "close",
+      });
+      d.render(true, { height: 800, width: 450 });
+    }
   }
 }
 

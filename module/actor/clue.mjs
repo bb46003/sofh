@@ -1,6 +1,10 @@
 import { moveRoll } from "../dialog/move-dialog.mjs";
+import sofh_Utility from "../utility.mjs";
 
-export class SofhClue extends ActorSheet {
+
+const BaseActorSheet = (typeof foundry?.appv1?.sheets?.ActorSheet !== "undefined") ? foundry.appv1.sheets.ActorSheet : ActorSheet;
+
+export class SofhClue extends BaseActorSheet {
 
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
@@ -157,7 +161,7 @@ async addPartyMember(event) {
   const actors = game.actors.filter(actor => actor.type === "character");
   const currentMember = this.actor.system.actorID;
   const filteredActors = actors.filter(actor => !Object.keys(currentMember).includes(actor.id));
-  const html = await renderTemplate("systems/SofH/templates/dialogs/add-patry-member.hbs", { actors: filteredActors});
+  const html = await sofh_Utility.renderTemplate("systems/SofH/templates/dialogs/add-patry-member.hbs", { actors: filteredActors});
   
   new Dialog({
       title: game.i18n.localize("sofh.ui.clue.add-party-member"),
@@ -222,8 +226,10 @@ async addOwnership(characterID){
     user.role !== 4 && user?.character?.id === characterID
 );
 const filteredUser = filteredUsers[0];
-const actor = this.actor;
-await actor.update({ [`ownership.${filteredUser._id}`]: 3 });
+if(filteredUser !== undefined){
+  const actor = this.actor;
+  await actor.update({ [`ownership.${filteredUser._id}`]: 3 });
+}
 }
 async removeOwnership(characterID){
   const users = Array.from(game.users.values());
@@ -231,8 +237,10 @@ async removeOwnership(characterID){
     user.role !== 4 && user?.character?.id === characterID
 );
 const filteredUser = filteredUsers[0];
-const actor = this.actor;
-await actor.update({ [`ownership.${filteredUser._id}`]: 0 });
+if(filteredUser !== undefined){
+  const actor = this.actor;
+  await actor.update({ [`ownership.${filteredUser._id}`]: 0 });
+}
 }
 
 async rollForTheorize(event){

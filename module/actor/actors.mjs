@@ -38,10 +38,10 @@ export class sofhActor extends Actor {
                     itemObj.flags = {
                         "compendiumSource": uuid
                     };
+                    itemObj.ownership.default = 3;
                     return itemObj;
                 });
 
-                console.log(itemObjects);
                 await this.createEmbeddedDocuments("Item", itemObjects);
             } else {
                 console.error("No items of type 'basicMoves' found in the compendium pack.");

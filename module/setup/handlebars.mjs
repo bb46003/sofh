@@ -283,8 +283,6 @@ return html
 
 Handlebars.registerHelper("customIDStyle", function () {
   const userID = game.user.id;
-  console.log(userID);
-
   const right = game.settings.get("SofH", "HomeScorePositionX");
   const bottom = game.settings.get("SofH", "HomeScorePositionY");
   const scale = game.settings.get("SofH", "HomeScoreSize");
