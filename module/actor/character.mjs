@@ -317,9 +317,10 @@ export class  sofhCharacterSheet extends BaseActorSheet {
   }
 
   async assignHouseQuestions(house, changeHouse) {
+    let question = await this.getHouseQuestions(house);
     const content = await sofh_Utility.renderTemplate(
       "systems/SofH/templates/dialogs/house-question.hbs",
-      { home: house },
+      { question: question },
     );
     new Dialog({
       title: game.i18n.localize("sofh.ui.house-question"),
@@ -351,7 +352,33 @@ export class  sofhCharacterSheet extends BaseActorSheet {
     }).render(true);
     
   }
+ async getHouseQuestions(houseKey) {
+  // Default: try translations
+  let q1 = game.i18n.localize(`sofh.ui.actor.${houseKey}question1`);
+  let q2 = game.i18n.localize(`sofh.ui.actor.${houseKey}question2`);
 
+  // Check if translations are missing
+  const missingQ1 = q1 === `sofh.ui.actor.${houseKey}question1`;
+  const missingQ2 = q2 === `sofh.ui.actor.${houseKey}question2`;
+
+  if (missingQ1 || missingQ2) {
+    // Load saved customConfig
+    const data = game.settings.get("SofH", "customConfig");
+
+    if (data?.houses?.length) {
+      const houseData = data.houses.find(
+        h => h.name?.toLowerCase().replace(/\s+/g, "_") === houseKey
+      );
+
+      if (houseData) {
+        if (missingQ1 && houseData.question1) q1 = houseData.question1;
+        if (missingQ2 && houseData.question2) q2 = houseData.question2;
+      }
+    }
+  }
+
+  return { q1, q2 };
+}
   async handleHouseQuestionSelection(html) {
     const selectedOption = html.find('input[name="housequestion"]:checked');
     if (selectedOption.length > 0) {

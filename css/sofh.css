@@ -1086,3 +1086,25 @@ button#add-string-btn, button#add-advantage-btn {
     margin: auto;
     width: 100%;
 }
+.application.sofh-custom .window-content {
+  overflow: auto !important;
+}
+.application.sofh-custom{
+    max-height: 500px;
+
+}
+.flexcolumn{
+    display: flex;
+    gap: 5px;
+    flex-direction: column;
+}
+.sofh-custom, .custom-houses{
+    gap: 30px;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 30px;
+}
+.custom-houses{
+    gap:5px;
+    margin-bottom: 0px;
+}

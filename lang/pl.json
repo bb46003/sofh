@@ -253,5 +253,12 @@
   "sofh.ui.actor.notes": "Notes",
   "sofh.ui.dialog.deleteMove": "Are you sure you want to delete the move <strong>{name}</strong>?",
   "sofh.ui.dialog.deleteMoveTitle": "Delete Move: {name}",
-  "sofh.ui.actor.yoursAdvantages":"Your Advantages"
+  "sofh.ui.actor.yoursAdvantages":"Your Advantages",
+  "sofh.SETTINGS.add-custom-house-title": "Dodaj własny Dom",
+  "sofh.SETTINGS.save": "Zapisz",
+  "sofh.SETTINGS.newHouseName": "Nazwa Domu",
+  "sofh.SETTINGS.newHouseQuestion": "Pytanie Domu",
+  "sofh.SETTINGS.new-house-eq": "Wyposażenie indiwidualne z Domu",
+  "sofh.SETTINGS.equipment": "Wyposażenie ogólne Domu",
+  "sofh.SETTINGS.add-custom-blood-type-title": "Dodaj własny Typ Krwi"
 }

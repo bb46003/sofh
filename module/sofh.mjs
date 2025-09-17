@@ -7,6 +7,7 @@ import { moveRoll } from "./dialog/move-dialog.mjs";
 import { characterRelation } from "./config.mjs";
 import {sofhActor} from "./actor/actors.mjs";
 import * as SofHMigrate from "./migrate.js";
+import { customHouse } from "./setup/customHouse.mjs";
 
 
 export default function registerSettings() {
@@ -130,22 +131,78 @@ export default function registerSettings() {
       customStyle(type, newValue); // Automatically called whenever the value changes
     }
   });
+  game.settings.register("SofH", "customConfig", {
+  name: "Custom Config",
+  hint: "Add or override blood types, houses, and equipment.",
+  scope: "world",
+  config: false, // hidden from default settings UI
+  type: Object,
+  default: {}
+});
+game.settings.registerMenu("SofH", "customConfigMenu", {
+  name: "Custom Config Menu",
+  label: "Edit Custom Config",
+  hint: "Define custom blood types, houses, and house equipment.",
+  type: customHouse, // FormApplication subclass (see below)
+  restricted: true
+});
 }
 }
 
 Hooks.once("init", async function () {
   console.log("Secret of Hogwarts Initialising");
+
   registerSheets();
   registerHandlebarsHelpers();
   registerSettings(); 
-  loadPolishLocalization()
-  CONFIG.Actor.documentClass = sofhActor;
-  CONFIG.SOFHCONFIG = SOFHCONFIG;
-  game.SofH = { HomeScore, moveRoll,  migrateWorld: SofHMigrate.migrateWorld,};
+  loadPolishLocalization();
 
+  CONFIG.Actor.documentClass = sofhActor;
+
+  // --- Load previously saved custom config ---
+  const savedData = game.settings.get("SofH", "customConfig");
+  if (savedData) {
+    // Merge blood types
+    if (savedData.bloodTypes?.length) {
+      savedData.bloodTypes.forEach((blood, i) => {
+        const key = `bloodType${i + 1}`;
+        SOFHCONFIG.bloodType[key] = blood;
+      });
+    }
+
+    // Merge houses
+    if (savedData.houses?.length) {
+      savedData.houses.forEach(house => {
+        if (!house.name) return;
+        const key = house.name.toLowerCase().replace(/\s+/g, "_");
+
+        // Merge house name
+        SOFHCONFIG.House[key] = house.name;
+
+        // Merge house-specific equipment
+        if (!SOFHCONFIG.houseeq[key]) SOFHCONFIG.houseeq[key] = {};
+        house.houseEq?.forEach(eq => {
+          if (eq) SOFHCONFIG.houseeq[key][eq.toLowerCase().replace(/\s+/g, "_")] = eq;
+        });
+
+        // Merge general equipment
+        if (house.equipment) SOFHCONFIG.equipment[key] = house.equipment;
+      });
+    }
+  }
+
+  // Assign merged config to global CONFIG
+  CONFIG.SOFHCONFIG = SOFHCONFIG;
+
+  game.SofH = {
+    HomeScore,
+    moveRoll,
+    migrateWorld: SofHMigrate.migrateWorld,
+  };
 
   return preloadHandlebarsTemplates();
 });
+
 
 async function loadPolishLocalization() {
   const response = await fetch('/systems/SofH/lang/pl.json');

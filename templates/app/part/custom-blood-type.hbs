@@ -1,0 +1,9 @@
+<section>
+  <div class="custom-house-header">
+    <h3>{{localize "sofh.SETTINGS.add-custom-blood-type-title"}} <a><i class="fa fa-plus" data-action="addBloodType"></i></a></h3>
+    
+  </div>
+      {{#each bloodTypes as |blood|}}
+            <input type="text" name="bloodType" value="{{blood}}">
+     {{/each}}
+</section>

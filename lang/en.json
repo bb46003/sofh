@@ -259,6 +259,12 @@
   "sofh.ui.actor.advantagesAddButton": "+ Add Advantage",
   "sofh.ui.actor.advantageDescriptuon": "Advantage descriptuon",
   "sofh.ui.rolldialog.relevantAdvantages": "Relevant Advantage",
-  "sofh.chat.actorUseAdvantages": "<strong>{actor}</strong> use Advantages defnie as <strong>{advantage}</strong>"
-  
+  "sofh.chat.actorUseAdvantages": "<strong>{actor}</strong> use Advantages defnie as <strong>{advantage}</strong>",
+  "sofh.SETTINGS.add-custom-house-title": "Add Custom House",
+  "sofh.SETTINGS.save": "Save",
+  "sofh.SETTINGS.newHouseName": "House Name",
+  "sofh.SETTINGS.newHouseQuestion": "House Question",
+  "sofh.SETTINGS.new-house-eq": "House individual equipment",
+  "sofh.SETTINGS.equipment": "House general equipment",
+  "sofh.SETTINGS.add-custom-blood-type-title": "Add Custom Blood Type"
 }
