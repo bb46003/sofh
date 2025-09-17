@@ -131,7 +131,9 @@ export default function registerSettings() {
       customStyle(type, newValue); // Automatically called whenever the value changes
     }
   });
-  game.settings.register("SofH", "customConfig", {
+  
+}
+game.settings.register("SofH", "customConfig", {
   name: "Custom Config",
   hint: "Add or override blood types, houses, and equipment.",
   scope: "world",
@@ -146,7 +148,6 @@ game.settings.registerMenu("SofH", "customConfigMenu", {
   type: customHouse, // FormApplication subclass (see below)
   restricted: true
 });
-}
 }
 
 Hooks.once("init", async function () {
