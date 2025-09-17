@@ -19,6 +19,7 @@ export const preloadHandlebarsTemplates = async function () {
     "systems/SofH/templates/tab/mistery-solve-list.hbs",
     "systems/SofH/templates/app/part/custom-house.hbs",
     "systems/SofH/templates/app/part/custom-blood-type.hbs",
+    "systems/SofH/templates/app/part/tab/house.hbs"
     
   ];
 

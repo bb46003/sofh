@@ -1,0 +1,18 @@
+ <section class="tab addsubject"   
+    action-data="tab"  data-group="sheet"  data-tab="addsubject">
+
+  <div class="custom-house-header">
+    <h3>{{localize "sofh.SETTINGS.add-custom-subject-title"}} <a><i class="fa fa-plus" data-action="addSubject"></i></a></h3>
+    
+  </div>
+      {{#each data.subject1 as |subject|}}
+            <input type="text" name="subject" value="{{subject}}">
+     {{/each}}
+<div class="custom-house-header">
+    <h3>{{localize "sofh.SETTINGS.add-custom-subject2-title"}} <a><i class="fa fa-plus" data-action="addSubject2"></i></a></h3>
+    
+  </div>
+      {{#each data.subject2 as |subject|}}
+            <input type="text" name="subject2" value="{{subject}}">
+     {{/each}}
+</section>

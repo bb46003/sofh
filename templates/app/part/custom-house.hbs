@@ -1,18 +1,16 @@
-<section>
+  <section class="tab addhouse active"   
+    action-data="tab"  data-group="sheet"  data-tab="addhouse">
+    <div class="custom-house-header">
+      <h3>{{localize "sofh.SETTINGS.add-custom-house-title"}} <a><i class="fa fa-plus" data-action="addHouse"></i></a></h3>
+      
+    </div>
 
-<div class="flexcolumn">
-  <label>{{localize "sofh.SETTINGS.newHouseName"}}</label>
-  <input type="text" name="houseName" value="{{house.name}}">
-  <label>{{localize "sofh.SETTINGS.newHouseQuestion"}}</label>
-    <input type="text" name="houseQuestion" value="{{house.question1}}">
-    <input type="text" name="houseQuestion" value="{{house.question2}}">
-  <label>{{localize "sofh.SETTINGS.new-house-eq"}}   <a><i class="fa fa-plus" data-action="addHouseEq"></i></a></label>
 
-  {{#each house.houseEq}}
-    <input type="text" name="houseEq" value="{{this}}">
-  {{/each}}
-
-  <label>{{localize "sofh.SETTINGS.equipment"}}</label>
-  <input type="text" name="equipment" value="{{house.equipment}}">
-</div>
-</section>
+  <div class="custom-houses">
+    {{#log data}}{{/log}}
+    {{#each data as |house|}}
+    {{#log house}}{{/log}}
+      {{> "systems/SofH/templates/app/part/tab/house.hbs" house}}
+    {{/each}}
+  </section>
+ 

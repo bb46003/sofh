@@ -1,22 +1,11 @@
 <section class="sofh-custom">
-  <section>
-    <div class="custom-house-header">
-      <h3>{{localize "sofh.SETTINGS.add-custom-house-title"}} <a><i class="fa fa-plus" data-action="addHouse"></i></a></h3>
-      
-    </div>
-  </section>
-
-  <section class="custom-houses">
-    {{#each houses}}
-      {{> "systems/SofH/templates/app/part/custom-house.hbs" house=this}}
-    {{/each}}
-  </section>
-
-  <section class="custom-blood">
-
-      {{> "systems/SofH/templates/app/part/custom-blood-type.hbs" blood=this}}
  
-  </section>
+ <nav class="sheet-tabs tabs" data-group="sheet">
+  <a class="tab-icon"   data-action="tab"    data-tab="addhouse"    data-group="sheet">{{localize "sofh.SETTINGS.add-new-house"}}</a>
+    <a class="tab-icon"   data-action="tab"    data-tab="addblood"    data-group="sheet">{{localize "sofh.SETTINGS.add-new-blood"}}</a>
+      <a class="tab-icon"   data-action="tab"    data-tab="addsubject"    data-group="sheet">{{localize "sofh.SETTINGS.add-new-subject"}}</a>
+ </nav>
+
 </section>
 
 <footer class="form-footer" style="width: 100%;">

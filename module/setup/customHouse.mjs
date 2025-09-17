@@ -1,39 +1,124 @@
 import sofh_Utility from "../utility.mjs";
 
 export class customHouse extends foundry.applications.api.ApplicationV2 {
-    static DEFAULT_OPTIONS = {
-        width: "auto",
-        height: 500,
-        template: "systems/SofH/templates/app/custom-config.hbs",
-        actions :{
-            addHouse: customHouse.#addHouse,
-            addBloodType: customHouse.#addBloodType,
-            addHouseEq: customHouse.#addHouseEq,
-            save: customHouse.#saveData,
-        },
-        classes:["sofh-custom"]
-    }
+  static DEFAULT_OPTIONS = {
+    width: "auto",
+    height: 500,
+    template: "systems/SofH/templates/app/custom-config.hbs",
+    classes: ["sofh-custom"],
+    tabs: {
+      sheet: {
+        initial: "addhouse",
+        tabs: [
+          { id: "addhouse", label: "Add House" },
+          { id: "addblood", label: "Add Blood Type" }
+        ]
+      }
+    },
+    actions :{
+      addHouse: customHouse.#addHouse, 
+      addBloodType: customHouse.#addBloodType, 
+      addHouseEq: customHouse.#addHouseEq, 
+      save: customHouse.#saveData,
+     }
+  };
 
-    async _renderHTML() {
-        try {
-            const data = game.settings.get("SofH", "customConfig")
-            const html = await sofh_Utility.renderTemplate(
-                this.options.template, data
-            );
-            return html;
-        } catch (e) {
-            console.error("_renderHTML error:", e);
-            throw e;
+  static TABS = {
+    sheet: [
+      { id: "addhouse", group: "sheet" , active: true, cssClass: "active" },
+      { id: "addblood", group: "sheet" , active: false, cssClass: "" },
+    ],
+  };
+
+  static PARTS = {
+    addhouse: {
+      id: "addhouse",
+      group: "sheet",
+      template: "systems/SofH/templates/app/part/custom-house.hbs",
+    },
+    addblood: {
+      id: "addblood",
+      group: "sheet",
+      template: "systems/SofH/templates/app/part/custom-blood-type.hbs",
+    },
+      addsubject: {
+      id: "addsubject",
+      group: "sheet",
+      template: "systems/SofH/templates/app/part/subject.hbs",
+    },
+  };
+   #getTabs() {
+    const element = this?.element;
+       let activeTab = "";
+    if (element !== undefined && element !== null) {
+      const tabsElements = element.querySelector(".tab.active");
+      if (tabsElements !== null) {
+        activeTab = tabsElements.dataset.tab;
+      }
+    }
+const tabs = {};
+    for (const [groupId, config] of Object.entries(this.constructor.TABS)) {
+      const group = {};
+      for (const t of config) {
+        const isGM = game.user.isGM;
+        let active = false;
+
+        if (isGM && t.id === "addhouse" && activeTab === "") {
+          active = true;
         }
-    }
+        if (activeTab !== "" && t.id === activeTab) {
+          active = true;
+        }
 
-    async _replaceHTML(result, html) {
-        html.innerHTML = result;
+        group[t.id] = {
+          ...t,
+          active,
+          cssClass: active ? "active" : "",
+        };
+      }
+      tabs[groupId] = group;
     }
+    return tabs;
 
+   }
+async _renderHTML() {
+  const data = game.settings.get("SofH", "customConfig") || {};
+  let html = await sofh_Utility.renderTemplate(this.options.template, { ...data });
+  let partsHtml = "";
+  for (const part of Object.values(this.constructor.PARTS)) {
+       let templateData = {};
+    
+    // Pick the data based on the part id
+    switch (part.id) {
+      case "addhouse":
+        templateData =  data?.houses; 
+        break;
+      case "addblood":
+        templateData = data?.bloodTypes;
+        break;
+       case "addsubject":
+        templateData = {
+          topic1: data?.topic1,
+          topic2: data?.topic2}
+        break;
+    }
+    partsHtml += await sofh_Utility.renderTemplate(part.template,  {data:templateData});
+  }
+  html = html.replace(
+    /(<nav class="sheet-tabs[^>]*">[\s\S]*?<\/nav>)/,
+    `$1${partsHtml}`
+  );
+
+  return html;
+}
+
+
+async _replaceHTML(result, html) {
+  html.innerHTML = result;
+}
     static async #addHouse(){
         const element = this.element;
-        const html = await sofh_Utility.renderTemplate("systems/SofH/templates/app/part/custom-house.hbs");
+        const html = await sofh_Utility.renderTemplate("systems/SofH/templates/app/part/tab/house.hbs");
         const container = element.querySelector(".custom-houses");
         const lastSection = container.querySelector("section:last-of-type");
         if (lastSection) {
@@ -42,7 +127,9 @@ export class customHouse extends foundry.applications.api.ApplicationV2 {
             container.insertAdjacentHTML("beforeend", html);
         }
     } 
-
+async _prepareContext(options) {
+  return  this.#getTabs();
+}
 static async #saveData() {
   const element = this.element;
   if (!element) return;
@@ -53,7 +140,7 @@ static async #saveData() {
   };
 
   // --- Houses ---
-  const houseSections = element.querySelectorAll(".custom-houses > section");
+  const houseSections = element.querySelectorAll(".custom-houses");
   houseSections.forEach(section => {
     
     const houseName = section.querySelector('input[name="houseName"]')?.value.trim() || null;

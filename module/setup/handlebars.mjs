@@ -23,7 +23,9 @@ export function registerHandlebarsHelpers() {
     return anycondition;
   });
 
-
+  Handlebars.registerHelper("log", function (element) {
+    console.log(element);
+  });
   Handlebars.registerHelper("checkIfOnLead", async function (leadVar, options) {
     return leadVar ? "" : "display:none";
   });
