@@ -2,10 +2,10 @@
     "id": "SofH",
     "title": "Secrets of Hogwarts",
     "description": "Stół do playtestów gtry Secrets of Hogwarts na silniku PBTA ",
-    "version": "0.35",
+    "version": "0.36",
     "compatibility": {
       "minimum": "12",
-      "verified": "13.342"
+      "verified": "13.348"
     },
     "authors": [
         {
