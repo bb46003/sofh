@@ -2,17 +2,21 @@
     action-data="tab"  data-group="sheet"  data-tab="addsubject">
 
   <div class="custom-house-header">
-    <h3>{{localize "sofh.SETTINGS.add-custom-subject-title"}} <a><i class="fa fa-plus" data-action="addSubject"></i></a></h3>
-    
+    <h3>{{localize "sofh.SETTINGS.add-custom-subject-title"}} </h3>
+    <label>{{localize "sofh.SETTINGS.replace_topic"}}<input name="replaceTopics" type="checkbox"{{#if data.replaceTopic}}checked{{/if}}></label>
   </div>
-      {{#each data.subject1 as |subject|}}
+  <div class="custom-house-header subject1 flexcolumn">
+    <h3>{{localize "sofh.SETTINGS.add-custom-subject1-title"}} <a><i class="fa fa-plus" data-action="addSubject1"></i></a></h3>
+      {{#each data.topic1 as |subject|}}
             <input type="text" name="subject" value="{{subject}}">
      {{/each}}
-<div class="custom-house-header">
+     </div>
+<div class="custom-house-header subject2 flexcolumn">
     <h3>{{localize "sofh.SETTINGS.add-custom-subject2-title"}} <a><i class="fa fa-plus" data-action="addSubject2"></i></a></h3>
     
-  </div>
-      {{#each data.subject2 as |subject|}}
+
+      {{#each data.topic2 as |subject|}}
             <input type="text" name="subject2" value="{{subject}}">
      {{/each}}
+       </div>
 </section>

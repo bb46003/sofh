@@ -6,11 +6,10 @@
   <label>{{localize "sofh.SETTINGS.newHouseQuestion"}}</label>
     <input type="text" name="houseQuestion" value="{{question1}}">
     <input type="text" name="houseQuestion" value="{{question2}}">
-  <label>{{localize "sofh.SETTINGS.new-house-eq"}}   <a><i class="fa fa-plus" data-action="addHouseEq"></i></a></label>
-
-  {{#each houseEq}}
-    <input type="text" name="houseEq" value="{{this}}">
-  {{/each}}
+    <label>{{localize "sofh.SETTINGS.new-house-eq"}}   <a><i class="fa fa-plus" data-action="addHouseEq"></i></a></label>
+    {{#each houseEq}}
+      <input type="text" name="houseEq" value="{{this}}">
+    {{/each}}
 
   <label>{{localize "sofh.SETTINGS.equipment"}}</label>
   <input type="text" name="equipment" value="{{equipment}}">

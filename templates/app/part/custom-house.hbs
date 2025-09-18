@@ -7,10 +7,9 @@
 
 
   <div class="custom-houses">
-    {{#log data}}{{/log}}
     {{#each data as |house|}}
-    {{#log house}}{{/log}}
       {{> "systems/SofH/templates/app/part/tab/house.hbs" house}}
     {{/each}}
+  </div>
   </section>
  
