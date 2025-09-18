@@ -325,27 +325,31 @@ export function registerHandlebarsHelpers() {
   Handlebars.registerHelper("checkPulltheStrings", function (data) {
     const items = data.items;
     let buttonPullStrings = "";
-    items.forEach(item=>{
-      if(item.name === game.i18n.localize("soft.move.namePulltheStrings") || item.name === "Pull the Strings"){
+    items.forEach((item) => {
+      if (
+        item.name === game.i18n.localize("soft.move.namePulltheStrings") ||
+        item.name === "Pull the Strings"
+      ) {
         buttonPullStrings = `
           <button class="send-to-chat-moves-btn" id="${item._id}" style="">
             <i class="fas fa-comments" id="${item._id}"></i>
           </button>`;
-         
       }
-    })
-     return new Handlebars.SafeString(buttonPullStrings);
-  })
+    });
+    return new Handlebars.SafeString(buttonPullStrings);
+  });
 
-    Handlebars.registerHelper("checkPulltheStringsCSS", function (data) {
+  Handlebars.registerHelper("checkPulltheStringsCSS", function (data) {
     const items = data.items;
     let css = "";
-    items.forEach(item=>{
-      if(item.name === game.i18n.localize("soft.move.namePulltheStrings") || item.name === "Pull the Strings"){
+    items.forEach((item) => {
+      if (
+        item.name === game.i18n.localize("soft.move.namePulltheStrings") ||
+        item.name === "Pull the Strings"
+      ) {
         css = `four`;
-         
       }
-    })
-     return css;
-  })
+    });
+    return css;
+  });
 }

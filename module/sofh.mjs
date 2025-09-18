@@ -157,7 +157,7 @@ Hooks.once("init", async function () {
   loadPolishLocalization();
 
   CONFIG.Actor.documentClass = sofhActor;
-
+ CONFIG.SOFHCONFIG = SOFHCONFIG;
   // --- Load previously saved custom config ---
   const savedData = game.settings.get("SofH", "customConfig");
   if (savedData) {
@@ -211,7 +211,7 @@ Hooks.once("init", async function () {
     }
 
     // Assign merged config to global CONFIG
-    CONFIG.SOFHCONFIG = SOFHCONFIG;
+   
 
     game.SofH = {
       HomeScore,

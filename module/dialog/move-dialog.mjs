@@ -311,9 +311,8 @@ export class moveRoll extends Dialog {
     } else {
       content = item.system?.below7 || "No content for below 7.";
     }
-    if (total >=12 && item.system?.above12 !== undefined){
+    if (total >= 12 && item.system?.above12 !== undefined) {
       content = item.system.above12;
-
     }
     if (question === undefined) {
       content = `
