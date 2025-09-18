@@ -410,6 +410,10 @@ input.relation-name {
     row-gap: 10px;
     font-family: 'IM Fell English', serif;
 }
+.strings-inputs.four{
+        grid-template-columns: 0.2fr 1fr 0.1fr 0.1fr;
+
+}
 .advantage-inputs {
     display: grid;
     grid-template-columns: 1fr 0.1fr;
@@ -553,7 +557,6 @@ form.moves-tab {
 }
 .moves-isrolled {
     display: grid;
-    grid-template-columns: 0.5fr 1fr;
     min-height: 330px;
 }
 .roll-resuilt-label {
@@ -665,7 +668,7 @@ h2.h2-roll {
     justify-content: center;
     font-family: 'IM Fell English SC', serif;
 }
-.editor-content.roll-resoult-above10, .editor-content.roll-resoult-below7, .editor-content.roll-resoult-7to9  {
+.editor-content.roll-resoult-above10, .editor-content.roll-resoult-below7, .editor-content.roll-resoult-7to9, .roll-resoult-above12  {
     border: 1px solid;
     min-height: 100px;
     font-family: 'IM Fell English', serif;
@@ -1107,4 +1110,17 @@ button#add-string-btn, button#add-advantage-btn {
 .custom-houses{
     gap:5px;
     margin-bottom: 0px;
+}
+.chat-description, .roll-results, .move-description-chat{
+    font-size: 20px;
+}
+.body-move.tab, .move-elements{
+        font-size: larger;
+}
+.row{
+    display: grid;
+    grid-template-columns: 0.5fr 1fr;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 5px;
 }

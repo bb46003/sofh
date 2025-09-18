@@ -257,7 +257,7 @@
   "sofh.ui.chat.usignString": "Using String",
   "sofh.ui.actor.yoursAdvantages": "Your Advantages",
   "sofh.ui.actor.advantagesAddButton": "+ Add Advantage",
-  "sofh.ui.actor.advantageDescriptuon": "Advantage descriptuon",
+  "sofh.ui.actor.advantageDescriptuon": "Advantage description",
   "sofh.ui.rolldialog.relevantAdvantages": "Relevant Advantage",
   "sofh.chat.actorUseAdvantages": "<strong>{actor}</strong> use Advantages defnie as <strong>{advantage}</strong>",
   "sofh.SETTINGS.add-custom-house-title": "Add Custom House",
@@ -266,5 +266,16 @@
   "sofh.SETTINGS.newHouseQuestion": "House Question",
   "sofh.SETTINGS.new-house-eq": "House individual equipment",
   "sofh.SETTINGS.equipment": "House general equipment",
-  "sofh.SETTINGS.add-custom-blood-type-title": "Add Custom Blood Type"
+  "sofh.SETTINGS.add-custom-blood-type-title": "Add Custom Blood Type",
+  "sofh.SETTINGS.add-new-subject":"Add new core subject and eelective subject",
+  "sofh.SETTINGS.add-new-blood":"Add new Blood Type",
+  "sofh.SETTINGS.add-new-house":"Add new House",
+  "sofh.SETTINGS.add-custom-subject-title": "Add your own core or eelective subjects",
+  "sofh.SETTINGS.add-custom-subject2-title": "Add new elective subjects",
+  "sofh.SETTINGS.add-custom-subject1-title":"Add new core subjects",
+  "sofh.SETTINGS.replace_topic": "Remove core subject and left only your custom subjects",
+  "soft.move.namePulltheStrings":"Pull the Strings",
+  "sofh.ui.move.resultAbove12": "Results 12+",
+  "sofh.move.haseResult12":"Move have results 12+",
+  "sofh.item.designerComment": "Designer comment and practicalities"
 }

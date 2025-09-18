@@ -114,7 +114,8 @@
           "realtedtoothermoves":false,
           "isrolled":false,
           "stringsrelated":false,
-          "cluerelated":false
+          "cluerelated":false,
+          "result12":false
         }
       },
       "basicMoves":{

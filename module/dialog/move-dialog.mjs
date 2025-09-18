@@ -3,45 +3,51 @@ import sofh_Utility from "../utility.mjs";
 export class moveRoll extends Dialog {
   constructor(actor, item, clueID) {
     super(actor, item, clueID);
-    (this.actor = actor), 
-    (this.item = item), 
-    (this.clueID = clueID);
+    ((this.actor = actor), (this.item = item), (this.clueID = clueID));
   }
 
   async activateListeners(html) {
     super.activateListeners(html);
     html.on("click", ".other-factor-h3", this.collapsOtherFactor.bind(this));
-    html.on("change", ".question-sheet-roll-muptiple .circle-checkbox-isapply", this.allowOnlyOneAproach.bind(this));
+    html.on(
+      "change",
+      ".question-sheet-roll-muptiple .circle-checkbox-isapply",
+      this.allowOnlyOneAproach.bind(this),
+    );
     html.on("change", ".selection-mistery", (event) => {
-      this.showKnowClue(event); 
+      this.showKnowClue(event);
     });
     html.on("change", ".selection-mistery-solutions", (event) => {
-      this.assigneComplexity(event); 
+      this.assigneComplexity(event);
     });
   }
 
-  async allowOnlyOneAproach(){
-    const checkboxes = document?.querySelectorAll(".question-sheet-roll-muptiple .circle-checkbox-isapply");
+  async allowOnlyOneAproach() {
+    const checkboxes = document?.querySelectorAll(
+      ".question-sheet-roll-muptiple .circle-checkbox-isapply",
+    );
 
-        checkboxes.forEach(checkbox => {
-            checkbox.addEventListener("change", function () {
-                if (this.checked) {
-                    checkboxes.forEach(cb => {
-                        if (cb !== this) {
-                            cb.checked = false;
-                        }
-                    })
-                }
-            })
-        })
+    checkboxes.forEach((checkbox) => {
+      checkbox.addEventListener("change", function () {
+        if (this.checked) {
+          checkboxes.forEach((cb) => {
+            if (cb !== this) {
+              cb.checked = false;
+            }
+          });
+        }
+      });
+    });
   }
 
   async collapsOtherFactor(event) {
     event.preventDefault();
-    
+
     // Find the element with the class "other-factor" relative to the current context
-    const movesElement = $(event.currentTarget).closest(".window-app").find(".other-factor");
-  
+    const movesElement = $(event.currentTarget)
+      .closest(".window-app")
+      .find(".other-factor");
+
     if (movesElement.css("display") === "none") {
       movesElement.css("display", "");
       $(".window-app").each(function () {
@@ -63,20 +69,18 @@ export class moveRoll extends Dialog {
         }
       });
     }
-  
+
     // Handle the text change for the header
     const h3Element = event.currentTarget;
     const originalText = game.i18n.localize("sofh.ui.dialog.other_factor");
     const newText = game.i18n.localize("sofh.ui.dialog.other_factor_close");
-    
+
     if (h3Element.textContent === originalText) {
       h3Element.textContent = newText;
     } else {
       h3Element.textContent = originalText;
     }
   }
-  
-
 
   async defnieRollingFormula(actor, item, clueID, question, solution, html) {
     const selections = {
@@ -92,23 +96,20 @@ export class moveRoll extends Dialog {
     };
     let rollmod = 0;
     let dicenumber = 0;
-    
-    if(question === undefined){
-      question =  html?.find(".selection-mistery-solutions")[0]?.value;
+
+    if (question === undefined) {
+      question = html?.find(".selection-mistery-solutions")[0]?.value;
     }
 
-    const houseCheckbox =  html?.find(
-      ".circle-checkbox-housequestion",
-    )[0];
+    const houseCheckbox = html?.find(".circle-checkbox-housequestion")[0];
     if (houseCheckbox) {
       selections.houseApply = houseCheckbox.checked;
       if (selections.houseApply) {
         rollmod = rollmod + 1;
       }
     }
-    const oponentcondition =  html?.find(
-      ".oponent-have-condition-checkbox",
-    )[0]?.checked;
+    const oponentcondition = html?.find(".oponent-have-condition-checkbox")[0]
+      ?.checked;
     if (oponentcondition) {
       selections.oponentcondition = oponentcondition;
       if (selections.oponentcondition) {
@@ -116,9 +117,7 @@ export class moveRoll extends Dialog {
       }
     }
 
-    const conditionElements = html?.find(
-      ".conditions-roll-detail",
-    ).toArray()
+    const conditionElements = html?.find(".conditions-roll-detail").toArray();
     conditionElements.forEach((condition) => {
       const isApply = condition.querySelector(
         ".circle-checkbox-isapply",
@@ -146,7 +145,9 @@ export class moveRoll extends Dialog {
         }
       }
     });
-    const aproachElements =  html?.find(".question-sheet-roll-muptiple").toArray();
+    const aproachElements = html
+      ?.find(".question-sheet-roll-muptiple")
+      .toArray();
     aproachElements.forEach((question) => {
       const impact =
         question.querySelector(".question-impact").value === "true";
@@ -155,7 +156,7 @@ export class moveRoll extends Dialog {
       ).checked;
       if (isApply) {
         selections.questions.push({ impact, isApply });
-       
+
         if (impact && isApply) {
           rollmod = rollmod + 1;
         } else if (!impact && isApply) {
@@ -164,57 +165,54 @@ export class moveRoll extends Dialog {
       }
     });
 
-    const relationSelect =  html?.find(".relation-chosen")[0];
+    const relationSelect = html?.find(".relation-chosen")[0];
     if (relationSelect) {
       selections.relevantRelation = relationSelect.value;
       rollmod = rollmod + Number(relationSelect.value.split(":")[0]);
     }
 
-    const stringsSelect =  html?.find(".roll-strings")[0];
+    const stringsSelect = html?.find(".roll-strings")[0];
     if (stringsSelect) {
       selections.relevantString = stringsSelect.value;
       if (stringsSelect.value !== "") {
         dicenumber = dicenumber + 1;
       }
     }
-    const advantagesSelect =  html?.find(".roll-advantages")[0];
+    const advantagesSelect = html?.find(".roll-advantages")[0];
     if (advantagesSelect) {
       selections.relevantAdvantages = advantagesSelect.value;
       if (advantagesSelect.value !== "") {
         dicenumber = dicenumber + 1;
       }
     }
-    const knownClue =  html?.find(".circle-checkbox-isapply-clue").toArray();
-    knownClue.forEach((knowClue)=>{
+    const knownClue = html?.find(".circle-checkbox-isapply-clue").toArray();
+    knownClue.forEach((knowClue) => {
       const isApply = knowClue.checked;
-      if(isApply){
+      if (isApply) {
         rollmod = rollmod + 1;
       }
-    })
+    });
     let clueIDs = "";
     if (knownClue.length > 0) {
-      const selection =  html?.find(".selection-mistery")[0]; 
-      if(selection !== undefined){
-      const selectedOption = selection.querySelector("option:checked"); 
-      clueIDs =selectedOption.id
+      const selection = html?.find(".selection-mistery")[0];
+      if (selection !== undefined) {
+        const selectedOption = selection.querySelector("option:checked");
+        clueIDs = selectedOption.id;
+      } else {
+        clueIDs = clueID;
       }
-      else{
-        clueIDs=clueID;
-      }
-    
     }
 
-    const complexityValue =   html?.find(".complexity-numer")[0]?.value;
-    if (complexityValue !== undefined){
-    rollmod = rollmod - Number(complexityValue)
+    const complexityValue = html?.find(".complexity-numer")[0]?.value;
+    if (complexityValue !== undefined) {
+      rollmod = rollmod - Number(complexityValue);
     }
 
     const numericInput = html?.find(".numeric-mod")[0];
     selections.numericModifier = numericInput ? numericInput.value : null;
     const otherMod = Number(selections.numericModifier);
     rollmod = rollmod + otherMod;
-    selections.otherrolltype =
-      html?.find('[name="ad-disad"]')[0]?.value;
+    selections.otherrolltype = html?.find('[name="ad-disad"]')[0]?.value;
     let diceMod = Number(selections.otherrolltype);
     if (diceMod > 3) {
       diceMod = 3;
@@ -245,19 +243,27 @@ export class moveRoll extends Dialog {
         formula = "3d6kl2" + rollmod.toString();
       }
     }
-    
-    await this.rolling(actor, item, formula, clueIDs, question, solution, advantagesSelect?.value);
-    if(stringsSelect !== undefined){
-    if (stringsSelect.value !== "") {
-      this.removeStrinAfterRoll(stringsSelect.value);
-    }
-    if(advantagesSelect !== undefined){
-      if (advantagesSelect.value !== "") {
-        this.removeAdvantageAfterRoll(advantagesSelect.value);
+
+    await this.rolling(
+      actor,
+      item,
+      formula,
+      clueIDs,
+      question,
+      solution,
+      advantagesSelect?.value,
+    );
+    if (stringsSelect !== undefined) {
+      if (stringsSelect.value !== "") {
+        this.removeStrinAfterRoll(stringsSelect.value);
+      }
+      if (advantagesSelect !== undefined) {
+        if (advantagesSelect.value !== "") {
+          this.removeAdvantageAfterRoll(advantagesSelect.value);
+        }
       }
     }
   }
-}
 
   async removeStrinAfterRoll(stringName) {
     const strings = this.actor.system.strings;
@@ -267,7 +273,6 @@ export class moveRoll extends Dialog {
         break;
       }
     }
-    
 
     await this.actor.update({ "system.strings": [{}] });
     await this.actor.update({ "system.strings": strings });
@@ -281,13 +286,20 @@ export class moveRoll extends Dialog {
         break;
       }
     }
-    
 
     await this.actor.update({ "system.advanatage": [{}] });
     await this.actor.update({ "system.advanatage": advanatage });
   }
 
-  async rolling(actor, item, formula, clueID, question,solution, advantagesSelect) {
+  async rolling(
+    actor,
+    item,
+    formula,
+    clueID,
+    question,
+    solution,
+    advantagesSelect,
+  ) {
     const rollResult = await new Roll(formula).evaluate();
     const total = rollResult.total;
     const label = item.name;
@@ -299,8 +311,12 @@ export class moveRoll extends Dialog {
     } else {
       content = item.system?.below7 || "No content for below 7.";
     }
-    if(question===undefined){
-    content = `
+    if (total >=12 && item.system?.above12 !== undefined){
+      content = item.system.above12;
+
+    }
+    if (question === undefined) {
+      content = `
           <div class="sofh">
           <h3 style="font-family: 'IM Fell English SC', serif;font-size: large;">${label}</h3><br>
           <div class="move-description-chat">${item.system.description}</div><br>
@@ -308,10 +324,9 @@ export class moveRoll extends Dialog {
           <div class="roll-results">${content}</div><br>
           </div>
       `;
-    }
-    else{
-      const questionlabel = game.i18n.localize("sofh.chat.mystery_question")
-      
+    } else {
+      const questionlabel = game.i18n.localize("sofh.chat.mystery_question");
+
       content = `
           <div class="sofh">
         
@@ -326,14 +341,13 @@ export class moveRoll extends Dialog {
             </div>
       `;
     }
-    if(advantagesSelect !== undefined){
+    if (advantagesSelect !== undefined) {
       content += `
       <h3></h3>
-      <p style="font-family: 'IM Fell English SC', serif>${game.i18n.format("sofh.chat.actorUseAdvantages",{actor:actor.name, advantage: advantagesSelect})}</p>
-      </div>`
-    }
-    else{
-      content += `</div>`
+      <p style="font-family: 'IM Fell English SC', serif>${game.i18n.format("sofh.chat.actorUseAdvantages", { actor: actor.name, advantage: advantagesSelect })}</p>
+      </div>`;
+    } else {
+      content += `</div>`;
     }
 
     rollResult.toMessage({
@@ -341,119 +355,132 @@ export class moveRoll extends Dialog {
       speaker: ChatMessage.getSpeaker({ actor }),
       flavor: content,
     });
-    if(rollResult.total< 6 && clueID !== ""){
+    if (rollResult.total < 6 && clueID !== "") {
       const clue = game.actors.get(clueID);
-      if(game.user.isGM){
-      for (let actorKey in clue.system.actorID) {
-        const memberActor = game.actors.get(actorKey);
-        const xpValues = memberActor.system.xp.value;
-        let lastTrueKey = null;
-        for (let key in xpValues) {
+      if (game.user.isGM) {
+        for (let actorKey in clue.system.actorID) {
+          const memberActor = game.actors.get(actorKey);
+          const xpValues = memberActor.system.xp.value;
+          let lastTrueKey = null;
+          for (let key in xpValues) {
             if (xpValues[key] === true) {
-                lastTrueKey = key;
+              lastTrueKey = key;
+            } else {
+              memberActor.update({ [`system.xp.value.${key}`]: true });
+              break;
             }
-            else{
-              
-              memberActor.update({[`system.xp.value.${key}`]: true})
-              break
-            }
-
+          }
         }
-
+      } else {
+        game.socket.emit("system.SofH", {
+          operation: "updateXPfromCule",
+          clue: clue,
+        });
+      }
+    } else if (rollResult.total < 7) {
+      const xpValues = actor.system.xp.value;
+      let lastTrueKey = null;
+      for (let key in xpValues) {
+        if (xpValues[key] === true) {
+          lastTrueKey = key;
+        } else {
+          actor.update({ [`system.xp.value.${key}`]: true });
+          break;
+        }
       }
     }
-    else{
-      game.socket.emit("system.SofH", { operation: "updateXPfromCule", clue: clue });
-    }
-    }
-    else if(rollResult.total< 7){
-      const xpValues = actor.system.xp.value;
-        let lastTrueKey = null;
-        for (let key in xpValues) {
-            if (xpValues[key] === true) {
-                lastTrueKey = key;
-            }
-            else{
-              actor.update({[`system.xp.value.${key}`]: true})
-              break
-            }
-
-        }
-    }
-
   }
 
-  async rollForMove(actor, item, clueID, complexity,question, solution, sheet) {
+  async rollForMove(
+    actor,
+    item,
+    clueID,
+    complexity,
+    question,
+    solution,
+    sheet,
+  ) {
     const is7conditions = actor.system.is7conditions;
-    if(complexity === undefined){
-      complexity = 0
+    if (complexity === undefined) {
+      complexity = 0;
     }
     if (!is7conditions) {
       let content = await sofh_Utility.renderTemplate(
         "systems/SofH/templates/dialogs/rolling-dialog.hbs",
-        { item: item, actor: actor, clueID: clueID, complexity:complexity, question:question},
+        {
+          item: item,
+          actor: actor,
+          clueID: clueID,
+          complexity: complexity,
+          question: question,
+        },
       );
-      if (typeof clueID === "string" && question === undefined){
-      const clueSheet = game.actors.get(clueID);
-      const selectElementSolution = await addQuestionSelector(clueSheet);
-      const selectElementSolutionHTML = selectElementSolution.outerHTML;
-      content = content.replace(
-        '<div class="complexity">',
-        `${selectElementSolutionHTML}<div class="complexity">`
-      );
-    }
+      if (typeof clueID === "string" && question === undefined) {
+        const clueSheet = game.actors.get(clueID);
+        const selectElementSolution = await addQuestionSelector(clueSheet);
+        const selectElementSolutionHTML = selectElementSolution.outerHTML;
+        content = content.replace(
+          '<div class="complexity">',
+          `${selectElementSolutionHTML}<div class="complexity">`,
+        );
+      }
       new moveRoll({
-        data:{actor,item,clueID},
+        data: { actor, item, clueID },
         title: game.i18n.localize("sofh.ui.rolling"),
         content,
         buttons: {
           OK: {
             icon: '<i class="fa fa-check"></i>',
-            label:`<div class="sofh-button">${game.i18n.localize("sofh.UI.Roll")}</div>`,
+            label: `<div class="sofh-button">${game.i18n.localize("sofh.UI.Roll")}</div>`,
             callback: async (html) => {
-          
-              await this.defnieRollingFormula(actor, item,clueID, solution, question, html);
+              await this.defnieRollingFormula(
+                actor,
+                item,
+                clueID,
+                solution,
+                question,
+                html,
+              );
             },
-          }
-       
+          },
         },
         default: `<div class="sofh-button">${game.i18n.localize("sofh.UI.Roll")}</div>`,
       }).render(true);
     } else {
-      ui.notifications.warn(game.i18n.localize("sofh.ui.warrning.cannotactduetoconditions")
-        
+      ui.notifications.warn(
+        game.i18n.localize("sofh.ui.warrning.cannotactduetoconditions"),
       );
     }
   }
 
-  async showKnowClue(event){
-    const existingClueElements = event.currentTarget.closest('.dialog').querySelectorAll('.single-clue, .complexity');
-    existingClueElements.forEach(element => element.remove());
-    const target = event.currentTarget.selectedOptions[0].id
+  async showKnowClue(event) {
+    const existingClueElements = event.currentTarget
+      .closest(".dialog")
+      .querySelectorAll(".single-clue, .complexity");
+    existingClueElements.forEach((element) => element.remove());
+    const target = event.currentTarget.selectedOptions[0].id;
     let selectElementSolution = null;
     const actorId = this.data.data.actor._id;
-    const clueSheet = game.actors.get(target)
-    if(clueSheet !== undefined){
+    const clueSheet = game.actors.get(target);
+    if (clueSheet !== undefined) {
       const clueDescription = clueSheet.system.clue;
       const actorClue = clueSheet.system.actorID[actorId];
       let html = "";
-      Object.keys(actorClue).forEach(key => {
-        if (key.startsWith('have') && actorClue[key] === true) {
-          const index = key.slice(4); 
+      Object.keys(actorClue).forEach((key) => {
+        if (key.startsWith("have") && actorClue[key] === true) {
+          const index = key.slice(4);
           if (clueDescription.hasOwnProperty(index)) {
             html += ` 
               <div class="single-clue">
                 <label class="known-clue-label">${clueDescription[index].description}</label>
                 <input type="checkbox" class="circle-checkbox-isapply-clue">
-              </div>`
+              </div>`;
           }
         }
       });
-      if (html !== ""){
+      if (html !== "") {
         selectElementSolution = await addQuestionSelector(clueSheet);
 
-        
-          
         html += `
           <div class="complexity">
             <label class="complexity-label">${game.i18n.localize("sofh.ui.complexity_value")}</label>
@@ -461,55 +488,55 @@ export class moveRoll extends Dialog {
           </div>`;
       }
       html = selectElementSolution?.outerHTML + html;
-      const clueSelector = event.currentTarget.closest('.dialog').querySelector('.clue-slector');     
-      clueSelector.insertAdjacentHTML('afterend', html); 
-     
+      const clueSelector = event.currentTarget
+        .closest(".dialog")
+        .querySelector(".clue-slector");
+      clueSelector.insertAdjacentHTML("afterend", html);
     }
-  } 
+  }
 
-  async assigneComplexity(event){
+  async assigneComplexity(event) {
     event.preventDefault();
     const selestedQuestion = event.target.options[event.target.selectedIndex];
-    const complexity = Number(selestedQuestion.id)
-    const complexityInput = event.target.closest('.known-clue').querySelector('.complexity-numer');
-    complexityInput.value = complexity
-
+    const complexity = Number(selestedQuestion.id);
+    const complexityInput = event.target
+      .closest(".known-clue")
+      .querySelector(".complexity-numer");
+    complexityInput.value = complexity;
   }
 }
 
 async function addQuestionSelector(clueSheet) {
-
-
-  const solutions =clueSheet.system.solutions;
+  const solutions = clueSheet.system.solutions;
   const playerSolutions = Object.keys(solutions)
-    .filter(key => solutions[key].showToPlayer === true)
-    .map(key => solutions[key]);
-  let selectElementSolution = document.createElement('select'); 
-  selectElementSolution.classList.add('selection-mistery-solutions');
+    .filter((key) => solutions[key].showToPlayer === true)
+    .map((key) => solutions[key]);
+  let selectElementSolution = document.createElement("select");
+  selectElementSolution.classList.add("selection-mistery-solutions");
 
   playerSolutions.forEach((solution, index) => {
-    let optionElement = document.createElement('option'); 
-    optionElement.value = solution.question; 
-    optionElement.textContent = solution.question; 
-    optionElement.id = solution.complexity
-    selectElementSolution.appendChild(optionElement); 
+    let optionElement = document.createElement("option");
+    optionElement.value = solution.question;
+    optionElement.textContent = solution.question;
+    optionElement.id = solution.complexity;
+    selectElementSolution.appendChild(optionElement);
   });
-  let blankOption = document.createElement('option');
-  blankOption.value = ''; 
-  blankOption.textContent = ''; 
+  let blankOption = document.createElement("option");
+  blankOption.value = "";
+  blankOption.textContent = "";
   blankOption.selected = true;
-  selectElementSolution.prepend(blankOption); 
-  
+  selectElementSolution.prepend(blankOption);
 
-  let misteryQuestionDiv = document.createElement('div');
-  misteryQuestionDiv.classList.add('mistery-question');
+  let misteryQuestionDiv = document.createElement("div");
+  misteryQuestionDiv.classList.add("mistery-question");
 
-  const misteryLabel = document.createElement('label');
-        misteryLabel.textContent = game.i18n.localize("sofh.dialog.select_mistery_question");
-        misteryLabel.classList.add('mistery-label'); 
-        misteryQuestionDiv.appendChild(misteryLabel);
-        misteryQuestionDiv.appendChild(selectElementSolution);
+  const misteryLabel = document.createElement("label");
+  misteryLabel.textContent = game.i18n.localize(
+    "sofh.dialog.select_mistery_question",
+  );
+  misteryLabel.classList.add("mistery-label");
+  misteryQuestionDiv.appendChild(misteryLabel);
+  misteryQuestionDiv.appendChild(selectElementSolution);
 
-  return misteryQuestionDiv
-  
+  return misteryQuestionDiv;
 }

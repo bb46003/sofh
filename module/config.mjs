@@ -102,6 +102,3 @@ export async function characterRelation() {
 
   SOFHCONFIG.characterRelation = characterRelation;
 }
-
-
-

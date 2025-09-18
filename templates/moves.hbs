@@ -23,6 +23,7 @@
           <label for="question">{{localize 'sofh.move.haveQuestion'}}</label>          
           <label for="movies">{{localize 'sofh.move.isRelatedToOtherMoves'}}</label>
           <label for="clue">{{localize 'sofh.move.isRelatedToClue'}}</label>
+          <label for="result12">{{localize 'sofh.move.haseResult12'}}</label>
           {{/if}}
          </div>
          <div class="moves-question-inputs">          
@@ -43,6 +44,7 @@
           <input type="checkbox" id="question" name="system.havequestion" {{#if system.havequestion}}checked{{/if}}>    
           <input type="checkbox" id="movies" name="system.realtedtoothermoves" {{#if system.realtedtoothermoves}}checked{{/if}}>
           <input type="checkbox" id="clue" name="system.cluerelated" {{#if system.cluerelated}}checked{{/if}}>
+          <input type="checkbox" id="result12" name="system.result12" {{#if system.result12}}checked{{/if}}>
           {{/if}}
         </div>
         </div>

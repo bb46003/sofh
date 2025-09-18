@@ -1,9 +1,11 @@
 import { moveRoll } from "../dialog/move-dialog.mjs";
 import sofh_Utility from "../utility.mjs";
 
-
-const BaseActorSheet = (typeof foundry?.appv1?.sheets?.ActorSheet !== "undefined") ? foundry.appv1.sheets.ActorSheet : ActorSheet;
-export class  sofhCharacterSheet extends BaseActorSheet {
+const BaseActorSheet =
+  typeof foundry?.appv1?.sheets?.ActorSheet !== "undefined"
+    ? foundry.appv1.sheets.ActorSheet
+    : ActorSheet;
+export class sofhCharacterSheet extends BaseActorSheet {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["sofh", "sheet", "actor", "character", "dialog-button"],
@@ -48,33 +50,28 @@ export class  sofhCharacterSheet extends BaseActorSheet {
 
     async function enrich(html) {
       if (html) {
-        if(game.release.generation < 13 ){
+        if (game.release.generation < 13) {
           return await TextEditor.enrichHTML(html, {
             secrets: context.actor.isOwner,
             async: true,
           });
-
+        } else {
+          return await foundry.applications.ux.TextEditor.enrichHTML(html, {
+            secrets: context.actor.isOwner,
+            async: true,
+          });
         }
-        else{
-        return await  foundry.applications.ux.TextEditor.enrichHTML(html, {
-          secrets: context.actor.isOwner,
-          async: true,
-        });
-      }
       } else {
         return html;
       }
     }
-    
 
     context.system.equipment = await enrich(context.system.equipment);
     this._prepareMoves(context);
-    
+
     return context;
   }
- 
- 
-  
+
   _prepareMoves(context) {
     const basicMoves = [];
     const houseMoves = [];
@@ -110,7 +107,6 @@ export class  sofhCharacterSheet extends BaseActorSheet {
     endOfSessionMoves.sort((a, b) => a.name.localeCompare(b.name));
     specialPlaybookMoves.sort((a, b) => a.name.localeCompare(b.name));
 
-
     // After assigning the items to each array, assign these arrays to the context object
     context.basicMoves = basicMoves;
     context.houseMoves = houseMoves;
@@ -138,14 +134,20 @@ export class  sofhCharacterSheet extends BaseActorSheet {
     html.on("click", "#add-string-btn", (ev) => this.addStringItem(ev));
     html.on("click", ".remove-string-btn", (ev) => this.removeStringItem(ev));
     html.on("click", "#add-advantage-btn", (ev) => this.addAdvantagItem(ev));
-    html.on("click", ".remove-advanatage-btn", (ev) => this.removeAdvantageItem(ev));
+    html.on("click", ".remove-advanatage-btn", (ev) =>
+      this.removeAdvantageItem(ev),
+    );
     html.on("click", ".move_type", (ev) => this.showMoves(ev));
     html.on("click", ".moves", (ev) => this.collapsAllMoves(ev));
     html.on("click", ".remove-moves-btn", (ev) => this.removeMoves(ev));
-    html.on("click contextmenu",".moves-edit",(ev) => this.openMoves(ev));
-    html.on("click",".roll-moves-btn",(ev) => this.rollForMove(ev));
-    html.on("click",".moves-description-open",(ev) => this.openMovesFromTriggers(ev));
-    html.on("click",".send-to-chat-moves-btn", (ev) => this.openMovesFromTriggers(ev));
+    html.on("click contextmenu", ".moves-edit", (ev) => this.openMoves(ev));
+    html.on("click", ".roll-moves-btn", (ev) => this.rollForMove(ev));
+    html.on("click", ".moves-description-open", (ev) =>
+      this.openMovesFromTriggers(ev),
+    );
+    html.on("click", ".send-to-chat-moves-btn", (ev) =>
+      this.openMovesFromTriggers(ev),
+    );
     html.on("click", ".time_to_shine", (ev) => this.showTimeToShine(ev));
   }
 
@@ -169,8 +171,7 @@ export class  sofhCharacterSheet extends BaseActorSheet {
         buttons: {
           OK: {
             icon: '<i class="fa fa-check"></i>',
-            label:`<div class ="sofh-button">${game.i18n.localize("sofh.UI.OK")}</div>`
-        
+            label: `<div class ="sofh-button">${game.i18n.localize("sofh.UI.OK")}</div>`,
           },
         },
         default: "OK",
@@ -181,10 +182,14 @@ export class  sofhCharacterSheet extends BaseActorSheet {
   async removeMoves(ev) {
     const button = ev.target.closest(".remove-moves-btn");
     const ID = button.id;
-    const item = this.actor.items.get(ID);    
-    const innerText = game.i18n.format("sofh.ui.dialog.deleteMove",{name:item.name})
+    const item = this.actor.items.get(ID);
+    const innerText = game.i18n.format("sofh.ui.dialog.deleteMove", {
+      name: item.name,
+    });
     const d = new Dialog({
-      title: game.i18n.format("sofh.ui.dialog.deleteMoveTitle",{name:item.name}), 
+      title: game.i18n.format("sofh.ui.dialog.deleteMoveTitle", {
+        name: item.name,
+      }),
       content: `
         <p>${innerText}</p>
       `,
@@ -192,25 +197,22 @@ export class  sofhCharacterSheet extends BaseActorSheet {
         delete: {
           label: game.i18n.localize("Delete"),
           callback: async () => {
-
             await this.actor.deleteEmbeddedDocuments("Item", [ID]);
             const movesElement = $(".all-moves." + item.type);
             await movesElement.css("display", "");
-          }
+          },
         },
         cancel: {
           label: game.i18n.localize("Cancel"),
           callback: () => {
-              ui.notifications.info("Deletion canceled.");
-          }
-        }
+            ui.notifications.info("Deletion canceled.");
+          },
+        },
       },
-      default: "cancel", 
-      close: () => {
-      }
+      default: "cancel",
+      close: () => {},
     });
     d.render(true);
-    
   }
 
   async handleHouseChange(ev) {
@@ -222,8 +224,6 @@ export class  sofhCharacterSheet extends BaseActorSheet {
       await this.addEq(house);
     }
   }
-
- 
 
   async handleDiamondClick(ev) {
     const element = ev.target.closest("div");
@@ -330,55 +330,55 @@ export class  sofhCharacterSheet extends BaseActorSheet {
           icon: '<i class="fa fa-check"></i>',
           label: `<div class="sofh-button">${game.i18n.localize("sofh.UI.OK")}</div>`,
           callback: (html) => {
-            const selectedQuestion = html.find('input[name="housequestion"]:checked');
-            
+            const selectedQuestion = html.find(
+              'input[name="housequestion"]:checked',
+            );
+
             // Check if an option is selected
             if (selectedQuestion.length === 0) {
-              ui.notifications.warn(game.i18n.localize("sofh.ui.notSelectedHouseQuestion"));
-              this.assignHouseQuestions(house,changeHouse)
-              
-                    }
-            else{
-            this.handleHouseQuestionSelection(html);
-            if (changeHouse) {
-              this.spefificHousEq(house);
+              ui.notifications.warn(
+                game.i18n.localize("sofh.ui.notSelectedHouseQuestion"),
+              );
+              this.assignHouseQuestions(house, changeHouse);
+            } else {
+              this.handleHouseQuestionSelection(html);
+              if (changeHouse) {
+                this.spefificHousEq(house);
+              }
             }
-          }
-           
           },
         },
       },
       default: "OK",
     }).render(true);
-    
   }
- async getHouseQuestions(houseKey) {
-  // Default: try translations
-  let q1 = game.i18n.localize(`sofh.ui.actor.${houseKey}question1`);
-  let q2 = game.i18n.localize(`sofh.ui.actor.${houseKey}question2`);
+  async getHouseQuestions(houseKey) {
+    // Default: try translations
+    let q1 = game.i18n.localize(`sofh.ui.actor.${houseKey}question1`);
+    let q2 = game.i18n.localize(`sofh.ui.actor.${houseKey}question2`);
 
-  // Check if translations are missing
-  const missingQ1 = q1 === `sofh.ui.actor.${houseKey}question1`;
-  const missingQ2 = q2 === `sofh.ui.actor.${houseKey}question2`;
+    // Check if translations are missing
+    const missingQ1 = q1 === `sofh.ui.actor.${houseKey}question1`;
+    const missingQ2 = q2 === `sofh.ui.actor.${houseKey}question2`;
 
-  if (missingQ1 || missingQ2) {
-    // Load saved customConfig
-    const data = game.settings.get("SofH", "customConfig");
+    if (missingQ1 || missingQ2) {
+      // Load saved customConfig
+      const data = game.settings.get("SofH", "customConfig");
 
-    if (data?.houses?.length) {
-      const houseData = data.houses.find(
-        h => h.name?.toLowerCase().replace(/\s+/g, "_") === houseKey
-      );
+      if (data?.houses?.length) {
+        const houseData = data.houses.find(
+          (h) => h.name?.toLowerCase().replace(/\s+/g, "_") === houseKey,
+        );
 
-      if (houseData) {
-        if (missingQ1 && houseData.question1) q1 = houseData.question1;
-        if (missingQ2 && houseData.question2) q2 = houseData.question2;
+        if (houseData) {
+          if (missingQ1 && houseData.question1) q1 = houseData.question1;
+          if (missingQ2 && houseData.question2) q2 = houseData.question2;
+        }
       }
     }
-  }
 
-  return { q1, q2 };
-}
+    return { q1, q2 };
+  }
   async handleHouseQuestionSelection(html) {
     const selectedOption = html.find('input[name="housequestion"]:checked');
     if (selectedOption.length > 0) {
@@ -525,12 +525,12 @@ export class  sofhCharacterSheet extends BaseActorSheet {
     let strings = actor.system.strings || [];
     let i = Object.keys(strings).length + 1;
     const stringElement = {
-        name: "",
-        description: "",
+      name: "",
+      description: "",
     };
     strings[i] = stringElement;
     await actor.update({ "system.strings": strings });
-}
+  }
 
   async addAdvantagItem() {
     const actor = this.actor;
@@ -551,9 +551,8 @@ export class  sofhCharacterSheet extends BaseActorSheet {
     delete newStrings[ID];
     await this.actor.update({ "system.strings": [{}] });
     await this.actor.update({ "system.strings": newStrings });
-  
   }
-  
+
   async removeAdvantageItem(ev) {
     const button = ev.target.closest(".remove-advanatage-btn");
     const ID = button.id;
@@ -580,8 +579,7 @@ export class  sofhCharacterSheet extends BaseActorSheet {
     const move = this.actor.items.get(itemId);
     if (event.type === "contextmenu") {
       await move.sheet.render(true);
-    } 
-    else {
+    } else {
       event.preventDefault(); // Prevent default anchor behavior
       const removeButton = document.querySelector(
         `.remove-moves-btn[id='${move.id}']`,
@@ -613,7 +611,7 @@ export class  sofhCharacterSheet extends BaseActorSheet {
     if (moveType !== "") {
       const closestWindowApp = $(event.currentTarget).closest(".window-app");
       const movesElement = closestWindowApp.find(".all-moves." + moveType);
-  
+
       if (movesElement.css("display") === "none") {
         movesElement.css("display", "");
       } else {
@@ -621,43 +619,44 @@ export class  sofhCharacterSheet extends BaseActorSheet {
       }
     }
   }
-  
 
   async collapsAllMoves(event) {
     const target = event.target.classList.value;
     const closestWindowApp = $(event.currentTarget).closest(".window-app");
-  
+
     if (target === "moves active") {
-      const movesElements = closestWindowApp.find(".all-moves").not(".basicMoves");
+      const movesElements = closestWindowApp
+        .find(".all-moves")
+        .not(".basicMoves");
       movesElements.css("display", "none");
     }
   }
-  
-
 
   async rollForMove(event) {
     const button = event.target;
     let ID = button.id;
     if (ID === "") {
       ID = event.currentTarget.id;
-    }//
+    } //
     const item = this.actor.items.get(ID);
     const actor = this.actor;
     const clueRelated = item.system.cluerelated;
     const clueID = [];
-    if(clueRelated){
+    if (clueRelated) {
       const clueActors = Array.from(game.actors.entries()).filter(
-        ([key, actor]) => actor.type === "clue");
-      
-       clueActors.forEach(ID =>{
-        let hasMatchingKey = Object.keys(ID[1].system.actorID).some(key => key === actor._id);
-        if(hasMatchingKey){
-        clueID.push(ID[0])
+        ([key, actor]) => actor.type === "clue",
+      );
+
+      clueActors.forEach((ID) => {
+        let hasMatchingKey = Object.keys(ID[1].system.actorID).some(
+          (key) => key === actor._id,
+        );
+        if (hasMatchingKey) {
+          clueID.push(ID[0]);
         }
-       })
-      
+      });
     }
-   const dialogInstance = new moveRoll(actor, item, clueID);
+    const dialogInstance = new moveRoll(actor, item, clueID);
     dialogInstance.rollForMove(actor, item, clueID);
   }
   async showTimeToShine(ev) {
@@ -680,10 +679,10 @@ export class  sofhCharacterSheet extends BaseActorSheet {
       buttons: {
         close: {
           label: `<div class ="sofh-button">${game.i18n.localize("sofh.ui.close")}</div>`,
-          callback: () => {}
+          callback: () => {},
         },
         sendToChat: {
-          label:`<div class ="sofh-button">${game.i18n.localize("sofh.ui.send_to_chat")}</div>`,
+          label: `<div class ="sofh-button">${game.i18n.localize("sofh.ui.send_to_chat")}</div>`,
           callback: () => {
             ChatMessage.create({
               user: game.user.id,
@@ -692,7 +691,7 @@ export class  sofhCharacterSheet extends BaseActorSheet {
             });
             updateData["system.reputation.timeToShine"] = currentTS - 1;
             actor.update(updateData);
-          }
+          },
         },
       },
       default: "close",
@@ -736,7 +735,7 @@ export class  sofhCharacterSheet extends BaseActorSheet {
                 speaker: ChatMessage.getSpeaker({ actor }),
                 content: moveToChat,
               });
-            }
+            },
           },
         },
         default: "close",
@@ -745,4 +744,3 @@ export class  sofhCharacterSheet extends BaseActorSheet {
     }
   }
 }
-

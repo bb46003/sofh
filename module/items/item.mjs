@@ -1,5 +1,7 @@
-
-const BaseItemSheet = (typeof foundry?.appv1?.sheets?.ItemSheet !== "undefined") ? foundry.appv1.sheets.ItemSheet : ItemSheet;
+const BaseItemSheet =
+  typeof foundry?.appv1?.sheets?.ItemSheet !== "undefined"
+    ? foundry.appv1.sheets.ItemSheet
+    : ItemSheet;
 export class sofhMovesSheet extends BaseItemSheet {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
@@ -19,19 +21,17 @@ export class sofhMovesSheet extends BaseItemSheet {
     async function enrich(html) {
       if (html) {
         if (html) {
-          if(game.release.generation < 13 ){
+          if (game.release.generation < 13) {
             return await TextEditor.enrichHTML(html, {
               secrets: context.owner,
               async: true,
             });
-  
+          } else {
+            return await foundry.applications.ux.TextEditor.enrichHTML(html, {
+              secrets: context.owner,
+              async: true,
+            });
           }
-          else{
-          return await  foundry.applications.ux.TextEditor.enrichHTML(html, {
-            secrets: context.owner,
-            async: true,
-          });
-        }
         } else {
           return html;
         }
@@ -50,31 +50,35 @@ export class sofhMovesSheet extends BaseItemSheet {
     html.on("change", ".relatedmoves", (ev) => this.relatedmoves(ev));
     html.on("change", ".relatedmoves", (ev) => this.rollingguestions(ev));
     html.on("click", ".isrolled", (ev) => this.changeRollingoption(ev));
-    html.on('drop', async (event) => {
+    html.on("drop", async (event) => {
       event.preventDefault();
       event.stopPropagation();
 
       // Get the data from the drop event
-      const data = JSON.parse(event.originalEvent.dataTransfer.getData('text/plain'));
+      const data = JSON.parse(
+        event.originalEvent.dataTransfer.getData("text/plain"),
+      );
 
       const targetItem = this.item;
-      if (data.type === "Item" && targetItem.system.realtedtoothermoves === true) {
+      if (
+        data.type === "Item" &&
+        targetItem.system.realtedtoothermoves === true
+      ) {
         const droppedItem = await fromUuid(data.uuid);
         if (droppedItem) {
           const droppedItemUuid = droppedItem.uuid;
 
           // Logic to handle the target item (the current item sheet's item)
-         
+
           const linkToDroppedItem = `@UUID[${droppedItemUuid}]{${droppedItem.name}}`;
-       
+
           let updateData = {};
           updateData["system.relatedmoves"] = linkToDroppedItem;
           await targetItem.update(updateData);
-        } 
+        }
       }
     });
   }
-
 
   async addquestion() {
     const item = this.item;
@@ -82,18 +86,17 @@ export class sofhMovesSheet extends BaseItemSheet {
     let i = Object.keys(question).length;
     const questionElement = {
       impact: "false",
-      description: ""
+      description: "",
     };
     question[i] = questionElement;
     await item.update({ "system.question": question });
     Hooks.once("renderItemSheet", (sheet, html) => {
       if (sheet.item.id !== item.id) return;
-        const target = html[0].querySelector("#add-question-btn");
-        if (target) {
-          target.scrollIntoView({ behavior: "smooth", block: "center" });
+      const target = html[0].querySelector("#add-question-btn");
+      if (target) {
+        target.scrollIntoView({ behavior: "smooth", block: "center" });
       }
     });
-  
   }
   async removequestion(ev) {
     const button = ev.target;
@@ -112,9 +115,9 @@ export class sofhMovesSheet extends BaseItemSheet {
     }
     Hooks.once("renderItemSheet", (sheet, html) => {
       if (sheet.item.id !== item.id) return;
-        const target = html[0].querySelector("#add-question-btn");
-        if (target) {
-          target.scrollIntoView({ behavior: "smooth", block: "center" });
+      const target = html[0].querySelector("#add-question-btn");
+      if (target) {
+        target.scrollIntoView({ behavior: "smooth", block: "center" });
       }
     });
   }
@@ -139,5 +142,4 @@ export class sofhMovesSheet extends BaseItemSheet {
       await this.item.update(updateData);
     }
   }
- 
 }
