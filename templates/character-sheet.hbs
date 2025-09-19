@@ -12,7 +12,7 @@
             <label for="home">{{localize "sofh.ui.actor.house"}}</label>
             <select name="system.home" class="house">
               <option value="">None</option>
-                {{selectOptions House selected=system.home localize=true}}
+                {{selectOptions House selected=system.house localize=true}}
             </select>
           </div>
           <div class="stat-grid">
@@ -26,16 +26,16 @@
           </div>
         
         <div class="empty-column">
-           {{#if (eq system.home (lowercase (localize "sofh.ui.actor.gryffindor")))}}
+           {{#if (eq system.house (lowercase (localize "sofh.ui.actor.gryffindor")))}}
               <img class="home-flag" src="systems/SofH/img/gryfbanner.png">  
             {{/if}}
-            {{#if (eq system.home (lowercase (localize "sofh.ui.actor.hufflepuff")))}}
+            {{#if (eq system.house (lowercase (localize "sofh.ui.actor.hufflepuff")))}}
               <img class="home-flag" src="systems/SofH/img/huffbanner.png">
             {{/if}}
-            {{#if (eq system.home (lowercase (localize "sofh.ui.actor.ravenclaw")))}}
+            {{#if (eq system.house (lowercase (localize "sofh.ui.actor.ravenclaw")))}}
               <img class="home-flag" src="systems/SofH/img/ravebanner.png">  
             {{/if}}
-            {{#if (eq system.home (lowercase (localize "sofh.ui.actor.slytherin")))}}
+            {{#if (eq system.house (lowercase (localize "sofh.ui.actor.slytherin")))}}
               <img class="home-flag" src="systems/SofH/img/slybanner.png">   
             {{/if}}        
         </div> 

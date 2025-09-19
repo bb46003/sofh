@@ -35,6 +35,8 @@ export class sofhCharacterSheet extends BaseActorSheet {
       equipment,
       houseeq,
       characterRelation,
+      goal,
+      timeToShine
     } = CONFIG.SOFHCONFIG;
 
     Object.assign(context, {
@@ -46,6 +48,8 @@ export class sofhCharacterSheet extends BaseActorSheet {
       equipment,
       houseeq,
       characterRelation,
+      goal,
+      timeToShine
     });
 
     async function enrich(html) {
@@ -217,6 +221,8 @@ export class sofhCharacterSheet extends BaseActorSheet {
 
   async handleHouseChange(ev) {
     const house = ev.target.value;
+    await this.actor.update({[`system.home`]:house.toLowerCase()})
+       await this.actor.update({[`system.house`]:house.toLowerCase()})
     if (house !== "") {
       await this.assignGoal(house);
       const changeHouse = true;
@@ -309,10 +315,10 @@ export class sofhCharacterSheet extends BaseActorSheet {
 
   async assignGoal(house) {
     const actor = this.actor;
-    const goal = CONFIG.SOFHCONFIG.goal[house]
+    const goal = game.i18n.localize(CONFIG.SOFHCONFIG.goal["goal"+house])
     await actor.update({
       "system.goal": goal,
-      "system.home": CONFIG.SOFHCONFIG.House[house].toLowerCase(),
+      "system.home": game.i18n.localize(CONFIG.SOFHCONFIG.House[house].toLowerCase()),
     });
   }
 
@@ -664,7 +670,7 @@ export class sofhCharacterSheet extends BaseActorSheet {
     const updateData = {};
     const currentTS = actor.system.reputation.timeToShine;
     const house = actor.system.home.toLowerCase();
-    const timeToShineText = CONFIG.SOFHCONFIG.timeToShine[house]
+    const timeToShineText = game.i18n.localize(CONFIG.SOFHCONFIG.timeToShine[house+"TimeToShine"]);
     const content = `<div class="sofh"><h2 style="font-family: 'IM Fell English', serif;">${game.i18n.localize("sofh.ui.actor.timeToShine")}</h2>
         <p>${timeToShineText}</p></div>
         `;
