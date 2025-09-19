@@ -187,6 +187,8 @@ Hooks.once("init", async function () {
 
         // Merge general equipment
         if (house.equipment) SOFHCONFIG.equipment[key] = house.equipment;
+        CONFIG.SOFHCONFIG.goal[key] = house.goal;
+        CONFIG.SOFHCONFIG.timeToShine[key] = house.timeToShine;
       });
     }
     if (savedData.topicReplace) {

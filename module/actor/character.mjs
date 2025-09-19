@@ -309,10 +309,10 @@ export class sofhCharacterSheet extends BaseActorSheet {
 
   async assignGoal(house) {
     const actor = this.actor;
-    const goal = game.i18n.localize(`sofh.ui.actor.goal${house}`);
+    const goal = CONFIG.SOFHCONFIG.goal[house]
     await actor.update({
       "system.goal": goal,
-      "system.home": game.i18n.localize(`sofh.ui.actor.${house}`).toLowerCase(),
+      "system.home": CONFIG.SOFHCONFIG.House[house].toLowerCase(),
     });
   }
 
@@ -664,14 +664,15 @@ export class sofhCharacterSheet extends BaseActorSheet {
     const updateData = {};
     const currentTS = actor.system.reputation.timeToShine;
     const house = actor.system.home.toLowerCase();
+    const timeToShineText = CONFIG.SOFHCONFIG.timeToShine[house]
     const content = `<div class="sofh"><h2 style="font-family: 'IM Fell English', serif;">${game.i18n.localize("sofh.ui.actor.timeToShine")}</h2>
-        <p>${game.i18n.localize(`sofh.ui.actor.${house}TimeToShine`)}</p></div>
+        <p>${timeToShineText}</p></div>
         `;
     const title = game.i18n.localize("sofh.ui.actor.timeToShine");
     const moveToChat = `<div class="sofh description-sheet"> 
            <h2 class="move_type description-label-notrrolabe">${game.i18n.localize("sofh.ui.chat.use_move")}<br>
            ${game.i18n.localize("sofh.ui.actor.timeToShine")}</h2>       
-            ${game.i18n.localize(`sofh.ui.actor.${house}TimeToShine`)}
+            ${timeToShineText}
         </div>`;
     const d = new Dialog({
       title: title,

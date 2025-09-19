@@ -87,6 +87,18 @@ SOFHCONFIG.houseeq = {
     bertie_botts_beans: "sofh.ui.actor.gryffindorbertie_botts_beans",
   },
 };
+SOFHCONFIG.goal = {
+  goalgryffindor:"sofh.ui.actor.goalgryffindor",
+  goalhufflepuff: "sofh.ui.actor.goalhufflepuff",
+  goalravenclaw: "sofh.ui.actor.goalravenclaw",
+  goalslytherin:"sofh.ui.actor.goalslytherin"
+};
+SOFHCONFIG.timeToShine = {
+  gryffindorTimeToShine: "sofh.ui.actor.gryffindorTimeToShine",
+  hufflepuffTimeToShine: "sofh.ui.actor.hufflepuffTimeToShine",
+  ravenclawTimeToShine: "sofh.ui.actor.ravenclawTimeToShine",
+  slytherinTimeToShine:"sofh.ui.actor.slytherinTimeToShine"
+}
 
 export async function characterRelation() {
   const actors = game.actors;
