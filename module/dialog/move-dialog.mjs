@@ -52,7 +52,7 @@ export class moveRoll extends Dialog {
       movesElement.css("display", "");
       $(".window-app").each(function () {
         const windowTitle = $(this).find(".window-title").text().trim();
-        if (windowTitle === game.i18n.localize("sofh.ui.rolling")) {
+        if (windowTitle === game.i18n.localize("sofh.rolling")) {
           $(this).css("top", (index, currentTop) => {
             return `${parseInt(currentTop, 10) - 200}px`;
           });
@@ -62,7 +62,7 @@ export class moveRoll extends Dialog {
       movesElement.css("display", "none");
       $(".window-app").each(function () {
         const windowTitle = $(this).find(".window-title").text().trim();
-        if (windowTitle === game.i18n.localize("sofh.ui.rolling")) {
+        if (windowTitle === game.i18n.localize("sofh.rolling")) {
           $(this).css("top", (index, currentTop) => {
             return `${parseInt(currentTop, 10) + 200}px`;
           });
@@ -319,12 +319,12 @@ export class moveRoll extends Dialog {
           <div class="sofh">
           <h3 style="font-family: 'IM Fell English SC', serif;font-size: large;">${label}</h3><br>
           <div class="move-description-chat">${item.system.description}</div><br>
-          <h2 class="move_type description-label ">${game.i18n.localize("sofh.chat.rollesult")}</h2>  
+          <h2 class="move_type description-label ">${game.i18n.localize("sofh.ui.chat.rollesult")}</h2>  
           <div class="roll-results">${content}</div><br>
           </div>
       `;
     } else {
-      const questionlabel = game.i18n.localize("sofh.chat.mystery_question");
+      const questionlabel = game.i18n.localize("sofh.ui.chat.mystery_question");
 
       content = `
           <div class="sofh">
@@ -335,7 +335,7 @@ export class moveRoll extends Dialog {
               <div class="mistery-question_solution">
                 <p>${questionlabel}${question}</p>
               </div>
-              <h2 class="move_type description-label ">${game.i18n.localize("sofh.chat.rollesult")}</h2>  
+              <h2 class="move_type description-label ">${game.i18n.localize("sofh.ui.chat.rollesult")}</h2>  
               <div class="roll-results">${content}</div><br>
             </div>
       `;
@@ -343,7 +343,7 @@ export class moveRoll extends Dialog {
     if (advantagesSelect !== undefined) {
       content += `
       <h3></h3>
-      <p style="font-family: 'IM Fell English SC', serif>${game.i18n.format("sofh.chat.actorUseAdvantages", { actor: actor.name, advantage: advantagesSelect })}</p>
+      <p style="font-family: 'IM Fell English SC', serif>${game.i18n.format("sofh.ui.chat.actorUseAdvantages", { actor: actor.name, advantage: advantagesSelect })}</p>
       </div>`;
     } else {
       content += `</div>`;
@@ -425,7 +425,7 @@ export class moveRoll extends Dialog {
       }
       new moveRoll({
         data: { actor, item, clueID },
-        title: game.i18n.localize("sofh.ui.rolling"),
+        title: game.i18n.localize("sofh.rolling"),
         content,
         buttons: {
           OK: {
@@ -447,7 +447,7 @@ export class moveRoll extends Dialog {
       }).render(true);
     } else {
       ui.notifications.warn(
-        game.i18n.localize("sofh.ui.warrning.cannotactduetoconditions"),
+        game.i18n.localize("sofh.ui.warning.cannotactduetoconditions"),
       );
     }
   }

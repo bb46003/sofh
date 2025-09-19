@@ -7,7 +7,7 @@
         </div>
         {{#if system.housequestion}}
         <div class="move-is-ralted-to-house-guestion">
-            {{localize "sofh.ui.move.isRaltedToHouse"}}
+            {{localize "sofh.move.isRaltedToHouse"}}
         </div>    
         {{/if}}
         {{#if (eq system.havequestion true)}} 
@@ -34,9 +34,9 @@
         <h2 class="move_type description-label ">{{localize "sofh.item.isrolled"}}</h2>
         <div class="moves-isrolled">    
             <div class="roll-resuilt-label">
-                <label for="above10">{{localize 'sofh.ui.move.resultAbove10'}}</label>
-                <label for="7to9">{{localize 'sofh.ui.move.result7to9'}}</label>
-                <label for="below7">{{localize 'sofh.ui.move.resultBelow7'}}</label>
+                <label for="above10">{{localize 'sofh.ui.moves.resultAbove10'}}</label>
+                <label for="7to9">{{localize 'sofh.ui.moves.result7to9'}}</label>
+                <label for="below7">{{localize 'sofh.ui.moves.resultBelow7'}}</label>
             </div>
             <div class="roll-resoult-text">
                 {{editor system.above10 target="system.above10"  engine="prosemirror" button=false owner=owner editable=false class="roll-resoult-above10"}}

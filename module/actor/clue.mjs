@@ -242,7 +242,7 @@ export class SofhClue extends BaseActorSheet {
       dialogInstance.rollForMove(actor, item, this.actor.id);
     } else {
       ui.notifications.warn(
-        game.i18n.localize("sofh.ui.war.you_are_not_owner"),
+        game.i18n.localize("sofh.you_are_not_owner"),
       );
     }
   }
@@ -309,7 +309,7 @@ export class SofhClue extends BaseActorSheet {
       );
     } else {
       ui.notifications.warn(
-        game.i18n.localize("sofh.ui.war.you_are_not_owner"),
+        game.i18n.localize("sofh.you_are_not_owner"),
       );
     }
   }
