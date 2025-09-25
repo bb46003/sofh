@@ -125,7 +125,7 @@ export class customHouse extends foundry.applications.api.ApplicationV2 {
   static async #addHouse() {
     const element = this.element;
     const html = await sofh_Utility.renderTemplate(
-      "systems/SofH/templates/app/part/tab/house.hbs",
+      "systems/SofH/templates/app/part/tab/new-house.hbs",
     );
     const container = element.querySelector(".custom-houses");
     const lastSection = container.querySelector("section:last-of-type");
