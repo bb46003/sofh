@@ -222,8 +222,9 @@ export class sofhCharacterSheet extends BaseActorSheet {
   async handleHouseChange(ev) {
     const house = ev.target.value;
     await this.actor.update({[`system.home`]:house.toLowerCase()})
-       await this.actor.update({[`system.house`]:house.toLowerCase()})
+    await this.actor.update({[`system.house`]:house.toLowerCase()})
     if (house !== "") {
+      this.actor.sheet.render()
       await this.assignGoal(house);
       const changeHouse = true;
       await this.assignHouseQuestions(house, changeHouse);
@@ -389,7 +390,7 @@ export class sofhCharacterSheet extends BaseActorSheet {
     const selectedOption = html.find('input[name="housequestion"]:checked');
     if (selectedOption.length > 0) {
       const selectedLabel = selectedOption.next("label").text().trim();
-      await this.actor.update({ "system.housequestion": selectedLabel });
+      await this.actor.update({["system.housequestion"]: selectedLabel });
     } else {
       ui.notifications.warn(game.i18n.localize("sofh.ui.warning.noSelection"));
     }

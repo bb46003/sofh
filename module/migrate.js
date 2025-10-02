@@ -59,6 +59,7 @@ async function migrateMoves(actor) {
       console.log(`Replaced ${currentMove.name}`);
     }
   } else {
+    console.log(moveTochange)
     await actor.createEmbeddedDocuments("Item", moveTochange);
     console.log(`Added new move: ${moveTochangeName}`);
   }

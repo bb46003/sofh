@@ -1112,7 +1112,7 @@ button#add-string-btn, button#add-advantage-btn {
     margin-bottom: 0px;
 }
 .chat-description, .roll-results, .move-description-chat{
-    font-size: 20px;
+    font-size: 16px;
 }
 .body-move.tab, .move-elements{
         font-size: larger;
