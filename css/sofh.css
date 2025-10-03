@@ -1124,3 +1124,6 @@ button#add-string-btn, button#add-advantage-btn {
     align-items: center;
     margin-bottom: 5px;
 }
+.italic {
+  font-style: italic;
+}
