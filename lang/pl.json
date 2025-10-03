@@ -25,7 +25,7 @@
       "eqquestion": "Circle three extra props:",
       "instructions": {
         "fill_in_with_players": "Fill in at least two with other player characters:",
-        "fill_in_with_characters": "Fill in all with other characters (PC or NPC):"
+        "fill_in_with_characters": "Fill in at least three with other characters (PC or NPC):"
       },
       "warning": {
         "noSelection": "Please select one question!",

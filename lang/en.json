@@ -25,7 +25,7 @@
       "eqquestion": "Circle three extra props:",
       "instructions": {
         "fill_in_with_players": "Fill in at least two with other player characters:",
-        "fill_in_with_characters": "Fill in all with other characters (PC or NPC):"
+        "fill_in_with_characters": "Fill in at least three with other characters (PC or NPC):"
       },
       "warning": {
         "noSelection": "Please select one question!",
@@ -111,7 +111,24 @@
         "score_instructions": "You start one relationship with +2, one with -1, and the rest with +1. Range: from -2 to +2.",
         "title": "Your Relationships",
         "scores_title": "Your Relationship Scores",
-        "relationQuestion": "Write your own relation question"
+        "relationQuestion": "Write your own relation question",
+        "slytherin1": "Your closest confidant and partner-in-crime: ",
+        "slytherin2": "Your fiercest rival, always trying to one-up you: ",
+        "slytherin3": "Someone who betrayed your trust and you are still not over \nit: ",
+        "slytherin4": "Your crush who endangers your ambitions: ",
+        "ravenclaw1": "Your closest confidant and partner-in-crime: ",
+        "ravenclaw2": "Your fiercest rival, always trying to one-up you: ",
+        "ravenclaw3": "Someone who betrayed your trust and you are still not over \nit: ",
+        "ravenclaw4": "Your biggest crush, even though you don't know how they \nfeel about you: ",
+        "hufflepuff1": "Your closest confidant and partner-in-crime: ",
+        "hufflepuff2": "Your fiercest rival, always trying to one-up you: ",
+        "hufflepuff3": "Someone who betrayed your trust and you are still not over \nit: ",
+        "hufflepuff4": "You have a huge, long-time crush on: ",
+        "gryffindor1": "Your closest confidant and partner-in-crime: ",
+        "gryffindor2": "Your fiercest rival, always trying to one-up you: ",
+        "gryffindor3": "Someone who betrayed your trust and you are still not over \nit: ",
+        "gryffindor4": "Your crush, making your life significantly more \ncomplicated: ",
+        "question": "Input your relation question"
       },
       "clue": {
         "clue_table": "Clues and who knows about them",
