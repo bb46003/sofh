@@ -264,7 +264,8 @@
         "yourmovestriggers": "Moves triggers:",
         "condition.type": "Type",
         "condition.name": "Short description",
-        "condition.fixed": "Fixed?"
+        "condition.fixed": "Fixed?",
+        "reputation_questions": "Reputation Questionm"
       }
     },
     "rolling": "Rolling dialog",
@@ -320,7 +321,11 @@
     "clue": "Mistery",
     "dialog": {
       "knownMisery": "Select Mistery",
-      "select_mistery_question": "Choose Mystery Question"
+      "select_mistery_question": "Choose Mystery Question",
+      "reputation-heder": "House Reputation questions\nAt the beginning of a school year, highlight two of the questions\nbelow. Ask these two when you Gain Reputation, in the end of\nevery game session.\nDid you...",
+      "reputation": {
+        "gryfindor1": "face a major foe or fear with courage?"
+      }
     },
     "UI": {
       "OK": "Apply",

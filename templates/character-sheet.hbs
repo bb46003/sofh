@@ -18,6 +18,9 @@
           <div class="stat-grid">
             <label for="year">{{localize "sofh.ui.actor.years"}}</label>
             <input id="schoolyear" name="system.schoolyear.value" type="number" value="{{system.schoolyear.value}}" min="1" max="7" step="1">
+            {{#if actor.system.changedYear}}
+              <a id="reputationQuestions">{{localize "sofh.ui.actor.reputation_questions"}}</a>
+            {{/if}}            
           </div>
           <div class="stat-grid"></div>
             <label for="house-question" class="hover-label-question">{{localize "sofh.ui.house-questionlabel"}}</label>

@@ -241,9 +241,7 @@ export class SofhClue extends BaseActorSheet {
       const dialogInstance = new moveRoll(actor, item, this.actor.id);
       dialogInstance.rollForMove(actor, item, this.actor.id);
     } else {
-      ui.notifications.warn(
-        game.i18n.localize("sofh.you_are_not_owner"),
-      );
+      ui.notifications.warn(game.i18n.localize("sofh.you_are_not_owner"));
     }
   }
   async addSolution(event) {
@@ -308,9 +306,7 @@ export class SofhClue extends BaseActorSheet {
         solution,
       );
     } else {
-      ui.notifications.warn(
-        game.i18n.localize("sofh.you_are_not_owner"),
-      );
+      ui.notifications.warn(game.i18n.localize("sofh.you_are_not_owner"));
     }
   }
 }

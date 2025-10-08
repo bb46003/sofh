@@ -1,20 +1,22 @@
 <div class="sheet-table-data item draggable-item" data-item-id="{{item._id}}">
-                 <div class="sheet-table-data"  data-item-id="{{item._id}}">
-                    <div class="first-row" id="{{item._id}}">
-                        <img class="move-image" src="{{item.img}}" title="{{item.name}}"/>
-                        <a class="moves-edit">{{item.name}}</a>
-                        <div class="buttons-moves">
-                           {{#if (eq item.system.isrolled true)}}
-                            <button class="roll-moves-btn" id="{{item._id}}">
-                                <i class="fas fa-dice" id="{{item._id}}"></i>
-                            </button>
-                            {{else}}
-                            <div><button class="send-to-chat-moves-btn" id="{{item._id}}">
-                                <i class="fas fa-comments" id="{{item._id}}"></i>
-                            </button></div>
-                            {{/if}}
-                            <button class="remove-moves-btn" id="{{item._id}}" ><i class="fa fa-trash"></i></button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+  <div class="sheet-table-data" data-item-id="{{item._id}}">
+    <div class="first-row" id="{{item._id}}">
+      <img class="move-image" src="{{item.img}}" title="{{item.name}}" />
+      <a class="moves-edit">{{item.name}}</a>
+      <div class="buttons-moves">
+        {{#if (eq item.system.isrolled true)}}
+          <button class="roll-moves-btn" id="{{item._id}}">
+            <i class="fas fa-dice" id="{{item._id}}"></i>
+          </button>
+        {{else}}
+          <div><button class="send-to-chat-moves-btn" id="{{item._id}}">
+              <i class="fas fa-comments" id="{{item._id}}"></i>
+            </button></div>
+        {{/if}}
+        <button class="remove-moves-btn" id="{{item._id}}"><i
+            class="fa fa-trash"
+          ></i></button>
+      </div>
+    </div>
+  </div>
+</div>

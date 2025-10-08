@@ -1,5 +1,6 @@
 import { moveRoll } from "../dialog/move-dialog.mjs";
 import sofh_Utility from "../utility.mjs";
+import { ReputationQuestion } from "../dialog/reputation-question.mjs";
 
 const BaseActorSheet =
   typeof foundry?.appv1?.sheets?.ActorSheet !== "undefined"
@@ -36,7 +37,7 @@ export class sofhCharacterSheet extends BaseActorSheet {
       houseeq,
       characterRelation,
       goal,
-      timeToShine
+      timeToShine,
     } = CONFIG.SOFHCONFIG;
 
     Object.assign(context, {
@@ -49,7 +50,7 @@ export class sofhCharacterSheet extends BaseActorSheet {
       houseeq,
       characterRelation,
       goal,
-      timeToShine
+      timeToShine,
     });
 
     async function enrich(html) {
@@ -153,6 +154,10 @@ export class sofhCharacterSheet extends BaseActorSheet {
       this.openMovesFromTriggers(ev),
     );
     html.on("click", ".time_to_shine", (ev) => this.showTimeToShine(ev));
+    html.on("change", "#schoolyear", (ev) => this.changeYear(ev));
+    html.on("click", "#reputationQuestions", (ev) =>
+      this.changeReputationQuestions(ev),
+    );
   }
 
   async handleReputationChange(ev) {
@@ -221,10 +226,10 @@ export class sofhCharacterSheet extends BaseActorSheet {
 
   async handleHouseChange(ev) {
     const house = ev.target.value;
-    await this.actor.update({[`system.home`]:house.toLowerCase()})
-    await this.actor.update({[`system.house`]:house.toLowerCase()})
+    await this.actor.update({ [`system.home`]: house.toLowerCase() });
+    await this.actor.update({ [`system.house`]: house.toLowerCase() });
     if (house !== "") {
-      this.actor.sheet.render()
+      this.actor.sheet.render();
       await this.assignGoal(house);
       const changeHouse = true;
       await this.assignHouseQuestions(house, changeHouse);
@@ -316,10 +321,12 @@ export class sofhCharacterSheet extends BaseActorSheet {
 
   async assignGoal(house) {
     const actor = this.actor;
-    const goal = game.i18n.localize(CONFIG.SOFHCONFIG.goal["goal"+house])
+    const goal = game.i18n.localize(CONFIG.SOFHCONFIG.goal["goal" + house]);
     await actor.update({
       "system.goal": goal,
-      "system.home": game.i18n.localize(CONFIG.SOFHCONFIG.House[house].toLowerCase()),
+      "system.home": game.i18n.localize(
+        CONFIG.SOFHCONFIG.House[house].toLowerCase(),
+      ),
     });
   }
 
@@ -390,7 +397,7 @@ export class sofhCharacterSheet extends BaseActorSheet {
     const selectedOption = html.find('input[name="housequestion"]:checked');
     if (selectedOption.length > 0) {
       const selectedLabel = selectedOption.next("label").text().trim();
-      await this.actor.update({["system.housequestion"]: selectedLabel });
+      await this.actor.update({ ["system.housequestion"]: selectedLabel });
     } else {
       ui.notifications.warn(game.i18n.localize("sofh.ui.warning.noSelection"));
     }
@@ -671,7 +678,9 @@ export class sofhCharacterSheet extends BaseActorSheet {
     const updateData = {};
     const currentTS = actor.system.reputation.timeToShine;
     const house = actor.system.home.toLowerCase();
-    const timeToShineText = game.i18n.localize(CONFIG.SOFHCONFIG.timeToShine[house+"TimeToShine"]);
+    const timeToShineText = game.i18n.localize(
+      CONFIG.SOFHCONFIG.timeToShine[house + "TimeToShine"],
+    );
     const content = `<div class="sofh"><h2 style="font-family: 'IM Fell English', serif;">${game.i18n.localize("sofh.ui.actor.timeToShine")}</h2>
         <p>${timeToShineText}</p></div>
         `;
@@ -750,5 +759,14 @@ export class sofhCharacterSheet extends BaseActorSheet {
       });
       d.render(true, { height: 800, width: 450 });
     }
+  }
+
+  async changeYear(ev) {
+    await this.actor.update({ ["system.changedYear"]: true });
+  }
+
+  async changeReputationQuestions(ev) {
+    const actor = this.actor;
+    new ReputationQuestion(actor).render(true);
   }
 }

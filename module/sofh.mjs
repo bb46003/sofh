@@ -157,7 +157,7 @@ Hooks.once("init", async function () {
   loadPolishLocalization();
 
   CONFIG.Actor.documentClass = sofhActor;
- CONFIG.SOFHCONFIG = SOFHCONFIG;
+  CONFIG.SOFHCONFIG = SOFHCONFIG;
   // --- Load previously saved custom config ---
   const savedData = game.settings.get("SofH", "customConfig");
   if (savedData) {
@@ -187,8 +187,8 @@ Hooks.once("init", async function () {
 
         // Merge general equipment
         if (house.equipment) SOFHCONFIG.equipment[key] = house.equipment;
-        CONFIG.SOFHCONFIG.goal["goal"+key] = house.goal;
-        CONFIG.SOFHCONFIG.timeToShine[key+"TimeToShine"] = house.timeToShine;
+        CONFIG.SOFHCONFIG.goal["goal" + key] = house.goal;
+        CONFIG.SOFHCONFIG.timeToShine[key + "TimeToShine"] = house.timeToShine;
       });
     }
     if (savedData.topicReplace) {
@@ -213,7 +213,6 @@ Hooks.once("init", async function () {
     }
 
     // Assign merged config to global CONFIG
-   
 
     game.SofH = {
       HomeScore,

@@ -7,29 +7,13 @@
       "minimum": "12",
       "verified": "13.348"
     },
-    "authors": [
-        {
-          "name": "Bartek",
-          "flags": {}
-        }
-    ],
-    "esmodules": [
-        "module/sofh.mjs"
-      ],
-      "styles": ["css/sofh.css"],
-      "languages": [
-        {
-          "lang": "pl",
-          "name": "Polski",
-          "path": "lang/pl.json"
-        },
-        {
-          "lang": "en",
-          "name": "English",
-          "path": "lang/en.json"
-        }
-      ],
-      "packs": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    }
+  ],
+  "packs": [
     {
       "name": "moves",
       "label": "Basic Moves",
@@ -44,10 +28,7 @@
     }
   ],
 
-      
-      "socket": true,
-      "manifest":"https://raw.githubusercontent.com/bb46003/sofh/refs/heads/main/system.json",
-      "download":"https://github.com/bb46003/sofh/archive/refs/heads/main.zip"
-
+  "socket": true,
+  "manifest": "https://raw.githubusercontent.com/bb46003/sofh/refs/heads/main/system.json",
+  "download": "https://github.com/bb46003/sofh/archive/refs/heads/main.zip"
 }
-

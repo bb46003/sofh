@@ -14,13 +14,14 @@ export const preloadHandlebarsTemplates = async function () {
     "systems/SofH/templates/tab/partial/relation-griffindor.hbs",
     "systems/SofH/templates/tab/partial/relation-hufflepuff.hbs",
     "systems/SofH/templates/tab/partial/relation-ravenclaw.hbs",
-     "systems/SofH/templates/tab/partial/relation-empty.hbs",
+    "systems/SofH/templates/tab/partial/relation-empty.hbs",
     "systems/SofH/templates/tab/party-list.hbs",
     "systems/SofH/templates/tab/clue-list.hbs",
     "systems/SofH/templates/tab/mistery-solve-list.hbs",
     "systems/SofH/templates/app/part/custom-house.hbs",
     "systems/SofH/templates/app/part/custom-blood-type.hbs",
     "systems/SofH/templates/app/part/tab/new-house.hbs",
+    "systems/SofH/templates/dialogs/reputation-questions.hbs",
   ];
 
   if (game.release.generation < 13) {

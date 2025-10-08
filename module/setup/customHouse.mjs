@@ -172,8 +172,11 @@ export class customHouse extends foundry.applications.api.ApplicationV2 {
 
       const question1 = questions[0] || null;
       const question2 = questions[1] || null;
-      const goal = section.querySelector(`input[name="timeToShine"]`)?.value.trim() || null;
-      const timeToShine = section.querySelector(`input[name="houseGoal"]`)?.value.trim() || null;
+      const goal =
+        section.querySelector(`input[name="timeToShine"]`)?.value.trim() ||
+        null;
+      const timeToShine =
+        section.querySelector(`input[name="houseGoal"]`)?.value.trim() || null;
       if (houseName || equipment || houseEq.length > 0) {
         data.houses.push({
           name: houseName,
@@ -242,8 +245,8 @@ export class customHouse extends foundry.applications.api.ApplicationV2 {
 
         // General equipment
         if (house.equipment) CONFIG.SOFHCONFIG.equipment[key] = house.equipment;
-         CONFIG.SOFHCONFIG.goal["goal"+key] = house.goal;
-         CONFIG.SOFHCONFIG.timeToShine[key+"TimeToShine"] = house.timeToShine;
+        CONFIG.SOFHCONFIG.goal["goal" + key] = house.goal;
+        CONFIG.SOFHCONFIG.timeToShine[key + "TimeToShine"] = house.timeToShine;
       }
     });
 
