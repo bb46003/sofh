@@ -352,4 +352,21 @@ export function registerHandlebarsHelpers() {
     });
     return css;
   });
+  Handlebars.registerHelper(
+    "checkReputation",
+    function (checkReputation, index) {
+      if (
+        Number(checkReputation[0]) === index ||
+        Number(checkReputation[1]) === index
+      ) {
+        return "checked";
+      }
+      if (
+        Number(checkReputation[0]) !== undefined &&
+        Number(checkReputation[1]) !== undefined
+      ) {
+        return "disabled";
+      }
+    },
+  );
 }

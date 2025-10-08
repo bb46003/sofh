@@ -67,17 +67,18 @@ async function migrateMoves(actor) {
 }
 
 async function migrateRelation(actor) {
-  const relation1 = actor.system.best_friend;               
-  const relation2 = actor.system?.worst_enemy ?? actor.system?.worst_enemy_or_rival;
+  const relation1 = actor.system.best_friend;
+  const relation2 =
+    actor.system?.worst_enemy ?? actor.system?.worst_enemy_or_rival;
   const relation3 = actor.system.current_crush;
 
-  if(relation1 !== ""){
-   await actor.update({['system.relation1']:relation1})
+  if (relation1 !== "") {
+    await actor.update({ ["system.relation1"]: relation1 });
   }
-  if(relation2 !== ""){
-     await actor.update({['system.relation2']:relation2})
+  if (relation2 !== "") {
+    await actor.update({ ["system.relation2"]: relation2 });
   }
-  if(relation3 !== ""){
-     await actor.update({['system.relation3']:relation3})
+  if (relation3 !== "") {
+    await actor.update({ ["system.relation3"]: relation3 });
   }
 }
