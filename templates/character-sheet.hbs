@@ -19,11 +19,11 @@
             <label for="year">{{localize "sofh.ui.actor.years"}}</label>
             {{#if actor.system.changedYear}}
               <div class="flex">
-                <input id="schoolyear" name="system.schoolyear.value" type="number" value="{{system.schoolyear.value}}" min="1" max="7" step="1">
+                <input id="schoolyear"  type="number" value="{{system.schoolyear.value}}" min="1" max="7" step="1">
                 <a id="reputationQuestions">{{localize "sofh.ui.actor.reputation_questions"}}</a>
               </div> 
             {{else}}
-              <input id="schoolyear" name="system.schoolyear.value" type="number" value="{{system.schoolyear.value}}" min="1" max="7" step="1">    
+              <input id="schoolyear"  type="number" value="{{system.schoolyear.value}}" min="1" max="7" step="1">    
             {{/if}}            
           </div>
           <div class="stat-grid"></div>
