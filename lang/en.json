@@ -282,7 +282,8 @@
       "isRaltedToHouseQuestion": "House Question",
       "isRaltedToHouse": "Move is related do House",
       "haseResult12": "Move have results 12+",
-      "namePulltheStrings": "Pull the Strings"
+      "namePulltheStrings": "Pull the Strings",
+      "endSesionMove": "End Sesion Moves"
     },
     "item": {
       "descriptionlabel": "Move description",
@@ -328,16 +329,13 @@
         "gryffindor2": "save someone important or famous?",
         "gryffindor3": "impress someone or made them admire you?",
         "gryffindor4": "steal someone’s spotlight?",
-
         "hufflepuff1": "make peace with a major foe?",
         "hufflepuff2": "make sure justice is done?",
         "hufflepuff3": "prove yourself the most loyal friend?",
         "hufflepuff4": "put your hard work in the spotlight?",
-
         "ravenclaw1": "outsmart or label a major foe?",
         "ravenclaw2": "let your knowledge take the spotlight?",
         "ravenclaw3": "solve a puzzle or make significant progress toward solving a mystery?",
-
         "slytherin1": "make a fool of a major foe?",
         "slytherin2": "improve your social standing or influence?",
         "slytherin3": "achieve an ambitious goal, proving to others that you are better than them?"

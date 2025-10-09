@@ -8,6 +8,8 @@ import { characterRelation } from "./config.mjs";
 import { sofhActor } from "./actor/actors.mjs";
 import * as SofHMigrate from "./migrate.js";
 import { customHouse } from "./setup/customHouse.mjs";
+import { EndSessionDialog } from "./dialog/end-session.mjs";
+import SocketHandler from "./setup/socket-handler.mjs";
 
 export default function registerSettings() {
   // -------------------
@@ -218,8 +220,10 @@ Hooks.once("init", async function () {
       HomeScore,
       moveRoll,
       migrateWorld: SofHMigrate.migrateWorld,
+      EndSessionDialog,
     };
-
+    const myPackage = game.system; // or just game.system if you're a system
+    myPackage.socketHandler = new SocketHandler();
     return preloadHandlebarsTemplates();
   }
 });
@@ -317,28 +321,32 @@ Hooks.once("ready", async function () {
         SYSTEM_MIGRATION_VERSION,
       );
     }
-  }
-});
+    const macroName = game.i18n.localize("sofh.move.endSesionMove");
 
-Hooks.on("createActor", async function (actor) {
-  if (actor.type === "character") {
-    characterRelation();
+    // Check if macro already exists globally
+    let macro = game.macros.find((m) => m.name === macroName);
 
-    CONFIG.SOFHCONFIG = SOFHCONFIG;
-    const characters = game.actors.filter((a) => a.type === "character");
+    if (!macro) {
+      // Create the macro if it doesn't exist
+      macro = await Macro.create({
+        name: macroName,
+        type: "script",
+        img: "icons/svg/door-open-outline.svg",
+        command: "new game.SofH.EndSessionDialog().render(true);",
+        flags: { sofh: true }, // optional
+      });
 
-    characters.forEach(async (character) => {
-      if (character.sheet.rendered) {
-        await character.sheet.render(true);
+      const hotbarMacros = game.user.getHotbarMacros();
+
+      // Find first empty slot (macro is null)
+      let emptySlot = hotbarMacros.findIndex((m) => m.macro === null);
+      if (emptySlot === -1) {
+        console.warn("No empty hotbar slot available for End Session macro!");
+        return;
       }
-    });
-  }
-});
 
-Hooks.on("updateActor", (actor, updateData) => {
-  if (actor.type === "character") {
-    if (updateData.name) {
-      Hooks.callAll("actorNameChanged");
+      // Hotbar slots are 1-based
+      await game.user.assignHotbarMacro(macro, emptySlot + 1);
     }
   }
 });
@@ -368,7 +376,15 @@ Hooks.on("deleteActor", async function (actor) {
 
 Hooks.on("renderActorSheet", async function name(data) {
   const actor = data.object;
-  if (actor.type === "character") {
+  const isGM = game.user.isGM;
+  const lang = game.i18n.lang;
+  let flagsLang = actor.flags?.SofH?.lang;
+  if (flagsLang === undefined) {
+    actor.setFlag("SofH", "lang", lang);
+    flagsLang = lang;
+  }
+
+  if (actor.type === "character" && !isGM && flagsLang !== lang) {
     const goal = actor.system.goal;
     const housequestion = actor.system.housequestion;
     const equipment = actor.system.equipment;

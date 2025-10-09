@@ -763,7 +763,10 @@ export class sofhCharacterSheet extends BaseActorSheet {
 
   async changeYear(ev) {
     const schoolyear = Number(ev.target.value);
-    await this.actor.update({ ["system.changedYear"]: true, ["system.schoolyear.value"]:schoolyear});
+    await this.actor.update({
+      ["system.changedYear"]: true,
+      ["system.schoolyear.value"]: schoolyear,
+    });
   }
 
   async changeReputationQuestions(ev) {

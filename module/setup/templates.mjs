@@ -22,6 +22,7 @@ export const preloadHandlebarsTemplates = async function () {
     "systems/SofH/templates/app/part/custom-blood-type.hbs",
     "systems/SofH/templates/app/part/tab/new-house.hbs",
     "systems/SofH/templates/dialogs/reputation-questions.hbs",
+    "systems/SofH/templates/dialogs/end-sesion-GM.hbs",
   ];
 
   if (game.release.generation < 13) {

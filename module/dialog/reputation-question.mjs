@@ -2,7 +2,6 @@ import sofh_Utility from "../utility.mjs";
 
 export class ReputationQuestion extends foundry.applications.api.ApplicationV2 {
   static DEFAULT_OPTIONS = {
-    
     actions: {
       questionChecked: ReputationQuestion.#questionChecked,
       submit: ReputationQuestion.#submit,
@@ -49,22 +48,25 @@ export class ReputationQuestion extends foundry.applications.api.ApplicationV2 {
       "ravenclaw",
       "slytherin",
     ].includes(data.house);
-    const reputationQuestion = [data?.reputationQuestion1, data?.reputationQuestion2]
+    const reputationQuestion = [
+      data?.reputationQuestion1,
+      data?.reputationQuestion2,
+    ];
     const questions = isOther ? repTable[data.house] : repTable.other;
     const template = "systems/SofH/templates/dialogs/reputation-questions.hbs";
     let html = await sofh_Utility.renderTemplate(template, {
       questions: questions,
       isOther: isOther,
-      reputationQuestion:reputationQuestion
+      reputationQuestion: reputationQuestion,
     });
-    
+
     return html;
   }
 
   async _replaceHTML(result, html) {
     html.innerHTML = result;
   }
-  
+
   static #questionChecked(ev) {
     // select all checkboxes inside the element
     const checkboxes = this.element.querySelectorAll('input[type="checkbox"]');
@@ -85,26 +87,27 @@ export class ReputationQuestion extends foundry.applications.api.ApplicationV2 {
     }
   }
   static #submit() {
-    const checkedBoxes = this.element.querySelectorAll('input[type="checkbox"]:checked');
+    const checkedBoxes = this.element.querySelectorAll(
+      'input[type="checkbox"]:checked',
+    );
     const isOther = [
       "gryffindor",
       "hufflepuff",
       "ravenclaw",
       "slytherin",
     ].includes(this.options.system.house);
-    let updateData = {}
-    if (isOther) {    
-      updateData['system.reputationQuestion1'] = checkedBoxes[0].id;
-      updateData['system.reputationQuestion2'] = checkedBoxes[1].id;
+    let updateData = {};
+    if (isOther) {
+      updateData["system.reputationQuestion1"] = checkedBoxes[0].id;
+      updateData["system.reputationQuestion2"] = checkedBoxes[1].id;
+    } else {
+      const questionInput = this.element.querySelectorAll('input[type="text"]');
+      updateData["system.reputationQuestion1"] = questionInput[0].value;
+      updateData["system.reputationQuestion2"] = questionInput[1].value;
     }
-    else {
-      const questionInput = this.element.querySelectorAll('input[type="text"]'); 
-      updateData['system.reputationQuestion1'] = questionInput[0].value;
-      updateData['system.reputationQuestion2'] = questionInput[1].value;
-    }
-    updateData['system.changedYear'] = false
+    updateData["system.changedYear"] = false;
     const actor = this.options.prototypeToken.actor;
-    actor.update(updateData)
-    this.close()
+    actor.update(updateData);
+    this.close();
   }
 }

@@ -55,9 +55,8 @@ input#settings-config-SofH\.HomeScorePositionX {
 .sofh .stat-grid {
   display: contents; /* Ensure individual elements follow the grid structure */
 }
-.stat-grid-3{
-  display: grid;
-  grid-template-columns: 1fr 0.5fr 2fr;
+.stat-grid a {
+  margin-left: 10px;
 }
 .sofh .stat-grid label {
   font-weight: bold;
@@ -1127,10 +1126,9 @@ button#add-advantage-btn {
   font-style: italic;
 }
 
-
 .reputation-question {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
 }

@@ -142,7 +142,7 @@ export class HomeScore extends Application {
     }
 
     HomeScore.renderHomeScore();
-    game.socket.emit("system.SofH", { operation: "updatePoints" });
+    game.system.socketHandler.emit({ operation: "updatePoints" });
 
     return;
   }

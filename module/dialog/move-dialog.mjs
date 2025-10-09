@@ -371,7 +371,7 @@ export class moveRoll extends Dialog {
           }
         }
       } else {
-        game.socket.emit("system.SofH", {
+        game.system.socketHandler.emit("system.SofH", {
           operation: "updateXPfromCule",
           clue: clue,
         });
