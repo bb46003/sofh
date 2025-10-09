@@ -1111,6 +1111,12 @@ button#add-string-btn, button#add-advantage-btn {
     gap:5px;
     margin-bottom: 0px;
 }
+.custom-house{
+    display: flex;
+    gap: 5px;
+    margin-bottom: 0px;
+    flex-direction: column;
+}
 .chat-description, .roll-results, .move-description-chat{
     font-size: 16px;
 }

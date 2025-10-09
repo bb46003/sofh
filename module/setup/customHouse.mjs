@@ -22,6 +22,7 @@ export class customHouse extends foundry.applications.api.ApplicationV2 {
       save: customHouse.#saveData,
       addSubject1: customHouse.#addSubject1,
       addSubject2: customHouse.#addSubject2,
+      removeHouseEq: customHouse.#removeHouseEq
     },
   };
 
@@ -84,9 +85,7 @@ export class customHouse extends foundry.applications.api.ApplicationV2 {
   }
   async _renderHTML() {
     const data = game.settings.get("SofH", "customConfig") || {};
-    let html = await sofh_Utility.renderTemplate(this.options.template, {
-      ...data,
-    });
+    let html = await sofh_Utility.renderTemplate(this.options.template, {data:data});
     let partsHtml = "";
     for (const part of Object.values(this.constructor.PARTS)) {
       let templateData = {};
@@ -151,7 +150,7 @@ export class customHouse extends foundry.applications.api.ApplicationV2 {
     };
 
     // --- Houses ---
-    const houseSections = element.querySelectorAll(".custom-houses");
+    const houseSections = element.querySelectorAll(".custom-house");
     houseSections.forEach((section) => {
       const houseName =
         section.querySelector('input[name="houseName"]')?.value.trim() || null;
@@ -257,7 +256,7 @@ export class customHouse extends foundry.applications.api.ApplicationV2 {
     });
     data.topic2.forEach((topic, i) => {
       const key = `topic-${i + 1}`;
-      CONFIG.SOFHCONFIG.favoriteTopic2[key] = topic;
+      CONFIG.SOFHCONFIG.favoriteTopic[key] = topic;
     });
     this.close();
   }
@@ -317,5 +316,25 @@ export class customHouse extends foundry.applications.api.ApplicationV2 {
       const addButton = element.querySelector('[data-action="addHouseEq"]');
       if (addButton) addButton.insertAdjacentHTML("afterend", html);
     }
+  }
+
+  static #removeHouseEq(event){
+    const target = event.target;
+    const element = target.parentElement.parentElement.parentElement
+    const houseName = element.querySelector('input[name="houseName"]').value;
+    if (CONFIG.SOFHCONFIG.House?.[houseName]) {
+      delete CONFIG.SOFHCONFIG.House[houseName];
+       delete CONFIG.SOFHCONFIG.goal["goal"+houseName]
+       delete CONFIG.SOFHCONFIG.timeToShine[houseName+"TimeToShine"];
+       delete CONFIG.SOFHCONFIG.houseeq[houseName]
+
+    console.log(`Removed house: ${houseName}`);
+  } else {
+    console.warn(`House "${houseName}" not found.`);
+  }
+
+  // Optional: update UI or re-render
+  element.remove();
+
   }
 }
