@@ -18,6 +18,7 @@ export class sofhActor extends Actor {
     await super._onCreate(data, options, user);
     if (this.type === "character") {
       // Find the compendium pack
+      this.setFlag("SofH", "lang", game.i18n.lang);
       const basicMovesPack = game.packs.find(
         (pack) => pack.collection === "SofH.moves",
       );

@@ -8,7 +8,11 @@
   <div class="custom-house-header subject1 flexcolumn">
     <h3>{{localize "sofh.SETTINGS.add-custom-subject1-title"}} <a><i class="fa fa-plus" data-action="addSubject1"></i></a></h3>
       {{#each data.topic1 as |subject|}}
-            <input type="text" name="subject" value="{{subject}}">
+      <div class= "custom-topic1">
+          <input type="text" name="subject" value="{{subject}}">
+          <a><i class="fa fa-trash"  data-action="removeTopic1"></i></a>
+      </div>
+            
      {{/each}}
      </div>
 <div class="custom-house-header subject2 flexcolumn">
@@ -16,7 +20,11 @@
     
 
       {{#each data.topic2 as |subject|}}
+      <div class= "custom-topic1">
             <input type="text" name="subject2" value="{{subject}}">
+            <a><i class="fa fa-trash"  data-action="removeTopic2"></i></a>
+      </div>
+
      {{/each}}
        </div>
 </section>

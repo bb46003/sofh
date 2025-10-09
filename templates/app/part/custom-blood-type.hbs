@@ -6,7 +6,10 @@
     
  
       {{#each data as |blood|}}
-            <input type="text" name="bloodType" value="{{blood}}">
+      <div class= "custom-blood">
+          <input type="text" name="bloodType" value="{{blood}}">
+          <a><i class="fa fa-trash" data-action="removeBlood"></i></a>
+      </div>            
      {{/each}}
      </div>
 </section>

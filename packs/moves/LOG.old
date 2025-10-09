@@ -1,6 +1,3 @@
-2025/09/18-22:38:15.715 27dc Log #169: 0 ops saved to Table #170 OK
-2025/09/18-22:38:15.715 27dc Archiving C:\Users\bartl\AppData\Local\FoundryVTT\Data\systems\SofH\packs\moves/000169.log: OK
-2025/09/18-22:38:15.716 27dc Table #22: 16 entries OK
-2025/09/18-22:38:15.716 27dc Table #140: 16 entries OK
-2025/09/18-22:38:15.718 27dc Archiving C:\Users\bartl\AppData\Local\FoundryVTT\Data\systems\SofH\packs\moves/MANIFEST-000168: OK
-2025/09/18-22:38:15.720 27dc **** Repaired leveldb C:\Users\bartl\AppData\Local\FoundryVTT\Data\systems\SofH\packs\moves; recovered 2 files; 36115 bytes. Some data may have been lost. ****
+2025/10/08-23:00:12.272 a198 Recovering log #192
+2025/10/08-23:00:12.276 a198 Delete type=0 #192
+2025/10/08-23:00:12.276 a198 Delete type=3 #191

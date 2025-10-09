@@ -369,7 +369,15 @@ Hooks.on("deleteActor", async function (actor) {
 
 Hooks.on("renderActorSheet", async function name(data) {
   const actor = data.object;
-  if (actor.type === "character") {
+  const isGM = game.user.isGM;
+  const lang = game.i18n.lang;
+  let flagsLang = actor.flags?.SofH?.lang;
+  if (flagsLang === undefined) {
+    actor.setFlag("SofH", "lang", lang);
+    flagsLang = lang;
+  }
+
+  if (actor.type === "character" && !isGM && flagsLang !== lang) {
     const goal = actor.system.goal;
     const housequestion = actor.system.housequestion;
     const equipment = actor.system.equipment;

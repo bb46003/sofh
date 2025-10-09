@@ -1111,6 +1111,11 @@ button#add-string-btn, button#add-advantage-btn {
     gap:5px;
     margin-bottom: 0px;
 }
+.custom-blood, .custom-topic1{
+    display:flex; 
+    gap: 10px; 
+    align-items: center;
+}
 .custom-house{
     display: flex;
     gap: 5px;

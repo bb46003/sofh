@@ -22,7 +22,10 @@ export class customHouse extends foundry.applications.api.ApplicationV2 {
       save: customHouse.#saveData,
       addSubject1: customHouse.#addSubject1,
       addSubject2: customHouse.#addSubject2,
-      removeHouseEq: customHouse.#removeHouseEq
+      removeHouseEq: customHouse.#removeHouseEq,
+      removeBlood: customHouse.#removeBlood,
+      removeTopic1: customHouse.#removeTopic1,
+      removeTopic2: customHouse.#removeTopic2
     },
   };
 
@@ -256,14 +259,17 @@ export class customHouse extends foundry.applications.api.ApplicationV2 {
     });
     data.topic2.forEach((topic, i) => {
       const key = `topic-${i + 1}`;
-      CONFIG.SOFHCONFIG.favoriteTopic[key] = topic;
+      CONFIG.SOFHCONFIG.favoriteTopic2[key] = topic;
     });
     this.close();
   }
 
   static async #addBloodType() {
     const element = this.element;
-    const html = `<input type="text" name="bloodType" value=""></input>`;
+    const html = `        <div class="custom-blood">
+          <input type="text" name="bloodType" value="">
+          <a><i class="fa fa-trash" data-action="removeBlood"></i></a>
+      </div>     `;
     const container = element.querySelectorAll(`.input[name="bloodType"]`);
     const lastSection = container[container.length - 1];
     if (lastSection) {
@@ -277,7 +283,10 @@ export class customHouse extends foundry.applications.api.ApplicationV2 {
   }
   static async #addSubject2() {
     const element = this.element;
-    const html = `<input type="text" name="subject2" value="">`;
+    const html = `     <div class= "custom-topic1">
+            <input type="text" name="subject2" value="">
+            <a><i class="fa fa-trash"  data-action="removeTopic2"></i></a>
+      </div>`;
     const container = element.querySelectorAll(`.input[name="subject2"]`);
     const lastSection = container[container.length - 1];
     if (lastSection) {
@@ -291,7 +300,10 @@ export class customHouse extends foundry.applications.api.ApplicationV2 {
   }
   static async #addSubject1() {
     const element = this.element;
-    const html = `<input type="text" name="subject" value="">`;
+    const html = `      <div class= "custom-topic1">
+          <input type="text" name="subject" value="">
+          <a><i class="fa fa-trash"  data-action="removeTopic1"></i></a>
+      </div>`;
     const container = element.querySelectorAll(`.input[name="subject]`);
     const lastSection = container[container.length - 1];
     if (lastSection) {
@@ -336,5 +348,30 @@ export class customHouse extends foundry.applications.api.ApplicationV2 {
   // Optional: update UI or re-render
   element.remove();
 
+  }
+
+  static #removeBlood(event){
+    const element = event.target.parentElement.parentElement;
+    const blood = element.querySelector(`input[type="text"]`).value
+    if(blood !== ""){
+      delete CONFIG.SOFHCONFIG.bloodType[blood];
+      element.remove()
+    }
+  }
+  static #removeTopic1(event){
+    const element = event.target.parentElement.parentElement;
+    const tipic = element.querySelector(`input[type="text"]`).value
+    if(tipic !== ""){
+      delete CONFIG.SOFHCONFIG.favoriteTopic[tipic];
+      element.remove()
+    }
+  }
+    static #removeTopic2(event){
+    const element = event.target.parentElement.parentElement;
+    const tipic = element.querySelector(`input[type="text"]`).value
+    if(tipic !== ""){
+      delete CONFIG.SOFHCONFIG.favoriteTopic2[tipic];
+      element.remove()
+    }
   }
 }
