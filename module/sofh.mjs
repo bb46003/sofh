@@ -222,8 +222,7 @@ Hooks.once("init", async function () {
       migrateWorld: SofHMigrate.migrateWorld,
       EndSessionDialog,
     };
-    const myPackage = game.system; // or just game.system if you're a system
-    myPackage.socketHandler = new SocketHandler();
+
     return preloadHandlebarsTemplates();
   }
 });
@@ -349,6 +348,8 @@ Hooks.once("ready", async function () {
       await game.user.assignHotbarMacro(macro, emptySlot + 1);
     }
   }
+      const myPackage = game.system; // or just game.system if you're a system
+    myPackage.socketHandler = new SocketHandler();
 });
 Hooks.on("actorNameChanged", () => {
   const characters = game.actors.filter((a) => a.type === "character");

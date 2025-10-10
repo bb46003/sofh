@@ -67,7 +67,6 @@ export class HomeScore extends Application {
     if (this._instance) return;
     new HomeScore();
     this.renderHomeScore();
-    this.registerSocketEvents();
   }
 
   activateListeners(html) {
@@ -140,9 +139,9 @@ export class HomeScore extends Application {
       HomeScore._instance.data[`${house.name}_on_leed`] = onLeed;
       await game.settings.set(SYSTEM_ID, `${house.name}_on_leed`, onLeed);
     }
+    await game.system.socketHandler.emit({ operation: "updatePoints" });
 
     HomeScore.renderHomeScore();
-    game.system.socketHandler.emit({ operation: "updatePoints" });
 
     return;
   }
