@@ -369,4 +369,12 @@ export function registerHandlebarsHelpers() {
       }
     },
   );
+  Handlebars.registerHelper("getActorName",  function(id) {
+    if (id !== ""){
+      const actor = game.actors.get(id);
+      const actorName = actor.name
+      return actorName
+    }
+    }
+  )
 }

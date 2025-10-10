@@ -73,6 +73,7 @@ export class EndSessionDialog extends foundry.applications.api.ApplicationV2 {
     const select = entry.querySelector("select.assign-character");
     const playerId = span?.dataset.user || select?.dataset.user;
     const actorId = span?.dataset.actor || select?.value;
+    game.system.socketHandler.emit({operation:"endOfSesionPlayer", player:playerId, actorId:actorId})
   }
 
   static #sendToALL(ev) {

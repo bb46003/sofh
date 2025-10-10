@@ -23,6 +23,7 @@ export const preloadHandlebarsTemplates = async function () {
     "systems/SofH/templates/app/part/tab/new-house.hbs",
     "systems/SofH/templates/dialogs/reputation-questions.hbs",
     "systems/SofH/templates/dialogs/end-sesion-GM.hbs",
+    "systems/SofH/templates/dialogs/end-sesion-relation.hbs",
   ];
 
   if (game.release.generation < 13) {

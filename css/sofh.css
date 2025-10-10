@@ -1132,3 +1132,33 @@ button#add-advantage-btn {
   gap: 10px;
   margin-bottom: 10px;
 }
+.relation-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+.relation-table th, .relation-table td {
+  border: 1px solid #999;
+  padding: 4px 8px;
+}
+
+
+.relation-table td:first-child {
+  text-align: left;
+  font-weight: bold;
+}
+.relation-table td:nth-child(3),
+.relation-table td:nth-child(4),
+.relation-table td:nth-child(2),
+.relation-table th:nth-child(3),
+.relation-table th:nth-child(4),
+.relation-table th:nth-child(2) {
+      max-width: 80px
+}
+
+.relation-table input[type="radio"] {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+}

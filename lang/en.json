@@ -340,7 +340,9 @@
         "slytherin2": "improve your social standing or influence?",
         "slytherin3": "achieve an ambitious goal, proving to others that you are better than them?"
       },
-      "apply": "Apply"
+      "apply": "Apply",
+      "makeOrBreakRelationship": "Make or Break Relationship",
+      "releationDescription": "At the end of each session, each player can adjust their Relationship score with one or two player characters up or down by 1. Explain how your character grew closer to or away from those characters this session."
     },
     "UI": {
       "OK": "Apply",

@@ -1,9 +1,10 @@
 import { HomeScore } from "../app/home_score.mjs";
+import { EndSessionRelation } from "../dialog/end-session-moves-relation.mjs";
 
 export default class SocketHandler {
   constructor() {
     this.identifier = "system.SofH";
-    game.socket.on(this.identifier, this.registerSocketEvents(this));
+    this.registerSocketEvents();
   }
   registerSocketEvents() {
     game.socket.on(this.identifier, async (data) => {
@@ -31,7 +32,13 @@ export default class SocketHandler {
             } 
           }
         break
-        case "endSesionDialog":
+        case "endOfSesionPlayer":
+          const playerToShow = data.player;
+          const currentPlayer = game.user._id;
+          if (playerToShow === currentPlayer){
+            new EndSessionRelation(data).render(true)
+          }
+        break
               
       } 
     });
