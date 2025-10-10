@@ -23,8 +23,8 @@ export class EndSessionDialog extends foundry.applications.api.ApplicationV2 {
     const selects = this.element.querySelectorAll("select.assign-character");
     const sendAllBtn = this.element.querySelector(".send-btn-all");
     if (selects !== null) {
-        this.updateSendAllButton(selects, sendAllBtn);
-        selects.forEach((select) => {
+      this.updateSendAllButton(selects, sendAllBtn);
+      selects.forEach((select) => {
         select.addEventListener("change", (ev) => {
           const target = ev.currentTarget;
           const entry = target.closest(".character-entry");
@@ -41,13 +41,10 @@ export class EndSessionDialog extends foundry.applications.api.ApplicationV2 {
     button.disabled = anyEmpty;
   }
   async _collectPlayerCharacterData() {
-
     const activePlayers = game.users.filter((u) => u.active && !u.isGM);
     const allActors = game.actors.contents;
     const playersData = activePlayers.map((u) => {
-      const ownedActors = allActors.filter(
-        (a) => a.type === "character" && a.testUserPermission(u, "OWNER"),
-      );
+      const ownedActors = allActors.filter((a) => a.type === "character" && a.testUserPermission(u, "OWNER"));
       return {
         userId: u.id,
         playerName: u.name,
@@ -73,7 +70,11 @@ export class EndSessionDialog extends foundry.applications.api.ApplicationV2 {
     const select = entry.querySelector("select.assign-character");
     const playerId = span?.dataset.user || select?.dataset.user;
     const actorId = span?.dataset.actor || select?.value;
-    game.system.socketHandler.emit({operation:"endOfSesionPlayer", player:playerId, actorId:actorId})
+    game.system.socketHandler.emit({
+      operation: "endOfSesionPlayer",
+      player: playerId,
+      actorId: actorId,
+    });
   }
 
   static #sendToALL(ev) {

@@ -9,12 +9,11 @@ export default class SocketHandler {
   registerSocketEvents() {
     game.socket.on(this.identifier, async (data) => {
       const operation = data.operation;
-      switch (operation) 
-      {
+      switch (operation) {
         case "updatePoints":
           HomeScore.renderHomeScore();
-          break
-        case "updateXPfromCule" :    
+          break;
+        case "updateXPfromCule":
           if (game.user.isGM) {
             for (let actorKey in data.clue.system.actorID) {
               const memberActor = game.actors.get(actorKey);
@@ -23,24 +22,22 @@ export default class SocketHandler {
               for (let key in xpValues) {
                 if (xpValues[key] === true) {
                   lastTrueKey = key;
-                } 
-                else {
+                } else {
                   memberActor.update({ [`system.xp.value.${key}`]: true });
                   break;
                 }
               }
-            } 
+            }
           }
-        break
+          break;
         case "endOfSesionPlayer":
           const playerToShow = data.player;
           const currentPlayer = game.user._id;
-          if (playerToShow === currentPlayer){
-            new EndSessionRelation(data).render(true)
+          if (playerToShow === currentPlayer) {
+            new EndSessionRelation(data).render(true);
           }
-        break
-              
-      } 
+          break;
+      }
     });
   }
   emit(data) {

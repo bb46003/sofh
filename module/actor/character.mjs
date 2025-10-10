@@ -2,10 +2,7 @@ import { moveRoll } from "../dialog/move-dialog.mjs";
 import sofh_Utility from "../utility.mjs";
 import { ReputationQuestion } from "../dialog/reputation-question.mjs";
 
-const BaseActorSheet =
-  typeof foundry?.appv1?.sheets?.ActorSheet !== "undefined"
-    ? foundry.appv1.sheets.ActorSheet
-    : ActorSheet;
+const BaseActorSheet = typeof foundry?.appv1?.sheets?.ActorSheet !== "undefined" ? foundry.appv1.sheets.ActorSheet : ActorSheet;
 export class sofhCharacterSheet extends BaseActorSheet {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
@@ -27,18 +24,7 @@ export class sofhCharacterSheet extends BaseActorSheet {
     const context = super.getData();
     const actorData = this.actor.toObject(false);
     context.system = actorData.system;
-    const {
-      bloodType,
-      favoriteTopic,
-      favoriteTopic2,
-      House,
-      conditionstype,
-      equipment,
-      houseeq,
-      characterRelation,
-      goal,
-      timeToShine,
-    } = CONFIG.SOFHCONFIG;
+    const { bloodType, favoriteTopic, favoriteTopic2, House, conditionstype, equipment, houseeq, characterRelation, goal, timeToShine } = CONFIG.SOFHCONFIG;
 
     Object.assign(context, {
       bloodType,
@@ -123,41 +109,27 @@ export class sofhCharacterSheet extends BaseActorSheet {
   async activateListeners(html) {
     super.activateListeners(html);
 
-    html.on("change", ".circle-checkbox-reputation", (ev) =>
-      this.handleReputationChange(ev),
-    );
+    html.on("change", ".circle-checkbox-reputation", (ev) => this.handleReputationChange(ev));
     html.on("change", ".circle-checkbox-xp", (ev) => this.handleXpChange(ev));
     html.on("click", ".decrease-btn", () => this.lowerReputationRank());
     html.on("change", ".house", (ev) => this.handleHouseChange(ev));
-    html.on("change", ".condition-text, .condition-type", (ev) =>
-      this.updateActorCondition(ev),
-    );
-    html.on("click", ".hover-label-question", () =>
-      this.assignHouseQuestions(this.actor.system.home, false),
-    );
+    html.on("change", ".condition-text, .condition-type", (ev) => this.updateActorCondition(ev));
+    html.on("click", ".hover-label-question", () => this.assignHouseQuestions(this.actor.system.home, false));
     html.on("click", (ev) => this.handleDiamondClick(ev));
     html.on("click", "#add-string-btn", (ev) => this.addStringItem(ev));
     html.on("click", ".remove-string-btn", (ev) => this.removeStringItem(ev));
     html.on("click", "#add-advantage-btn", (ev) => this.addAdvantagItem(ev));
-    html.on("click", ".remove-advanatage-btn", (ev) =>
-      this.removeAdvantageItem(ev),
-    );
+    html.on("click", ".remove-advanatage-btn", (ev) => this.removeAdvantageItem(ev));
     html.on("click", ".move_type", (ev) => this.showMoves(ev));
     html.on("click", ".moves", (ev) => this.collapsAllMoves(ev));
     html.on("click", ".remove-moves-btn", (ev) => this.removeMoves(ev));
     html.on("click contextmenu", ".moves-edit", (ev) => this.openMoves(ev));
     html.on("click", ".roll-moves-btn", (ev) => this.rollForMove(ev));
-    html.on("click", ".moves-description-open", (ev) =>
-      this.openMovesFromTriggers(ev),
-    );
-    html.on("click", ".send-to-chat-moves-btn", (ev) =>
-      this.openMovesFromTriggers(ev),
-    );
+    html.on("click", ".moves-description-open", (ev) => this.openMovesFromTriggers(ev));
+    html.on("click", ".send-to-chat-moves-btn", (ev) => this.openMovesFromTriggers(ev));
     html.on("click", ".time_to_shine", (ev) => this.showTimeToShine(ev));
     html.on("change", "#schoolyear", (ev) => this.changeYear(ev));
-    html.on("click", "#reputationQuestions", (ev) =>
-      this.changeReputationQuestions(ev),
-    );
+    html.on("click", "#reputationQuestions", (ev) => this.changeReputationQuestions(ev));
   }
 
   async handleReputationChange(ev) {
@@ -171,9 +143,7 @@ export class sofhCharacterSheet extends BaseActorSheet {
     const ID = ev.target.id[0];
     await this.updateXp(ID, isChecked);
     if (Number(ID) === 7 && isChecked) {
-      const content = await sofh_Utility.renderTemplate(
-        "systems/SofH/templates/dialogs/xp.hbs",
-      );
+      const content = await sofh_Utility.renderTemplate("systems/SofH/templates/dialogs/xp.hbs");
       new Dialog({
         title: game.i18n.localize("sofh.ui.gainxp"),
         content,
@@ -245,17 +215,7 @@ export class sofhCharacterSheet extends BaseActorSheet {
   }
 
   async isDiamondElement(element) {
-    return [
-      "minustwo",
-      "two",
-      "one",
-      "zero",
-      "right-bottom",
-      "right-top",
-      "left-top",
-      "center",
-      "left-bottom",
-    ].some((className) => element.classList.contains(className));
+    return ["minustwo", "two", "one", "zero", "right-bottom", "right-top", "left-top", "center", "left-bottom"].some((className) => element.classList.contains(className));
   }
 
   async updateReputation(index, value) {
@@ -284,9 +244,7 @@ export class sofhCharacterSheet extends BaseActorSheet {
 
   async updateReputationValues(updateData, index2, value) {
     for (let i = 1; i <= 7; i++) {
-      updateData[`system.reputation.value.${i}`] = value
-        ? i <= index2
-        : i < index2;
+      updateData[`system.reputation.value.${i}`] = value ? i <= index2 : i < index2;
     }
   }
 
@@ -324,18 +282,13 @@ export class sofhCharacterSheet extends BaseActorSheet {
     const goal = game.i18n.localize(CONFIG.SOFHCONFIG.goal["goal" + house]);
     await actor.update({
       "system.goal": goal,
-      "system.home": game.i18n.localize(
-        CONFIG.SOFHCONFIG.House[house].toLowerCase(),
-      ),
+      "system.home": game.i18n.localize(CONFIG.SOFHCONFIG.House[house].toLowerCase()),
     });
   }
 
   async assignHouseQuestions(house, changeHouse) {
     let question = await this.getHouseQuestions(house);
-    const content = await sofh_Utility.renderTemplate(
-      "systems/SofH/templates/dialogs/house-question.hbs",
-      { question: question },
-    );
+    const content = await sofh_Utility.renderTemplate("systems/SofH/templates/dialogs/house-question.hbs", { question: question });
     new Dialog({
       title: game.i18n.localize("sofh.ui.house-question"),
       content,
@@ -344,15 +297,11 @@ export class sofhCharacterSheet extends BaseActorSheet {
           icon: '<i class="fa fa-check"></i>',
           label: `<div class="sofh-button">${game.i18n.localize("sofh.UI.OK")}</div>`,
           callback: (html) => {
-            const selectedQuestion = html.find(
-              'input[name="housequestion"]:checked',
-            );
+            const selectedQuestion = html.find('input[name="housequestion"]:checked');
 
             // Check if an option is selected
             if (selectedQuestion.length === 0) {
-              ui.notifications.warn(
-                game.i18n.localize("sofh.ui.notSelectedHouseQuestion"),
-              );
+              ui.notifications.warn(game.i18n.localize("sofh.ui.notSelectedHouseQuestion"));
               this.assignHouseQuestions(house, changeHouse);
             } else {
               this.handleHouseQuestionSelection(html);
@@ -380,9 +329,7 @@ export class sofhCharacterSheet extends BaseActorSheet {
       const data = game.settings.get("SofH", "customConfig");
 
       if (data?.houses?.length) {
-        const houseData = data.houses.find(
-          (h) => h.name?.toLowerCase().replace(/\s+/g, "_") === houseKey,
-        );
+        const houseData = data.houses.find((h) => h.name?.toLowerCase().replace(/\s+/g, "_") === houseKey);
 
         if (houseData) {
           if (missingQ1 && houseData.question1) q1 = houseData.question1;
@@ -440,9 +387,7 @@ export class sofhCharacterSheet extends BaseActorSheet {
             });
 
             if (selectedValues.length > 3) {
-              ui.notifications.error(
-                game.i18n.localize("sofh.ui.dialog.eqwarrning"),
-              );
+              ui.notifications.error(game.i18n.localize("sofh.ui.dialog.eqwarrning"));
               return;
             }
             let currentEquipment = actor.system.equipment || "";
@@ -452,9 +397,7 @@ export class sofhCharacterSheet extends BaseActorSheet {
             await actor.update({
               "system.equipment": currentEquipment,
             });
-            ui.notifications.info(
-              game.i18n.localize("sofh.ui.dialog.addeqconfirmation"),
-            );
+            ui.notifications.info(game.i18n.localize("sofh.ui.dialog.addeqconfirmation"));
           },
           class: "my-button",
         },
@@ -478,9 +421,7 @@ export class sofhCharacterSheet extends BaseActorSheet {
                 selectedOptions.push(event.target);
               }
             } else {
-              selectedOptions = selectedOptions.filter(
-                (item) => item !== event.target,
-              );
+              selectedOptions = selectedOptions.filter((item) => item !== event.target);
             }
           });
         });
@@ -509,13 +450,7 @@ export class sofhCharacterSheet extends BaseActorSheet {
   }
 
   async resetDiamondClickState(element) {
-    const positionClasses = [
-      "left-bottom ",
-      "center ",
-      "right-bottom ",
-      "left-top ",
-      "right-top ",
-    ];
+    const positionClasses = ["left-bottom ", "center ", "right-bottom ", "left-top ", "right-top "];
     if (positionClasses.includes(element.className)) {
       Array.from(element.offsetParent.children).forEach((child) => {
         if (child.classList.contains("clicked")) {
@@ -581,9 +516,7 @@ export class sofhCharacterSheet extends BaseActorSheet {
     const actor = this.actor;
     const updateData = { [ev.target.name]: ev.target.value };
     await actor.update(updateData);
-    const allConditionsMet = Object.values(actor.system.condition).every(
-      (condition) => condition.type && condition.text,
-    );
+    const allConditionsMet = Object.values(actor.system.condition).every((condition) => condition.type && condition.text);
     await actor.update({ "system.is7conditions": allConditionsMet });
   }
 
@@ -595,9 +528,7 @@ export class sofhCharacterSheet extends BaseActorSheet {
       await move.sheet.render(true);
     } else {
       event.preventDefault(); // Prevent default anchor behavior
-      const removeButton = document.querySelector(
-        `.remove-moves-btn[id='${move.id}']`,
-      );
+      const removeButton = document.querySelector(`.remove-moves-btn[id='${move.id}']`);
       let decription = document.querySelector(".second-row");
       let titleDiv = document.querySelector(`.first-row[id='${move.id}']`);
       if (!decription || !titleDiv) {
@@ -608,10 +539,7 @@ export class sofhCharacterSheet extends BaseActorSheet {
 
       if (decription === null) {
         const newElement = document.createElement("div");
-        const moveBody = await sofh_Utility.renderTemplate(
-          "systems/SofH/templates/tab/partial/moves-body-limited.hbs",
-          move,
-        );
+        const moveBody = await sofh_Utility.renderTemplate("systems/SofH/templates/tab/partial/moves-body-limited.hbs", move);
         newElement.innerHTML = moveBody;
         titleDiv.insertAdjacentElement("afterend", newElement);
       } else {
@@ -639,9 +567,7 @@ export class sofhCharacterSheet extends BaseActorSheet {
     const closestWindowApp = $(event.currentTarget).closest(".window-app");
 
     if (target === "moves active") {
-      const movesElements = closestWindowApp
-        .find(".all-moves")
-        .not(".basicMoves");
+      const movesElements = closestWindowApp.find(".all-moves").not(".basicMoves");
       movesElements.css("display", "none");
     }
   }
@@ -657,14 +583,10 @@ export class sofhCharacterSheet extends BaseActorSheet {
     const clueRelated = item.system.cluerelated;
     const clueID = [];
     if (clueRelated) {
-      const clueActors = Array.from(game.actors.entries()).filter(
-        ([key, actor]) => actor.type === "clue",
-      );
+      const clueActors = Array.from(game.actors.entries()).filter(([key, actor]) => actor.type === "clue");
 
       clueActors.forEach((ID) => {
-        let hasMatchingKey = Object.keys(ID[1].system.actorID).some(
-          (key) => key === actor._id,
-        );
+        let hasMatchingKey = Object.keys(ID[1].system.actorID).some((key) => key === actor._id);
         if (hasMatchingKey) {
           clueID.push(ID[0]);
         }
@@ -678,9 +600,7 @@ export class sofhCharacterSheet extends BaseActorSheet {
     const updateData = {};
     const currentTS = actor.system.reputation.timeToShine;
     const house = actor.system.home.toLowerCase();
-    const timeToShineText = game.i18n.localize(
-      CONFIG.SOFHCONFIG.timeToShine[house + "TimeToShine"],
-    );
+    const timeToShineText = game.i18n.localize(CONFIG.SOFHCONFIG.timeToShine[house + "TimeToShine"]);
     const content = `<div class="sofh"><h2 style="font-family: 'IM Fell English', serif;">${game.i18n.localize("sofh.ui.actor.timeToShine")}</h2>
         <p>${timeToShineText}</p></div>
         `;
@@ -717,17 +637,11 @@ export class sofhCharacterSheet extends BaseActorSheet {
   }
 
   async openMovesFromTriggers(event) {
-    if (
-      event.currentTarget.className === "moves-description-open" ||
-      event.currentTarget.className === "send-to-chat-moves-btn"
-    ) {
+    if (event.currentTarget.className === "moves-description-open" || event.currentTarget.className === "send-to-chat-moves-btn") {
       const ID = event.currentTarget.id;
       const item = this.actor.items.get(ID);
       const title = item.name;
-      const content = await sofh_Utility.renderTemplate(
-        "systems/SofH/templates/dialogs/moves-body-limited.hbs",
-        item,
-      );
+      const content = await sofh_Utility.renderTemplate("systems/SofH/templates/dialogs/moves-body-limited.hbs", item);
       const actor = this.actor;
 
       const moveToChat = `<div class="description-sheet"> 

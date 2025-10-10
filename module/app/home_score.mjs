@@ -28,38 +28,14 @@ export class HomeScore extends Application {
   getData() {
     super.getData();
     const SYSTEM_ID = "SofH";
-    this.data.points_slytherin = game.settings.get(
-      SYSTEM_ID,
-      "points_slytherin",
-    );
-    this.data.points_ravenclaw = game.settings.get(
-      SYSTEM_ID,
-      "points_ravenclaw",
-    );
-    this.data.points_hufflepuff = game.settings.get(
-      SYSTEM_ID,
-      "points_hufflepuff",
-    );
-    this.data.points_gryffindor = game.settings.get(
-      SYSTEM_ID,
-      "points_gryffindor",
-    );
-    this.data.slytherin_on_leed = game.settings.get(
-      SYSTEM_ID,
-      "slytherin_on_leed",
-    );
-    this.data.ravenclaw_on_leed = game.settings.get(
-      SYSTEM_ID,
-      "ravenclaw_on_leed",
-    );
-    this.data.hufflepuff_on_leed = game.settings.get(
-      SYSTEM_ID,
-      "hufflepuff_on_leed",
-    );
-    this.data.gryffindor_on_leed = game.settings.get(
-      SYSTEM_ID,
-      "gryffindor_on_leed",
-    );
+    this.data.points_slytherin = game.settings.get(SYSTEM_ID, "points_slytherin");
+    this.data.points_ravenclaw = game.settings.get(SYSTEM_ID, "points_ravenclaw");
+    this.data.points_hufflepuff = game.settings.get(SYSTEM_ID, "points_hufflepuff");
+    this.data.points_gryffindor = game.settings.get(SYSTEM_ID, "points_gryffindor");
+    this.data.slytherin_on_leed = game.settings.get(SYSTEM_ID, "slytherin_on_leed");
+    this.data.ravenclaw_on_leed = game.settings.get(SYSTEM_ID, "ravenclaw_on_leed");
+    this.data.hufflepuff_on_leed = game.settings.get(SYSTEM_ID, "hufflepuff_on_leed");
+    this.data.gryffindor_on_leed = game.settings.get(SYSTEM_ID, "gryffindor_on_leed");
     return this.data;
   }
 
@@ -85,19 +61,14 @@ export class HomeScore extends Application {
 
   static async resolvePoints(house, html) {
     if (!game.user.isGM) {
-      ui.notifications.warn(
-        "Tylko najwyższy Mistrz Gry może zmieniać punkty, ty niegrzeczny uczniu!/niegrzeczna auczennico!",
-      );
+      ui.notifications.warn("Tylko najwyższy Mistrz Gry może zmieniać punkty, ty niegrzeczny uczniu!/niegrzeczna auczennico!");
       return;
     }
 
     const inputScoreElement = html.find(`.input-score#${house.toLowerCase()}`);
     let inputScore = parseInt(inputScoreElement.val(), 10) || 0;
 
-    let currentPoints = game.settings.get(
-      "SofH",
-      `points_${house.toLowerCase()}`,
-    );
+    let currentPoints = game.settings.get("SofH", `points_${house.toLowerCase()}`);
     let newPoints = currentPoints + inputScore;
 
     await game.settings.set("SofH", `points_${house.toLowerCase()}`, newPoints);
@@ -127,12 +98,9 @@ export class HomeScore extends Application {
       },
     ];
 
-    const houseWithHighestPoints = houseSettings.reduce(
-      (maxHouse, currentHouse) => {
-        return currentHouse.value > maxHouse.value ? currentHouse : maxHouse;
-      },
-      houseSettings[0],
-    );
+    const houseWithHighestPoints = houseSettings.reduce((maxHouse, currentHouse) => {
+      return currentHouse.value > maxHouse.value ? currentHouse : maxHouse;
+    }, houseSettings[0]);
 
     for (let house of houseSettings) {
       let onLeed = house.name === houseWithHighestPoints.name;

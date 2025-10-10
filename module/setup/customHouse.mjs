@@ -111,10 +111,7 @@ export class customHouse extends foundry.applications.api.ApplicationV2 {
         data: templateData,
       });
     }
-    html = html.replace(
-      /(<nav class="sheet-tabs[^>]*">[\s\S]*?<\/nav>)/,
-      `$1${partsHtml}`,
-    );
+    html = html.replace(/(<nav class="sheet-tabs[^>]*">[\s\S]*?<\/nav>)/, `$1${partsHtml}`);
 
     return html;
   }
@@ -124,9 +121,7 @@ export class customHouse extends foundry.applications.api.ApplicationV2 {
   }
   static async #addHouse() {
     const element = this.element;
-    const html = await sofh_Utility.renderTemplate(
-      "systems/SofH/templates/app/part/tab/new-house.hbs",
-    );
+    const html = await sofh_Utility.renderTemplate("systems/SofH/templates/app/part/tab/new-house.hbs");
     const container = element.querySelector(".custom-houses");
     const lastSection = container.querySelector("section:last-of-type");
     if (lastSection) {
@@ -153,30 +148,23 @@ export class customHouse extends foundry.applications.api.ApplicationV2 {
     // --- Houses ---
     const houseSections = element.querySelectorAll(".custom-houses");
     houseSections.forEach((section) => {
-      const houseName =
-        section.querySelector('input[name="houseName"]')?.value.trim() || null;
-      const equipment =
-        section.querySelector('input[name="equipment"]')?.value.trim() || null;
+      const houseName = section.querySelector('input[name="houseName"]')?.value.trim() || null;
+      const equipment = section.querySelector('input[name="equipment"]')?.value.trim() || null;
 
       const eqInputs = section.querySelectorAll('input[name="houseEq"]');
 
       const houseEq = Array.from(eqInputs)
         .map((i) => i.value.trim())
         .filter((v) => v !== "");
-      const questionInputs = section.querySelectorAll(
-        'input[name="houseQuestion"]',
-      );
+      const questionInputs = section.querySelectorAll('input[name="houseQuestion"]');
       const questions = Array.from(questionInputs)
         .map((i) => i.value.trim())
         .filter((v) => v !== "");
 
       const question1 = questions[0] || null;
       const question2 = questions[1] || null;
-      const goal =
-        section.querySelector(`input[name="timeToShine"]`)?.value.trim() ||
-        null;
-      const timeToShine =
-        section.querySelector(`input[name="houseGoal"]`)?.value.trim() || null;
+      const goal = section.querySelector(`input[name="timeToShine"]`)?.value.trim() || null;
+      const timeToShine = section.querySelector(`input[name="houseGoal"]`)?.value.trim() || null;
       if (houseName || equipment || houseEq.length > 0) {
         data.houses.push({
           name: houseName,
@@ -202,17 +190,13 @@ export class customHouse extends foundry.applications.api.ApplicationV2 {
     });
 
     // --- Blood Types ---
-    const bloodInputs = element.querySelectorAll(
-      ".custom-blood input[type='text']",
-    );
+    const bloodInputs = element.querySelectorAll(".custom-blood input[type='text']");
     bloodInputs.forEach((input) => {
       const val = input.value.trim();
       if (val) data.bloodTypes.push(val);
     });
 
-    const topicReplace = element.querySelector(
-      `input[name="replaceTopics"]`,
-    ).checked;
+    const topicReplace = element.querySelector(`input[name="replaceTopics"]`).checked;
     data.replaceTopic = topicReplace;
     // --- Save to settings ---
     await game.settings.set("SofH", "customConfig", data);
@@ -234,13 +218,9 @@ export class customHouse extends foundry.applications.api.ApplicationV2 {
         CONFIG.SOFHCONFIG.House[key] = house.name;
 
         // House equipment
-        if (!CONFIG.SOFHCONFIG.houseeq[key])
-          CONFIG.SOFHCONFIG.houseeq[key] = {};
+        if (!CONFIG.SOFHCONFIG.houseeq[key]) CONFIG.SOFHCONFIG.houseeq[key] = {};
         house.houseEq.forEach((eq) => {
-          if (eq)
-            CONFIG.SOFHCONFIG.houseeq[key][
-              eq.toLowerCase().replace(/\s+/g, "_")
-            ] = eq;
+          if (eq) CONFIG.SOFHCONFIG.houseeq[key][eq.toLowerCase().replace(/\s+/g, "_")] = eq;
         });
 
         // General equipment
@@ -273,9 +253,7 @@ export class customHouse extends foundry.applications.api.ApplicationV2 {
     if (lastSection) {
       lastSection.insertAdjacentHTML("afterend", html);
     } else {
-      const bloodContainer = element.querySelector(
-        ".custom-house-header.addBlood",
-      );
+      const bloodContainer = element.querySelector(".custom-house-header.addBlood");
       if (bloodContainer) bloodContainer.insertAdjacentHTML("beforeend", html);
     }
   }
@@ -287,9 +265,7 @@ export class customHouse extends foundry.applications.api.ApplicationV2 {
     if (lastSection) {
       lastSection.insertAdjacentHTML("afterend", html);
     } else {
-      const bloodContainer = element.querySelector(
-        ".custom-house-header.subject2",
-      );
+      const bloodContainer = element.querySelector(".custom-house-header.subject2");
       if (bloodContainer) bloodContainer.insertAdjacentHTML("beforeend", html);
     }
   }
@@ -301,9 +277,7 @@ export class customHouse extends foundry.applications.api.ApplicationV2 {
     if (lastSection) {
       lastSection.insertAdjacentHTML("afterend", html);
     } else {
-      const bloodContainer = element.querySelector(
-        ".custom-house-header.subject1",
-      );
+      const bloodContainer = element.querySelector(".custom-house-header.subject1");
       if (bloodContainer) bloodContainer.insertAdjacentHTML("beforeend", html);
     }
   }

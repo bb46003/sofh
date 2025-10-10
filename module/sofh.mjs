@@ -183,8 +183,7 @@ Hooks.once("init", async function () {
         // Merge house-specific equipment
         if (!SOFHCONFIG.houseeq[key]) SOFHCONFIG.houseeq[key] = {};
         house.houseEq?.forEach((eq) => {
-          if (eq)
-            SOFHCONFIG.houseeq[key][eq.toLowerCase().replace(/\s+/g, "_")] = eq;
+          if (eq) SOFHCONFIG.houseeq[key][eq.toLowerCase().replace(/\s+/g, "_")] = eq;
         });
 
         // Merge general equipment
@@ -237,11 +236,7 @@ async function loadPolishLocalization() {
   return plStrings;
 }
 Hooks.on("updateSetting", (setting) => {
-  if (
-    ["HomeScorePositionX", "HomeScorePositionY", "HomeScoreSize"].includes(
-      setting.key,
-    )
-  ) {
+  if (["HomeScorePositionX", "HomeScorePositionY", "HomeScoreSize"].includes(setting.key)) {
     customStyle();
   }
 });
@@ -270,12 +265,9 @@ Hooks.once("ready", async function () {
       },
     ];
 
-    const houseWithHighestPoints = houseSettings.reduce(
-      (maxHouse, currentHouse) => {
-        return currentHouse.value > maxHouse.value ? currentHouse : maxHouse;
-      },
-      houseSettings[0],
-    );
+    const houseWithHighestPoints = houseSettings.reduce((maxHouse, currentHouse) => {
+      return currentHouse.value > maxHouse.value ? currentHouse : maxHouse;
+    }, houseSettings[0]);
     houseSettings.forEach(async (house) => {
       if (house.name === houseWithHighestPoints.name) {
         await game.settings.set(SYSTEM_ID, `${house.name}_on_leed`, true);
@@ -287,9 +279,7 @@ Hooks.once("ready", async function () {
   characterRelation();
   // Check if an actor of type "clue" exists, if not, create a new one
   const allActors = game.actors;
-  const isClueExist = Array.from(allActors.entries()).some(
-    ([key, actor]) => actor.type === "clue",
-  );
+  const isClueExist = Array.from(allActors.entries()).some(([key, actor]) => actor.type === "clue");
 
   if (!isClueExist) {
     const newActorData = {
@@ -308,48 +298,46 @@ Hooks.once("ready", async function () {
   if (game.user.isGM) {
     const SYSTEM_MIGRATION_VERSION = game.world.systemVersion;
     const currentVersion = game.settings.get("SofH", "systemMigrationVersion");
-    const needsMigration =
-      !currentVersion ||
-      foundry.utils.isNewerVersion(SYSTEM_MIGRATION_VERSION, currentVersion);
+    const needsMigration = !currentVersion || foundry.utils.isNewerVersion(SYSTEM_MIGRATION_VERSION, currentVersion);
 
     if (needsMigration) {
       SofHMigrate.migrateWorld();
-      game.settings.set(
-        "SofH",
-        "systemMigrationVersion",
-        SYSTEM_MIGRATION_VERSION,
-      );
+      game.settings.set("SofH", "systemMigrationVersion", SYSTEM_MIGRATION_VERSION);
     }
-    const macroName = game.i18n.localize("sofh.move.endSesionMove");
+    const macroKey = "sofh.move.endSesionMove";
 
-    // Check if macro already exists globally
-    let macro = game.macros.find((m) => m.name === macroName);
+    const allLangs = Object.keys(game.i18n.translations);
+    const localizedNames = [];
+
+    for (const lang of allLangs) {
+      const translationSet = game.i18n.translations[lang];
+      const localized = foundry.utils.getProperty(translationSet, macroKey.split("."));
+      if (localized) localizedNames.push(localized);
+    }
+
+    const macro = game.macros.find((m) => localizedNames.includes(m.name));
 
     if (!macro) {
-      // Create the macro if it doesn't exist
       macro = await Macro.create({
         name: macroName,
         type: "script",
         img: "icons/svg/door-open-outline.svg",
         command: "new game.SofH.EndSessionDialog().render(true);",
-        flags: { sofh: true }, // optional
       });
 
       const hotbarMacros = game.user.getHotbarMacros();
 
-      // Find first empty slot (macro is null)
       let emptySlot = hotbarMacros.findIndex((m) => m.macro === null);
       if (emptySlot === -1) {
         console.warn("No empty hotbar slot available for End Session macro!");
         return;
       }
 
-      // Hotbar slots are 1-based
       await game.user.assignHotbarMacro(macro, emptySlot + 1);
     }
   }
-      const myPackage = game.system; // or just game.system if you're a system
-    myPackage.socketHandler = new SocketHandler();
+  const myPackage = game.system;
+  myPackage.socketHandler = new SocketHandler();
 });
 Hooks.on("actorNameChanged", () => {
   const characters = game.actors.filter((a) => a.type === "character");
@@ -418,9 +406,7 @@ Hooks.on("renderActorSheet", async function name(data) {
       if (key.includes(searchKeyQuestion)) {
         if (value === housequestion) {
           updateData = {
-            ["system.housequestion"]: game.i18n.localize(
-              `sofh.ui.actor.${key}`,
-            ),
+            ["system.housequestion"]: game.i18n.localize(`sofh.ui.actor.${key}`),
           };
         }
       }

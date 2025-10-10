@@ -96,13 +96,7 @@
     "clue": {}
   },
   "Item": {
-    "types": [
-      "basicMoves",
-      "houseMoves",
-      "peripheralMoves",
-      "endOfSessionMoves",
-      "specialPlaybookMoves"
-    ],
+    "types": ["basicMoves", "houseMoves", "peripheralMoves", "endOfSessionMoves", "specialPlaybookMoves"],
     "templates": {
       "base": {
         "triggers": "",
