@@ -1091,9 +1091,13 @@ button#add-advantage-btn {
   max-height: 500px;
 }
 .flexcolumn {
-  display: flex;
+  display: grid;
   gap: 5px;
-  flex-direction: column;
+  margin-top: 10px;
+}
+.flexrow-sofh{
+    display: grid;
+    grid-template-columns: 2fr 0.5fr;
 }
 .sofh-custom,
 .custom-houses {

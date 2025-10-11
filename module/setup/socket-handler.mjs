@@ -33,9 +33,12 @@ export default class SocketHandler {
         case "endOfSesionPlayer":
           const playerToShow = data.player;
           const currentPlayer = game.user._id;
-          if (playerToShow === currentPlayer) {
-            new EndSessionRelation(data).render(true);
-          }
+          playerToShow.forEach((playerId, index) => {
+            if (playerId === currentPlayer) {
+              const info = { player: playerId, actorId: data.actorId[index] };
+              new EndSessionRelation(info).render(true);
+            }
+          });
           break;
       }
     });

@@ -42,7 +42,9 @@
         "rollesult": "Roll result is:",
         "actorUseAdvantages": "<strong>{actor}</strong> use Advantages defnie as <strong>{advantage}</strong>",
         "mystery_solution": "Opportunity - ",
-        "mystery_question": "Question - "
+        "mystery_question": "Question - ",
+        "gainxp": "`{actor} gains {gainXP} XP!`",
+        "gainRep": "{actor} gains {gainRep} Reputation!`"
       },
       "moves": {
         "name": "Name of move:",
@@ -343,7 +345,17 @@
       "apply": "Apply",
       "makeOrBreakRelationship": "Make or Break Relationship",
       "releationDescription": "At the end of each session, each player can adjust their Relationship score with one or two player characters up or down by 1. Explain how your character grew closer to or away from those characters this session.",
-      "updateRelation": "updated relations with:"
+      "updateRelation": "updated relations with:",
+      "gainxp": "At the end of each session, a character marks one Experience for each of the following questions they answer yes:",
+      "xpquestion1": "Did you make mistakes complicating your school life?",
+      "xpquestion2": "Did you face consequences of your <span class='italic'>Conditions</span>?",
+      "xpquestion3": "Did you mark no <span class='italic'>Experience</span> up to this point in the game session?",
+      "learnFromExperience": "Learn From Experience",
+      "gainReputaton": "Your Reputation",
+      "gainReputation": "Your <span class='italic'>Reputation</span> is a measure of how famous you are! Harry Potter started at Hogwarts already famous, but your characters will start at zero and have to work their way up as they solve mysteries, defeat enemies, and save people or even the school itself! There are five <span class='italic'>Ranks of Reputation</span>. When you reach 7 <span class='italic'>Reputation</span>, you go up to a new rank!\nMark below question to gain <span class='italic'>Reputation</span>.",
+      "commonQuestion1": " Did we solve a <span class='italic'>Mystery</span>?",
+      "commonQuestion2": " Did you gain any new <span class='italic'>Label (Social Condition)</span>?",
+      "subbmit": "Subbmit"
     },
     "UI": {
       "OK": "Apply",

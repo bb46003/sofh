@@ -48,42 +48,63 @@ export class EndSessionRelation extends foundry.applications.api.ApplicationV2 {
     const inputs = element.querySelectorAll(".change-relation");
     const updateData = {};
     const changes = [];
-    inputs.forEach((input) => {
+    let brakethrough = false;
+    let messageContent = "";
+    inputs.forEach(async (input) => {
+      const action = input.dataset.action;
       if (input.checked) {
-        const action = input.dataset.action;
         let newValue = 0;
         switch (action) {
           case "up":
             newValue = Number(input.dataset.relationvalue) + 1;
+            if (newValue === 3) {
+              newValue = -2;
+              brakethrough = true;
+            }
             break;
           case "down":
             newValue = Number(input.dataset.relationvalue) - 1;
+            if (newValue === -3) {
+              newValue = 2;
+              brakethrough = true;
+            }
         }
         updateData[input.dataset.relationid] = newValue;
         const relationName = input.closest("tr")?.querySelector("td")?.innerText ?? relationPath;
         const sign = action === "up" ? "+" : "-";
         changes.push(`${relationName}: ${input.dataset.relationvalue} → ${newValue} (${sign}1)`);
+
+        if (Object.keys(updateData).length > 0) {
+          messageContent = `
+            <div class="relation-update">
+              <strong>${actor.name}</strong> ${game.i18n.localize("sofh.dialog.updateRelation")} <br>
+              <ul>
+                ${changes.map((c) => `<li>${c}</li>`).join("")}
+              </ul>
+            </div>`;
+          if (brakethrough) {
+            messageContent += `
+              <div class="relation-breakthrough">
+                <p><em>${game.i18n.localize("sofh.dialog.breakthroughText")}</em></p>
+                <button class="roll-breakthrough" data-action="${action}">
+                  ${game.i18n.localize("sofh.dialog.rollBreakthrough")}
+                </button>
+              </div>`;
+          }
+        }
       }
     });
-    if (Object.keys(updateData).length > 0) {
+    if (messageContent !== "") {
       await actor.update(updateData);
-      const messageContent = `
-      <div class="relation-update">
-        <strong>${actor.name}</strong> ${game.i18n.localize("sofh.dialog.updateRelation")} <br>
-        <ul>
-          ${changes.map((c) => `<li>${c}</li>`).join("")}
-        </ul>
-      </div>
-    `;
-
       ChatMessage.create({
         user: game.user.id,
         speaker: game.user.name,
         content: messageContent,
       });
     }
-    const data = { player: this.option.player, actorID: this.option.actorId };
+
+    const data = { player: this.options.player, actorId: this.options.actorId };
     this.close();
-    new EndSessionLearnFromExperience(data);
+    new EndSessionLearnFromExperience(data).render(true);
   }
 }

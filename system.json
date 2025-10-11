@@ -39,6 +39,18 @@
       },
       "system": "sofh",
       "flags": {}
+    },
+    {
+      "name": "random-table",
+      "label": "Random Tables",
+      "path": "packs/random-table",
+      "type": "RollTable",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      },
+      "system": "sofh",
+      "flags": {}
     }
   ],
 

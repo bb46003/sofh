@@ -305,19 +305,40 @@ Hooks.once("ready", async function () {
       game.settings.set("SofH", "systemMigrationVersion", SYSTEM_MIGRATION_VERSION);
     }
     const macroKey = "sofh.move.endSesionMove";
-
-    const allLangs = Object.keys(game.i18n.translations);
+    const allLangs = game.system.languages.map((l) => l.lang);
     const localizedNames = [];
 
-    for (const lang of allLangs) {
-      const translationSet = game.i18n.translations[lang];
-      const localized = foundry.utils.getProperty(translationSet, macroKey.split("."));
-      if (localized) localizedNames.push(localized);
+    // cache translations so we don't re-fetch next time
+    if (!game.sofhLangCache) game.sofhLangCache = {};
+
+    for (const langDef of game.system.languages) {
+      if (!langDef?.path) continue;
+
+      try {
+        if (!game.sofhLangCache[langDef.lang]) {
+          const response = await fetch(langDef.path);
+          game.sofhLangCache[langDef.lang] = await response.json();
+        }
+
+        const translationSet = await game.sofhLangCache[langDef.lang];
+        const localized = await foundry.utils.getProperty(translationSet, macroKey);
+        if (localized) localizedNames.push(localized);
+      } catch (err) {
+        console.warn(`Failed to load translations for ${langDef.lang}:`, err);
+      }
     }
 
-    const macro = game.macros.find((m) => localizedNames.includes(m.name));
+    // find GM users
+    const gmUsers = game.users.filter((u) => u.isGM);
+    const gmMacros = game.macros.filter((m) => gmUsers.some((u) => m.ownership[u.id] === 3 || m.ownership.default === 3));
+
+    // find any GM macro whose name matches any localized name
+    let macro = gmMacros.find((m) => localizedNames.includes(m.name));
 
     if (!macro) {
+      // fallback name in current language
+      const macroName = game.i18n.localize(macroKey);
+
       macro = await Macro.create({
         name: macroName,
         type: "script",
@@ -325,15 +346,15 @@ Hooks.once("ready", async function () {
         command: "new game.SofH.EndSessionDialog().render(true);",
       });
 
+      // assign to first empty slot
       const hotbarMacros = game.user.getHotbarMacros();
+      const emptySlot = hotbarMacros.findIndex((h) => !h.macro);
 
-      let emptySlot = hotbarMacros.findIndex((m) => m.macro === null);
       if (emptySlot === -1) {
         console.warn("No empty hotbar slot available for End Session macro!");
-        return;
+      } else {
+        await game.user.assignHotbarMacro(macro, emptySlot + 1);
       }
-
-      await game.user.assignHotbarMacro(macro, emptySlot + 1);
     }
   }
   const myPackage = game.system;
@@ -447,6 +468,31 @@ Hooks.on("preCreateScene", (scene) => {
     grid: {
       type: CONST.GRID_TYPES.GRIDLESS,
     },
+  });
+});
+Hooks.on("renderChatMessageHTML", (message, html) => {
+  // Use querySelectorAll to get all matching buttons
+  const buttons = html.querySelectorAll(".roll-breakthrough");
+
+  buttons.forEach((button) => {
+    button.addEventListener("click", async (ev) => {
+      const action = ev.currentTarget.dataset.action;
+      const pack = game.packs.get("SofH.random-table");
+
+      let rollTable;
+      if (action === "up") {
+        rollTable = await pack.getDocument("wzX0mwmH6SEWCT8l"); // Up table
+      } else {
+        rollTable = await pack.getDocument("ky6qfFM0IqONlFkb"); // Down table
+      }
+
+      if (rollTable) {
+        const result = await rollTable.roll();
+        rollTable.toMessage(result.results);
+      } else {
+        ui.notifications.error("Roll table not found.");
+      }
+    });
   });
 });
 

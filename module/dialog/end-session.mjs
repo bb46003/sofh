@@ -72,12 +72,40 @@ export class EndSessionDialog extends foundry.applications.api.ApplicationV2 {
     const actorId = span?.dataset.actor || select?.value;
     game.system.socketHandler.emit({
       operation: "endOfSesionPlayer",
-      player: playerId,
-      actorId: actorId,
+      player: [playerId],
+      actorId: [actorId],
     });
   }
 
   static #sendToALL(ev) {
-    const target = ev.terget;
+    const entries = this.element.querySelectorAll(".character-entry");
+    const playerIds = [];
+    const actorIds = [];
+
+    entries.forEach((entry) => {
+      const span = entry.querySelector("span.character-label");
+      const select = entry.querySelector("select.assign-character");
+
+      let userId, actorId;
+
+      if (span) {
+        userId = span.dataset.user;
+        actorId = span.dataset.actor;
+      } else if (select) {
+        userId = select.dataset.user;
+        actorId = select.value; // empty string if not selected
+      }
+
+      // Only include if actorId is set (optional)
+      if (actorId) {
+        playerIds.push(userId);
+        actorIds.push(actorId);
+      }
+    });
+    game.system.socketHandler.emit({
+      operation: "endOfSesionPlayer",
+      player: playerIds,
+      actorId: actorIds,
+    });
   }
 }
