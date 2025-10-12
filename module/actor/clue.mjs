@@ -1,10 +1,7 @@
 import { moveRoll } from "../dialog/move-dialog.mjs";
 import sofh_Utility from "../utility.mjs";
 
-const BaseActorSheet =
-  typeof foundry?.appv1?.sheets?.ActorSheet !== "undefined"
-    ? foundry.appv1.sheets.ActorSheet
-    : ActorSheet;
+const BaseActorSheet = typeof foundry?.appv1?.sheets?.ActorSheet !== "undefined" ? foundry.appv1.sheets.ActorSheet : ActorSheet;
 
 export class SofhClue extends BaseActorSheet {
   static get defaultOptions() {
@@ -38,18 +35,12 @@ export class SofhClue extends BaseActorSheet {
     html.on("click", ".theorize-move-roll", this.rollForTheorize.bind(this));
     html.on("click", ".solution-add", this.addSolution.bind(this));
     html.on("click", ".remove-solution", this.removeSolution.bind(this));
-    html.on(
-      "click",
-      ".theorize-solution-roll",
-      this.solutionRollForTheorize.bind(this),
-    );
+    html.on("click", ".theorize-solution-roll", this.solutionRollForTheorize.bind(this));
 
     html.find(".character-sheet").on("dragover", this._onDragOver.bind(this));
     html.find(".character-sheet").on("dragleave", this._onDragLeave.bind(this));
     html.find(".character-sheet").on("drop", this._onDrop.bind(this));
-    html
-      .find(`.remove-single-party-member`)
-      .on("click", this.removePartyMember.bind(this));
+    html.find(`.remove-single-party-member`).on("click", this.removePartyMember.bind(this));
     html.find(`.add-character`).on("click", this.addPartyMember.bind(this));
   }
 
@@ -148,13 +139,8 @@ export class SofhClue extends BaseActorSheet {
   async addPartyMember(event) {
     const actors = game.actors.filter((actor) => actor.type === "character");
     const currentMember = this.actor.system.actorID;
-    const filteredActors = actors.filter(
-      (actor) => !Object.keys(currentMember).includes(actor.id),
-    );
-    const html = await sofh_Utility.renderTemplate(
-      "systems/SofH/templates/dialogs/add-patry-member.hbs",
-      { actors: filteredActors },
-    );
+    const filteredActors = actors.filter((actor) => !Object.keys(currentMember).includes(actor.id));
+    const html = await sofh_Utility.renderTemplate("systems/SofH/templates/dialogs/add-patry-member.hbs", { actors: filteredActors });
 
     new Dialog({
       title: game.i18n.localize("sofh.ui.clue.add-party-member"),
@@ -174,9 +160,7 @@ export class SofhClue extends BaseActorSheet {
     const containers = document.querySelectorAll(".party-memeber-add");
 
     const clue = this.actor;
-    const currentClues = clue.system?.clue
-      ? Object.keys(clue.system.clue).length
-      : 0;
+    const currentClues = clue.system?.clue ? Object.keys(clue.system.clue).length : 0;
     let updateData = {};
     containers.forEach(async (container) => {
       const checkbox = container.querySelector('input[type="checkbox"]');
@@ -208,9 +192,7 @@ export class SofhClue extends BaseActorSheet {
 
   async addOwnership(characterID) {
     const users = Array.from(game.users.values());
-    const filteredUsers = users.filter(
-      (user) => user.role !== 4 && user?.character?.id === characterID,
-    );
+    const filteredUsers = users.filter((user) => user.role !== 4 && user?.character?.id === characterID);
     const filteredUser = filteredUsers[0];
     if (filteredUser !== undefined) {
       const actor = this.actor;
@@ -219,9 +201,7 @@ export class SofhClue extends BaseActorSheet {
   }
   async removeOwnership(characterID) {
     const users = Array.from(game.users.values());
-    const filteredUsers = users.filter(
-      (user) => user.role !== 4 && user?.character?.id === characterID,
-    );
+    const filteredUsers = users.filter((user) => user.role !== 4 && user?.character?.id === characterID);
     const filteredUser = filteredUsers[0];
     if (filteredUser !== undefined) {
       const actor = this.actor;
@@ -241,9 +221,7 @@ export class SofhClue extends BaseActorSheet {
       const dialogInstance = new moveRoll(actor, item, this.actor.id);
       dialogInstance.rollForMove(actor, item, this.actor.id);
     } else {
-      ui.notifications.warn(
-        game.i18n.localize("sofh.you_are_not_owner"),
-      );
+      ui.notifications.warn(game.i18n.localize("sofh.you_are_not_owner"));
     }
   }
   async addSolution(event) {
@@ -290,27 +268,16 @@ export class SofhClue extends BaseActorSheet {
     const hasAccess = ownership[user] === 3;
     const solutionGroup = ev.target.closest(".solution-group");
     const complexityInput = solutionGroup.querySelector(".complexity");
-    const complexity = complexityInput
-      ? parseFloat(complexityInput.value)
-      : undefined;
+    const complexity = complexityInput ? parseFloat(complexityInput.value) : undefined;
     const question = solutionGroup.querySelector(".solution-question").value;
     const solution = solutionGroup.querySelector(".solution").textContent;
 
     if (hasAccess) {
       const item = actor.items.filter((move) => move.id === ev.target.id)[0];
       const dialogInstance = new moveRoll(actor, item, this.actor.id);
-      dialogInstance.rollForMove(
-        actor,
-        item,
-        this.actor.id,
-        complexity,
-        question,
-        solution,
-      );
+      dialogInstance.rollForMove(actor, item, this.actor.id, complexity, question, solution);
     } else {
-      ui.notifications.warn(
-        game.i18n.localize("sofh.you_are_not_owner"),
-      );
+      ui.notifications.warn(game.i18n.localize("sofh.you_are_not_owner"));
     }
   }
 }

@@ -9,11 +9,7 @@ export class moveRoll extends Dialog {
   async activateListeners(html) {
     super.activateListeners(html);
     html.on("click", ".other-factor-h3", this.collapsOtherFactor.bind(this));
-    html.on(
-      "change",
-      ".question-sheet-roll-muptiple .circle-checkbox-isapply",
-      this.allowOnlyOneAproach.bind(this),
-    );
+    html.on("change", ".question-sheet-roll-muptiple .circle-checkbox-isapply", this.allowOnlyOneAproach.bind(this));
     html.on("change", ".selection-mistery", (event) => {
       this.showKnowClue(event);
     });
@@ -23,9 +19,7 @@ export class moveRoll extends Dialog {
   }
 
   async allowOnlyOneAproach() {
-    const checkboxes = document?.querySelectorAll(
-      ".question-sheet-roll-muptiple .circle-checkbox-isapply",
-    );
+    const checkboxes = document?.querySelectorAll(".question-sheet-roll-muptiple .circle-checkbox-isapply");
 
     checkboxes.forEach((checkbox) => {
       checkbox.addEventListener("change", function () {
@@ -44,9 +38,7 @@ export class moveRoll extends Dialog {
     event.preventDefault();
 
     // Find the element with the class "other-factor" relative to the current context
-    const movesElement = $(event.currentTarget)
-      .closest(".window-app")
-      .find(".other-factor");
+    const movesElement = $(event.currentTarget).closest(".window-app").find(".other-factor");
 
     if (movesElement.css("display") === "none") {
       movesElement.css("display", "");
@@ -108,8 +100,7 @@ export class moveRoll extends Dialog {
         rollmod = rollmod + 1;
       }
     }
-    const oponentcondition = html?.find(".oponent-have-condition-checkbox")[0]
-      ?.checked;
+    const oponentcondition = html?.find(".oponent-have-condition-checkbox")[0]?.checked;
     if (oponentcondition) {
       selections.oponentcondition = oponentcondition;
       if (selections.oponentcondition) {
@@ -119,9 +110,7 @@ export class moveRoll extends Dialog {
 
     const conditionElements = html?.find(".conditions-roll-detail").toArray();
     conditionElements.forEach((condition) => {
-      const isApply = condition.querySelector(
-        ".circle-checkbox-isapply",
-      ).checked;
+      const isApply = condition.querySelector(".circle-checkbox-isapply").checked;
       if (isApply) {
         selections.conditions.push({ isApply });
         dicenumber = dicenumber - 1;
@@ -130,11 +119,8 @@ export class moveRoll extends Dialog {
 
     const questionElements = html.find(".question-sheet-roll").toArray();
     questionElements.forEach((question) => {
-      const impact =
-        question.querySelector(".question-impact").value === "true";
-      const isApply = question.querySelector(
-        ".circle-checkbox-isapply",
-      ).checked;
+      const impact = question.querySelector(".question-impact").value === "true";
+      const isApply = question.querySelector(".circle-checkbox-isapply").checked;
       if (isApply) {
         selections.questions.push({ impact, isApply });
 
@@ -145,15 +131,10 @@ export class moveRoll extends Dialog {
         }
       }
     });
-    const aproachElements = html
-      ?.find(".question-sheet-roll-muptiple")
-      .toArray();
+    const aproachElements = html?.find(".question-sheet-roll-muptiple").toArray();
     aproachElements.forEach((question) => {
-      const impact =
-        question.querySelector(".question-impact").value === "true";
-      const isApply = question.querySelector(
-        ".circle-checkbox-isapply",
-      ).checked;
+      const impact = question.querySelector(".question-impact").value === "true";
+      const isApply = question.querySelector(".circle-checkbox-isapply").checked;
       if (isApply) {
         selections.questions.push({ impact, isApply });
 
@@ -244,15 +225,7 @@ export class moveRoll extends Dialog {
       }
     }
 
-    await this.rolling(
-      actor,
-      item,
-      formula,
-      clueIDs,
-      question,
-      solution,
-      advantagesSelect?.value,
-    );
+    await this.rolling(actor, item, formula, clueIDs, question, solution, advantagesSelect?.value);
     if (stringsSelect !== undefined) {
       if (stringsSelect.value !== "") {
         this.removeStrinAfterRoll(stringsSelect.value);
@@ -291,15 +264,7 @@ export class moveRoll extends Dialog {
     await this.actor.update({ "system.advanatage": advanatage });
   }
 
-  async rolling(
-    actor,
-    item,
-    formula,
-    clueID,
-    question,
-    solution,
-    advantagesSelect,
-  ) {
+  async rolling(actor, item, formula, clueID, question, solution, advantagesSelect) {
     const rollResult = await new Roll(formula).evaluate();
     const total = rollResult.total;
     const label = item.name;
@@ -371,7 +336,7 @@ export class moveRoll extends Dialog {
           }
         }
       } else {
-        game.socket.emit("system.SofH", {
+        game.system.socketHandler.emit("SofH", {
           operation: "updateXPfromCule",
           clue: clue,
         });
@@ -390,38 +355,24 @@ export class moveRoll extends Dialog {
     }
   }
 
-  async rollForMove(
-    actor,
-    item,
-    clueID,
-    complexity,
-    question,
-    solution,
-    sheet,
-  ) {
+  async rollForMove(actor, item, clueID, complexity, question, solution, sheet) {
     const is7conditions = actor.system.is7conditions;
     if (complexity === undefined) {
       complexity = 0;
     }
     if (!is7conditions) {
-      let content = await sofh_Utility.renderTemplate(
-        "systems/SofH/templates/dialogs/rolling-dialog.hbs",
-        {
-          item: item,
-          actor: actor,
-          clueID: clueID,
-          complexity: complexity,
-          question: question,
-        },
-      );
+      let content = await sofh_Utility.renderTemplate("systems/SofH/templates/dialogs/rolling-dialog.hbs", {
+        item: item,
+        actor: actor,
+        clueID: clueID,
+        complexity: complexity,
+        question: question,
+      });
       if (typeof clueID === "string" && question === undefined) {
         const clueSheet = game.actors.get(clueID);
         const selectElementSolution = await addQuestionSelector(clueSheet);
         const selectElementSolutionHTML = selectElementSolution.outerHTML;
-        content = content.replace(
-          '<div class="complexity">',
-          `${selectElementSolutionHTML}<div class="complexity">`,
-        );
+        content = content.replace('<div class="complexity">', `${selectElementSolutionHTML}<div class="complexity">`);
       }
       new moveRoll({
         data: { actor, item, clueID },
@@ -432,30 +383,19 @@ export class moveRoll extends Dialog {
             icon: '<i class="fa fa-check"></i>',
             label: `<div class="sofh-button">${game.i18n.localize("sofh.UI.Roll")}</div>`,
             callback: async (html) => {
-              await this.defnieRollingFormula(
-                actor,
-                item,
-                clueID,
-                solution,
-                question,
-                html,
-              );
+              await this.defnieRollingFormula(actor, item, clueID, solution, question, html);
             },
           },
         },
         default: `<div class="sofh-button">${game.i18n.localize("sofh.UI.Roll")}</div>`,
       }).render(true);
     } else {
-      ui.notifications.warn(
-        game.i18n.localize("sofh.ui.warning.cannotactduetoconditions"),
-      );
+      ui.notifications.warn(game.i18n.localize("sofh.ui.warning.cannotactduetoconditions"));
     }
   }
 
   async showKnowClue(event) {
-    const existingClueElements = event.currentTarget
-      .closest(".dialog")
-      .querySelectorAll(".single-clue, .complexity");
+    const existingClueElements = event.currentTarget.closest(".dialog").querySelectorAll(".single-clue, .complexity");
     existingClueElements.forEach((element) => element.remove());
     const target = event.currentTarget.selectedOptions[0].id;
     let selectElementSolution = null;
@@ -487,9 +427,7 @@ export class moveRoll extends Dialog {
           </div>`;
       }
       html = selectElementSolution?.outerHTML + html;
-      const clueSelector = event.currentTarget
-        .closest(".dialog")
-        .querySelector(".clue-slector");
+      const clueSelector = event.currentTarget.closest(".dialog").querySelector(".clue-slector");
       clueSelector.insertAdjacentHTML("afterend", html);
     }
   }
@@ -498,9 +436,7 @@ export class moveRoll extends Dialog {
     event.preventDefault();
     const selestedQuestion = event.target.options[event.target.selectedIndex];
     const complexity = Number(selestedQuestion.id);
-    const complexityInput = event.target
-      .closest(".known-clue")
-      .querySelector(".complexity-numer");
+    const complexityInput = event.target.closest(".known-clue").querySelector(".complexity-numer");
     complexityInput.value = complexity;
   }
 }
@@ -530,9 +466,7 @@ async function addQuestionSelector(clueSheet) {
   misteryQuestionDiv.classList.add("mistery-question");
 
   const misteryLabel = document.createElement("label");
-  misteryLabel.textContent = game.i18n.localize(
-    "sofh.dialog.select_mistery_question",
-  );
+  misteryLabel.textContent = game.i18n.localize("sofh.dialog.select_mistery_question");
   misteryLabel.classList.add("mistery-label");
   misteryQuestionDiv.appendChild(misteryLabel);
   misteryQuestionDiv.appendChild(selectElementSolution);

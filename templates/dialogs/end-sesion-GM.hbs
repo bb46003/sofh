@@ -1,0 +1,50 @@
+<div>
+  <span>{{localize "sofh.dialog.endSensionHeder"}}</span>
+  <div class="character-list">
+    {{#each characters as |char|}}
+      <div class="character-entry flexrow align-center">
+        <label><strong>{{char.playerName}}</strong>:</label>
+
+        {{!-- If player already has an assigned character --}}
+        {{#if char.actorName}}
+          <span 
+            class="character-label" 
+            data-user="{{char.userId}}" 
+            data-actor="{{char.actor.id}}">
+            {{char.actorName}}
+          </span>
+        {{!-- Otherwise show a dropdown for selecting one --}}
+        {{else}}
+          <select 
+            class="assign-character" 
+            data-user="{{char.userId}}">
+            <option value="">
+              {{localize "sofh.dialog.selectCharacter"}}
+            </option>
+            {{#each char.ownedActors as |owned|}}
+              <option 
+                value="{{owned.id}}" 
+                data-user="{{../char.userId}}" 
+                data-actor="{{owned.id}}">
+                {{owned.name}}
+              </option>
+            {{/each}}
+          </select>
+        {{/if}}
+        {{log char.actorName}}
+        <button 
+          type="button" 
+          class="send-btn" data-action="sendToPlayer" {{#if (eq char.actorName null)}}disabled{{/if}}>
+          {{localize "sofh.dialog.send"}}
+        </button>
+      </div>
+    {{/each}}
+  </div>
+  <div>
+    <button 
+          type="button" 
+          class="send-btn-all" data-action="sendToALL" {{#if (eq char.actorName null)}}disabled{{/if}}>
+          {{localize "sofh.dialog.sendToAll"}}
+    </button>
+  </div>
+</div>

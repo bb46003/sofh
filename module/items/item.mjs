@@ -1,7 +1,4 @@
-const BaseItemSheet =
-  typeof foundry?.appv1?.sheets?.ItemSheet !== "undefined"
-    ? foundry.appv1.sheets.ItemSheet
-    : ItemSheet;
+const BaseItemSheet = typeof foundry?.appv1?.sheets?.ItemSheet !== "undefined" ? foundry.appv1.sheets.ItemSheet : ItemSheet;
 export class sofhMovesSheet extends BaseItemSheet {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
@@ -55,15 +52,10 @@ export class sofhMovesSheet extends BaseItemSheet {
       event.stopPropagation();
 
       // Get the data from the drop event
-      const data = JSON.parse(
-        event.originalEvent.dataTransfer.getData("text/plain"),
-      );
+      const data = JSON.parse(event.originalEvent.dataTransfer.getData("text/plain"));
 
       const targetItem = this.item;
-      if (
-        data.type === "Item" &&
-        targetItem.system.realtedtoothermoves === true
-      ) {
+      if (data.type === "Item" && targetItem.system.realtedtoothermoves === true) {
         const droppedItem = await fromUuid(data.uuid);
         if (droppedItem) {
           const droppedItemUuid = droppedItem.uuid;

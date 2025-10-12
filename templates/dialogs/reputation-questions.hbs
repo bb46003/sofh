@@ -1,0 +1,24 @@
+<div>
+  <h4>{{localize "sofh.dialog.reputation-heder"}}</h4>
+  {{#if isOther}}
+    {{#each questions as |question index|}}
+      <div class="reputation-question flex">
+        <input type="checkbox" id="{{index}}" data-action="questionChecked" {{checkReputation ../reputationQuestion index}}/>
+        <label>{{localize question}}</label>
+      </div>
+
+    {{/each}}
+  {{else}}
+    {{#each questions as |question index|}}
+      <div class="reputation-question flex">
+        <label class="custom-reputation" for="reputation-{{index}}">
+          {{localize question}}
+        </label>
+        <input type="text" id="reputation-{{index}}"  value="{{lookup ../reputationQuestion index}}" />
+      </div>
+    {{/each}}
+  {{/if}}
+</div>
+<div class="footer">
+  <button data-action="submit"style="width: 100%;">{{localize "sofh.dialog.apply"}}</button>
+</div>

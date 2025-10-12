@@ -1,0 +1,5 @@
+2025/10/12-19:01:04.994 74fc Recovering log #15
+2025/10/12-19:01:04.994 74fc Level-0 table #17: started
+2025/10/12-19:01:05.005 74fc Level-0 table #17: 815 bytes OK
+2025/10/12-19:01:05.010 74fc Delete type=0 #15
+2025/10/12-19:01:05.010 74fc Delete type=3 #14

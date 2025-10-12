@@ -42,7 +42,9 @@
         "rollesult": "Roll result is:",
         "actorUseAdvantages": "<strong>{actor}</strong> use Advantages defnie as <strong>{advantage}</strong>",
         "mystery_solution": "Opportunity - ",
-        "mystery_question": "Question - "
+        "mystery_question": "Question - ",
+        "gainxp": "`{actor} gains {gainXP} XP!`",
+        "gainRep": "{actor} gains {gainRep} Reputation!`"
       },
       "moves": {
         "name": "Name of move:",
@@ -264,8 +266,11 @@
         "yourmovestriggers": "Moves triggers:",
         "condition.type": "Type",
         "condition.name": "Short description",
-        "condition.fixed": "Fixed?"
-      }
+        "condition.fixed": "Fixed?",
+        "reputation_questions": "Reputation Questionm",
+        "pickYourAdvancements": "Pick your Advancements"
+      },
+      "selectOption": "Select any option!"
     },
     "rolling": "Rolling dialog",
     "lack_of_move": "do not have move related to clues",
@@ -281,7 +286,8 @@
       "isRaltedToHouseQuestion": "House Question",
       "isRaltedToHouse": "Move is related do House",
       "haseResult12": "Move have results 12+",
-      "namePulltheStrings": "Pull the Strings"
+      "namePulltheStrings": "Pull the Strings",
+      "endSesionMove": "End Sesion Moves"
     },
     "item": {
       "descriptionlabel": "Move description",
@@ -321,7 +327,50 @@
     "clue": "Mistery",
     "dialog": {
       "knownMisery": "Select Mistery",
-      "select_mistery_question": "Choose Mystery Question"
+      "select_mistery_question": "Choose Mystery Question",
+      "reputation-heder": "House Reputation questions\nAt the beginning of a school year, highlight two of the questions\nbelow. Ask these two when you Gain Reputation, in the end of\nevery game session.\nDid you...",
+      "reputation": {
+        "gryffindor1": "face a major foe or fear with courage?",
+        "gryffindor2": "save someone important or famous?",
+        "gryffindor3": "impress someone or made them admire you?",
+        "gryffindor4": "steal someone’s spotlight?",
+        "hufflepuff1": "make peace with a major foe?",
+        "hufflepuff2": "make sure justice is done?",
+        "hufflepuff3": "prove yourself the most loyal friend?",
+        "hufflepuff4": "put your hard work in the spotlight?",
+        "ravenclaw1": "outsmart or label a major foe?",
+        "ravenclaw2": "let your knowledge take the spotlight?",
+        "ravenclaw3": "solve a puzzle or make significant progress toward solving a mystery?",
+        "slytherin1": "make a fool of a major foe?",
+        "slytherin2": "improve your social standing or influence?",
+        "slytherin3": "achieve an ambitious goal, proving to others that you are better than them?"
+      },
+      "apply": "Apply",
+      "makeOrBreakRelationship": "Make or Break Relationship",
+      "releationDescription": "At the end of each session, each player can adjust their Relationship score with one or two player characters up or down by 1. Explain how your character grew closer to or away from those characters this session.",
+      "updateRelation": "updated relations with:",
+      "gainxp": "At the end of each session, a character marks one Experience for each of the following questions they answer yes:",
+      "xpquestion1": "Did you make mistakes complicating your school life?",
+      "xpquestion2": "Did you face consequences of your <span class='italic'>Conditions</span>?",
+      "xpquestion3": "Did you mark no <span class='italic'>Experience</span> up to this point in the game session?",
+      "learnFromExperience": "Learn From Experience",
+      "gainReputaton": "Your Reputation",
+      "gainReputation": "Your <span class='italic'>Reputation</span> is a measure of how famous you are! Harry Potter started at Hogwarts already famous, but your characters will start at zero and have to work their way up as they solve mysteries, defeat enemies, and save people or even the school itself! There are five <span class='italic'>Ranks of Reputation</span>. When you reach 7 <span class='italic'>Reputation</span>, you go up to a new rank!\nMark below question to gain <span class='italic'>Reputation</span>.",
+      "commonQuestion1": " Did we solve a <span class='italic'>Mystery</span>?",
+      "commonQuestion2": " Did you gain any new <span class='italic'>Label (Social Condition)</span>?",
+      "subbmit": "Subbmit",
+      "send": "Send to Player",
+      "sendToAll": "Send to All Players",
+      "selectCharacter": "Select Player Character",
+      "endSensionHeder": "Below is list of Players and thier characters, if any Player do not have assigned character pick apropirt character from list. Then send End of Session Move to each player separatly by clikin button \"Send To Player\" or send to all at one by clicking \"Send to All\"",
+      "endOfSession": "End of Session Moves Handler",
+      "next": "Next Move",
+      "relationWith": "Relation with",
+      "relationValue": "Relation Value",
+      "riseRelation": "Rise relation",
+      "lowerRelation": "Lower Relation",
+      "breakthroughText": "You face a breakthrough in your relationship",
+      "rollBreakthrough": "Random Table for breakthrough"
     },
     "UI": {
       "OK": "Apply",

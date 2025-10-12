@@ -1,10 +1,12 @@
- <section class="tab addblood {{tabs.cechy_glowne.cssClass}}"   
-    action-data="tab"  data-group="sheet"  data-tab="addblood">
+<section
+  class="tab addblood {{tabs.cechy_glowne.cssClass}}"
+  action-data="tab"
+  data-group="sheet"
+  data-tab="addblood"
+>
 
   <div class="custom-house-header addBlood flexcolumn">
     <h3>{{localize "sofh.SETTINGS.add-custom-blood-type-title"}} <a><i class="fa fa-plus" data-action="addBloodType"></i></a></h3>
-    
- 
       {{#each data as |blood|}}
       <div class= "custom-blood">
           <input type="text" name="bloodType" value="{{blood}}">
@@ -13,3 +15,4 @@
      {{/each}}
      </div>
 </section>
+

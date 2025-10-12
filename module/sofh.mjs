@@ -8,6 +8,8 @@ import { characterRelation } from "./config.mjs";
 import { sofhActor } from "./actor/actors.mjs";
 import * as SofHMigrate from "./migrate.js";
 import { customHouse } from "./setup/customHouse.mjs";
+import { EndSessionDialog } from "./dialog/end-session.mjs";
+import SocketHandler from "./setup/socket-handler.mjs";
 
 export default function registerSettings() {
   // -------------------
@@ -157,7 +159,7 @@ Hooks.once("init", async function () {
   loadPolishLocalization();
 
   CONFIG.Actor.documentClass = sofhActor;
- CONFIG.SOFHCONFIG = SOFHCONFIG;
+  CONFIG.SOFHCONFIG = SOFHCONFIG;
   // --- Load previously saved custom config ---
   const savedData = game.settings.get("SofH", "customConfig");
   if (savedData) {
@@ -181,14 +183,13 @@ Hooks.once("init", async function () {
         // Merge house-specific equipment
         if (!SOFHCONFIG.houseeq[key]) SOFHCONFIG.houseeq[key] = {};
         house.houseEq?.forEach((eq) => {
-          if (eq)
-            SOFHCONFIG.houseeq[key][eq.toLowerCase().replace(/\s+/g, "_")] = eq;
+          if (eq) SOFHCONFIG.houseeq[key][eq.toLowerCase().replace(/\s+/g, "_")] = eq;
         });
 
         // Merge general equipment
         if (house.equipment) SOFHCONFIG.equipment[key] = house.equipment;
-        CONFIG.SOFHCONFIG.goal["goal"+key] = house.goal;
-        CONFIG.SOFHCONFIG.timeToShine[key+"TimeToShine"] = house.timeToShine;
+        CONFIG.SOFHCONFIG.goal["goal" + key] = house.goal;
+        CONFIG.SOFHCONFIG.timeToShine[key + "TimeToShine"] = house.timeToShine;
       });
     }
     if (savedData.topicReplace) {
@@ -213,12 +214,12 @@ Hooks.once("init", async function () {
     }
 
     // Assign merged config to global CONFIG
-   
 
     game.SofH = {
       HomeScore,
       moveRoll,
       migrateWorld: SofHMigrate.migrateWorld,
+      EndSessionDialog,
     };
 
     return preloadHandlebarsTemplates();
@@ -235,11 +236,7 @@ async function loadPolishLocalization() {
   return plStrings;
 }
 Hooks.on("updateSetting", (setting) => {
-  if (
-    ["HomeScorePositionX", "HomeScorePositionY", "HomeScoreSize"].includes(
-      setting.key,
-    )
-  ) {
+  if (["HomeScorePositionX", "HomeScorePositionY", "HomeScoreSize"].includes(setting.key)) {
     customStyle();
   }
 });
@@ -268,12 +265,9 @@ Hooks.once("ready", async function () {
       },
     ];
 
-    const houseWithHighestPoints = houseSettings.reduce(
-      (maxHouse, currentHouse) => {
-        return currentHouse.value > maxHouse.value ? currentHouse : maxHouse;
-      },
-      houseSettings[0],
-    );
+    const houseWithHighestPoints = houseSettings.reduce((maxHouse, currentHouse) => {
+      return currentHouse.value > maxHouse.value ? currentHouse : maxHouse;
+    }, houseSettings[0]);
     houseSettings.forEach(async (house) => {
       if (house.name === houseWithHighestPoints.name) {
         await game.settings.set(SYSTEM_ID, `${house.name}_on_leed`, true);
@@ -285,9 +279,7 @@ Hooks.once("ready", async function () {
   characterRelation();
   // Check if an actor of type "clue" exists, if not, create a new one
   const allActors = game.actors;
-  const isClueExist = Array.from(allActors.entries()).some(
-    ([key, actor]) => actor.type === "clue",
-  );
+  const isClueExist = Array.from(allActors.entries()).some(([key, actor]) => actor.type === "clue");
 
   if (!isClueExist) {
     const newActorData = {
@@ -306,42 +298,67 @@ Hooks.once("ready", async function () {
   if (game.user.isGM) {
     const SYSTEM_MIGRATION_VERSION = game.world.systemVersion;
     const currentVersion = game.settings.get("SofH", "systemMigrationVersion");
-    const needsMigration =
-      !currentVersion ||
-      foundry.utils.isNewerVersion(SYSTEM_MIGRATION_VERSION, currentVersion);
+    const needsMigration = !currentVersion || foundry.utils.isNewerVersion(SYSTEM_MIGRATION_VERSION, currentVersion);
 
     if (needsMigration) {
       SofHMigrate.migrateWorld();
-      game.settings.set(
-        "SofH",
-        "systemMigrationVersion",
-        SYSTEM_MIGRATION_VERSION,
-      );
+      game.settings.set("SofH", "systemMigrationVersion", SYSTEM_MIGRATION_VERSION);
     }
-  }
-});
+    const macroKey = "sofh.move.endSesionMove";
+    const allLangs = game.system.languages.map((l) => l.lang);
+    const localizedNames = [];
 
-Hooks.on("createActor", async function (actor) {
-  if (actor.type === "character") {
-    characterRelation();
+    // cache translations so we don't re-fetch next time
+    if (!game.sofhLangCache) game.sofhLangCache = {};
 
-    CONFIG.SOFHCONFIG = SOFHCONFIG;
-    const characters = game.actors.filter((a) => a.type === "character");
+    for (const langDef of game.system.languages) {
+      if (!langDef?.path) continue;
 
-    characters.forEach(async (character) => {
-      if (character.sheet.rendered) {
-        await character.sheet.render(true);
+      try {
+        if (!game.sofhLangCache[langDef.lang]) {
+          const response = await fetch(langDef.path);
+          game.sofhLangCache[langDef.lang] = await response.json();
+        }
+
+        const translationSet = await game.sofhLangCache[langDef.lang];
+        const localized = await foundry.utils.getProperty(translationSet, macroKey);
+        if (localized) localizedNames.push(localized);
+      } catch (err) {
+        console.warn(`Failed to load translations for ${langDef.lang}:`, err);
       }
-    });
-  }
-});
+    }
 
-Hooks.on("updateActor", (actor, updateData) => {
-  if (actor.type === "character") {
-    if (updateData.name) {
-      Hooks.callAll("actorNameChanged");
+    // find GM users
+    const gmUsers = game.users.filter((u) => u.isGM);
+    const gmMacros = game.macros.filter((m) => gmUsers.some((u) => m.ownership[u.id] === 3 || m.ownership.default === 3));
+
+    // find any GM macro whose name matches any localized name
+    let macro = gmMacros.find((m) => localizedNames.includes(m.name));
+
+    if (!macro) {
+      // fallback name in current language
+      const macroName = game.i18n.localize(macroKey);
+
+      macro = await Macro.create({
+        name: macroName,
+        type: "script",
+        img: "icons/svg/door-open-outline.svg",
+        command: "new game.SofH.EndSessionDialog().render(true);",
+      });
+
+      // assign to first empty slot
+      const hotbarMacros = game.user.getHotbarMacros();
+      const emptySlot = hotbarMacros.findIndex((h) => !h.macro);
+
+      if (emptySlot === -1) {
+        console.warn("No empty hotbar slot available for End Session macro!");
+      } else {
+        await game.user.assignHotbarMacro(macro, emptySlot + 1);
+      }
     }
   }
+  const myPackage = game.system;
+  myPackage.socketHandler = new SocketHandler();
 });
 Hooks.on("actorNameChanged", () => {
   const characters = game.actors.filter((a) => a.type === "character");
@@ -410,9 +427,7 @@ Hooks.on("renderActorSheet", async function name(data) {
       if (key.includes(searchKeyQuestion)) {
         if (value === housequestion) {
           updateData = {
-            ["system.housequestion"]: game.i18n.localize(
-              `sofh.ui.actor.${key}`,
-            ),
+            ["system.housequestion"]: game.i18n.localize(`sofh.ui.actor.${key}`),
           };
         }
       }
@@ -453,6 +468,31 @@ Hooks.on("preCreateScene", (scene) => {
     grid: {
       type: CONST.GRID_TYPES.GRIDLESS,
     },
+  });
+});
+Hooks.on("renderChatMessageHTML", (message, html) => {
+  // Use querySelectorAll to get all matching buttons
+  const buttons = html.querySelectorAll(".roll-breakthrough");
+
+  buttons.forEach((button) => {
+    button.addEventListener("click", async (ev) => {
+      const action = ev.currentTarget.dataset.action;
+      const pack = game.packs.get("SofH.random-table");
+
+      let rollTable;
+      if (action === "up") {
+        rollTable = await pack.getDocument("wzX0mwmH6SEWCT8l"); // Up table
+      } else {
+        rollTable = await pack.getDocument("ky6qfFM0IqONlFkb"); // Down table
+      }
+
+      if (rollTable) {
+        const result = await rollTable.roll();
+        rollTable.toMessage(result.results);
+      } else {
+        ui.notifications.error("Roll table not found.");
+      }
+    });
   });
 });
 

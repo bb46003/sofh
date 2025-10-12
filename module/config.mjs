@@ -10,15 +10,13 @@ SOFHCONFIG.favoriteTopic = {
   spells: "sofh.ui.actor.favoriteTopic.spells",
   herbology: "sofh.ui.actor.favoriteTopic.herbology",
   history_of_magic: "sofh.ui.actor.favoriteTopic.history_of_magic",
-  defense_against_dark_arts:
-    "sofh.ui.actor.favoriteTopic.defense_against_dark_arts",
+  defense_against_dark_arts: "sofh.ui.actor.favoriteTopic.defense_against_dark_arts",
   potions: "sofh.ui.actor.favoriteTopic.potions",
   transmutation: "sofh.ui.actor.favoriteTopic.transmutation",
 };
 
 SOFHCONFIG.favoriteTopic2 = {
-  care_of_magical_creatures:
-    "sofh.ui.actor.favoriteTopic2.care_of_magical_creatures",
+  care_of_magical_creatures: "sofh.ui.actor.favoriteTopic2.care_of_magical_creatures",
   muggle_studies: "sofh.ui.actor.favoriteTopic2.muggle_studies",
   numerology: "sofh.ui.actor.favoriteTopic2.numerology",
   divination: "sofh.ui.actor.favoriteTopic2.divination",
@@ -88,23 +86,21 @@ SOFHCONFIG.houseeq = {
   },
 };
 SOFHCONFIG.goal = {
-  goalgryffindor:"sofh.ui.actor.goalgryffindor",
+  goalgryffindor: "sofh.ui.actor.goalgryffindor",
   goalhufflepuff: "sofh.ui.actor.goalhufflepuff",
   goalravenclaw: "sofh.ui.actor.goalravenclaw",
-  goalslytherin:"sofh.ui.actor.goalslytherin"
+  goalslytherin: "sofh.ui.actor.goalslytherin",
 };
 SOFHCONFIG.timeToShine = {
   gryffindorTimeToShine: "sofh.ui.actor.gryffindorTimeToShine",
   hufflepuffTimeToShine: "sofh.ui.actor.hufflepuffTimeToShine",
   ravenclawTimeToShine: "sofh.ui.actor.ravenclawTimeToShine",
-  slytherinTimeToShine:"sofh.ui.actor.slytherinTimeToShine"
-}
+  slytherinTimeToShine: "sofh.ui.actor.slytherinTimeToShine",
+};
 
 export async function characterRelation() {
   const actors = game.actors;
-  const character = Array.from(actors.entries()).filter(
-    ([key, actor]) => actor.type === "character",
-  );
+  const character = Array.from(actors.entries()).filter(([key, actor]) => actor.type === "character");
 
   let characterRelation = {};
 

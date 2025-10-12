@@ -1,0 +1,52 @@
+<div>
+    <div>
+       
+        <label>{{localize "sofh.dialog.releationDescription"}}</label>
+        <div>
+<table class="relation-table">
+  <thead>
+    <tr>
+      <th>{{localize "sofh.dialog.relationWith"}}</th>
+      <th>{{localize "sofh.dialog.relationValue"}}</th>
+      <th>{{localize "sofh.dialog.riseRelation"}}</th>
+      <th>{{localize "sofh.dialog.lowerRelation"}}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>{{getActorName system.relation.name1}}</td>
+      <td>{{system.relation.value1}}</td>
+      <td><input type="radio" name="relation1"  class="change-relation" data-relationID="system.relation.value1" data-relationValue="{{system.relation.value1}}" data-action="up" data-tooltip="{{localize "sofh.dialog.riseRelation"}}"></td>
+      <td><input type="radio" name="relation1" class="change-relation" data-relationID="system.relation.value1" data-relationValue="{{system.relation.value1}}" data-action="down" data-tooltip="{{localize "sofh.dialog.lowerRelation"}}"></td>
+    </tr>
+    <tr>
+      <td>{{getActorName system.relation.name2}}</td>
+      <td>{{system.relation.value2}}</td>
+      <td><input type="radio" name="relation2" class="change-relation" data-relationID="system.relation.value2" data-relationValue="{{system.relation.value2}}" data-action="up" data-tooltip="{{localize "sofh.dialog.riseRelation"}}"></td>
+      <td><input type="radio" name="relation2" class="change-relation" data-relationID="system.relation.value2" data-relationValue="{{system.relation.value2}}" data-action="down" data-tooltip="{{localize "sofh.dialog.lowerRelation"}}"></td>
+    </tr>
+    <tr>
+      <td>{{getActorName system.relation.name3}}</td>
+      <td>{{system.relation.value3}}</td>
+      <td><input type="radio" name="relation3" class="change-relation" data-relationID="system.relation.value3" data-relationValue="{{system.relation.value3}}" data-action="up" data-tooltip="{{localize "sofh.dialog.riseRelation"}}"></td>
+      <td><input type="radio" name="relation3" class="change-relation" data-relationID="system.relation.value3" data-relationValue="{{system.relation.value3}}" data-action="down" data-tooltip="{{localize "sofh.dialog.lowerRelation"}}"></td>
+    </tr>
+    <tr>
+      <td>{{getActorName system.relation.name4}}</td>
+      <td>{{system.relation.value4}}</td>
+      <td><input type="radio" name="relation4" class="change-relation" data-relationID="system.relation.value4" data-relationValue="{{system.relation.value4}}"  data-action="up" data-tooltip="{{localize "sofh.dialog.riseRelation"}}"></td>
+      <td><input type="radio" name="relation4" class="change-relation" data-relationID="system.relation.value4" data-relationValue="{{system.relation.value4}}" data-action="down" data-tooltip="{{localize "sofh.dialog.lowerRelation"}}"></td>
+    </tr>
+  </tbody>
+</table>
+
+        </div>
+    </div>
+     <button 
+          type="button" 
+          class="send-btn-all" data-action="next">
+          {{localize "sofh.dialog.next"}}
+    </button>
+</div>
+
+

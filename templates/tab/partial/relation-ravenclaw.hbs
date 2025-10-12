@@ -1,47 +1,90 @@
+<div class="descriptionm-relations">
+  <h2>{{localize "sofh.ui.relationships.title"}}</h2>
+  <p class="instruction">{{localize
+      "sofh.ui.instructions.fill_in_with_players"
+    }}</p>
 
-    <div class="descriptionm-relations">
-        <h2>{{localize "sofh.ui.relationships.title"}}</h2>
-        <p class="instruction">{{localize "sofh.ui.instructions.fill_in_with_players"}}</p>
+  <div class="relationship">
+    <p>● {{localize "sofh.ui.relationships.study_buddy"}}</p>
+    <input
+      name="system.study_buddy"
+      type="text"
+      value="{{system.study_buddy}}"
+    />
+  </div>
 
-        <div class="relationship">
-            <p>● {{localize "sofh.ui.relationships.study_buddy"}}</p>
-            <input name="system.study_buddy" type="text" value="{{system.study_buddy}}">
-        </div>
+  <div class="relationship">
+    <p>● {{localize "sofh.ui.relationships.sneaked_into_library"}}</p>
+    <input
+      name="system.sneaked_into_library"
+      type="text"
+      value="{{system.sneaked_into_library}}"
+    />
+  </div>
 
-        <div class="relationship">
-            <p>● {{localize "sofh.ui.relationships.sneaked_into_library"}}</p>
-            <input name="system.sneaked_into_library" type="text" value="{{system.sneaked_into_library}}">
-        </div>
+  <div class="relationship">
+    <p>● {{localize "sofh.ui.relationships.caught_cheating"}}</p>
+    <input
+      name="system.caught_cheating"
+      type="text"
+      value="{{system.caught_cheating}}"
+    />
+  </div>
 
-        <div class="relationship">
-            <p>● {{{localize "sofh.ui.relationships.caught_cheating"}}}</p>
-            <input name="system.caught_cheating" type="text" value="{{system.caught_cheating}}">
-        </div>
+  <div class="relationship">
+    <p>● {{{localize "sofh.ui.relationships.caught_cheating"}}}</p>
+    <input
+      name="system.caught_cheating"
+      type="text"
+      value="{{system.caught_cheating}}"
+    />
+  </div>
 
-        <div class="relationship">
-            <p>● {{localize "sofh.ui.relationships.helped_with_invention"}}</p>
-            <input name="system.helped_with_invention" type="text" value="{{system.helped_with_invention}}">
-        </div>
+  <p class="instruction">{{localize
+      "sofh.ui.instructions.fill_in_with_characters"
+    }}</p>
 
-        <p class="instruction">{{localize "sofh.ui.instructions.fill_in_with_characters"}}</p>
+  <div class="relationship">
+    <p>● {{localize "sofh.ui.relationships.best_friend"}}</p>
+    <textarea
+      name="system.best_friend"
+      type="text"
+      value="{{system.best_friend}}"
+    >{{system.best_friend}}</textarea>
+  </div>
 
-        <div class="relationship">
-            <p>● {{localize "sofh.ui.relationships.ravenclaw1"}}</p>
-            <textarea name="system.relation1" type="text" value="{{system.relation1}}">{{system.relation1}}</textarea>
-        </div>
+  <div class="relationship">
+    <p>● {{localize "sofh.ui.relationships.ravenclaw1"}}</p>
+    <textarea
+      name="system.relation1"
+      type="text"
+      value="{{system.relation1}}"
+    >{{system.relation1}}</textarea>
+  </div>
 
-        <div class="relationship">
-            <p>● {{localize "sofh.ui.relationships.ravenclaw2"}}</p>
-            <textarea name="system.relation2" type="text" value="{{system.relation2}}">{{system.relation2}}</textarea>
-        </div>
+  <div class="relationship">
+    <p>● {{localize "sofh.ui.relationships.ravenclaw2"}}</p>
+    <textarea
+      name="system.relation2"
+      type="text"
+      value="{{system.relation2}}"
+    >{{system.relation2}}</textarea>
+  </div>
 
-        <div class="relationship">
-            <p>● {{localize "sofh.ui.relationships.ravenclaw3"}}</p>
-            <textarea name="system.relation3" type="text" value="{{system.relation3}}">{{system.relation3}}</textarea>
-        </div>
-        <div class="relationship">
-            <p>● {{localize "sofh.ui.relationships.ravenclaw4"}}</p>
-            <textarea name="system.relation4" type="text" value="{{system.relation4}}">{{system.relation4}}</textarea>
-        </div>  
-    </div>
-
+  <div class="relationship">
+    <p>● {{localize "sofh.ui.relationships.ravenclaw3"}}</p>
+    <textarea
+      name="system.relation3"
+      type="text"
+      value="{{system.relation3}}"
+    >{{system.relation3}}</textarea>
+  </div>
+  <div class="relationship">
+    <p>● {{localize "sofh.ui.relationships.ravenclaw4"}}</p>
+    <textarea
+      name="system.relation4"
+      type="text"
+      value="{{system.relation4}}"
+    >{{system.relation4}}</textarea>
+  </div>
+</div>

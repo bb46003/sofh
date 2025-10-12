@@ -1,1116 +1,1150 @@
-@import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=IM+Fell+English+SC&family=IM+Fell+English:ital@0;1&family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=IM+Fell+English+SC&family=IM+Fell+English:ital@0;1&family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
 .sofh {
-    font-family: 'IM Fell English', serif;
+  font-family: "IM Fell English", serif;
 }
 .sofh .main-sheet {
-    display: flex;
-    flex-direction: column;
-    gap: 20px; /* Adds spacing between sections */
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Adds spacing between sections */
 }
 
 .sofh .title-section {
-    display: flex;
-    flex-direction: column;
-    background: transparent;
+  display: flex;
+  flex-direction: column;
+  background: transparent;
 }
 
 .sofh .main-info {
-    display: flex;
-    border: 10px solid black;
-    column-gap: 25px;
-
+  display: flex;
+  border: 10px solid black;
+  column-gap: 25px;
 }
-input#settings-config-SofH\.HomeScoreSize, 
-input#settings-config-SofH\.HomeScorePositionY, 
+input#settings-config-SofH\.HomeScoreSize,
+input#settings-config-SofH\.HomeScorePositionY,
 input#settings-config-SofH\.HomeScorePositionX {
-    max-width: 4em;
+  max-width: 4em;
 }
-.home-flag{
-    width: 100px;
-    border: none;
-    margin-top: 10px;
-    margin-left: 30px;
+.home-flag {
+  width: 100px;
+  border: none;
+  margin-top: 10px;
+  margin-left: 30px;
 }
 
 .sofh .borderless {
-    border: 1px solid transparent;
-    height: 200px;
-
+  border: 1px solid transparent;
+  height: 200px;
 }
-.borderless-partymember{
-    border: none;
-
+.borderless-partymember {
+  border: none;
 }
 
 .sofh .form-grid {
-    display: grid;
-    grid-template-columns: 1fr 1.5fr;
-    row-gap: 5px;
-    column-gap: 0px;
-    padding: 5px;
-    align-items: center;
-    width: 350px;
-    justify-items: stretch;
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  row-gap: 5px;
+  column-gap: 0px;
+  padding: 5px;
+  align-items: center;
+  width: 350px;
+  justify-items: stretch;
 }
 
 .sofh .stat-grid {
-    display: contents; /* Ensure individual elements follow the grid structure */
+  display: contents; /* Ensure individual elements follow the grid structure */
 }
-
+.stat-grid a {
+  margin-left: 10px;
+}
 .sofh .stat-grid label {
-    font-weight: bold;
-    align-self: center; /* Align labels vertically to the center */
+  font-weight: bold;
+  align-self: center; /* Align labels vertically to the center */
 }
 
 .sofh .stat-grid select,
-.sofh .stat-grid input{
-    text-align: right;
+.sofh .stat-grid input {
+  text-align: right;
 }
-.sofh .stat-grid textarea{
-    width: 100%; /* Make the inputs full width within their grid area */
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background: transparent;
-    resize: none;
-    font-family: 'IM Fell English', serif;
+.sofh .stat-grid textarea {
+  width: 100%; /* Make the inputs full width within their grid area */
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: transparent;
+  resize: none;
+  font-family: "IM Fell English", serif;
 }
 .sofh .stat-grid .checkboxes {
-    width: 100%; /* Make the inputs full width within their grid area */
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background: transparent;
+  width: 100%; /* Make the inputs full width within their grid area */
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: transparent;
 }
 
 .sofh .title-section div {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 .sofh .title-section label {
-    font-weight: bold;
-    margin-right: 10px;
+  font-weight: bold;
+  margin-right: 10px;
 }
 
 .sofh .title-section textarea#goal {
-     flex: 1;
-     padding: 5px;
-     border: 1px solid black;
-     border-radius: 4px;
-     margin-right: 20px;
-     text-align: right;
-     resize: none;
-     height: 1px;
-     background: rgba(0, 0, 0, 0.05);
-     resize: none;
-     font-family: 'IM Fell English', serif;
+  flex: 1;
+  padding: 5px;
+  border: 1px solid black;
+  border-radius: 4px;
+  margin-right: 20px;
+  text-align: right;
+  resize: none;
+  height: 1px;
+  background: rgba(0, 0, 0, 0.05);
+  resize: none;
+  font-family: "IM Fell English", serif;
 }
-.sofh .characteristic-sheet{
-    display: grid;
-    grid-template-columns: 1fr 1fr; /* Two columns: labels and inputs */
-    gap: 5px; /* Space between columns */
-    padding: 5px;
-    border: 10px solid black;
-
+.sofh .characteristic-sheet {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two columns: labels and inputs */
+  gap: 5px; /* Space between columns */
+  padding: 5px;
+  border: 10px solid black;
 }
 .sofh .char-grid-feature {
-    padding: 5px;
-    border: 1px solid black;
+  padding: 5px;
+  border: 1px solid black;
 }
 
 .sofh .char-grid {
-    display: grid;
-    grid-template-columns: 1fr 2fr; /* Two columns: labels and inputs */
-    gap: 5px; /* Space between columns */
-    padding: 5px;
-
+  display: grid;
+  grid-template-columns: 1fr 2fr; /* Two columns: labels and inputs */
+  gap: 5px; /* Space between columns */
+  padding: 5px;
 }
 
 .sofh .checkboxes {
-    background-color: lightgray; /* Background color */
-    border-radius: 50%; /* Make it circular */
-    display: inline-block; /* Inline-block to set size */
-    cursor: pointer; /* Pointer cursor on hover */
-    margin-right: 20px;
+  background-color: lightgray; /* Background color */
+  border-radius: 50%; /* Make it circular */
+  display: inline-block; /* Inline-block to set size */
+  cursor: pointer; /* Pointer cursor on hover */
+  margin-right: 20px;
 }
 
 /* Style select dropdowns */
 .sofh .stat-grid select {
-    height: auto;
-    text-align: right;
+  height: auto;
+  text-align: right;
 }
 
 /* Reputation rank styling */
 .sofh .reputation-rank {
-    grid-column: 1 / 3; /* Span across both columns */
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-weight: normal;
-    flex-wrap: wrap;
+  grid-column: 1 / 3; /* Span across both columns */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: normal;
+  flex-wrap: wrap;
 }
 
 .sofh .ranks {
-    font-style: oblique;
-    font-size: small;
+  font-style: oblique;
+  font-size: small;
 }
 
 .sofh .decrease-btn {
-    width: 20px;
-    font-size: x-large;
-    margin-left: auto;
-    background-color: transparent;
-    border: 1px solid #ccc;
+  width: 20px;
+  font-size: x-large;
+  margin-left: auto;
+  background-color: transparent;
+  border: 1px solid #ccc;
 }
 
 /* XP checkbox container */
 .sofh .stat-grid .checkboxes {
-    display: flex;
-    justify-content: flex-end;
-    background: transparent;
+  display: flex;
+  justify-content: flex-end;
+  background: transparent;
 }
 
 .xp-options {
-    padding: 2px;
+  padding: 2px;
 }
 
 button.dialog-button.OK.default.bright {
-    margin-top: 10px;
+  margin-top: 10px;
 }
 .sofh .stat-grid-condition-headers {
-    display: grid;
-    grid-template-columns: 1fr 2fr 0.2fr; /* Adjust the column sizes as needed */
-    gap: 10px; /* Space between the columns */
-    margin-bottom: 10px;
-    font-weight: bold;
-    text-align: center;
+  display: grid;
+  grid-template-columns: 1fr 2fr 0.2fr; /* Adjust the column sizes as needed */
+  gap: 10px; /* Space between the columns */
+  margin-bottom: 10px;
+  font-weight: bold;
+  text-align: center;
 }
 
 /* Container for each condition row */
 .sofh .stat-grid-condition {
-    display: grid;
-    grid-template-columns: 1fr 2fr 0.2fr; /* Same column layout as headers */
-    gap: 10px; /* Space between the columns */
-    margin-bottom: 10px;
+  display: grid;
+  grid-template-columns: 1fr 2fr 0.2fr; /* Same column layout as headers */
+  gap: 10px; /* Space between the columns */
+  margin-bottom: 10px;
 }
 
 /* Align input text and checkbox */
 .sofh .condition-text {
-    width: 100%; /* Make the input take up full width */
+  width: 100%; /* Make the input take up full width */
 }
 
 .sofh .circle-checkbox-condition {
-    margin: auto; /* Center the checkbox in its grid cell */
+  margin: auto; /* Center the checkbox in its grid cell */
 }
 .sofh .char-grid-condition {
-    padding: 5px;
-    border: 1px solid black;
+  padding: 5px;
+  border: 1px solid black;
 }
 .sofh label.conditions-label {
-    display: flex;
-    border: 1px solid black;
-    justify-content: center;
+  display: flex;
+  border: 1px solid black;
+  justify-content: center;
 }
 .sofh .seventhconditions {
-    color: red; /* Set the text color to red */
-    animation: blink 5s infinite; /* Apply the blink animation */
+  color: red; /* Set the text color to red */
+  animation: blink 5s infinite; /* Apply the blink animation */
 }
 
 @keyframes blink {
-    0%, 100% {
-        opacity: 1; /* Fully visible at the start and end */
-    }
-    50% {
-        opacity: 0.3; /* Invisible in the middle of the animation */
-    }
+  0%,
+  100% {
+    opacity: 1; /* Fully visible at the start and end */
+  }
+  50% {
+    opacity: 0.3; /* Invisible in the middle of the animation */
+  }
 }
-.sofh .bottom-panel{
-    display: flex;
-    flex: 1;
-    width: 100%;
+.sofh .bottom-panel {
+  display: flex;
+  flex: 1;
+  width: 100%;
 }
 .sofh .sheet-body,
 .sofh .sheet-body .tab,
-.sofh .sheet-body .tab{
-    min-height: 50px;
-
+.sofh .sheet-body .tab {
+  min-height: 50px;
 }
 
 .sofh .hover-label-question {
-    display: inline-block;
-  }
-  
- .sofh .hover-label-question:hover {
-    text-shadow: 
+  display: inline-block;
+}
+
+.sofh .hover-label-question:hover {
+  text-shadow:
     -0.2px -0.2px 0 red,
     0.2px -0.2px 0 red,
     -0.2px 0.2px 0 red,
-    0.2px 0.2px 0 red; 
-  }
+    0.2px 0.2px 0 red;
+}
 
-  .diamond {
-    width: 100px; /* 1/2 of 200px */
-    height: 50px; /* 1/2 of 100px */
-    transform: rotate(45deg);
+.diamond {
+  width: 100px; /* 1/2 of 200px */
+  height: 50px; /* 1/2 of 100px */
+  transform: rotate(45deg);
 }
 
 .diamond div {
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 12px; /* 1/2 of 24px */
-    font-weight: bold;
-    color: black;
-    cursor: pointer;
-    border: 1px solid #D4A017; /* 1/2 of 2px */
-    background-color: white;
-    transition: background-color 0.3s ease;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px; /* 1/2 of 24px */
+  font-weight: bold;
+  color: black;
+  cursor: pointer;
+  border: 1px solid #d4a017; /* 1/2 of 2px */
+  background-color: white;
+  transition: background-color 0.3s ease;
 }
 
 /* Center (Square Button) */
 .center {
-    width: 25px; /* 1/2 of 50px */
-    height: 25px; /* 1/2 of 50px */
-    top: 35%; /* Keep the original percentage */
-    left: 55%; /* Keep the original percentage */
-    box-shadow: 0 0 0 2.5px #D4A017; /* 1/2 of 5px */
-    background-color: white;
+  width: 25px; /* 1/2 of 50px */
+  height: 25px; /* 1/2 of 50px */
+  top: 35%; /* Keep the original percentage */
+  left: 55%; /* Keep the original percentage */
+  box-shadow: 0 0 0 2.5px #d4a017; /* 1/2 of 5px */
+  background-color: white;
 }
 
 /* Top Trapezoidal Button */
 .left-bottom {
-    top: 44%; /* Keep the original percentage */
-    left: 0%; /* Keep the original percentage */
-    width: 60px; /* 1/2 of 120px */
-    height: 15px; /* 1/2 of 30px */
-    z-index: -1;
-    transform: translateX(100%) rotate(-90deg);
-    background-color: transparent;
-    border: 2px solid #000; /* 1/2 of 4px */
-    clip-path: polygon(25% 0%, 75% 0%, 100% 100%, 0% 100%);
+  top: 44%; /* Keep the original percentage */
+  left: 0%; /* Keep the original percentage */
+  width: 60px; /* 1/2 of 120px */
+  height: 15px; /* 1/2 of 30px */
+  z-index: -1;
+  transform: translateX(100%) rotate(-90deg);
+  background-color: transparent;
+  border: 2px solid #000; /* 1/2 of 4px */
+  clip-path: polygon(25% 0%, 75% 0%, 100% 100%, 0% 100%);
 }
 
 /* Bottom Trapezoidal Button */
 .right-bottom {
-    bottom: -18%; /* Keep the original percentage */
-    left: 38%; /* Keep the original percentage */
-    width: 60px; /* 1/2 of 120px */
-    height: 15px; /* 1/2 of 30px */
-    transform: translateX(0%) rotate(0deg);
-    clip-path: polygon(25% 0%, 75% 0%, 100% 100%, 0% 100%);
+  bottom: -18%; /* Keep the original percentage */
+  left: 38%; /* Keep the original percentage */
+  width: 60px; /* 1/2 of 120px */
+  height: 15px; /* 1/2 of 30px */
+  transform: translateX(0%) rotate(0deg);
+  clip-path: polygon(25% 0%, 75% 0%, 100% 100%, 0% 100%);
 }
 
 /* Left Trapezoidal Button */
 .left-top {
-    top: 13%; /* Keep the original percentage */
-    left: 16%; /* Keep the original percentage */
-    width: 60px; /* 1/2 of 120px */
-    height: 15px; /* 1/2 of 30px */
-    transform: translateY(100%) rotate(90deg);
-    clip-path: polygon(25% 0%, 75% 0%, 100% 100%, 0% 100%);
+  top: 13%; /* Keep the original percentage */
+  left: 16%; /* Keep the original percentage */
+  width: 60px; /* 1/2 of 120px */
+  height: 15px; /* 1/2 of 30px */
+  transform: translateY(100%) rotate(90deg);
+  clip-path: polygon(25% 0%, 75% 0%, 100% 100%, 0% 100%);
 }
 
 /* Right Trapezoidal Button */
 .right-top {
-    top: 0%; /* Keep the original percentage */
-    right: 2%; /* Keep the original percentage */
-    width: 60px; /* 1/2 of 120px */
-    height: 15px; /* 1/2 of 30px */
-    transform: translateY(0%) rotate(-180deg);
-    clip-path: polygon(25% 0%, 75% 0%, 100% 100%, 0% 100%);
+  top: 0%; /* Keep the original percentage */
+  right: 2%; /* Keep the original percentage */
+  width: 60px; /* 1/2 of 120px */
+  height: 15px; /* 1/2 of 30px */
+  transform: translateY(0%) rotate(-180deg);
+  clip-path: polygon(25% 0%, 75% 0%, 100% 100%, 0% 100%);
 }
 
 /* On click, change background color */
 .diamond div.clicked {
-    background-color: #f0d74f;
+  background-color: #f0d74f;
 }
 
 /* Adjust text inside the buttons */
 .minustwo {
-    transform: translateY(0%) rotate(180deg);
+  transform: translateY(0%) rotate(180deg);
 }
 
 .two {
-    transform: translateY(0%) rotate(180deg);
+  transform: translateY(0%) rotate(180deg);
 }
 
 .zero {
-    transform: translateY(0%) rotate(-45deg);
+  transform: translateY(0%) rotate(-45deg);
 }
 .one {
-    transform: translateY(0%) rotate(-0deg);
+  transform: translateY(0%) rotate(-0deg);
 }
-.minusone{
-    transform: translateY(0%) rotate(-0deg);
-
+.minusone {
+  transform: translateY(0%) rotate(-0deg);
 }
 .clicked {
-    background-color: #007bff; /* Change this to your desired color */
-    color: white; /* Optional: change text color for better contrast */
-    transition: background-color 0.3s ease; /* Smooth transition */
+  background-color: #007bff; /* Change this to your desired color */
+  color: white; /* Optional: change text color for better contrast */
+  transition: background-color 0.3s ease; /* Smooth transition */
 }
-.relation{
-    height: 90px;
-    display: grid;
-    grid-template-columns: 0.75fr 2fr;
-    align-items: flex-start;
+.relation {
+  height: 90px;
+  display: grid;
+  grid-template-columns: 0.75fr 2fr;
+  align-items: flex-start;
 }
 input.relation-name {
-    position: relative;
-    bottom: -30%;
-    left: 1%;
-    width: 200px;
+  position: relative;
+  bottom: -30%;
+  left: 1%;
+  width: 200px;
 }
 .reputation-sheet {
-    display: grid;
-    flex-wrap: wrap;
+  display: grid;
+  flex-wrap: wrap;
 
-    grid-template-columns: 1fr 1fr;
-
+  grid-template-columns: 1fr 1fr;
 }
-.sofh .sheet-body, .sofh .sheet-body .tab, .sofh .sheet-body .tab{
-    min-height: 350px;
-    width: 100%;
+.sofh .sheet-body,
+.sofh .sheet-body .tab,
+.sofh .sheet-body .tab {
+  min-height: 350px;
+  width: 100%;
 }
 
-
-.relation-name{
-    margin-top: 6%;
+.relation-name {
+  margin-top: 6%;
 }
 .descriptionm-relations {
-    border-right: 2px solid black;
-    padding-right: 2px;
+  border-right: 2px solid black;
+  padding-right: 2px;
 }
 .value-relations {
-    padding-left: 2px;
+  padding-left: 2px;
 }
 .advanatage-item {
-    margin-top: 10px;
+  margin-top: 10px;
 }
 .string-item {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    margin-top: 10px
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-top: 10px;
 }
 .advantage-item {
-    display: grid;
-    grid-template-columns: 1fr;
+  display: grid;
+  grid-template-columns: 1fr;
 }
 .sofh.strings-tab {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 .strings-inputs {
-    display: grid;
-    grid-template-columns: 0.2fr 1fr 0.1fr;
-    align-items: center;
-    column-gap: 5px;
-    row-gap: 10px;
-    font-family: 'IM Fell English', serif;
+  display: grid;
+  grid-template-columns: 0.2fr 1fr 0.1fr;
+  align-items: center;
+  column-gap: 5px;
+  row-gap: 10px;
+  font-family: "IM Fell English", serif;
 }
-.strings-inputs.four{
-        grid-template-columns: 0.2fr 1fr 0.1fr 0.1fr;
-
+.strings-inputs.four {
+  grid-template-columns: 0.2fr 1fr 0.1fr 0.1fr;
 }
 .advantage-inputs {
-    display: grid;
-    grid-template-columns: 1fr 0.1fr;
-    align-items: center;
-    column-gap: 5px;
-    row-gap: 10px;
-    font-family: 'IM Fell English', serif;
+  display: grid;
+  grid-template-columns: 1fr 0.1fr;
+  align-items: center;
+  column-gap: 5px;
+  row-gap: 10px;
+  font-family: "IM Fell English", serif;
 }
 
-
 .strings-inputs input.strings {
-    flex: 1;
-    width: 100%; /* Ensure input takes full width */
-    box-sizing: border-box; /* Include padding/border in the width */
-    margin-right: 2px;
-    height: 30px;
+  flex: 1;
+  width: 100%; /* Ensure input takes full width */
+  box-sizing: border-box; /* Include padding/border in the width */
+  margin-right: 2px;
+  height: 30px;
 }
 
 .strings-inputs {
-    flex-shrink: 0;
-    margin-left: 5px;
-    height: 30px;
+  flex-shrink: 0;
+  margin-left: 5px;
+  height: 30px;
 }
 textarea.strings {
-    min-height: 30px;
-    max-height: 30px;
-    resize: none;
-    font-family: 'IM Fell English', serif;
+  min-height: 30px;
+  max-height: 30px;
+  resize: none;
+  font-family: "IM Fell English", serif;
 }
-textarea.house-question{
-    resize: none;
-    font-family: 'IM Fell English', serif;
+textarea.house-question {
+  resize: none;
+  font-family: "IM Fell English", serif;
 }
 .moves-top-grid {
-    display: grid;
-    grid-template-columns: 0.5fr  1fr;
-    grid-template-rows: repeat(5, auto); /* 5 rows for all form elements */
-    align-items: center;
-    border-bottom: 1px solid black;
-    gap: 10px; /* Optional: adds space between elements */
+  display: grid;
+  grid-template-columns: 0.5fr 1fr;
+  grid-template-rows: repeat(5, auto); /* 5 rows for all form elements */
+  align-items: center;
+  border-bottom: 1px solid black;
+  gap: 10px; /* Optional: adds space between elements */
 }
 .moves-question-inputs {
-    display: grid;
+  display: grid;
 }
 .moves-question-labels {
-    display: grid;
-    align-items: flex-end;
+  display: grid;
+  align-items: flex-end;
 }
 
 .moves-top-grid img {
-    grid-row: 1 / 6; /* Spans all 5 rows */
-    grid-column: 1; /* Image in the first column */
+  grid-row: 1 / 6; /* Spans all 5 rows */
+  grid-column: 1; /* Image in the first column */
 }
-
-
 
 .move-questions {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    width: calc(100% - 15px);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: calc(100% - 15px);
 }
 .moves-realtedtoothermoves {
-    width: calc(100% - 15px);
-    max-height: 70px;
+  width: calc(100% - 15px);
+  max-height: 70px;
 }
-.editor:has(.relatedmoves){
-    max-height: 50px;
-    overflow: hidden;
+.editor:has(.relatedmoves) {
+  max-height: 50px;
+  overflow: hidden;
 }
 .move_type {
-    text-align: center;
-    font-family: 'IM Fell English', serif;
-
-  }
+  text-align: center;
+  font-family: "IM Fell English", serif;
+}
 
 .description-sheet {
-    height: auto;
-    display: flex;
-    flex-direction: column;
+  height: auto;
+  display: flex;
+  flex-direction: column;
 }
- .sheet .editor {
-    height: auto;
-    font-family: 'IM Fell English', serif;
-  }
-   .sheet .editor .editor-content {
-    height: 100%;
-    font-family: 'IM Fell English', serif;
-  }
+.sheet .editor {
+  height: auto;
+  font-family: "IM Fell English", serif;
+}
+.sheet .editor .editor-content {
+  height: 100%;
+  font-family: "IM Fell English", serif;
+}
 
-   .description-field .editor {
-    height: 100%;
-    font-family: 'IM Fell English', serif;
-  }
- .editor .editor-content {
-    width: 100%;
-    height: 100%;
-    min-height: 10rem;
-    flex: 1;
-    font-family: 'IM Fell English', serif;
-  }
-  .editor-container {
-    min-height: 350px;
-    font-family: 'IM Fell English', serif;
+.description-field .editor {
+  height: 100%;
+  font-family: "IM Fell English", serif;
+}
+.editor .editor-content {
+  width: 100%;
+  height: 100%;
+  min-height: 10rem;
+  flex: 1;
+  font-family: "IM Fell English", serif;
+}
+.editor-container {
+  min-height: 350px;
+  font-family: "IM Fell English", serif;
 }
 .editor.prosemirror {
-    border: 1px solid;
-    font-family: 'IM Fell English', serif;
+  border: 1px solid;
+  font-family: "IM Fell English", serif;
 }
 textarea.question {
-    height: 100%;
-    font-family: 'IM Fell English', serif;
+  height: 100%;
+  font-family: "IM Fell English", serif;
 }
 .question-sheet {
-    display: grid;
-    grid-template-columns: 2fr 0.2fr 0.2fr;
-    height: 60px;
-    column-gap: 5px;
-    padding: 5px;
+  display: grid;
+  grid-template-columns: 2fr 0.2fr 0.2fr;
+  height: 60px;
+  column-gap: 5px;
+  padding: 5px;
 }
 select#question-type {
-    height: 100%;
+  height: 100%;
 }
 button#\30 {
-    height: 100%;
-    
+  height: 100%;
 }
 .move-image {
-    width: 20%;
-    border: none;
+  width: 20%;
+  border: none;
 }
-input.fake-box{
-    visibility: hidden;
+input.fake-box {
+  visibility: hidden;
 }
 form.moves-tab {
-    overflow: hidden;
+  overflow: hidden;
 }
 .body-move {
-    height: calc(100% - 310px);
-    width: 100%;
-    overflow: auto;
+  height: calc(100% - 310px);
+  width: 100%;
+  overflow: auto;
 }
 .moves-isrolled {
-    display: grid;
-    min-height: 330px;
+  display: grid;
+  min-height: 330px;
 }
 .roll-resuilt-label {
-    display: grid;
+  display: grid;
 }
 .sheet-table-data.item.draggable-item {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 .sheet-table-data {
-    border-bottom: 1px dashed;
+  border-bottom: 1px dashed;
 }
 
 .first-row {
-    display: grid; 
-    grid-template-columns: 0.3fr 1fr 0.3fr;
-    align-items: center;
-    justify-items: center;
+  display: grid;
+  grid-template-columns: 0.3fr 1fr 0.3fr;
+  align-items: center;
+  justify-items: center;
 }
 
 .first-row img {
-    margin-right: 40%; /* Space between the image and the text */
+  margin-right: 40%; /* Space between the image and the text */
 }
 
 .first-row a {
-    margin-right: 10px; /* Space between the link and the button */
-    font-size: 20px;
+  margin-right: 10px; /* Space between the link and the button */
+  font-size: 20px;
 }
 
-
-
 .second-row {
-    display: flex;
-    flex-direction: column;
-    width: 100%; /* Same width as the first row */
-    margin-bottom: 5px;
+  display: flex;
+  flex-direction: column;
+  width: 100%; /* Same width as the first row */
+  margin-bottom: 5px;
 }
 
 /* Optional: Ensures the second row doesn't expand beyond the first */
-.first-row, .second-row {
-    max-width: 100%;
+.first-row,
+.second-row {
+  max-width: 100%;
 }
 .second-row {
-    max-width: 100%;
-    max-height: 200px;
-    overflow: auto;
-    border: 1px solid;
+  max-width: 100%;
+  max-height: 200px;
+  overflow: auto;
+  border: 1px solid;
 }
 .buttons-moves {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    column-gap: 40px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 40px;
 }
 
 .conditions-roll-toprow {
-    display: flex;
-    justify-content: space-between;
-    padding-bottom: 15px;
-
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 15px;
 }
 label.condittion-isallpy {
-    margin-left: auto;
+  margin-left: auto;
 }
 
 .conditions-roll-detail {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 .question-sheet-roll--toprow {
-    display: flex;
-    /* flex-direction: row; */
-    justify-content: space-between;
+  display: flex;
+  /* flex-direction: row; */
+  justify-content: space-between;
 }
-.question-sheet-roll,.question-sheet-roll-muptiple {
-    display: grid;
-    align-items: center;
-    grid-template-columns: 9rem 1.2fr 1fr;
-    padding-bottom: 10px;
-    padding-top: 10px;
-
+.question-sheet-roll,
+.question-sheet-roll-muptiple {
+  display: grid;
+  align-items: center;
+  grid-template-columns: 9rem 1.2fr 1fr;
+  padding-bottom: 10px;
+  padding-top: 10px;
 }
 select.question-impact {
-    
-    width: 50%;
-    justify-self: center;
-    margin-right: 20%;
+  width: 50%;
+  justify-self: center;
+  margin-right: 20%;
 }
-.relation-roll, .strings-sheet-roll, .advantages-sheet-roll{
-    display: flex;
-    justify-content: space-around;
+.relation-roll,
+.strings-sheet-roll,
+.advantages-sheet-roll {
+  display: flex;
+  justify-content: space-around;
 }
-.others-mods{
-    display: flex;
-    justify-content: space-between;
-
+.others-mods {
+  display: flex;
+  justify-content: space-between;
 }
 .house-question-application {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 .roll-mod-other {
-    padding-top: 10px;
-    display: flex;
-    justify-content: space-between;
+  padding-top: 10px;
+  display: flex;
+  justify-content: space-between;
 }
 h2.h2-roll {
-    display: flex;
-    justify-content: center;
-    font-family: 'IM Fell English SC', serif;
+  display: flex;
+  justify-content: center;
+  font-family: "IM Fell English SC", serif;
 }
-.editor-content.roll-resoult-above10, .editor-content.roll-resoult-below7, .editor-content.roll-resoult-7to9, .roll-resoult-above12  {
-    border: 1px solid;
-    min-height: 100px;
-    font-family: 'IM Fell English', serif;
+.editor-content.roll-resoult-above10,
+.editor-content.roll-resoult-below7,
+.editor-content.roll-resoult-7to9,
+.roll-resoult-above12 {
+  border: 1px solid;
+  min-height: 100px;
+  font-family: "IM Fell English", serif;
 }
 .roll-resoult-text {
-    display: flex;
-    row-gap: 5px;
-    flex-direction: column;
-    height: 100%;
+  display: flex;
+  row-gap: 5px;
+  flex-direction: column;
+  height: 100%;
 }
-.editor-content.roll-resoult-above10.ProseMirror,.editor-content.roll-resoult-below7.ProseMirror, .editor-content.roll-resoult-7to9.ProseMirror   {
-    border: none;
-    font-family: 'IM Fell English', serif;
+.editor-content.roll-resoult-above10.ProseMirror,
+.editor-content.roll-resoult-below7.ProseMirror,
+.editor-content.roll-resoult-7to9.ProseMirror {
+  border: none;
+  font-family: "IM Fell English", serif;
 }
 .dialog-custom {
-    max-width: 600px; /* Set a max width for the dialog */
-    width: auto; /* Allow width to adjust based on content */
+  max-width: 600px; /* Set a max width for the dialog */
+  width: auto; /* Allow width to adjust based on content */
 }
 
 .dialog {
-    /* Automatically adjust height to fit content */
-    height: auto !important;
-    overflow: visible !important; /* Prevent scrollbar, if necessary */
+  /* Automatically adjust height to fit content */
+  height: auto !important;
+  overflow: visible !important; /* Prevent scrollbar, if necessary */
 }
 label.question-isapply {
-    text-wrap: wrap;
-    max-width: 110px;
-    text-align: right;
+  text-wrap: wrap;
+  max-width: 110px;
+  text-align: right;
 }
 label.question-impact {
-    margin-left: 20px;
+  margin-left: 20px;
 }
 label.question-description {
-    min-width: 140px;
+  min-width: 140px;
 }
 select.question-impact:disabled {
-    width: 80%;
-    margin-left: 10px;
+  width: 80%;
+  margin-left: 10px;
 }
 .min-move-body {
-    display: grid;
-    row-gap: 25px;
+  display: grid;
+  row-gap: 25px;
 }
 .oponent-have-condition {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
-.house-scores-container{
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-    width: 900px;
-    transform: scale(0.45);
-    position: absolute;
-    margin: 5px;
-    bottom: -150px !important;
-    right: 70px !important;
-    /* Skalą się pobaw bom pewny nie jest */
-  }
-  
-  .red{
-    --outline:#690000;
-    --background_1:#FF5858;
-    --background_11:#FF585850;
-    --background_2:#993535;
-    --line_color:#440000;
-    --background_image: url(../img/gryfstripes.jpg);
-  }
-  .green{
-    --outline:#006911;
-    --background_1:#58FF87;
-    --background_11:#58FF8750;
-    --background_2:#359957;
-    --line_color:#00440F;
-    --background_image: url(../img/slystripes.png);
-  }
-  .yellow{
-    --outline:#695800;
-    --background_1:#FCFF58;
-    --background_11:#FCFF5850;
-    --background_2:#999535;
-    --line_color:#443100;
-    --background_image: url(../img/huffstripes.png);
-  }
-  .blue{
-    --outline:#003769;
-    --background_1:#58A5FF;
-    --background_11:#58A5FF50;
-    --background_2:#356399;
-    --line_color:#002B44;
-    --background_image: url(../img/ravestripes.png);
-  }
-  
-  .score-Column{
-    width:200px;
-  }
-  
-  .score{
-    width: 200px !important;
-    border-width:10px !important; 
-    color:white !important;
-    font-size: 50px !important;
-    box-shadow:  7px 14px 7px #00000025,inset 5px 10px 5px #00000025 !important;
-  }
-  
-  .modify-section{
-    width: 200px;
-    height: 140px;
-    background-image:var(--background_image);
-    text-align: center;
-    background-size:cover;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-flow: column;
-  }
-  .input-score[type="number"]{
-    background-color: var(--background_11);
-    color:var(--outline);
-    text-align: center;
-    font-style: italic;
-    border: none;
-    border-style: none;
-    height: 50px;
-    width:150px;
-    font-size: 60px;
-    margin-top: 20px;
-  }
-  .modify-section > hr{
-    border: 4px solid var(--line_color);
-    width:160px;
-  }
-  .some-box{
-    width: 150px;
-    padding: 5px 0;
-    border:6px solid var(--outline);
-    box-sizing: border-box;
-  
-    color: var(--outline);
-    font-size: 25px;
-    font-weight: 600;
-    font-family: Arial, Helvetica, sans-serif;
-    text-align: center;
-  
-    box-shadow:  5px 10px 5px #00000025,inset 3px 6px 3px #00000025;
-    
-    background-image: linear-gradient(to bottom right, var(--background_1) , var(--background_2));
-  }
-  .just-black-space{
-    width:200px;
-    height:20px;
-    background-color: black;
-  }
-  .score-Column> img{
-    width:200px;
-  }
-  
-  .are-Ya-Winning-Son{
-    width: 200px;
-    height: 200px;
-    background-size: cover;
-  }
-  .imgflag{
-    border: none;
-  }
-  dialog#reload-world-confirm {
-    max-height: 200px;
+.house-scores-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 900px;
+  transform: scale(0.45);
+  position: absolute;
+  margin: 5px;
+  bottom: -150px !important;
+  right: 70px !important;
+  /* Skalą się pobaw bom pewny nie jest */
 }
-.instruction{
-    font-style: oblique;
-    font-weight: 1000;
+
+.red {
+  --outline: #690000;
+  --background_1: #ff5858;
+  --background_11: #ff585850;
+  --background_2: #993535;
+  --line_color: #440000;
+  --background_image: url(../img/gryfstripes.jpg);
+}
+.green {
+  --outline: #006911;
+  --background_1: #58ff87;
+  --background_11: #58ff8750;
+  --background_2: #359957;
+  --line_color: #00440f;
+  --background_image: url(../img/slystripes.png);
+}
+.yellow {
+  --outline: #695800;
+  --background_1: #fcff58;
+  --background_11: #fcff5850;
+  --background_2: #999535;
+  --line_color: #443100;
+  --background_image: url(../img/huffstripes.png);
+}
+.blue {
+  --outline: #003769;
+  --background_1: #58a5ff;
+  --background_11: #58a5ff50;
+  --background_2: #356399;
+  --line_color: #002b44;
+  --background_image: url(../img/ravestripes.png);
+}
+
+.score-Column {
+  width: 200px;
+}
+
+.score {
+  width: 200px !important;
+  border-width: 10px !important;
+  color: white !important;
+  font-size: 50px !important;
+  box-shadow:
+    7px 14px 7px #00000025,
+    inset 5px 10px 5px #00000025 !important;
+}
+
+.modify-section {
+  width: 200px;
+  height: 140px;
+  background-image: var(--background_image);
+  text-align: center;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+}
+.input-score[type="number"] {
+  background-color: var(--background_11);
+  color: var(--outline);
+  text-align: center;
+  font-style: italic;
+  border: none;
+  border-style: none;
+  height: 50px;
+  width: 150px;
+  font-size: 60px;
+  margin-top: 20px;
+}
+.modify-section > hr {
+  border: 4px solid var(--line_color);
+  width: 160px;
+}
+.some-box {
+  width: 150px;
+  padding: 5px 0;
+  border: 6px solid var(--outline);
+  box-sizing: border-box;
+
+  color: var(--outline);
+  font-size: 25px;
+  font-weight: 600;
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
+
+  box-shadow:
+    5px 10px 5px #00000025,
+    inset 3px 6px 3px #00000025;
+
+  background-image: linear-gradient(
+    to bottom right,
+    var(--background_1),
+    var(--background_2)
+  );
+}
+.just-black-space {
+  width: 200px;
+  height: 20px;
+  background-color: black;
+}
+.score-Column > img {
+  width: 200px;
+}
+
+.are-Ya-Winning-Son {
+  width: 200px;
+  height: 200px;
+  background-size: cover;
+}
+.imgflag {
+  border: none;
+}
+dialog#reload-world-confirm {
+  max-height: 200px;
+}
+.instruction {
+  font-style: oblique;
+  font-weight: 1000;
 }
 .is-apply {
-    margin-left: auto;
-    display: flex;
-    align-items: center;
+  margin-left: auto;
+  display: flex;
+  align-items: center;
 }
 .questionc-.hcekbox {
-    margin-left: auto;
+  margin-left: auto;
 }
-.h2-roll{ 
-     border-top: 1px solid var(--color-underline-header);
-     border-bottom: none;
-     margin-top: 5px;
-     font-family: 'IM Fell English SC', serif;
+.h2-roll {
+  border-top: 1px solid var(--color-underline-header);
+  border-bottom: none;
+  margin-top: 5px;
+  font-family: "IM Fell English SC", serif;
 }
-.other-factor-h3{
-    border-top: 1px solid var(--color-underline-header);
-     border-bottom: none;
-     margin-top: 5px;
-     font-family: 'IM Fell English SC', serif;
-
+.other-factor-h3 {
+  border-top: 1px solid var(--color-underline-header);
+  border-bottom: none;
+  margin-top: 5px;
+  font-family: "IM Fell English SC", serif;
 }
-.h2-roll-first{
-    border-bottom: none;
-    margin-top: 5px;
-    font-family: 'IM Fell English SC', serif;
+.h2-roll-first {
+  border-bottom: none;
+  margin-top: 5px;
+  font-family: "IM Fell English SC", serif;
 }
 h2.move_type.description-label-notrrolabe {
-    font-size: large;
-    font-family: 'IM Fell English SC', serif;
+  font-size: large;
+  font-family: "IM Fell English SC", serif;
 }
 .tooltip {
-    position: absolute;
-    background-color: #333;
-    color: #fff;
-    padding: 5px 10px;
-    border-radius: 5px;
-    font-size: 12px;
-    white-space: nowrap;
-    pointer-events: none; 
-    opacity: 0;
-    transition: opacity 0.2s;
-    z-index: 1000;
-  }
-  
+  position: absolute;
+  background-color: #333;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 12px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s;
+  z-index: 1000;
+}
 
-  .tooltip.visible {
-    opacity: 1;
-  }
+.tooltip.visible {
+  opacity: 1;
+}
 
-  .move_type.description-label-notrrolabe,
-  .chat-description,
-  .question.description,
-  .question-isapply,
-  .my-button,
-  .sofh-button,
-  textarea.relatedmoves {
-    font-family: 'IM Fell English', serif;
-  }
-  button.dialog-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.move_type.description-label-notrrolabe,
+.chat-description,
+.question.description,
+.question-isapply,
+.my-button,
+.sofh-button,
+textarea.relatedmoves {
+  font-family: "IM Fell English", serif;
+}
+button.dialog-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .dice-formula,
 .dice-roll .dice-total {
-    font-family: 'IM Fell English', serif;
-    font-size: x-large;
+  font-family: "IM Fell English", serif;
+  font-size: x-large;
 }
 button.add-clue {
-    border: none;
-    background: #a7a68d;
-    width: 2rem;
-  
-    display: grid;
-    justify-content: center;
-    margin-left: 20px;
+  border: none;
+  background: #a7a68d;
+  width: 2rem;
 
-
+  display: grid;
+  justify-content: center;
+  margin-left: 20px;
 }
 .clue-label {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 th.actor-known-clue {
-    width: 6rem;
+  width: 6rem;
 }
 .clue-description {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 button.remove-clue {
-    width: 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  width: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-textarea.clue-description-text{
-    resize: none;
-    min-width: 20rem;
-    font-family: 'IM Fell English', serif;
-
+textarea.clue-description-text {
+  resize: none;
+  min-width: 20rem;
+  font-family: "IM Fell English", serif;
 }
-.complexity,.single-clue  {
-    
-    display: flex;
-    justify-content: space-between;
+.complexity,
+.single-clue {
+  display: flex;
+  justify-content: space-between;
 }
 input[type="number"] {
-   
-    max-width: 2rem;
+  max-width: 2rem;
 }
 .party-list-header {
-    font-size: 1.25em;
-    border-bottom: 1px solid var(--color-underline-header);
-    display: flex;
-    margin-bottom: 10px;
+  font-size: 1.25em;
+  border-bottom: 1px solid var(--color-underline-header);
+  display: flex;
+  margin-bottom: 10px;
 }
 h3.party-list {
-    border: none;
+  border: none;
 }
 button.add-character {
-    margin-bottom: 5px;
-    width: 30px;
-    margin-left: auto;
+  margin-bottom: 5px;
+  width: 30px;
+  margin-left: auto;
 }
 .single-party-member {
-    font-size: xx-large;
-    margin-left: auto;
+  font-size: xx-large;
+  margin-left: auto;
 }
 .remove-single-party-member {
-    margin-left: auto;
+  margin-left: auto;
 }
 .party-member {
-    display: flex;
-    align-items: center;
-    border-bottom: solid 1px blue;
+  display: flex;
+  align-items: center;
+  border-bottom: solid 1px blue;
 }
 
 a.party-list,
 a.clue-list,
-a.solution-list{
-    font-size: x-large;
+a.solution-list {
+  font-size: x-large;
 }
 
 nav.sheet-tabs.tabs.clue {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 .-uactor-name {
-    display: flex;
-    align-items: center;
-    margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
 }
 .party-memeber-add {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 button.theorize-move-roll {
-
-    width: fit-content;
-    background-color: #c7c2b5;
-    border-color: black;
-    font-family: 'IM Fell English', serif;
+  width: fit-content;
+  background-color: #c7c2b5;
+  border-color: black;
+  font-family: "IM Fell English", serif;
 }
 .actor-clue-headr {
-    display: grid;
-    flex-direction: column;
-    min-height: 90px;
+  display: grid;
+  flex-direction: column;
+  min-height: 90px;
 }
 .clue-move-button,
 .clue-header-name {
-    margin-top: auto;
+  margin-top: auto;
 }
 h3.clue-line {
-    border-bottom: 1px solid var(--color-text-light-highlight);
+  border-bottom: 1px solid var(--color-text-light-highlight);
 }
 .clue-slector {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 textarea.solution {
-    resize: none;
-    width: 100%;
-    height: 100%;
+  resize: none;
+  width: 100%;
+  height: 100%;
 }
-.solution-group, .list-pf-solutuion-labels {
-    display: grid;
-    align-items: center;
-    grid-template-columns: 1.5fr 0.2fr 1fr 0.2fr 0.2fr;
-    grid-column-gap: 5px;
-    margin-bottom: 15px;
-    justify-items: center;
+.solution-group,
+.list-pf-solutuion-labels {
+  display: grid;
+  align-items: center;
+  grid-template-columns: 1.5fr 0.2fr 1fr 0.2fr 0.2fr;
+  grid-column-gap: 5px;
+  margin-bottom: 15px;
+  justify-items: center;
 }
 input.complexity {
-    width: 100%;
-    height: 100%;
-    align-content: center;
-    text-align: center;
-    font-size: xx-large;
+  width: 100%;
+  height: 100%;
+  align-content: center;
+  text-align: center;
+  font-size: xx-large;
 }
 .header-solution {
-    display: flex;
-    max-height: 50px;
-    align-items: center;
-    margin-bottom: 15px;
+  display: flex;
+  max-height: 50px;
+  align-items: center;
+  margin-bottom: 15px;
 }
 input.solution-question {
-    height: 100%;
+  height: 100%;
 }
 input.show-to-player {
-    width: 70%;
-    height: 70%;
-    margin: 3px 5px;
+  width: 70%;
+  height: 70%;
+  margin: 3px 5px;
 }
-button.remove-solution{
-    height:100%
+button.remove-solution {
+  height: 100%;
 }
 .mistery-question {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 .known-clue {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    row-gap: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  row-gap: 5px;
 }
 
 .clue-slector {
-    display: flex;
-    flex-direction: row;
-    align-items: stretch;
-    row-gap: 5px;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  row-gap: 5px;
 }
 .single-clue {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 input.input-score {
-    min-width: 80%;
-    max-width: 80%;
+  min-width: 80%;
+  max-width: 80%;
 }
-button#add-string-btn, button#add-advantage-btn {
-    margin: auto;
-    width: 100%;
+button#add-string-btn,
+button#add-advantage-btn {
+  margin: auto;
+  width: 100%;
 }
 .application.sofh-custom .window-content {
   overflow: auto !important;
 }
-.application.sofh-custom{
-    max-height: 500px;
+.application.sofh-custom {
+  max-height: 500px;
+}
+.flexcolumn {
+  display: grid;
+  gap: 5px;
+  margin-top: 10px;
+}
+.flexrow-sofh{
+    display: grid;
+    grid-template-columns: 2fr 0.5fr;
+}
+.checkboxes.grid {
+  display: grid !important;
+}
+.sofh-custom,
+.custom-houses {
+  gap: 30px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 30px;
+}
+.custom-houses {
+  gap: 5px;
+  margin-bottom: 0px;
+}
+.chat-description,
+.roll-results,
+.move-description-chat {
+  font-size: 16px;
+}
+.body-move.tab,
+.move-elements {
+  font-size: larger;
+}
+.row {
+  display: grid;
+  grid-template-columns: 0.5fr 1fr;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 5px;
+}
+.italic {
+  font-style: italic;
+}
 
+.reputation-question {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
 }
-.flexcolumn{
-    display: flex;
-    gap: 5px;
-    flex-direction: column;
-}
-.sofh-custom, .custom-houses{
-    gap: 30px;
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 30px;
-}
-.custom-houses{
-    gap:5px;
-    margin-bottom: 0px;
-}
+
+.relation-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+
 .custom-blood, .custom-topic1{
     display:flex; 
     gap: 10px; 
@@ -1124,17 +1158,37 @@ button#add-string-btn, button#add-advantage-btn {
 }
 .chat-description, .roll-results, .move-description-chat{
     font-size: 16px;
+
 }
-.body-move.tab, .move-elements{
-        font-size: larger;
+
+.relation-table th, .relation-table td {
+  border: 1px solid #999;
+  padding: 4px 8px;
 }
-.row{
-    display: grid;
-    grid-template-columns: 0.5fr 1fr;
-    flex-direction: row;
-    align-items: center;
-    margin-bottom: 5px;
+
+
+.relation-table td:first-child {
+  text-align: left;
+  font-weight: bold;
 }
-.italic {
-  font-style: italic;
+.relation-table td:nth-child(3),
+.relation-table td:nth-child(4),
+.relation-table td:nth-child(2),
+.relation-table th:nth-child(3),
+.relation-table th:nth-child(4),
+.relation-table th:nth-child(2) {
+      max-width: 80px
+}
+
+.relation-table input[type="radio"] {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+}
+
+.send-btn-all{
+  width: 100%;
+}
+.character-entry, .character-list{
+  margin: 10px;
 }

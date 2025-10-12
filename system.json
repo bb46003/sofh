@@ -1,35 +1,34 @@
 {
-    "id": "SofH",
-    "title": "Secrets of Hogwarts",
-    "description": "Stół do playtestów gtry Secrets of Hogwarts na silniku PBTA ",
-    "version": "0.381",
-    "compatibility": {
-      "minimum": "12",
-      "verified": "13.348"
+  "id": "SofH",
+  "title": "Secrets of Hogwarts",
+  "description": "Stół do playtestów gtry Secrets of Hogwarts na silniku PBTA ",
+  "version": "0.39",
+  "compatibility": {
+    "minimum": "12",
+    "verified": "13.348"
+  },
+  "authors": [
+    {
+      "name": "Bartek",
+      "flags": {}
+    }
+  ],
+  "esmodules": ["module/sofh.mjs"],
+  "styles": ["css/sofh.css"],
+  "languages": [
+    {
+      "lang": "pl",
+      "name": "Polski",
+      "path": "lang/pl.json"
+
     },
-    "authors": [
-        {
-          "name": "Bartek",
-          "flags": {}
-        }
-    ],
-    "esmodules": [
-        "module/sofh.mjs"
-      ],
-      "styles": ["css/sofh.css"],
-      "languages": [
-        {
-          "lang": "pl",
-          "name": "Polski",
-          "path": "lang/pl.json"
-        },
-        {
-          "lang": "en",
-          "name": "English",
-          "path": "lang/en.json"
-        }
-      ],
-      "packs": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    }
+  ],
+  "packs": [
     {
       "name": "moves",
       "label": "Basic Moves",
@@ -41,13 +40,22 @@
       },
       "system": "sofh",
       "flags": {}
+    },
+    {
+      "name": "random-table",
+      "label": "Random Tables",
+      "path": "packs/random-table",
+      "type": "RollTable",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      },
+      "system": "sofh",
+      "flags": {}
     }
   ],
 
-      
-      "socket": true,
-      "manifest":"https://raw.githubusercontent.com/bb46003/sofh/refs/heads/main/system.json",
-      "download":"https://github.com/bb46003/sofh/archive/refs/heads/main.zip"
-
+  "socket": true,
+  "manifest": "https://raw.githubusercontent.com/bb46003/sofh/refs/heads/main/system.json",
+  "download": "https://github.com/bb46003/sofh/archive/refs/heads/main.zip"
 }
-
