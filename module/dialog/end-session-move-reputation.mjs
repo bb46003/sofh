@@ -46,19 +46,19 @@ export class EndSessionYourReputation extends foundry.applications.api.Applicati
       if (input.checked) gainRep += 1;
     });
     const reputationValue = actor.system.reputation.value;
-    const keys = Object.keys(reputationValue).map(Number);  
-    let trueReputation = keys.reverse().find(key => reputationValue[key] === true);
+    const keys = Object.keys(reputationValue).map(Number);
+    let trueReputation = keys.reverse().find((key) => reputationValue[key] === true);
     if (trueReputation === undefined) trueReputation = 0;
     const updateData = {};
     let newRep = trueReputation + gainRep;
     let riseRank = false;
-    if(newRep >= 7){
-        newRep = newRep - 7;
-        riseRank = true;
-        const currentRank = actor.system.reputation.rank;
-        const currentTS = actor.system.reputation.timeToShine;
-        updateData["system.reputation.rank"] = currentRank + 1;
-        updateData["system.reputation.timeToShine"] = currentTS + 1;
+    if (newRep >= 7) {
+      newRep = newRep - 7;
+      riseRank = true;
+      const currentRank = actor.system.reputation.rank;
+      const currentTS = actor.system.reputation.timeToShine;
+      updateData["system.reputation.rank"] = currentRank + 1;
+      updateData["system.reputation.timeToShine"] = currentTS + 1;
     }
     for (let i = 1; i <= 7; i++) {
       const key = `system.reputation.value.${i}`;

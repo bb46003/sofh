@@ -267,8 +267,10 @@
         "condition.type": "Type",
         "condition.name": "Short description",
         "condition.fixed": "Fixed?",
-        "reputation_questions": "Reputation Questionm"
-      }
+        "reputation_questions": "Reputation Questionm",
+        "pickYourAdvancements": "Pick your Advancements"
+      },
+      "selectOption": "Select any option!"
     },
     "rolling": "Rolling dialog",
     "lack_of_move": "do not have move related to clues",
@@ -355,7 +357,19 @@
       "gainReputation": "Your <span class='italic'>Reputation</span> is a measure of how famous you are! Harry Potter started at Hogwarts already famous, but your characters will start at zero and have to work their way up as they solve mysteries, defeat enemies, and save people or even the school itself! There are five <span class='italic'>Ranks of Reputation</span>. When you reach 7 <span class='italic'>Reputation</span>, you go up to a new rank!\nMark below question to gain <span class='italic'>Reputation</span>.",
       "commonQuestion1": " Did we solve a <span class='italic'>Mystery</span>?",
       "commonQuestion2": " Did you gain any new <span class='italic'>Label (Social Condition)</span>?",
-      "subbmit": "Subbmit"
+      "subbmit": "Subbmit",
+      "send": "Send to Player",
+      "sendToAll": "Send to All Players",
+      "selectCharacter": "Select Player Character",
+      "endSensionHeder": "Below is list of Players and thier characters, if any Player do not have assigned character pick apropirt character from list. Then send End of Session Move to each player separatly by clikin button \"Send To Player\" or send to all at one by clicking \"Send to All\"",
+      "endOfSession": "End of Session Moves Handler",
+      "next": "Next Move",
+      "relationWith": "Relation with",
+      "relationValue": "Relation Value",
+      "riseRelation": "Rise relation",
+      "lowerRelation": "Lower Relation",
+      "breakthroughText": "You face a breakthrough in your relationship",
+      "rollBreakthrough": "Random Table for breakthrough"
     },
     "UI": {
       "OK": "Apply",

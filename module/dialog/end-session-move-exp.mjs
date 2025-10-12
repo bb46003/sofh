@@ -32,12 +32,16 @@ export class EndSessionLearnFromExperience extends foundry.applications.api.Appl
       if (input.checked) gainXP += 1;
     });
     const xpValues = actor.system.xp.value;
-    const keys = Object.keys(xpValues).map(Number);  
-    let trueXP = keys.reverse().find(key => xpValues[key] === true);
+    const keys = Object.keys(xpValues).map(Number);
+    let trueXP = keys.reverse().find((key) => xpValues[key] === true);
     if (trueXP === undefined) trueXP = 0;
-
-    const newXp = trueXP + gainXP;
     const updateData = {};
+    let newXp = trueXP + gainXP;
+    if (newXp > 7) {
+      newXp = newXp - 7;
+      updateData["system.advancement"] = true;
+    }
+
     for (let i = 1; i <= 7; i++) {
       const key = `system.xp.value.${i}`;
       updateData[key] = i <= newXp;

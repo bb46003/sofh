@@ -1099,6 +1099,9 @@ button#add-advantage-btn {
     display: grid;
     grid-template-columns: 2fr 0.5fr;
 }
+.checkboxes.grid {
+  display: grid !important;
+}
 .sofh-custom,
 .custom-houses {
   gap: 30px;
@@ -1165,4 +1168,11 @@ button#add-advantage-btn {
   width: 16px;
   height: 16px;
   margin: 0;
+}
+
+.send-btn-all{
+  width: 100%;
+}
+.character-entry, .character-list{
+  margin: 10px;
 }

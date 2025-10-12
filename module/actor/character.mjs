@@ -130,6 +130,7 @@ export class sofhCharacterSheet extends BaseActorSheet {
     html.on("click", ".time_to_shine", (ev) => this.showTimeToShine(ev));
     html.on("change", "#schoolyear", (ev) => this.changeYear(ev));
     html.on("click", "#reputationQuestions", (ev) => this.changeReputationQuestions(ev));
+    html.on("click", "#advamcmentDialog", (ev) => this.advamcmentDialog(ev));
   }
 
   async handleReputationChange(ev) {
@@ -143,19 +144,38 @@ export class sofhCharacterSheet extends BaseActorSheet {
     const ID = ev.target.id[0];
     await this.updateXp(ID, isChecked);
     if (Number(ID) === 7 && isChecked) {
-      const content = await sofh_Utility.renderTemplate("systems/SofH/templates/dialogs/xp.hbs");
-      new Dialog({
-        title: game.i18n.localize("sofh.ui.gainxp"),
-        content,
-        buttons: {
-          OK: {
-            icon: '<i class="fa fa-check"></i>',
-            label: `<div class ="sofh-button">${game.i18n.localize("sofh.UI.OK")}</div>`,
+      await this.actor.update({ ["system.advancement"]: true });
+    }
+  }
+  async advamcmentDialog(ev) {
+    const content = await sofh_Utility.renderTemplate("systems/SofH/templates/dialogs/xp.hbs");
+    const pickAdvancement = new foundry.applications.api.DialogV2({
+      widnow: { title: game.i18n.localize("sofh.ui.gainxp") },
+      content,
+      buttons: [
+        {
+          label: game.i18n.localize("sofh.UI.OK"),
+          icon: "fa-solid fa-check",
+          action: "ok",
+          callback: async (event, html) => {
+            const selected = html.offsetParent.querySelector('input[name="advancement"]:checked');
+            if (!selected) {
+              ui.notifications.warn(game.i18n.localize("sofh.ui.selectOption"));
+              return false;
+            }
+            const choice = selected.value;
+            ChatMessage.create({
+              user: game.user.id,
+              speaker: game.user.name,
+              content: `${game.i18n.localize("sofh.ui.gainxp")}: <b>${choice}</b>`,
+            });
+            await this.actor.update({ ["system.advancement"]: false });
           },
         },
-        default: "OK",
-      }).render(true);
-    }
+      ],
+      defaultButton: "ok",
+    });
+    pickAdvancement.render(true, { width: 600 });
   }
 
   async removeMoves(ev) {

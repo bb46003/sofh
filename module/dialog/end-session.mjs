@@ -11,6 +11,7 @@ export class EndSessionDialog extends foundry.applications.api.ApplicationV2 {
       height: "auto",
     },
     template: "systems/SofH/templates/dialogs/end-sesion-GM.hbs",
+    window: { title: "sofh.dialog.endOfSession" },
   };
   async _renderHTML() {
     const characters = await this._collectPlayerCharacterData();
