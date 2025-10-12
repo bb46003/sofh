@@ -321,7 +321,8 @@
       "add-custom-subject1-title": "Add new core subjects",
       "replace_topic": "Remove core subject and left only your custom subjects",
       "timeToShine": "Descrption of House for Time To Shine",
-      "houseGoal": "Defnie House goal"
+      "houseGoal": "Defnie House goal",
+      "removeCustomHouse": "Remove Custom House"
     },
     "clue": "Mistery",
     "dialog": {

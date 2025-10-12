@@ -22,6 +22,10 @@ export class customHouse extends foundry.applications.api.ApplicationV2 {
       save: customHouse.#saveData,
       addSubject1: customHouse.#addSubject1,
       addSubject2: customHouse.#addSubject2,
+      removeHouseEq: customHouse.#removeHouseEq,
+      removeBlood: customHouse.#removeBlood,
+      removeTopic1: customHouse.#removeTopic1,
+      removeTopic2: customHouse.#removeTopic2
     },
   };
 
@@ -84,9 +88,7 @@ export class customHouse extends foundry.applications.api.ApplicationV2 {
   }
   async _renderHTML() {
     const data = game.settings.get("SofH", "customConfig") || {};
-    let html = await sofh_Utility.renderTemplate(this.options.template, {
-      ...data,
-    });
+    let html = await sofh_Utility.renderTemplate(this.options.template, {data:data});
     let partsHtml = "";
     for (const part of Object.values(this.constructor.PARTS)) {
       let templateData = {};
@@ -146,7 +148,7 @@ export class customHouse extends foundry.applications.api.ApplicationV2 {
     };
 
     // --- Houses ---
-    const houseSections = element.querySelectorAll(".custom-houses");
+    const houseSections = element.querySelectorAll(".custom-house");
     houseSections.forEach((section) => {
       const houseName = section.querySelector('input[name="houseName"]')?.value.trim() || null;
       const equipment = section.querySelector('input[name="equipment"]')?.value.trim() || null;
@@ -247,7 +249,10 @@ export class customHouse extends foundry.applications.api.ApplicationV2 {
 
   static async #addBloodType() {
     const element = this.element;
-    const html = `<input type="text" name="bloodType" value=""></input>`;
+    const html = `        <div class="custom-blood">
+          <input type="text" name="bloodType" value="">
+          <a><i class="fa fa-trash" data-action="removeBlood"></i></a>
+      </div>     `;
     const container = element.querySelectorAll(`.input[name="bloodType"]`);
     const lastSection = container[container.length - 1];
     if (lastSection) {
@@ -259,7 +264,10 @@ export class customHouse extends foundry.applications.api.ApplicationV2 {
   }
   static async #addSubject2() {
     const element = this.element;
-    const html = `<input type="text" name="subject2" value="">`;
+    const html = `     <div class= "custom-topic1">
+            <input type="text" name="subject2" value="">
+            <a><i class="fa fa-trash"  data-action="removeTopic2"></i></a>
+      </div>`;
     const container = element.querySelectorAll(`.input[name="subject2"]`);
     const lastSection = container[container.length - 1];
     if (lastSection) {
@@ -271,7 +279,10 @@ export class customHouse extends foundry.applications.api.ApplicationV2 {
   }
   static async #addSubject1() {
     const element = this.element;
-    const html = `<input type="text" name="subject" value="">`;
+    const html = `      <div class= "custom-topic1">
+          <input type="text" name="subject" value="">
+          <a><i class="fa fa-trash"  data-action="removeTopic1"></i></a>
+      </div>`;
     const container = element.querySelectorAll(`.input[name="subject]`);
     const lastSection = container[container.length - 1];
     if (lastSection) {
@@ -293,6 +304,51 @@ export class customHouse extends foundry.applications.api.ApplicationV2 {
     } else {
       const addButton = element.querySelector('[data-action="addHouseEq"]');
       if (addButton) addButton.insertAdjacentHTML("afterend", html);
+    }
+  }
+
+  static #removeHouseEq(event){
+    const target = event.target;
+    const element = target.parentElement.parentElement.parentElement
+    const houseName = element.querySelector('input[name="houseName"]').value;
+    if (CONFIG.SOFHCONFIG.House?.[houseName]) {
+      delete CONFIG.SOFHCONFIG.House[houseName];
+       delete CONFIG.SOFHCONFIG.goal["goal"+houseName]
+       delete CONFIG.SOFHCONFIG.timeToShine[houseName+"TimeToShine"];
+       delete CONFIG.SOFHCONFIG.houseeq[houseName]
+
+    console.log(`Removed house: ${houseName}`);
+  } else {
+    console.warn(`House "${houseName}" not found.`);
+  }
+
+  // Optional: update UI or re-render
+  element.remove();
+
+  }
+
+  static #removeBlood(event){
+    const element = event.target.parentElement.parentElement;
+    const blood = element.querySelector(`input[type="text"]`).value
+    if(blood !== ""){
+      delete CONFIG.SOFHCONFIG.bloodType[blood];
+      element.remove()
+    }
+  }
+  static #removeTopic1(event){
+    const element = event.target.parentElement.parentElement;
+    const tipic = element.querySelector(`input[type="text"]`).value
+    if(tipic !== ""){
+      delete CONFIG.SOFHCONFIG.favoriteTopic[tipic];
+      element.remove()
+    }
+  }
+    static #removeTopic2(event){
+    const element = event.target.parentElement.parentElement;
+    const tipic = element.querySelector(`input[type="text"]`).value
+    if(tipic !== ""){
+      delete CONFIG.SOFHCONFIG.favoriteTopic2[tipic];
+      element.remove()
     }
   }
 }

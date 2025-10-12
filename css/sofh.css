@@ -1139,10 +1139,26 @@ button#add-advantage-btn {
   gap: 10px;
   margin-bottom: 10px;
 }
+
 .relation-table {
   width: 100%;
   border-collapse: collapse;
   text-align: center;
+
+.custom-blood, .custom-topic1{
+    display:flex; 
+    gap: 10px; 
+    align-items: center;
+}
+.custom-house{
+    display: flex;
+    gap: 5px;
+    margin-bottom: 0px;
+    flex-direction: column;
+}
+.chat-description, .roll-results, .move-description-chat{
+    font-size: 16px;
+
 }
 
 .relation-table th, .relation-table td {
