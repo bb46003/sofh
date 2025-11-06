@@ -1,0 +1,23 @@
+<form class="sofh moves-tab">
+  <section class="main-move tab">
+    <div class="moves-top-grid">
+      <img
+        src="{{item.img}}"
+        alt="{{item.name}}"
+        class="borderless"
+        data-action="editImage"
+        data-edit="img"
+      />
+      <div class="move-questions">
+        <div class="moves-question-labels">
+          <label for="name">{{localize "sofh.ui.moves.name"}}</label>
+          {{formInput
+            item.schema.fields.name
+            value=source.name
+            placeholder="Item Name"
+          }}
+        </div>
+      </div>
+    </div>
+  </section>
+</form>

@@ -96,7 +96,13 @@
     "clue": {}
   },
   "Item": {
-    "types": ["basicMoves", "houseMoves", "peripheralMoves", "endOfSessionMoves", "specialPlaybookMoves"],
+    "types": [
+      "basicMoves",
+      "houseMoves",
+      "peripheralMoves",
+      "endOfSessionMoves",
+      "specialPlaybookMoves"
+    ],
     "templates": {
       "base": {
         "triggers": "",
@@ -125,7 +131,10 @@
       "templates": ["base"]
     },
     "specialPlaybookMoves": {
-      "templates": ["base"]
+      "action": [],
+      "description": "",
+      "resultsChange": "",
+      "additionalQuestion": {}
     }
   }
 }

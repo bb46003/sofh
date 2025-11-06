@@ -15,7 +15,9 @@ export function registerHandlebarsHelpers() {
   });
   Handlebars.registerHelper("ifCondition", function (condition) {
     const conditionArray = Object.values(condition);
-    const anycondition = conditionArray.some((element) => element.type !== "" && element.name !== "");
+    const anycondition = conditionArray.some(
+      (element) => element.type !== "" && element.name !== "",
+    );
     return anycondition;
   });
 
@@ -30,32 +32,37 @@ export function registerHandlebarsHelpers() {
     return str.toLowerCase();
   });
 
-  Handlebars.registerHelper("checkRelation", function (characterRelation, actor, ID) {
-    const filteredRelations = {};
+  Handlebars.registerHelper(
+    "checkRelation",
+    function (characterRelation, actor, ID) {
+      const filteredRelations = {};
 
-    for (let [id, name] of Object.entries(characterRelation)) {
-      if (name !== actor.name) {
-        filteredRelations[id] = game.actors.get(id).name;
-      }
+      for (let [id, name] of Object.entries(characterRelation)) {
+        if (name !== actor.name) {
+          filteredRelations[id] = game.actors.get(id).name;
+        }
 
-      for (let j = 1; j < 5; j++) {
-        if (j !== ID) {
-          if (id === actor.system.relation[`name${j}`]) {
-            delete filteredRelations[id];
-            break;
-          } else if (name !== actor.name) {
-            filteredRelations[id] = game.actors.get(id).name;
+        for (let j = 1; j < 5; j++) {
+          if (j !== ID) {
+            if (id === actor.system.relation[`name${j}`]) {
+              delete filteredRelations[id];
+              break;
+            } else if (name !== actor.name) {
+              filteredRelations[id] = game.actors.get(id).name;
+            }
           }
         }
       }
-    }
 
-    return filteredRelations;
-  });
+      return filteredRelations;
+    },
+  );
 
   Handlebars.registerHelper("selectRelevantRelation", function (thisCharacter) {
     const actors = game.actors;
-    const character = Array.from(actors.entries()).filter(([key, actor]) => actor.type === "character");
+    const character = Array.from(actors.entries()).filter(
+      ([key, actor]) => actor.type === "character",
+    );
 
     let characterWithRelationtoMe = {};
     const myCharacterID = thisCharacter._id;
@@ -65,7 +72,9 @@ export function registerHandlebarsHelpers() {
         let relationName = actor.name;
         if (relationID === myCharacterID) {
           let j = Object.keys(characterWithRelationtoMe).length;
-          characterWithRelationtoMe[`${actor.system.relation[`value${i}`]}` + `:${j}`] = relationName;
+          characterWithRelationtoMe[
+            `${actor.system.relation[`value${i}`]}` + `:${j}`
+          ] = relationName;
         }
       }
     });
@@ -85,7 +94,9 @@ export function registerHandlebarsHelpers() {
       if (actorId !== "0") {
         const name = characters[actorId].name;
         const actor = game.actors.get(actorId);
-        const cluerelatedMoves = actor?.items.filter((move) => move.system.cluerelated === true);
+        const cluerelatedMoves = actor?.items.filter(
+          (move) => move.system.cluerelated === true,
+        );
         const theorize = cluerelatedMoves[0];
         if (theorize === undefined) {
           html += `<th class="actor-known-clue" id="${actorId}">${name}<p>${game.i18n.localize("Character")} ${game.i18n.localize("sofh.ui.lack_of_move")}</p></th>`;
@@ -198,7 +209,9 @@ export function registerHandlebarsHelpers() {
       return true;
     } else {
       const solutions = this.actor.system.solutions;
-      const areShowToPlayer = solutions ? Object.values(solutions).some((item) => item.showToPlayer === true) : false;
+      const areShowToPlayer = solutions
+        ? Object.values(solutions).some((item) => item.showToPlayer === true)
+        : false;
 
       if (areShowToPlayer) {
         return true;
@@ -239,7 +252,9 @@ export function registerHandlebarsHelpers() {
     } else {
       let html = ``;
       const actor = game.user.character;
-      const cluerelatedMoves = actor?.items.filter((move) => move.system.cluerelated === true);
+      const cluerelatedMoves = actor?.items.filter(
+        (move) => move.system.cluerelated === true,
+      );
       const theorize = cluerelatedMoves[0];
       if (theorize === undefined) {
         html += `<th class="actor-known-clue" id="${actor._id}">${name}<p>${game.i18n.localize("Character")} ${game.i18n.localize("sofh.ui.lack_of_move")}</p></th>`;
@@ -311,7 +326,10 @@ export function registerHandlebarsHelpers() {
     const items = data.items;
     let buttonPullStrings = "";
     items.forEach((item) => {
-      if (item.name === game.i18n.localize("soft.move.namePulltheStrings") || item.name === "Pull the Strings") {
+      if (
+        item.name === game.i18n.localize("soft.move.namePulltheStrings") ||
+        item.name === "Pull the Strings"
+      ) {
         buttonPullStrings = `
           <button class="send-to-chat-moves-btn" id="${item._id}" style="">
             <i class="fas fa-comments" id="${item._id}"></i>
@@ -325,20 +343,32 @@ export function registerHandlebarsHelpers() {
     const items = data.items;
     let css = "";
     items.forEach((item) => {
-      if (item.name === game.i18n.localize("soft.move.namePulltheStrings") || item.name === "Pull the Strings") {
+      if (
+        item.name === game.i18n.localize("soft.move.namePulltheStrings") ||
+        item.name === "Pull the Strings"
+      ) {
         css = `four`;
       }
     });
     return css;
   });
-  Handlebars.registerHelper("checkReputation", function (checkReputation, index) {
-    if (Number(checkReputation[0]) === index || Number(checkReputation[1]) === index) {
-      return "checked";
-    }
-    if (Number(checkReputation[0]) !== undefined && Number(checkReputation[1]) !== undefined) {
-      return "disabled";
-    }
-  });
+  Handlebars.registerHelper(
+    "checkReputation",
+    function (checkReputation, index) {
+      if (
+        Number(checkReputation[0]) === index ||
+        Number(checkReputation[1]) === index
+      ) {
+        return "checked";
+      }
+      if (
+        Number(checkReputation[0]) !== undefined &&
+        Number(checkReputation[1]) !== undefined
+      ) {
+        return "disabled";
+      }
+    },
+  );
   Handlebars.registerHelper("getActorName", function (id) {
     if (id !== "") {
       const actor = game.actors.get(id);

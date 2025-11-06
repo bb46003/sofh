@@ -70,9 +70,12 @@ export class EndSessionRelation extends foundry.applications.api.ApplicationV2 {
             }
         }
         updateData[input.dataset.relationid] = newValue;
-        const relationName = input.closest("tr")?.querySelector("td")?.innerText ?? relationPath;
+        const relationName =
+          input.closest("tr")?.querySelector("td")?.innerText ?? relationPath;
         const sign = action === "up" ? "+" : "-";
-        changes.push(`${relationName}: ${input.dataset.relationvalue} → ${newValue} (${sign}1)`);
+        changes.push(
+          `${relationName}: ${input.dataset.relationvalue} → ${newValue} (${sign}1)`,
+        );
 
         if (Object.keys(updateData).length > 0) {
           messageContent = `

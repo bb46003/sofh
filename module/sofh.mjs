@@ -10,6 +10,7 @@ import * as SofHMigrate from "./migrate.js";
 import { customHouse } from "./setup/customHouse.mjs";
 import { EndSessionDialog } from "./dialog/end-session.mjs";
 import SocketHandler from "./setup/socket-handler.mjs";
+import MOVES from "./items/default-item-function.mjs";
 
 export default function registerSettings() {
   // -------------------
@@ -157,7 +158,7 @@ Hooks.once("init", async function () {
   registerHandlebarsHelpers();
   registerSettings();
   loadPolishLocalization();
-
+  CONFIG.Item.documentClass = MOVES;
   CONFIG.Actor.documentClass = sofhActor;
   CONFIG.SOFHCONFIG = SOFHCONFIG;
   // --- Load previously saved custom config ---
@@ -183,7 +184,8 @@ Hooks.once("init", async function () {
         // Merge house-specific equipment
         if (!SOFHCONFIG.houseeq[key]) SOFHCONFIG.houseeq[key] = {};
         house.houseEq?.forEach((eq) => {
-          if (eq) SOFHCONFIG.houseeq[key][eq.toLowerCase().replace(/\s+/g, "_")] = eq;
+          if (eq)
+            SOFHCONFIG.houseeq[key][eq.toLowerCase().replace(/\s+/g, "_")] = eq;
         });
 
         // Merge general equipment
@@ -236,7 +238,11 @@ async function loadPolishLocalization() {
   return plStrings;
 }
 Hooks.on("updateSetting", (setting) => {
-  if (["HomeScorePositionX", "HomeScorePositionY", "HomeScoreSize"].includes(setting.key)) {
+  if (
+    ["HomeScorePositionX", "HomeScorePositionY", "HomeScoreSize"].includes(
+      setting.key,
+    )
+  ) {
     customStyle();
   }
 });
@@ -265,9 +271,12 @@ Hooks.once("ready", async function () {
       },
     ];
 
-    const houseWithHighestPoints = houseSettings.reduce((maxHouse, currentHouse) => {
-      return currentHouse.value > maxHouse.value ? currentHouse : maxHouse;
-    }, houseSettings[0]);
+    const houseWithHighestPoints = houseSettings.reduce(
+      (maxHouse, currentHouse) => {
+        return currentHouse.value > maxHouse.value ? currentHouse : maxHouse;
+      },
+      houseSettings[0],
+    );
     houseSettings.forEach(async (house) => {
       if (house.name === houseWithHighestPoints.name) {
         await game.settings.set(SYSTEM_ID, `${house.name}_on_leed`, true);
@@ -279,7 +288,9 @@ Hooks.once("ready", async function () {
   characterRelation();
   // Check if an actor of type "clue" exists, if not, create a new one
   const allActors = game.actors;
-  const isClueExist = Array.from(allActors.entries()).some(([key, actor]) => actor.type === "clue");
+  const isClueExist = Array.from(allActors.entries()).some(
+    ([key, actor]) => actor.type === "clue",
+  );
 
   if (!isClueExist) {
     const newActorData = {
@@ -298,11 +309,17 @@ Hooks.once("ready", async function () {
   if (game.user.isGM) {
     const SYSTEM_MIGRATION_VERSION = game.world.systemVersion;
     const currentVersion = game.settings.get("SofH", "systemMigrationVersion");
-    const needsMigration = !currentVersion || foundry.utils.isNewerVersion(SYSTEM_MIGRATION_VERSION, currentVersion);
+    const needsMigration =
+      !currentVersion ||
+      foundry.utils.isNewerVersion(SYSTEM_MIGRATION_VERSION, currentVersion);
 
     if (needsMigration) {
       SofHMigrate.migrateWorld();
-      game.settings.set("SofH", "systemMigrationVersion", SYSTEM_MIGRATION_VERSION);
+      game.settings.set(
+        "SofH",
+        "systemMigrationVersion",
+        SYSTEM_MIGRATION_VERSION,
+      );
     }
     const macroKey = "sofh.move.endSesionMove";
     const allLangs = game.system.languages.map((l) => l.lang);
@@ -321,7 +338,10 @@ Hooks.once("ready", async function () {
         }
 
         const translationSet = await game.sofhLangCache[langDef.lang];
-        const localized = await foundry.utils.getProperty(translationSet, macroKey);
+        const localized = await foundry.utils.getProperty(
+          translationSet,
+          macroKey,
+        );
         if (localized) localizedNames.push(localized);
       } catch (err) {
         console.warn(`Failed to load translations for ${langDef.lang}:`, err);
@@ -330,7 +350,9 @@ Hooks.once("ready", async function () {
 
     // find GM users
     const gmUsers = game.users.filter((u) => u.isGM);
-    const gmMacros = game.macros.filter((m) => gmUsers.some((u) => m.ownership[u.id] === 3 || m.ownership.default === 3));
+    const gmMacros = game.macros.filter((m) =>
+      gmUsers.some((u) => m.ownership[u.id] === 3 || m.ownership.default === 3),
+    );
 
     // find any GM macro whose name matches any localized name
     let macro = gmMacros.find((m) => localizedNames.includes(m.name));
@@ -427,7 +449,9 @@ Hooks.on("renderActorSheet", async function name(data) {
       if (key.includes(searchKeyQuestion)) {
         if (value === housequestion) {
           updateData = {
-            ["system.housequestion"]: game.i18n.localize(`sofh.ui.actor.${key}`),
+            ["system.housequestion"]: game.i18n.localize(
+              `sofh.ui.actor.${key}`,
+            ),
           };
         }
       }
