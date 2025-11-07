@@ -7,12 +7,30 @@ export default class MOVES extends foundry.documents.Item {
   }  
 
 async zmianaDanych(event,name,index, name2, element){
-   const newValue = event.target.value;
+  const target = event.target
+   const newValue = target.value;   
   switch(element){
     case "name":
         await this.update({['name']:newValue})
     break
   }
-   this.sheet.render(true)
+  if(element.includes("system.action")){
+    await this.update({[element]:target.checked})
+  }
+  if(target.id === "related-move"){
+    await this.update({[element]:target.value})
+  }
+}
+
+async removeRelatedMove(moveID){
+  const item = this;
+  const relatedMoves = item.system.relatedMoves;
+  delete relatedMoves[moveID];
+  const reindexed = {};
+  Object.values(relatedMoves).forEach((value, index) => {
+    reindexed[index] = value;
+  });
+  await item.update({["system.relatedMoves"]: reindexed });
+  item.sheet.render()
 }
 }

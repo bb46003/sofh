@@ -12,10 +12,12 @@ export class sofhSpecialMovesSheet extends api.HandlebarsApplicationMixin(
       height: 695,
     },
     form: {
-      handler: sofhSpecialMovesSheet.myFormHandler,
       submitOnChange: true,
     },
-    actions: {},
+    actions: {
+      addRelatedMove: sofhSpecialMovesSheet.#addRelatedMove,
+      removeRelatedMove: sofhSpecialMovesSheet.#removeRelatedMove,
+    },
     item: {
       type: "specialPlaybookMoves",
     },
@@ -33,6 +35,17 @@ export class sofhSpecialMovesSheet extends api.HandlebarsApplicationMixin(
 
   async getData() {
     const itemData = this.document.toObject(false);
+    const baseActions = CONFIG.SOFHCONFIG.typeOfSpecialMoves;
+    const storedActions = itemData.system.action || {};
+    const convertedActions = Object.entries(baseActions).reduce((acc, [key, label]) => {
+      acc[key] = {
+      label,
+      isUse: storedActions[key]?.isUse ?? false
+      };
+      return acc;
+    }, {});
+
+  itemData.system.action = convertedActions;
     const context = {
       item: this.document,
       system: itemData.system,
@@ -61,4 +74,15 @@ export class sofhSpecialMovesSheet extends api.HandlebarsApplicationMixin(
       await this.item.update({ ["img"]: formData.object.img });
     }
   }
+static #addRelatedMove(event, element) {
+  const div = event.target.closest("div");
+  const id = div.querySelectorAll("#related-move").length;
+  const newRelatedMove = `<input type="text" id="related-move" name="system.relatedMoves.${id}"><i class="fa fa-trash" data-action="removeRelatedMove"></i></input>`;
+  div.insertAdjacentHTML("beforeend", newRelatedMove);
+}
+static async #removeRelatedMove(event, element) {
+  const input = event.target.previousElementSibling;
+  const moveID = input.name.split(".")[2];
+  this.item.removeRelatedMove(moveID)
+}
 }

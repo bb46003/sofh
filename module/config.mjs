@@ -100,6 +100,15 @@ SOFHCONFIG.timeToShine = {
   slytherinTimeToShine: "sofh.ui.actor.slytherinTimeToShine",
 };
 
+SOFHCONFIG.typeOfSpecialMoves = {
+  addQuestion: "sofh.items.specialMoveType.addQuestion",
+  addProps: "sofh.items.specialMoveType.addProps",
+  addFavoriteTopic: "sofh.items.specialMoveType.addFavoriteTopic",
+  riseRollResults: "sofh.items.specialMoveType.riseRollResults",
+  modifyEffect: "sofh.items.specialMoveType.modifEffect",
+  isRealeted: "sofh.items.specialMoveType.isRelated"
+}
+
 export async function characterRelation() {
   const actors = game.actors;
   const character = Array.from(actors.entries()).filter(

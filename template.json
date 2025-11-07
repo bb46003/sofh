@@ -131,10 +131,11 @@
       "templates": ["base"]
     },
     "specialPlaybookMoves": {
-      "action": [],
+      "action": {},
       "description": "",
       "resultsChange": "",
-      "additionalQuestion": {}
+      "additionalQuestion": {},
+      "relatedMoves":{}
     }
   }
 }
