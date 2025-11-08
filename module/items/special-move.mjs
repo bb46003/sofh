@@ -1,5 +1,4 @@
 const { api, sheets } = foundry.applications;
-import sofh_Utility from "../utility.mjs";
 
 export class sofhSpecialMovesSheet extends api.HandlebarsApplicationMixin(
   sheets.ItemSheetV2,
@@ -12,6 +11,7 @@ export class sofhSpecialMovesSheet extends api.HandlebarsApplicationMixin(
       height: 695,
     },
     form: {
+      handler: sofhSpecialMovesSheet.myFormHandler,
       submitOnChange: true,
     },
     actions: {
@@ -28,30 +28,23 @@ export class sofhSpecialMovesSheet extends api.HandlebarsApplicationMixin(
       template: "systems/SofH/templates/special-moves.hbs",
     },
   };
-  async _prepareContext(options) {
-    const itemData = await this.getData();
+  async _prepareContext(partId, context) {
+    const itemData = await this.getData(partId, context);
     return itemData;
   }
 
-  async getData() {
-    const itemData = this.document.toObject(false);
-    const baseActions = CONFIG.SOFHCONFIG.typeOfSpecialMoves;
-    const storedActions = itemData.system.action || {};
-    const convertedActions = Object.entries(baseActions).reduce((acc, [key, label]) => {
-      acc[key] = {
-      label,
-      isUse: storedActions[key]?.isUse ?? false
-      };
-      return acc;
-    }, {});
-
-  itemData.system.action = convertedActions;
-    const context = {
+  async getData(partId, context) {
+    const itemData = this.document.toObject(false);   
+    //itemData.system.resultsChange["7to9"] = await enrich(itemData.system.resultsChange["7to9"]);
+    // itemData.system.resultsChange.above10 =  await enrich(itemData.system.resultsChange.above10)
+    //itemData.system.resultsChange.above12 =  await enrich(itemData.system.resultsChange.above12)
+    context = {
       item: this.document,
       system: itemData.system,
       fields: this.document.system?.schema?.fields ?? {},
       isEditable: this.isEditable,
       source: this.document.toObject(),
+      formInput: itemData.system?.resultsChange ?? {},
     };
 
     return context;
@@ -74,15 +67,14 @@ export class sofhSpecialMovesSheet extends api.HandlebarsApplicationMixin(
       await this.item.update({ ["img"]: formData.object.img });
     }
   }
-static #addRelatedMove(event, element) {
-  const div = event.target.closest("div");
-  const id = div.querySelectorAll("#related-move").length;
-  const newRelatedMove = `<input type="text" id="related-move" name="system.relatedMoves.${id}"><i class="fa fa-trash" data-action="removeRelatedMove"></i></input>`;
-  div.insertAdjacentHTML("beforeend", newRelatedMove);
-}
-static async #removeRelatedMove(event, element) {
-  const input = event.target.previousElementSibling;
-  const moveID = input.name.split(".")[2];
-  this.item.removeRelatedMove(moveID)
-}
+  static #addRelatedMove(event, element) {
+    const relatedMoves = this.item.system.relatedMoves;
+    const id = relatedMoves.length;
+    this.item.addRelatedMove(id);
+  }
+  static async #removeRelatedMove(event, element) {
+    const input = event.target.previousElementSibling;
+    const moveID = Number(input.dataset.id);
+    this.item.removeRelatedMove(moveID);
+  }
 }

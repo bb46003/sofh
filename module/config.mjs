@@ -106,8 +106,8 @@ SOFHCONFIG.typeOfSpecialMoves = {
   addFavoriteTopic: "sofh.items.specialMoveType.addFavoriteTopic",
   riseRollResults: "sofh.items.specialMoveType.riseRollResults",
   modifyEffect: "sofh.items.specialMoveType.modifEffect",
-  isRealeted: "sofh.items.specialMoveType.isRelated"
-}
+  isRealeted: "sofh.items.specialMoveType.isRelated",
+};
 
 export async function characterRelation() {
   const actors = game.actors;

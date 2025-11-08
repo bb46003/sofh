@@ -1,43 +1,65 @@
-<form class="sofh moves-tab">
-  <section class="main-move tab">
-    <div class="moves-top-grid">
-      <img
-        src="{{item.img}}"
-        alt="{{item.name}}"
-        class="borderless"
-        data-action="editImage"
-        data-edit="img"
-      />
-      <div class="move-questions">
-        <div class="moves-question-labels">
-          <label for="name">{{localize "sofh.ui.moves.name"}}</label>
-          {{formInput
-            item.schema.fields.name
-            value=source.name
-            placeholder="Item Name"
-          }}
-        </div>
+<section class="main-move tab" style="overflow: auto;">
+  <div class="moves-top-grid">
+    <img
+      src="{{item.img}}"
+      alt="{{item.name}}"
+      class="borderless"
+      data-action="editImage"
+      data-edit="img"
+    />
+    <div class="move-questions">
+      <div class="moves-question-labels">
+        <label for="name">{{localize "sofh.ui.moves.name"}}</label>
+        {{formInput
+          item.schema.fields.name
+          value=source.name
+          placeholder="Item Name"
+        }}
       </div>
     </div>
-    <div>
-      <lablel>{{localize "sofh.item.specialMoves.selectMoveAction"}}</lablel>
-      <div class="special-move-types">
-        {{#each system.action as |action key|}}
-          <div class="special-move-entry">
-            <label for="action-{{key}}">{{localize action.label}}</label>
-            <input type="checkbox" name="system.action.{{key}}.isUse" id="action-{{key}}"{{#if action.isUse}}checked{{/if}}>
-          </div>
-        {{/each}}
-      </div>
-      {{#if system.action.isRealeted.isUse}}
-      <div id="relatedMoves"> 
-        <label>{{localize "sofh.item.specialMoves.relatedMoves"}}<i class="fa fa-plus"  data-action="addRelatedMove"></i></label>
-        {{#each system.relatedMoves as |move index|}}
-            <input type="text" id="related-move" name='system.relatedMoves.{{index}}' value="{{move}}"><i class="fa fa-trash" data-action="removeRelatedMove"></i></input>
-        {{/each}}
-      </div>
-      {{/if}}
-    </div>
-  </section>
+  </div>
 
-</form>
+  <div>
+    <label>{{localize "sofh.item.specialMoves.selectMoveAction"}}</label>
+    <div class="special-move-types">
+      {{#each system.action as |action key|}}
+        <div class="special-move-entry">
+          <label for="action-{{key}}">{{localize action.label}}</label>
+          <input
+            type="checkbox"
+            name="system.action.{{key}}.isUse"
+            id="action-{{key}}"
+            {{#if action.isUse}}checked{{/if}}
+          >
+        </div>
+      {{/each}}
+    </div>
+
+    {{#if system.action.isRealeted.isUse}}
+      <div id="relatedMoves">
+        <label>
+          {{localize "sofh.item.specialMoves.relatedMoves"}}
+          <i class="fa fa-plus" data-action="addRelatedMove"></i>
+        </label>
+        {{#each system.relatedMoves as |move index|}}
+          <select
+            id="related-move"
+            data-name="system.relatedMoves.{{index}}.moves"
+            data-id="{{index}}"
+          >
+            <option value="">-- Select a Move --</option>
+            {{selectOptions (allItems) selected=move.moves localize=false}}
+          </select>
+          <i class="fa fa-trash" data-action="removeRelatedMove"></i>
+        {{/each}}
+      </div>
+    {{/if}}
+
+    {{#if system.action.modifyEffect.isUse}}
+      <h2 class="move_type description-label">
+        {{localize "sofh.item.isrolled"}}
+      </h2>
+      <div class="moves-isrolled"></div>
+    {{/if}}
+  </div>
+</section>

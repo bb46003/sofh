@@ -11,6 +11,7 @@ import { customHouse } from "./setup/customHouse.mjs";
 import { EndSessionDialog } from "./dialog/end-session.mjs";
 import SocketHandler from "./setup/socket-handler.mjs";
 import MOVES from "./items/default-item-function.mjs";
+import SpecialMovesDataModel from "./datamodel/special-move-datamodel.mjs";
 
 export default function registerSettings() {
   // -------------------
@@ -161,6 +162,7 @@ Hooks.once("init", async function () {
   CONFIG.Item.documentClass = MOVES;
   CONFIG.Actor.documentClass = sofhActor;
   CONFIG.SOFHCONFIG = SOFHCONFIG;
+  CONFIG.Item.dataModels = { specialPlaybookMoves: SpecialMovesDataModel };
   // --- Load previously saved custom config ---
   const savedData = game.settings.get("SofH", "customConfig");
   if (savedData) {
@@ -381,6 +383,13 @@ Hooks.once("ready", async function () {
   }
   const myPackage = game.system;
   myPackage.socketHandler = new SocketHandler();
+  const worldItems = await game.items.filter((i) => i.type === "basicMoves");
+  const basicMovesPack = await game.packs.get("SofH.moves");
+  const packItems = await basicMovesPack.getDocuments();
+  const allItems = [...worldItems, ...packItems];
+  const names = allItems.map((i) => i.name);
+  const namesObject = Object.fromEntries(names.map((name) => [name, name]));
+  CONFIG.SOFHCONFIG.allItems = namesObject;
 });
 Hooks.on("actorNameChanged", () => {
   const characters = game.actors.filter((a) => a.type === "character");

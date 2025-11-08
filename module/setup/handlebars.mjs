@@ -376,4 +376,8 @@ export function registerHandlebarsHelpers() {
       return actorName;
     }
   });
+
+  Handlebars.registerHelper("allItems", function () {
+    return CONFIF.SOFHCONFIG.allItems;
+  });
 }
