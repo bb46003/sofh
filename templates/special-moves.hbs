@@ -50,7 +50,7 @@
             <option value="">-- Select a Move --</option>
             {{selectOptions (allItems) selected=move.moves localize=false}}
           </select>
-          <i class="fa fa-trash" data-action="removeRelatedMove"></i>
+          <i class="fa fa-trash" data-action="removeRelatedMove" data-id="{{index}}"></i>
         {{/each}}
       </div>
     {{/if}}

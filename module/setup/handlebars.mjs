@@ -378,6 +378,6 @@ export function registerHandlebarsHelpers() {
   });
 
   Handlebars.registerHelper("allItems", function () {
-    return CONFIF.SOFHCONFIG.allItems;
+    return CONFIG.SOFHCONFIG.allItems;
   });
 }

@@ -1,10 +1,1 @@
-2025/11/08-12:02:50.825 3d90 Log #214: 0 ops saved to Table #235 OK
-2025/11/08-12:02:50.826 3d90 Archiving C:\Users\bartl\AppData\Local\FoundryVTT\Data\systems\SofH\packs\moves/000214.log: OK
-2025/11/08-12:02:50.826 3d90 Log #234: 0 ops saved to Table #236 OK
-2025/11/08-12:02:50.826 3d90 Archiving C:\Users\bartl\AppData\Local\FoundryVTT\Data\systems\SofH\packs\moves/000234.log: OK
-2025/11/08-12:02:50.826 3d90 Table #173: 31 entries OK
-2025/11/08-12:02:50.827 3d90 Table #178: 15 entries OK
-2025/11/08-12:02:50.827 3d90 Table #228: 15 entries OK
-2025/11/08-12:02:50.828 3d90 Archiving C:\Users\bartl\AppData\Local\FoundryVTT\Data\systems\SofH\packs\moves/MANIFEST-000213: OK
-2025/11/08-12:02:50.829 3d90 Archiving C:\Users\bartl\AppData\Local\FoundryVTT\Data\systems\SofH\packs\moves/MANIFEST-000233: OK
-2025/11/08-12:02:50.831 3d90 **** Repaired leveldb C:\Users\bartl\AppData\Local\FoundryVTT\Data\systems\SofH\packs\moves; recovered 3 files; 57931 bytes. Some data may have been lost. ****
+2025/11/08-12:02:50.842 3d90 Delete type=3 #1
