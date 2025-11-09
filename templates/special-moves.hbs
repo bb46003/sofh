@@ -47,7 +47,7 @@
             data-name="system.relatedMoves.{{index}}.moves"
             data-id="{{index}}"
           >
-            <option value="">-- Select a Move --</option>
+            <option value="">{{localize "sofh.item.selectMovr"}}</option>
             {{selectOptions (allItems) selected=move.moves localize=false}}
           </select>
           <i class="fa fa-trash" data-action="removeRelatedMove" data-id="{{index}}"></i>
@@ -59,7 +59,34 @@
       <h2 class="move_type description-label">
         {{localize "sofh.item.isrolled"}}
       </h2>
-      <div class="moves-isrolled"></div>
+      <div class="moves-isrolled">
+        <div class="row">
+          <label for="above10">{{localize 'sofh.ui.move.resultAbove12'}}</label>
+          {{formInput above12.field value=above12.value enriched=above12.enriched toggled="true"}}      
+        </div>
+        <div class="row">
+          <label for="above10">{{localize 'sofh.ui.move.resultAbove10'}}</label>
+          {{formInput above10.field value=above10.value enriched=above10.enriched toggled="true"}}      
+        </div>
+        <div class="row">
+          <label for="7to9">{{localize 'sofh.ui.move.result7to9'}}</label>
+          {{formInput 7to9.field value=7to9.value enriched=7to9.enriched toggled="true"}}      
+        </div>
+        <div class="row">
+          <label for="below7">{{localize 'sofh.ui.move.resultBelow7'}}</label> 
+          {{formInput below7.field value=below7.value enriched=below7.enriched toggled="true"}}      
+        </div>  
+      </div>
+    {{/if}}
+    {{#if system.action.addQuestion.isUse}}
+    <h2>{{localize "sofh.item.addQuestion"}}</h2>
+    <i class="fa fa-plus" data-action="addQuestion"></i>
+    {{#each additionalQuestions as |question index|}}
+      <div>
+        {{formInput question.field value=question.value enriched=question.enriched name=(concat "additionalQuestion[" index "]")toggled="true"}}      
+        <i class="fa fa-trash" data-action="removeQuestion" data-id="{{index}}"></i>
+      </div>
+      {{/each}}
     {{/if}}
   </div>
 </section>

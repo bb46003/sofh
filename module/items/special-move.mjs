@@ -17,6 +17,7 @@ export class sofhSpecialMovesSheet extends api.HandlebarsApplicationMixin(
     actions: {
       addRelatedMove: sofhSpecialMovesSheet.#addRelatedMove,
       removeRelatedMove: sofhSpecialMovesSheet.#removeRelatedMove,
+      addQuestion: sofhSpecialMovesSheet.#addQuestion,
     },
     item: {
       type: "specialPlaybookMoves",
@@ -29,23 +30,43 @@ export class sofhSpecialMovesSheet extends api.HandlebarsApplicationMixin(
     },
   };
   async _prepareContext(partId, context) {
-    const itemData = await this.getData(partId, context);
+    const itemData = await this.getData();
     return itemData;
   }
 
-  async getData(partId, context) {
-    const itemData = this.document.toObject(false);   
-    //itemData.system.resultsChange["7to9"] = await enrich(itemData.system.resultsChange["7to9"]);
-    // itemData.system.resultsChange.above10 =  await enrich(itemData.system.resultsChange.above10)
-    //itemData.system.resultsChange.above12 =  await enrich(itemData.system.resultsChange.above12)
-    context = {
-      item: this.document,
-      system: itemData.system,
-      fields: this.document.system?.schema?.fields ?? {},
-      isEditable: this.isEditable,
-      source: this.document.toObject(),
-      formInput: itemData.system?.resultsChange ?? {},
+  async getData() {
+    const context = {};
+    const itemData = this.document.toObject(false);
+    context.system = itemData.system;
+    context.fields = this.document.system?.schema?.fields ?? {};
+    const { enrichHTML } = foundry.applications.ux.TextEditor;
+    context["7to9"] = {
+      value: itemData.system.resultsChange["7to9"],
+      enriched: await enrichHTML(itemData.system.resultsChange["7to9"]),
+      field: context.fields.resultsChange.fields["7to9"],
     };
+    context.above10 = {
+      value: itemData.system.resultsChange.above10,
+      enriched: await enrichHTML(itemData.system.resultsChange.above10),
+      field: context.fields.resultsChange.fields.above10,
+    };
+    context.below7 = {
+      value: itemData.system.resultsChange.below7,
+      enriched: await enrichHTML(itemData.system.resultsChange.below7),
+      field: context.fields.resultsChange.fields.below7,
+    };
+    context.additionalQuestions = await Promise.all(
+      itemData.system.additionalQuestion.map(async (q, i) => ({
+        value: q.question,
+        enriched: await enrichHTML(q.question),
+        field: context.fields.additionalQuestion.element.fields.question,
+      })),
+    );
+
+    context.addQuestion = context.item = this.document;
+    context.system = itemData.system;
+    context.isEditable = this.isEditable;
+    context.source = this.document.toObject();
 
     return context;
   }
@@ -67,13 +88,15 @@ export class sofhSpecialMovesSheet extends api.HandlebarsApplicationMixin(
       await this.item.update({ ["img"]: formData.object.img });
     }
   }
-  static #addRelatedMove(event, element) {
-
+  static #addRelatedMove() {
     this.item.addRelatedMove();
   }
-  static async #removeRelatedMove(event, element) {
-        const target = event.target;
+  static async #removeRelatedMove(event) {
+    const target = event.target;
     const id = target.dataset.id;
     this.item.removeRelatedMove(id);
+  }
+  static async #addQuestion() {
+    this.item.addQuestion();
   }
 }
