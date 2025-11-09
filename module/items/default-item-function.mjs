@@ -13,9 +13,12 @@ async zmianaDanych(event,name,index, name2, element){
     case "name":
         await this.update({['name']:newValue})
     break
-  }
+      }
   if(element.includes("system.action")){
     await this.update({[element]:target.checked})
+  }
+   if(element.includes("resultsChange")){
+    await this.update({[element]:target.value})
   }
   if(target.id === "related-move"){
     const relatedMoves = this.system.relatedMoves;
