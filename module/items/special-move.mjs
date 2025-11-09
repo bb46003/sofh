@@ -68,11 +68,12 @@ export class sofhSpecialMovesSheet extends api.HandlebarsApplicationMixin(
     }
   }
   static #addRelatedMove(event, element) {
-    const target = event.target;
-    const id = target.dataset.id;
-    this.item.addRelatedMove(id);
+
+    this.item.addRelatedMove();
   }
   static async #removeRelatedMove(event, element) {
-    this.item.removeRelatedMove();
+        const target = event.target;
+    const id = target.dataset.id;
+    this.item.removeRelatedMove(id);
   }
 }

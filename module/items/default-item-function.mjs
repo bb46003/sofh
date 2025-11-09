@@ -18,16 +18,19 @@ async zmianaDanych(event,name,index, name2, element){
     await this.update({[element]:target.checked})
   }
   if(target.id === "related-move"){
-    await this.update({[name]:target.value})
+    const relatedMoves = this.system.relatedMoves;
+    const id = Number(target.dataset.id);
+    relatedMoves[id].moves = newValue
+    await this.update({'system.relatedMoves':relatedMoves})
   }
 }
 
 async removeRelatedMove(moveID) {
   const item = this;
   const relatedMoves = item.system.relatedMoves || [];
-
+  const moveToRemove = relatedMoves[moveID] 
   // Filter out the move with the given ID
-  const updatedMoves = relatedMoves.filter(m => m.moves !== moveID);
+  const updatedMoves = relatedMoves.filter(m => m.moves !== moveToRemove.moves);
 
   await item.update({
     'system.relatedMoves': updatedMoves
