@@ -102,7 +102,7 @@ SOFHCONFIG.timeToShine = {
 
 SOFHCONFIG.typeOfSpecialMoves = {
   addQuestion: "sofh.items.specialMoveType.addQuestion",
-  addProps: "sofh.items.specialMoveType.addProps",
+  isRolable: "sofh.items.specialMoveType.isRolable",
   addFavoriteTopic: "sofh.items.specialMoveType.addFavoriteTopic",
   riseRollResults: "sofh.items.specialMoveType.riseRollResults",
   modifyEffect: "sofh.items.specialMoveType.modifEffect",

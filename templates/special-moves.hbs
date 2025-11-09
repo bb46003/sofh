@@ -55,7 +55,7 @@
       </div>
     {{/if}}
 
-    {{#if system.action.modifyEffect.isUse}}
+    {{#if (or system.action.modifyEffect.isUse system.action.isRolable.isUse)}}
       <h2 class="move_type description-label">
         {{localize "sofh.item.isrolled"}}
       </h2>
