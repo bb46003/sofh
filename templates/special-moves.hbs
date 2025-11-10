@@ -34,6 +34,21 @@
         </div>
       {{/each}}
     </div>
+        <div class="move-elements">
+        <div class="trigers-sheet"> 
+           <h2 class="move_type trigger-label ">{{localize "sofh.item.trigerlabel"}}</h2> 
+            <div class="">
+            {{formInput triggers.field value=triggers.value enriched=triggers.enriched toggled="true"}}
+            </div>      
+        </div>        
+        <div class="description-sheet"> 
+           <h2 class="move_type description-label ">{{localize "sofh.item.descriptionlabel"}}</h2>
+           <div class="">
+          {{formInput description.field value=description.value enriched=description.enriched toggled="true"}}      
+
+           </div>       
+        </div>
+    </div>
 
     {{#if system.action.isRealeted.isUse}}
       <div id="relatedMoves">

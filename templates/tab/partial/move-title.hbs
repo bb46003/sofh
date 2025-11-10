@@ -4,7 +4,7 @@
       <img class="move-image" src="{{item.img}}" title="{{item.name}}" />
       <a class="moves-edit">{{item.name}}</a>
       <div class="buttons-moves">
-        {{#if (eq item.system.isrolled true)}}
+        {{#if (or (eq item.system.isrolled true) item.system.action.isRolable.isUse)}}
           <button class="roll-moves-btn" id="{{item._id}}">
             <i class="fas fa-dice" id="{{item._id}}"></i>
           </button>

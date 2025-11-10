@@ -15,7 +15,11 @@ export default class MOVES extends foundry.documents.Item {
       updates["name"] = newValue;
     } else if (element.includes("system.action")) {
       updates[element] = target.checked;
-    } else if (element.includes("resultsChange")) {
+    } else if (
+      element.includes("resultsChange") ||
+      element.includes("triggers") ||
+      element.includes("description")
+    ) {
       updates[element] = newValue;
     } else if (target.id === "related-move") {
       const relatedMoves = foundry.utils.deepClone(this.system.relatedMoves);

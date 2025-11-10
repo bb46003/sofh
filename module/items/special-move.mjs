@@ -45,6 +45,11 @@ export class sofhSpecialMovesSheet extends api.HandlebarsApplicationMixin(
       enriched: await enrichHTML(itemData.system.resultsChange["7to9"]),
       field: context.fields.resultsChange.fields["7to9"],
     };
+    context.above12 = {
+      value: itemData.system.resultsChange.above12,
+      enriched: await enrichHTML(itemData.system.resultsChange.above12),
+      field: context.fields.resultsChange.fields.above12,
+    };
     context.above10 = {
       value: itemData.system.resultsChange.above10,
       enriched: await enrichHTML(itemData.system.resultsChange.above10),
@@ -54,6 +59,16 @@ export class sofhSpecialMovesSheet extends api.HandlebarsApplicationMixin(
       value: itemData.system.resultsChange.below7,
       enriched: await enrichHTML(itemData.system.resultsChange.below7),
       field: context.fields.resultsChange.fields.below7,
+    };
+    context.description = {
+      value: itemData.system.description,
+      enriched: await enrichHTML(itemData.system.description),
+      field: context.fields.description,
+    };
+    context.triggers = {
+      value: itemData.system.triggers,
+      enriched: await enrichHTML(itemData.system.triggers),
+      field: context.fields.triggers,
     };
     context.additionalQuestions = await Promise.all(
       itemData.system.additionalQuestion.map(async (q, i) => ({

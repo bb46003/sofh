@@ -795,4 +795,31 @@ export class sofhCharacterSheet extends BaseActorSheet {
     const actor = this.actor;
     new ReputationQuestion(actor).render(true);
   }
-}
+  async _onDrop(event) {
+    event.preventDefault();
+    const data = event.dataTransfer;
+    const actor = this.actor;
+    if (data) {
+      const droppedItem = JSON.parse(data.getData("text/plain"));
+      const droppedType = droppedItem.type;
+      if (droppedType === "Item") {
+        const itemData = await fromUuid(droppedItem.uuid);
+       const createdItems = await actor.createEmbeddedDocuments("Item", [itemData]);
+          const createdItem = createdItems[0];
+        if (itemData.type === "specialPlaybookMoves" && itemData.system.action.isRealeted.isUse) {
+          const relatedMoves = itemData.system.relatedMoves ?? [];
+          const actorItems = actor.items;
+          const relatedNames = relatedMoves.map((n) => n.moves.toLowerCase());
+          const affectedMoves = actorItems.filter((item) =>
+            relatedNames.includes(item.name.toLowerCase()),
+          );
+          affectedMoves.forEach(move =>{
+            move.setFlag("SofH", "affectedby", createdItem.id)
+          })
+
+          }
+        }
+      }
+    }
+  }
+

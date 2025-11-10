@@ -35,6 +35,8 @@ export default class SpecialMovesDataModel extends foundry.abstract
     schema.relatedMoves = new fields.ArrayField(
       new fields.SchemaField({ moves: new fields.StringField() }),
     );
+    schema.description = new fields.HTMLField({ initial: "" });
+    schema.triggers = new fields.HTMLField({ initial: "" });
     return schema;
   }
   /** @override */
