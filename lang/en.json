@@ -275,7 +275,8 @@
         "condition.name": "Short description",
         "condition.fixed": "Fixed?",
         "reputation_questions": "Reputation Questionm",
-        "pickYourAdvancements": "Pick your Advancements"
+        "pickYourAdvancements": "Pick your Advancements",
+        "additionaNewTopicFromMove": "Additional favorit Topic from Special Moves"
       },
       "selectOption": "Select any option!",
       "move": {
@@ -393,13 +394,18 @@
       "riseRelation": "Rise relation",
       "lowerRelation": "Lower Relation",
       "breakthroughText": "You face a breakthrough in your relationship",
-      "rollBreakthrough": "Random Table for breakthrough"
+      "rollBreakthrough": "Random Table for breakthrough",
+      "selectNewFavoriteTopic": "Select Yor additional favorit Topic ",
+      "selectNewTopic": "-- New Topic --"
     },
     "UI": {
       "OK": "Apply",
       "Roll": "Roll!"
     },
     "actor": "Character",
-    "moves": "Moves"
+    "moves": "Moves",
+    "dilog": {
+      "addNewTopic": "Add new topic from Special Move"
+    }
   }
 }

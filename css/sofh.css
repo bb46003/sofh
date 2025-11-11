@@ -1206,3 +1206,8 @@ h2.special-move{
     display: flex;
     gap: 10px;
 }
+.topic-field{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}

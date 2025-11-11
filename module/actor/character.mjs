@@ -829,6 +829,44 @@ export class sofhCharacterSheet extends BaseActorSheet {
         }
         if (itemData.system.action.addFavoriteTopic.isUse) {
           //addFavoriteTopic
+          const content = await sofh_Utility.renderTemplate(
+            "systems/SofH/templates/dialogs/add-new-topic.hbs",
+          );
+          const addNewTopic = new foundry.applications.api.DialogV2({
+            widnow: { title: game.i18n.localize("sofh.dilog.addNewTopic") },
+            content,
+            buttons: [
+              {
+                label: game.i18n.localize("sofh.UI.OK"),
+                icon: "fa-solid fa-check",
+                action: "ok",
+                callback: async (event, html) => {
+                  const selected =
+                    html.offsetParent.querySelector(".new-topic");
+                  if (!selected) {
+                    ui.notifications.warn(
+                      game.i18n.localize("sofh.ui.selectOption"),
+                    );
+                    return false;
+                  }
+                  const choice = selected.selectedOptions[0].outerText;
+                  ChatMessage.create({
+                    user: game.user.id,
+                    speaker: game.user.name,
+                    content: `${game.i18n.localize("sofh.dilog.addNewTopic")}: <b>${choice}</b>`,
+                  });
+                  const currentTopics = this.actor.system.additionalTopic;
+                  const size = Object.keys(currentTopics).length; 
+                  currentTopics[size]= {name:choice, id:createdItem.id};
+                  await this.actor.update({
+                    "system.additionalTopic": currentTopics,
+                  });
+                },
+              },
+            ],
+            defaultButton: "ok",
+          });
+          addNewTopic.render(true, { width: 600 });
         }
       }
     }

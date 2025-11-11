@@ -27,20 +27,19 @@ export default class SpecialMovesDataModel extends foundry.abstract
             initial: false,
           }),
         });
+      } else {
+        actionFields[key] = new fields.SchemaField({
+          label: new fields.StringField({
+            label: "Localized Label",
+            required: true,
+            initial: label,
+          }),
+          isUse: new fields.BooleanField({
+            label: "Is Used",
+            initial: false,
+          }),
+        });
       }
-      else{
-      actionFields[key] = new fields.SchemaField({
-        label: new fields.StringField({
-          label: "Localized Label",
-          required: true,
-          initial: label,
-        }),
-        isUse: new fields.BooleanField({
-          label: "Is Used",
-          initial: false,
-        }),
-      });
-    }
     }
     schema.isHouseRelated = new fields.BooleanField({ initial: false });
     schema.relationRelated = new fields.BooleanField({ initial: false });

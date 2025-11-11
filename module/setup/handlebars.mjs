@@ -388,4 +388,11 @@ export function registerHandlebarsHelpers() {
       return false;
     }
   });
+
+  Handlebars.registerHelper("allTopic", function () {
+  return { 
+    ...CONFIG.SOFHCONFIG.favoriteTopic, 
+    ...CONFIG.SOFHCONFIG.favoriteTopic2 
+  };
+  });
 }

@@ -24,6 +24,7 @@ export const preloadHandlebarsTemplates = async function () {
     "systems/SofH/templates/dialogs/reputation-questions.hbs",
     "systems/SofH/templates/dialogs/end-sesion-GM.hbs",
     "systems/SofH/templates/dialogs/end-sesion-relation.hbs",
+    "systems/SofH/templates/dialogs/add-new-topic.hbs"
   ];
 
   if (game.release.generation < 13) {
