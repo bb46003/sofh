@@ -46,7 +46,8 @@
         "gainxp": "`{actor} gains {gainXP} XP!`",
         "gainRep": "{actor} gains {gainRep} Reputation!`",
         "additionalResults": "Additional results from related move <strong>{name}</strong>",
-        "relatedMoveRiseEffect": "Move <strong>{name}</strong> rise roll result."
+        "relatedMoveRiseEffect": "Move <strong>{name}</strong> rise roll result.",
+        "relatedMoveCauseComplication": "You use Move {name} to many times on this session, prepare for Complication"
       },
       "moves": {
         "name": "Name of move:",
@@ -276,7 +277,13 @@
         "reputation_questions": "Reputation Questionm",
         "pickYourAdvancements": "Pick your Advancements"
       },
-      "selectOption": "Select any option!"
+      "selectOption": "Select any option!",
+      "move": {
+        "resultAbove12": "Results on roll 12+",
+        "resultAbove10": "Results on 10+",
+        "result7to9": "Results on 7 to 9",
+        "resultBelow7": "Results on 6 and below"
+      }
     },
     "rolling": "Rolling dialog",
     "lack_of_move": "do not have move related to clues",
@@ -301,7 +308,17 @@
       "trigerlabel": "Triggers to move",
       "realtedtoothermoves": "Ralated moves to this one",
       "isrolled": "Description of roll results",
-      "designerComment": "Designer comment and practicalities"
+      "designerComment": "Designer comment and practicalities",
+      "specialMoves": {
+        "selectMoveAction": "Select Move Action",
+        "relatedMoves": "Add Releted Moves"
+      },
+      "specialMove": {
+        "causeComplication": "Move cause Complication on sequential use ? ",
+        "afteHowManyUse": "After how mny use couse Complication"
+      },
+      "selectMovr": "- Select Move -",
+      "addQuestion": "Add Move Question"
     },
     "SETTINGS": {
       "showHousePoint": "Display House Points",

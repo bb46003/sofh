@@ -13,7 +13,13 @@ export default class MOVES extends foundry.documents.Item {
 
     if (element === "name") {
       updates["name"] = newValue;
-    } else if (element.includes("system.action")) {
+    } else if (
+      (element.includes("system.action") && element.includes("isUse"))||
+      element.includes("isHouseRelated") ||
+      element.includes("relationRelated") ||
+      element.includes("stringRelated") ||
+      element.includes("culeRelated")
+    ) {
       updates[element] = target.checked;
     } else if (
       element.includes("resultsChange") ||
@@ -38,6 +44,9 @@ export default class MOVES extends foundry.documents.Item {
           updates["system.additionalQuestion"] = questions;
         }
       }
+    } else if(element === "system.action.riseRollResults.useNumber"){
+      updates[element] = Number(newValue);
+      
     }
 
     if (Object.keys(updates).length > 0) {

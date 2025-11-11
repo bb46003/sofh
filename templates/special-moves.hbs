@@ -16,6 +16,19 @@
           <label for="action-{{key}}">{{localize action.label}}</label>
           <input type="checkbox" name="system.action.{{key}}.isUse" id="action-{{key}}" {{#if action.isUse}}checked{{/if}}>
         </div>
+        {{#if (and (eq key "riseRollResults") action.isUse)}}
+        <div class="special-move-entry">
+          <div class="column">
+            <label for="action-riseRollResults">{{localize "sofh.item.specialMove.causeComplication"}}</label>
+            <input type="checkbox" name="system.action.riseRollResults.causeComplication" id="action-riseRollResults-causeComplication" {{#if action.causeComplication}}checked{{/if}}>
+          </div>
+          <div class="column">
+            {{log action}}
+            <label for="action-riseRollResults">{{localize "sofh.item.specialMove.afteHowManyUse"}}</label>
+            <input type="number" name="system.action.riseRollResults.useNumber" id="action-riseRollResults-useNumber" value="{{action.useNumber}}">
+          </div>
+        </div>
+    {{/if}}
       {{/each}}
     </div>
     {{#if system.action.isRolable.isUse}}
@@ -38,12 +51,7 @@
     </div>    
   </div>
     {{/if}}
-    {{#if system.action.riseRollResults.isUse}}
-        <div class="special-move-entry">
-          <label for="action-{{key}}">{{localize system.action.riseRollResults.causeComplication}}</label>
-          <input type="checkbox" name="system.action.riseRollResults.causeComplication" id="action-riseRollResults-causeComplication}" {{#if system.action.riseRollResults.causeComplication}}checked{{/if}}>
-        </div>
-    {{/if}}
+
         <div class="move-elements">
         <div class="trigers-sheet"> 
           <h2 class="move_type trigger-label ">{{localize "sofh.item.trigerlabel"}}</h2> 
@@ -60,16 +68,18 @@
     </div>
     {{#if system.action.isRealeted.isUse}}
       <div id="relatedMoves">
-        <label>
+        <h2 class="special-move">
           {{localize "sofh.item.specialMoves.relatedMoves"}}
           <i class="fa fa-plus" data-action="addRelatedMove"></i>
-        </label>
+        </h2>
         {{#each system.relatedMoves as |move index|}}
+        <div class="reletedMove">
           <select id="related-move" data-name="system.relatedMoves.{{index}}.moves" data-id="{{index}}">
             <option value="">{{localize "sofh.item.selectMovr"}}</option>
             {{selectOptions (allItems) selected=move.moves localize=false}}
           </select>
           <i class="fa fa-trash" data-action="removeRelatedMove" data-id="{{index}}"></i>
+          </div>
         {{/each}}
       </div>
     {{/if}}
@@ -98,8 +108,7 @@
       </div>
     {{/if}}
     {{#if system.action.addQuestion.isUse}}
-    <h2>{{localize "sofh.item.addQuestion"}}</h2>
-    <i class="fa fa-plus" data-action="addQuestion"></i>
+    <h2 class="special-move">{{localize "sofh.item.addQuestion"}}<i class="fa fa-plus" data-action="addQuestion"></i></h2>    
     {{#each additionalQuestions as |question index|}}
       <div>
         {{formInput question.field value=question.value enriched=question.enriched name=(concat "additionalQuestion[" index "]")toggled="true"}}      

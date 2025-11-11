@@ -7,14 +7,28 @@ export default class SpecialMovesDataModel extends foundry.abstract
     for (const [key, label] of Object.entries(
       CONFIG.SOFHCONFIG.typeOfSpecialMoves,
     )) {
-      if (key === riseRollResults) {
+      if (key === "riseRollResults") {
         actionFields[key] = new fields.SchemaField({
           causeComplication: new fields.BooleanField({
             label: "Cause Complication",
             initial: false,
           }),
+          useNumber: new fields.NumberField({
+            label: "Use per Sesion",
+            initial: 1,
+          }),
+          label: new fields.StringField({
+            label: "Localized Label",
+            required: true,
+            initial: label,
+          }),
+          isUse: new fields.BooleanField({
+            label: "Is Used",
+            initial: false,
+          }),
         });
       }
+      else{
       actionFields[key] = new fields.SchemaField({
         label: new fields.StringField({
           label: "Localized Label",
@@ -26,6 +40,7 @@ export default class SpecialMovesDataModel extends foundry.abstract
           initial: false,
         }),
       });
+    }
     }
     schema.isHouseRelated = new fields.BooleanField({ initial: false });
     schema.relationRelated = new fields.BooleanField({ initial: false });

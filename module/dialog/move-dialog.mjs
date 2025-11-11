@@ -281,6 +281,7 @@ export class moveRoll extends Dialog {
       advantagesSelect?.value,
       stepOfRise,
       usedRelatedMove,
+      complication,
     );
     if (stringsSelect !== undefined) {
       if (stringsSelect.value !== "") {
@@ -330,6 +331,7 @@ export class moveRoll extends Dialog {
     advantagesSelect,
     stepOfRise,
     usedRelatedMove,
+    complication,
   ) {
     const rollResult = await new Roll(formula).evaluate();
     const total = rollResult.total;
@@ -411,6 +413,13 @@ export class moveRoll extends Dialog {
             name: move,
           }) +
           `<br>`;
+
+        if (complication[i]) {
+          content += game.i18n.format(
+            "sofh.ui.chat.relatedMoveCauseComplication",
+            { name: move },
+          );
+        }
         i++;
       });
     }
@@ -510,12 +519,49 @@ export class moveRoll extends Dialog {
       const move = await fromUuid(`Actor.${actor.id}.Item.${moveId}`);
       relatedMoves.push(move);
     }
+    let customItem = {};
     const areRelatedMoves = relatedMoves.length > 0;
     if (!is7conditions) {
+      if (item.type === "specialPlaybookMoves") {
+        const questions = {};
+
+        if (
+          item.system.action.addQuestion.isUse &&
+          Array.isArray(item.system.additionalQuestion)
+        ) {
+          item.system.additionalQuestion.forEach((element, index) => {
+            questions[index] = {
+              description: element.question,
+              impact: "true",
+            };
+          });
+        }
+        customItem.system = {
+          "7to9": item.system.resultsChange["7to9"],
+          above10: item.system.resultsChange.above10,
+          above12: item.system.resultsChange.above12,
+          below7: item.system.resultsChange.below7,
+          cluerelated: item.system.culeRelated,
+          culerelated: item.system.culeRelated,
+          description: item.system.description,
+          havequestion: item.system.action.addQuestion.isUse,
+          housequestion: item.system.isHouseRelated,
+          houserelated: item.system.isHouseRelated,
+          question: questions,
+          relationrelated: item.system.relationRelated,
+          result12: !!item.system.resultsChange.above12,
+          stringsrelated: item.system.stringRelated,
+        };
+        customItem.id = item.id;
+        customItem.name = item.name;
+        customItem.uuid = item.uuid;
+      } else if (item.type === "basicMoves") {
+        customItem = item;
+      }
       let content = await sofh_Utility.renderTemplate(
         "systems/SofH/templates/dialogs/rolling-dialog.hbs",
         {
-          item: item,
+          item: customItem,
           actor: actor,
           clueID: clueID,
           complexity: complexity,
@@ -544,7 +590,7 @@ export class moveRoll extends Dialog {
             callback: async (html) => {
               await this.defnieRollingFormula(
                 actor,
-                item,
+                customItem,
                 clueID,
                 solution,
                 question,
@@ -615,17 +661,25 @@ export class moveRoll extends Dialog {
   }
   async checkComplication(moveID, actor) {
     const move = actor.items.get(moveID);
-    const flag = move.flags?.SofH?.usedtime;
+    const flag = move.flags?.SofH?.complication;
 
     if (flag === undefined) {
-      move.setFlag("SofH", "usedtime", new Date());
+      move.setFlag("SofH", "complication.usedtime", new Date());
+      move.setFlag("SofH", "complication.useNumber", 1);
       return false;
     } else {
       const delta = new Date() - new Date(flag);
+      const useCount = flag.useNumber + 1;
       const twelveHours = 12 * 60 * 60 * 1000;
-
-      if (delta < twelveHours) {
+      move.setFlag("SofH", "complication.useNumber", useCount);
+      if (
+        delta < twelveHours &&
+        useCount === move.system.action.riseRollResults.useNumber
+      ) {
         return true;
+      } else if (delta > twelveHours) {
+        move.setFlag("SofH", "complication.usedtime", new Date());
+        move.setFlag("SofH", "complication.useNumber", 1);
       }
       return false;
     }

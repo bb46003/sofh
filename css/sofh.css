@@ -1148,7 +1148,7 @@ button#add-advantage-btn {
   width: 100%;
   border-collapse: collapse;
   text-align: center;
-
+}
 .custom-blood, .custom-topic1{
     display:flex; 
     gap: 10px; 
@@ -1195,4 +1195,14 @@ button#add-advantage-btn {
 }
 .character-entry, .character-list{
   margin: 10px;
+}
+.reletedMove{
+  display: grid;
+  grid-template-columns:  1fr 0.1fr;
+  gap: 10px;
+  align-items: center;
+}
+h2.special-move{
+    display: flex;
+    gap: 10px;
 }
