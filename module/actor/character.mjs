@@ -804,22 +804,33 @@ export class sofhCharacterSheet extends BaseActorSheet {
       const droppedType = droppedItem.type;
       if (droppedType === "Item") {
         const itemData = await fromUuid(droppedItem.uuid);
-       const createdItems = await actor.createEmbeddedDocuments("Item", [itemData]);
-          const createdItem = createdItems[0];
-        if (itemData.type === "specialPlaybookMoves" && itemData.system.action.isRealeted.isUse) {
+        const createdItems = await actor.createEmbeddedDocuments("Item", [
+          itemData,
+        ]);
+        const createdItem = createdItems[0];
+        if (
+          itemData.type === "specialPlaybookMoves" &&
+          itemData.system.action.isRealeted.isUse
+        ) {
           const relatedMoves = itemData.system.relatedMoves ?? [];
           const actorItems = actor.items;
           const relatedNames = relatedMoves.map((n) => n.moves.toLowerCase());
           const affectedMoves = actorItems.filter((item) =>
             relatedNames.includes(item.name.toLowerCase()),
           );
-          affectedMoves.forEach(move =>{
-            move.setFlag("SofH", "affectedby", createdItem.id)
-          })
-
-          }
+          affectedMoves.forEach(async (move) => {
+            let current = move.getFlag("SofH", "affectedby") || [];
+            if (!Array.isArray(current)) current = [current]; // in case it was a single value
+            if (!current.includes(createdItem.id)) {
+              current.push(createdItem.id);
+              await move.setFlag("SofH", "affectedby", current);
+            }
+          });
+        }
+        if (itemData.system.action.addFavoriteTopic.isUse) {
+          //addFavoriteTopic
         }
       }
     }
   }
-
+}

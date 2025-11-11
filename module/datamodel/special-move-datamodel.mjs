@@ -7,6 +7,14 @@ export default class SpecialMovesDataModel extends foundry.abstract
     for (const [key, label] of Object.entries(
       CONFIG.SOFHCONFIG.typeOfSpecialMoves,
     )) {
+      if (key === riseRollResults) {
+        actionFields[key] = new fields.SchemaField({
+          causeComplication: new fields.BooleanField({
+            label: "Cause Complication",
+            initial: false,
+          }),
+        });
+      }
       actionFields[key] = new fields.SchemaField({
         label: new fields.StringField({
           label: "Localized Label",
@@ -19,6 +27,10 @@ export default class SpecialMovesDataModel extends foundry.abstract
         }),
       });
     }
+    schema.isHouseRelated = new fields.BooleanField({ initial: false });
+    schema.relationRelated = new fields.BooleanField({ initial: false });
+    schema.stringRelated = new fields.BooleanField({ initial: false });
+    schema.culeRelated = new fields.BooleanField({ initial: false });
     schema.action = new fields.SchemaField(actionFields);
     schema.description = new fields.StringField({ initial: "" });
     schema.resultsChange = new fields.SchemaField({

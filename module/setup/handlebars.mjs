@@ -380,4 +380,12 @@ export function registerHandlebarsHelpers() {
   Handlebars.registerHelper("allItems", function () {
     return CONFIG.SOFHCONFIG.allItems;
   });
+
+  Handlebars.registerHelper("areRelatedMoves", function (relatedMoves) {
+    if (relatedMoves.length > 0) {
+      return true;
+    } else {
+      return false;
+    }
+  });
 }

@@ -1,55 +1,63 @@
 <section class="main-move tab" style="overflow: auto;">
   <div class="moves-top-grid">
-    <img
-      src="{{item.img}}"
-      alt="{{item.name}}"
-      class="borderless"
-      data-action="editImage"
-      data-edit="img"
-    />
+    <img src="{{item.img}}" alt="{{item.name}}" class="borderless" data-action="editImage" data-edit="img"/>
     <div class="move-questions">
       <div class="moves-question-labels">
         <label for="name">{{localize "sofh.ui.moves.name"}}</label>
-        {{formInput
-          item.schema.fields.name
-          value=source.name
-          placeholder="Item Name"
-        }}
+        {{formInput item.schema.fields.name value=source.name placeholder="Item Name"}}
       </div>
     </div>
   </div>
-
   <div>
     <label>{{localize "sofh.item.specialMoves.selectMoveAction"}}</label>
     <div class="special-move-types">
       {{#each system.action as |action key|}}
         <div class="special-move-entry">
           <label for="action-{{key}}">{{localize action.label}}</label>
-          <input
-            type="checkbox"
-            name="system.action.{{key}}.isUse"
-            id="action-{{key}}"
-            {{#if action.isUse}}checked{{/if}}
-          >
+          <input type="checkbox" name="system.action.{{key}}.isUse" id="action-{{key}}" {{#if action.isUse}}checked{{/if}}>
         </div>
       {{/each}}
     </div>
+    {{#if system.action.isRolable.isUse}}
+    <div>
+      <div class="special-move-types">
+        <label for="house">{{localize 'sofh.move.isRaltedToHouse'}}</label>
+        <input type="checkbox" name="system.isHouseRelated" id="action-isHouseRelated" {{#if system.isHouseRelated}}checked{{/if}}>
+      </div>
+      <div class="special-move-types">
+        <label for="relation">{{localize 'sofh.move.isRelationRelated'}}</label>
+        <input type="checkbox" name="system.relationRelated" id="action-relationRelated" {{#if system.relationRelated}}checked{{/if}}>
+      </div>
+      <div class="special-move-types">
+        <label for="strings">{{localize 'sofh.move.isStringsRelated'}}</label>
+        <input type="checkbox" name="system.stringRelated" id="action-stringRelated" {{#if system.stringRelated}}checked{{/if}}>
+      </div>
+      <div class="special-move-types">
+        <label for="clue">{{localize 'sofh.move.isRelatedToClue'}}</label>
+        <input type="checkbox" name="system.culeRelated" id="action-culeRelated" {{#if system.culeRelated}}checked{{/if}}> 
+    </div>    
+  </div>
+    {{/if}}
+    {{#if system.action.riseRollResults.isUse}}
+        <div class="special-move-entry">
+          <label for="action-{{key}}">{{localize system.action.riseRollResults.causeComplication}}</label>
+          <input type="checkbox" name="system.action.riseRollResults.causeComplication" id="action-riseRollResults-causeComplication}" {{#if system.action.riseRollResults.causeComplication}}checked{{/if}}>
+        </div>
+    {{/if}}
         <div class="move-elements">
         <div class="trigers-sheet"> 
-           <h2 class="move_type trigger-label ">{{localize "sofh.item.trigerlabel"}}</h2> 
-            <div class="">
+          <h2 class="move_type trigger-label ">{{localize "sofh.item.trigerlabel"}}</h2> 
+          <div class="">
             {{formInput triggers.field value=triggers.value enriched=triggers.enriched toggled="true"}}
-            </div>      
+          </div>      
         </div>        
         <div class="description-sheet"> 
-           <h2 class="move_type description-label ">{{localize "sofh.item.descriptionlabel"}}</h2>
-           <div class="">
-          {{formInput description.field value=description.value enriched=description.enriched toggled="true"}}      
-
-           </div>       
+          <h2 class="move_type description-label ">{{localize "sofh.item.descriptionlabel"}}</h2>
+          <div class="">
+            {{formInput description.field value=description.value enriched=description.enriched toggled="true"}}      
+          </div>       
         </div>
     </div>
-
     {{#if system.action.isRealeted.isUse}}
       <div id="relatedMoves">
         <label>
@@ -57,11 +65,7 @@
           <i class="fa fa-plus" data-action="addRelatedMove"></i>
         </label>
         {{#each system.relatedMoves as |move index|}}
-          <select
-            id="related-move"
-            data-name="system.relatedMoves.{{index}}.moves"
-            data-id="{{index}}"
-          >
+          <select id="related-move" data-name="system.relatedMoves.{{index}}.moves" data-id="{{index}}">
             <option value="">{{localize "sofh.item.selectMovr"}}</option>
             {{selectOptions (allItems) selected=move.moves localize=false}}
           </select>

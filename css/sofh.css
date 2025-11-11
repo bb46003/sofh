@@ -656,6 +656,9 @@ h2.h2-roll {
   justify-content: center;
   font-family: "IM Fell English SC", serif;
 }
+h2.h2-roll.special{
+  display: block;
+}
 .editor-content.roll-resoult-above10,
 .editor-content.roll-resoult-below7,
 .editor-content.roll-resoult-7to9,
@@ -1117,6 +1120,7 @@ button#add-advantage-btn {
 .roll-results,
 .move-description-chat {
   font-size: 16px;
+  word-break: break-word;
 }
 .body-move.tab,
 .move-elements {

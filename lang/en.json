@@ -44,7 +44,9 @@
         "mystery_solution": "Opportunity - ",
         "mystery_question": "Question - ",
         "gainxp": "`{actor} gains {gainXP} XP!`",
-        "gainRep": "{actor} gains {gainRep} Reputation!`"
+        "gainRep": "{actor} gains {gainRep} Reputation!`",
+        "additionalResults": "Additional results from related move <strong>{name}</strong>",
+        "relatedMoveRiseEffect": "Move <strong>{name}</strong> rise roll result."
       },
       "moves": {
         "name": "Name of move:",
@@ -73,7 +75,11 @@
         "normalLabel": "Normal",
         "advantageLabel": "Advantage",
         "relatedClue": "Known Clues",
-        "pickOneAproach": "Choose one approach from the following:"
+        "pickOneAproach": "Choose one approach from the following:",
+        "additionQuestionFromReletedMoves": "Additional Question from related move: <strong>{name}</strong>",
+        "relatedMoveRiseResult": "Related Move {name} is applicable? If yes result of roll will be rised.",
+        "relatedMoveModifyEffects": "Related Move {name} is applicable? If yes result effests will be modify.",
+        "relatedMoves": "Effects from Related Moves"
       },
       "dialog": {
         "houseeq": "House Equipment Selection",
