@@ -390,9 +390,18 @@ export function registerHandlebarsHelpers() {
   });
 
   Handlebars.registerHelper("allTopic", function () {
-  return { 
-    ...CONFIG.SOFHCONFIG.favoriteTopic, 
-    ...CONFIG.SOFHCONFIG.favoriteTopic2 
-  };
+    return {
+      ...CONFIG.SOFHCONFIG.favoriteTopic,
+      ...CONFIG.SOFHCONFIG.favoriteTopic2,
+    };
+  });
+
+  Handlebars.registerHelper("includesElement", function (element) {
+    if (!element || typeof element !== "object") return false;
+    if (element?.name && element?.id) {
+      return true;
+    } else {
+      return false;
+    }
   });
 }

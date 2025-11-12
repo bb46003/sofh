@@ -159,6 +159,7 @@ export class sofhCharacterSheet extends BaseActorSheet {
       this.changeReputationQuestions(ev),
     );
     html.on("click", "#advamcmentDialog", (ev) => this.advamcmentDialog(ev));
+    html.on("click", "i.fa.fa-trash", (ev) => this.removeAdditionalTopic(ev));
   }
 
   async handleReputationChange(ev) {
@@ -231,6 +232,18 @@ export class sofhCharacterSheet extends BaseActorSheet {
             await this.actor.deleteEmbeddedDocuments("Item", [ID]);
             const movesElement = $(".all-moves." + item.type);
             await movesElement.css("display", "");
+            if (item.system?.action.addFavoriteTopic.isUse) {
+              const additionalTopic = foundry.utils.deepClone(
+                this.actor.system.additionalTopic,
+              );
+              const cleanedTopics = Object.values(additionalTopic).filter(
+                (topic) => topic?.id && topic?.name && topic.id !== ID,
+              );
+              await this.actor.update({
+                "system.additionalTopic": cleanedTopics,
+              });
+              this.actor.sheet.render(true);
+            }
           },
         },
         cancel: {
@@ -855,12 +868,21 @@ export class sofhCharacterSheet extends BaseActorSheet {
                     speaker: game.user.name,
                     content: `${game.i18n.localize("sofh.dilog.addNewTopic")}: <b>${choice}</b>`,
                   });
-                  const currentTopics = this.actor.system.additionalTopic;
-                  const size = Object.keys(currentTopics).length; 
-                  currentTopics[size]= {name:choice, id:createdItem.id};
-                  await this.actor.update({
-                    "system.additionalTopic": currentTopics,
-                  });
+                  const currentTopics =
+                    this.actor.system?.additionalTopic ?? {};
+                  let size = 0;
+                  for (const [key, value] of Object.entries(currentTopics)) {
+                    if (!value?.name || !value?.id) {
+                      delete currentTopics[key];
+                    }
+                  }
+                  if (currentTopics) {
+                    size = Object.keys(currentTopics).length;
+                  }
+                  currentTopics[size] = { name: choice, id: createdItem.id };
+                  const updateData = {};
+                  updateData["system.additionalTopic"] = currentTopics;
+                  await this.actor.update(updateData);
                 },
               },
             ],
@@ -870,5 +892,41 @@ export class sofhCharacterSheet extends BaseActorSheet {
         }
       }
     }
+  }
+  async removeAdditionalTopic(ev) {
+    const target = ev.target;
+    const input = target.parentElement.previousElementSibling;
+    const moveID = input.dataset.id;
+    const topicID = Number(input.dataset.topicid);
+    const actor = this.actor;
+    const additionalTopic = foundry.utils.deepClone(
+      actor.system.additionalTopic,
+    );
+    const move = await actor.items.get(moveID);
+    const innerText = game.i18n.format("sofh.ui.dialog.deleteMoveAndTopic", {
+      name: move?.name,
+    });
+    const removeTopic = new foundry.applications.api.DialogV2({
+      widnow: { title: game.i18n.localize("sofh.dilog.removeTopic") },
+      content: innerText,
+      buttons: [
+        {
+          label: game.i18n.localize("sofh.UI.OK"),
+          icon: "fa-solid fa-check",
+          action: "ok",
+          callback: async () => {
+            delete additionalTopic[topicID];
+            const cleanedTopics = Object.values(additionalTopic).filter(
+              (topic) => topic?.id && topic?.name,
+            );
+            await actor.update({ "system.additionalTopic": cleanedTopics });
+            await actor.deleteEmbeddedDocuments("Item", [moveID]);
+            actor.sheet.render(true);
+          },
+        },
+      ],
+      defaultButton: "ok",
+    });
+    removeTopic.render(true, { width: 600 });
   }
 }

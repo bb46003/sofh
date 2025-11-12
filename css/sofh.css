@@ -656,7 +656,7 @@ h2.h2-roll {
   justify-content: center;
   font-family: "IM Fell English SC", serif;
 }
-h2.h2-roll.special{
+h2.h2-roll.special {
   display: block;
 }
 .editor-content.roll-resoult-above10,
@@ -1098,9 +1098,9 @@ button#add-advantage-btn {
   gap: 5px;
   margin-top: 10px;
 }
-.flexrow-sofh{
-    display: grid;
-    grid-template-columns: 2fr 0.5fr;
+.flexrow-sofh {
+  display: grid;
+  grid-template-columns: 2fr 0.5fr;
 }
 .checkboxes.grid {
   display: grid !important;
@@ -1149,27 +1149,29 @@ button#add-advantage-btn {
   border-collapse: collapse;
   text-align: center;
 }
-.custom-blood, .custom-topic1{
-    display:flex; 
-    gap: 10px; 
-    align-items: center;
+.custom-blood,
+.custom-topic1 {
+  display: flex;
+  gap: 10px;
+  align-items: center;
 }
-.custom-house{
-    display: flex;
-    gap: 5px;
-    margin-bottom: 0px;
-    flex-direction: column;
+.custom-house {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 0px;
+  flex-direction: column;
 }
-.chat-description, .roll-results, .move-description-chat{
-    font-size: 16px;
+.chat-description,
+.roll-results,
+.move-description-chat {
+  font-size: 16px;
+}
 
-}
-
-.relation-table th, .relation-table td {
+.relation-table th,
+.relation-table td {
   border: 1px solid #999;
   padding: 4px 8px;
 }
-
 
 .relation-table td:first-child {
   text-align: left;
@@ -1181,7 +1183,7 @@ button#add-advantage-btn {
 .relation-table th:nth-child(3),
 .relation-table th:nth-child(4),
 .relation-table th:nth-child(2) {
-      max-width: 80px
+  max-width: 80px;
 }
 
 .relation-table input[type="radio"] {
@@ -1190,24 +1192,25 @@ button#add-advantage-btn {
   margin: 0;
 }
 
-.send-btn-all{
+.send-btn-all {
   width: 100%;
 }
-.character-entry, .character-list{
+.character-entry,
+.character-list {
   margin: 10px;
 }
-.reletedMove{
+.reletedMove {
   display: grid;
-  grid-template-columns:  1fr 0.1fr;
+  grid-template-columns: 1fr 0.1fr;
   gap: 10px;
   align-items: center;
 }
-h2.special-move{
-    display: flex;
-    gap: 10px;
+h2.special-move {
+  display: flex;
+  gap: 10px;
 }
-.topic-field{
-    display: flex;
-    align-items: center;
-    gap: 10px;
+.topic-field {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }

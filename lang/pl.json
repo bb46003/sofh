@@ -42,7 +42,12 @@
         "rollesult": "Roll result is:",
         "actorUseAdvantages": "<strong>{actor}</strong> use Advantages defnie as <strong>{advantage}</strong>",
         "mystery_solution": "Opportunity - ",
-        "mystery_question": "Question - "
+        "mystery_question": "Question - ",
+        "gainxp": "`{actor} gains {gainXP} XP!`",
+        "gainRep": "{actor} gains {gainRep} Reputation!`",
+        "additionalResults": "Additional results from related move <strong>{name}</strong>",
+        "relatedMoveRiseEffect": "Move <strong>{name}</strong> rise roll result.",
+        "relatedMoveCauseComplication": "You use Move {name} to many times on this session, prepare for Complication"
       },
       "moves": {
         "name": "Name of move:",
@@ -71,7 +76,11 @@
         "normalLabel": "Normal",
         "advantageLabel": "Advantage",
         "relatedClue": "Known Clues",
-        "pickOneAproach": "Choose one approach from the following:"
+        "pickOneAproach": "Choose one approach from the following:",
+        "additionQuestionFromReletedMoves": "Additional Question from related move: <strong>{name}</strong>",
+        "relatedMoveRiseResult": "Related Move {name} is applicable? If yes result of roll will be rised.",
+        "relatedMoveModifyEffects": "Related Move {name} is applicable? If yes result effests will be modify.",
+        "relatedMoves": "Effects from Related Moves"
       },
       "dialog": {
         "houseeq": "House Equipment Selection",
@@ -80,7 +89,8 @@
         "deleteMove": "Are you sure you want to delete the move <strong>{name}</strong>?",
         "deleteMoveTitle": "Delete Move: {name}",
         "other_factor": "Other factor impacting roll, click to open",
-        "other_factor_close": "Other factor impacting roll, click to close"
+        "other_factor_close": "Other factor impacting roll, click to close",
+        "deleteMoveAndTopic": "You want to delet additional Topic and Special Move <strong>{name}</strong>"
       },
       "relationships": {
         "caught_breaking_rules_with": "You got caught breaking the rules with:",
@@ -101,8 +111,7 @@
         "betrayed_trust": "Someone who betrayed your trust and you're still not over it:",
         "study_buddy": "Your study buddy is:",
         "sneaked_into_library": "You convinced them to sneak into the restricted section of the library with you:",
-        "caught_cheating": "They saw you sneaking after curfew to conduct strange research:",
-        "helped_with_invention": "They helped you with one of your inventions when you were stuck:",
+        "caught_cheating": "They saw you sneaking after curfew to conduct strange research <span class='italic'>Why didn’t they rat you out?</span>:\n",
         "deepest_secret_known_by": "Your deepest, darkest secret is known by:",
         "insulted_but_given_chance": "You once badly insulted them, but they gave you a second chance:",
         "lost_valuable_returned": "They found out you have something valuable that no one else knows about:",
@@ -111,7 +120,24 @@
         "score_instructions": "You start one relationship with +2, one with -1, and the rest with +1. Range: from -2 to +2.",
         "title": "Your Relationships",
         "scores_title": "Your Relationship Scores",
-        "relationQuestion": "Write your own relation question"
+        "relationQuestion": "Write your own relation question",
+        "slytherin1": "Your closest confidant and partner-in-crime: ",
+        "slytherin2": "Your fiercest rival, always trying to one-up you: ",
+        "slytherin3": "Someone who betrayed your trust and you are still not over \nit: ",
+        "slytherin4": "Your crush who endangers your ambitions: ",
+        "ravenclaw1": "Your closest confidant and partner-in-crime: ",
+        "ravenclaw2": "Your fiercest rival, always trying to one-up you: ",
+        "ravenclaw3": "Someone who betrayed your trust and you are still not over \nit: ",
+        "ravenclaw4": "Your biggest crush, even though you don't know how they \nfeel about you: ",
+        "hufflepuff1": "Your closest confidant and partner-in-crime: ",
+        "hufflepuff2": "Your fiercest rival, always trying to one-up you: ",
+        "hufflepuff3": "Someone who betrayed your trust and you are still not over \nit: ",
+        "hufflepuff4": "You have a huge, long-time crush on: ",
+        "gryffindor1": "Your closest confidant and partner-in-crime: ",
+        "gryffindor2": "Your fiercest rival, always trying to one-up you: ",
+        "gryffindor3": "Someone who betrayed your trust and you are still not over \nit: ",
+        "gryffindor4": "Your crush, making your life significantly more \ncomplicated: ",
+        "question": "Input your relation question"
       },
       "clue": {
         "clue_table": "Clues and who knows about them",
@@ -248,7 +274,17 @@
         "yourmovestriggers": "Moves triggers:",
         "condition.type": "Type",
         "condition.name": "Short description",
-        "condition.fixed": "Fixed?"
+        "condition.fixed": "Fixed?",
+        "reputation_questions": "Reputation Questionm",
+        "pickYourAdvancements": "Pick your Advancements",
+        "additionaNewTopicFromMove": "Additional favorit Topic from Special Moves"
+      },
+      "selectOption": "Select any option!",
+      "move": {
+        "resultAbove12": "Results on roll 12+",
+        "resultAbove10": "Results on 10+",
+        "result7to9": "Results on 7 to 9",
+        "resultBelow7": "Results on 6 and below"
       }
     },
     "rolling": "Rolling dialog",
@@ -265,7 +301,8 @@
       "isRaltedToHouseQuestion": "House Question",
       "isRaltedToHouse": "Move is related do House",
       "haseResult12": "Move have results 12+",
-      "namePulltheStrings": "Pull the Strings"
+      "namePulltheStrings": "Pull the Strings",
+      "endSesionMove": "End Sesion Moves"
     },
     "item": {
       "descriptionlabel": "Move description",
@@ -273,7 +310,17 @@
       "trigerlabel": "Triggers to move",
       "realtedtoothermoves": "Ralated moves to this one",
       "isrolled": "Description of roll results",
-      "designerComment": "Designer comment and practicalities"
+      "designerComment": "Designer comment and practicalities",
+      "specialMoves": {
+        "selectMoveAction": "Select Move Action",
+        "relatedMoves": "Add Releted Moves"
+      },
+      "specialMove": {
+        "causeComplication": "Move cause Complication on sequential use ? ",
+        "afteHowManyUse": "After how mny use couse Complication"
+      },
+      "selectMovr": "- Select Move -",
+      "addQuestion": "Add Move Question"
     },
     "SETTINGS": {
       "showHousePoint": "Display House Points",
@@ -299,18 +346,68 @@
       "add-custom-subject1-title": "Add new core subjects",
       "replace_topic": "Remove core subject and left only your custom subjects",
       "timeToShine": "Descrption of House for Time To Shine",
-      "houseGoal": "Defnie House goal"
+      "houseGoal": "Defnie House goal",
+      "removeCustomHouse": "Remove Custom House"
     },
     "clue": "Mistery",
     "dialog": {
       "knownMisery": "Select Mistery",
-      "select_mistery_question": "Choose Mystery Question"
+      "select_mistery_question": "Choose Mystery Question",
+      "reputation-heder": "House Reputation questions\nAt the beginning of a school year, highlight two of the questions\nbelow. Ask these two when you Gain Reputation, in the end of\nevery game session.\nDid you...",
+      "reputation": {
+        "gryffindor1": "face a major foe or fear with courage?",
+        "gryffindor2": "save someone important or famous?",
+        "gryffindor3": "impress someone or made them admire you?",
+        "gryffindor4": "steal someone’s spotlight?",
+        "hufflepuff1": "make peace with a major foe?",
+        "hufflepuff2": "make sure justice is done?",
+        "hufflepuff3": "prove yourself the most loyal friend?",
+        "hufflepuff4": "put your hard work in the spotlight?",
+        "ravenclaw1": "outsmart or label a major foe?",
+        "ravenclaw2": "let your knowledge take the spotlight?",
+        "ravenclaw3": "solve a puzzle or make significant progress toward solving a mystery?",
+        "slytherin1": "make a fool of a major foe?",
+        "slytherin2": "improve your social standing or influence?",
+        "slytherin3": "achieve an ambitious goal, proving to others that you are better than them?"
+      },
+      "apply": "Apply",
+      "makeOrBreakRelationship": "Make or Break Relationship",
+      "releationDescription": "At the end of each session, each player can adjust their Relationship score with one or two player characters up or down by 1. Explain how your character grew closer to or away from those characters this session.",
+      "updateRelation": "updated relations with:",
+      "gainxp": "At the end of each session, a character marks one Experience for each of the following questions they answer yes:",
+      "xpquestion1": "Did you make mistakes complicating your school life?",
+      "xpquestion2": "Did you face consequences of your <span class='italic'>Conditions</span>?",
+      "xpquestion3": "Did you mark no <span class='italic'>Experience</span> up to this point in the game session?",
+      "learnFromExperience": "Learn From Experience",
+      "gainReputaton": "Your Reputation",
+      "gainReputation": "Your <span class='italic'>Reputation</span> is a measure of how famous you are! Harry Potter started at Hogwarts already famous, but your characters will start at zero and have to work their way up as they solve mysteries, defeat enemies, and save people or even the school itself! There are five <span class='italic'>Ranks of Reputation</span>. When you reach 7 <span class='italic'>Reputation</span>, you go up to a new rank!\nMark below question to gain <span class='italic'>Reputation</span>.",
+      "commonQuestion1": " Did we solve a <span class='italic'>Mystery</span>?",
+      "commonQuestion2": " Did you gain any new <span class='italic'>Label (Social Condition)</span>?",
+      "subbmit": "Subbmit",
+      "send": "Send to Player",
+      "sendToAll": "Send to All Players",
+      "selectCharacter": "Select Player Character",
+      "endSensionHeder": "Below is list of Players and thier characters, if any Player do not have assigned character pick apropirt character from list. Then send End of Session Move to each player separatly by clikin button \"Send To Player\" or send to all at one by clicking \"Send to All\"",
+      "endOfSession": "End of Session Moves Handler",
+      "next": "Next Move",
+      "relationWith": "Relation with",
+      "relationValue": "Relation Value",
+      "riseRelation": "Rise relation",
+      "lowerRelation": "Lower Relation",
+      "breakthroughText": "You face a breakthrough in your relationship",
+      "rollBreakthrough": "Random Table for breakthrough",
+      "selectNewFavoriteTopic": "Select Yor additional favorit Topic ",
+      "selectNewTopic": "-- New Topic --"
     },
     "UI": {
       "OK": "Apply",
       "Roll": "Roll!"
     },
     "actor": "Character",
-    "moves": "Moves"
+    "moves": "Moves",
+    "dilog": {
+      "addNewTopic": "Add new topic from Special Move",
+      "removeTopic": "Remove aditional Topic and Special Move"
+    }
   }
 }

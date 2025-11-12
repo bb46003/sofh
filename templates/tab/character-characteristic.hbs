@@ -29,8 +29,9 @@
           </select>
           </div>
           
-          {{#if system.additionalTopic}}
+       
           {{#each system.additionalTopic as |topic index|}}
+             {{#if (includesElement topic)}}
           <div class="stat-grid">
             <label>{{localize "sofh.ui.actor.additionaNewTopicFromMove"}}</label>          
             <div class="topic-field">
@@ -38,13 +39,15 @@
                 name="system.additionalTopic.{{index}}.name"
                 value="{{topic.name}}"
                 data-id="{{topic.id}}"
+                data-topicid="{{index}}"
                 class="topic-input">              
-              <i class="fa fa-trash"></i>
+              <a><i class="fa fa-trash"></i></a>
               </div>
              </div>
+             {{/if}}
           {{/each}}
          
-          {{/if}}
+        
           
 
 
