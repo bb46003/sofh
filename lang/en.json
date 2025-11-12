@@ -408,6 +408,16 @@
     "dilog": {
       "addNewTopic": "Add new topic from Special Move",
       "removeTopic": "Remove aditional Topic and Special Move"
+    },
+    "items": {
+      "specialMoveType": {
+        "addQuestion": "Add Question to Move",
+        "isRolable": "You can roll for this Move?",
+        "addFavoriteTopic": "Move add new favorit Topic?",
+        "riseRollResults": "Move rise result of related Move?",
+        "modifEffect": "Move modify results of related Move?",
+        "isRelated": "Move is related to other Move?"
+      }
     }
   }
 }
