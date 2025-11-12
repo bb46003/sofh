@@ -20,7 +20,9 @@ export class sofhActor extends Actor {
       // Find the compendium pack
       this.setFlag("SofH", "lang", game.i18n.lang);
 
-      const basicMovesPack = game.packs.find((pack) => pack.collection === "SofH.moves");
+      const basicMovesPack = game.packs.find(
+        (pack) => pack.collection === "SofH.moves",
+      );
 
       try {
         // Ensure the pack is loaded and then filter for items with type "basicMoves"
@@ -41,7 +43,9 @@ export class sofhActor extends Actor {
 
           await this.createEmbeddedDocuments("Item", itemObjects);
         } else {
-          console.error("No items of type 'basicMoves' found in the compendium pack.");
+          console.error(
+            "No items of type 'basicMoves' found in the compendium pack.",
+          );
         }
       } catch (err) {
         console.error("Error loading items from the compendium:", err);

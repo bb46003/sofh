@@ -45,7 +45,9 @@ export class EndSessionDialog extends foundry.applications.api.ApplicationV2 {
     const activePlayers = game.users.filter((u) => u.active && !u.isGM);
     const allActors = game.actors.contents;
     const playersData = activePlayers.map((u) => {
-      const ownedActors = allActors.filter((a) => a.type === "character" && a.testUserPermission(u, "OWNER"));
+      const ownedActors = allActors.filter(
+        (a) => a.type === "character" && a.testUserPermission(u, "OWNER"),
+      );
       return {
         userId: u.id,
         playerName: u.name,

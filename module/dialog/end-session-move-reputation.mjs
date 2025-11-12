@@ -1,6 +1,7 @@
 import sofh_Utility from "../utility.mjs";
 
-export class EndSessionYourReputation extends foundry.applications.api.ApplicationV2 {
+export class EndSessionYourReputation extends foundry.applications.api
+  .ApplicationV2 {
   static DEFAULT_OPTIONS = {
     actions: {
       next: EndSessionYourReputation.#next,
@@ -18,10 +19,28 @@ export class EndSessionYourReputation extends foundry.applications.api.Applicati
     let question1 = actor.system.reputationQuestion1;
     let question2 = actor.system.reputationQuestion2;
     const repTable = {
-      gryffindor: ["sofh.dialog.reputation.gryffindor1", "sofh.dialog.reputation.gryffindor2", "sofh.dialog.reputation.gryffindor3", "sofh.dialog.reputation.gryffindor4"],
-      hufflepuff: ["sofh.dialog.reputation.hufflepuff1", "sofh.dialog.reputation.hufflepuff2", "sofh.dialog.reputation.hufflepuff3", "sofh.dialog.reputation.hufflepuff4"],
-      ravenclaw: ["sofh.dialog.reputation.ravenclaw1", "sofh.dialog.reputation.ravenclaw2", "sofh.dialog.reputation.ravenclaw3"],
-      slytherin: ["sofh.dialog.reputation.slytherin1", "sofh.dialog.reputation.slytherin2", "sofh.dialog.reputation.slytherin3"],
+      gryffindor: [
+        "sofh.dialog.reputation.gryffindor1",
+        "sofh.dialog.reputation.gryffindor2",
+        "sofh.dialog.reputation.gryffindor3",
+        "sofh.dialog.reputation.gryffindor4",
+      ],
+      hufflepuff: [
+        "sofh.dialog.reputation.hufflepuff1",
+        "sofh.dialog.reputation.hufflepuff2",
+        "sofh.dialog.reputation.hufflepuff3",
+        "sofh.dialog.reputation.hufflepuff4",
+      ],
+      ravenclaw: [
+        "sofh.dialog.reputation.ravenclaw1",
+        "sofh.dialog.reputation.ravenclaw2",
+        "sofh.dialog.reputation.ravenclaw3",
+      ],
+      slytherin: [
+        "sofh.dialog.reputation.slytherin1",
+        "sofh.dialog.reputation.slytherin2",
+        "sofh.dialog.reputation.slytherin3",
+      ],
     };
     const house = actor.system.house;
     if (!isNaN(Number(question1))) {
@@ -30,7 +49,10 @@ export class EndSessionYourReputation extends foundry.applications.api.Applicati
     if (!isNaN(Number(question2))) {
       question2 = game.i18n.localize(repTable[house][Number(question2)]);
     }
-    const html = await sofh_Utility.renderTemplate(this.options.template, { q1: question1, q2: question2 });
+    const html = await sofh_Utility.renderTemplate(this.options.template, {
+      q1: question1,
+      q2: question2,
+    });
     return html;
   }
 
@@ -47,7 +69,9 @@ export class EndSessionYourReputation extends foundry.applications.api.Applicati
     });
     const reputationValue = actor.system.reputation.value;
     const keys = Object.keys(reputationValue).map(Number);
-    let trueReputation = keys.reverse().find((key) => reputationValue[key] === true);
+    let trueReputation = keys
+      .reverse()
+      .find((key) => reputationValue[key] === true);
     if (trueReputation === undefined) trueReputation = 0;
     const updateData = {};
     let newRep = trueReputation + gainRep;
@@ -69,7 +93,10 @@ export class EndSessionYourReputation extends foundry.applications.api.Applicati
       ChatMessage.create({
         user: game.user.id,
         speaker: game.user.name,
-        content: game.i18n.format("sofh.ui.chat.gainRep", { actor: actor.name, gainRep: gainRep }),
+        content: game.i18n.format("sofh.ui.chat.gainRep", {
+          actor: actor.name,
+          gainRep: gainRep,
+        }),
       });
     }
     this.close();

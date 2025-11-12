@@ -1,7 +1,8 @@
 import sofh_Utility from "../utility.mjs";
 import { EndSessionYourReputation } from "./end-session-move-reputation.mjs";
 
-export class EndSessionLearnFromExperience extends foundry.applications.api.ApplicationV2 {
+export class EndSessionLearnFromExperience extends foundry.applications.api
+  .ApplicationV2 {
   static DEFAULT_OPTIONS = {
     actions: {
       next: EndSessionLearnFromExperience.#next,
@@ -51,7 +52,10 @@ export class EndSessionLearnFromExperience extends foundry.applications.api.Appl
       ChatMessage.create({
         user: game.user.id,
         speaker: game.user.name,
-        content: game.i18n.format("sofh.ui.chat.gainxp", { actor: actor.name, gainXP: gainXP }),
+        content: game.i18n.format("sofh.ui.chat.gainxp", {
+          actor: actor.name,
+          gainXP: gainXP,
+        }),
       });
     }
     const data = { player: this.options.player, actorId: this.options.actorId };

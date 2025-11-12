@@ -1,4 +1,5 @@
 <form class="sofh{{cssClass}}" autocomplete="off">
+    {{log item}}
     {{#if item.system.housequestion}}
     <h2 class="h2-roll">{{localize 'sofh.ui.rolldialog.houseQuestionTitle'}}</h2>
 
@@ -13,8 +14,7 @@
 
  
     <div class="item">
-    {{#if item.system.havequestion}}
-    
+    {{#if item.system.havequestion}}    
         {{#if (eq (numberOfQuestion item.system) false)}}
             <h2 class="h2-roll">{{localize 'sofh.ui.rolldialog.moveQuestionTitle'}}</h2>
             {{#each item.system.question as |question index|}}
@@ -66,6 +66,25 @@
             {{/each}}
         {{/if}}
     {{/if}}
+    {{#each relatedMoves as |relatedMove|}}
+        {{#if relatedMove.system.action.addQuestion.isUse}}
+            <h2 class="h2-roll special">{{{localize  "sofh.ui.rolldialog.additionQuestionFromReletedMoves" name=relatedMove.name}}}</h2>
+            {{log relatedMove.system.additionalQuestion }}
+            {{#each relatedMove.system.additionalQuestion as |question|}}
+                <div class="question-sheet-roll">
+                    <div class="question description">{{{question.question}}}</div>
+                        <select class="question-impact" disabled>
+                            <option value="true" selected>{{localize 'sofh.ui.rolldialog.positiveOption'}}</option>
+                        </select>
+                        <div class="questionc- hcekbox">
+                            <label class="question-isapply">{{localize 'sofh.ui.rolldialog.isApplyLabel'}}</label>
+                            <input type="checkbox" class="circle-checkbox-isapply">
+                        </div>
+                    </div>
+                </div>
+            {{/each}}
+        {{/if}}
+    {{/each}}
     </div>
     {{#if item.system.relationrelated}}
         <h2 class="h2-roll">{{localize 'sofh.ui.rolldialog.relevantRelationTitle'}}</h2>
@@ -79,11 +98,27 @@
     {{/if}}
     {{#if item.system.cluerelated}}
         <h2 class="h2-roll">{{localize 'sofh.ui.rolldialog.relatedClue'}}</h2>
-        <div class="known-clue">
-            
+        <div class="known-clue">            
             {{showAllKnownClue clueID complexity}}
         </div>
     {{/if}}
+    {{#if areRelatedMoves}}
+        <h2 class="h2-roll">{{localize 'sofh.ui.rolldialog.relatedMoves'}}</h2>
+    {{/if}}
+    {{#each relatedMoves as |relatedMove|}}
+        {{#if relatedMove.system.action.riseRollResults.isUse}}
+        <div class="riseResult">
+            <label class="question description">{{localize  "sofh.ui.rolldialog.relatedMoveRiseResult" name=relatedMove.name}}</label>
+            <input type="checkbox" class="circle-checkbox-isapply" data-movename="{{relatedMove.name}}" data-moveid="{{relatedMove.id}}">
+        </div>
+        {{/if}}
+        {{#if relatedMove.system.action.modifyEffect.isUse}}
+        <div class="modifyEffect">
+            <label class="question description">{{localize  "sofh.ui.rolldialog.relatedMoveModifyEffects" name=relatedMove.name}}</label>
+            <input type="checkbox" class="circle-checkbox-isapply" data-moveid="{{relatedMove.id}}">
+        </div>
+        {{/if}}
+    {{/each}}
     {{#if (eq item.system.cluerelated false)}}
         <h3 class="other-factor-h3">{{localize "sofh.ui.dialog.other_factor"}}</h3>
         <div class="other-factor" style="display: none">

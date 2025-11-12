@@ -10,13 +10,15 @@ SOFHCONFIG.favoriteTopic = {
   spells: "sofh.ui.actor.favoriteTopic.spells",
   herbology: "sofh.ui.actor.favoriteTopic.herbology",
   history_of_magic: "sofh.ui.actor.favoriteTopic.history_of_magic",
-  defense_against_dark_arts: "sofh.ui.actor.favoriteTopic.defense_against_dark_arts",
+  defense_against_dark_arts:
+    "sofh.ui.actor.favoriteTopic.defense_against_dark_arts",
   potions: "sofh.ui.actor.favoriteTopic.potions",
   transmutation: "sofh.ui.actor.favoriteTopic.transmutation",
 };
 
 SOFHCONFIG.favoriteTopic2 = {
-  care_of_magical_creatures: "sofh.ui.actor.favoriteTopic2.care_of_magical_creatures",
+  care_of_magical_creatures:
+    "sofh.ui.actor.favoriteTopic2.care_of_magical_creatures",
   muggle_studies: "sofh.ui.actor.favoriteTopic2.muggle_studies",
   numerology: "sofh.ui.actor.favoriteTopic2.numerology",
   divination: "sofh.ui.actor.favoriteTopic2.divination",
@@ -98,9 +100,20 @@ SOFHCONFIG.timeToShine = {
   slytherinTimeToShine: "sofh.ui.actor.slytherinTimeToShine",
 };
 
+SOFHCONFIG.typeOfSpecialMoves = {
+  addQuestion: "sofh.items.specialMoveType.addQuestion",
+  isRolable: "sofh.items.specialMoveType.isRolable",
+  addFavoriteTopic: "sofh.items.specialMoveType.addFavoriteTopic",
+  riseRollResults: "sofh.items.specialMoveType.riseRollResults",
+  modifyEffect: "sofh.items.specialMoveType.modifEffect",
+  isRealeted: "sofh.items.specialMoveType.isRelated",
+};
+
 export async function characterRelation() {
   const actors = game.actors;
-  const character = Array.from(actors.entries()).filter(([key, actor]) => actor.type === "character");
+  const character = Array.from(actors.entries()).filter(
+    ([key, actor]) => actor.type === "character",
+  );
 
   let characterRelation = {};
 

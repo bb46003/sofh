@@ -6,13 +6,13 @@
 >
 
   <div class="custom-house-header addBlood flexcolumn">
-    <h3>{{localize "sofh.SETTINGS.add-custom-blood-type-title"}} <a><i class="fa fa-plus" data-action="addBloodType"></i></a></h3>
-      {{#each data as |blood|}}
-      <div class= "custom-blood">
-          <input type="text" name="bloodType" value="{{blood}}">
-          <a><i class="fa fa-trash" data-action="removeBlood"></i></a>
-      </div>            
-     {{/each}}
-     </div>
+    <h3>{{localize "sofh.SETTINGS.add-custom-blood-type-title"}}
+      <a><i class="fa fa-plus" data-action="addBloodType"></i></a></h3>
+    {{#each data as |blood|}}
+      <div class="custom-blood">
+        <input type="text" name="bloodType" value="{{blood}}" />
+        <a><i class="fa fa-trash" data-action="removeBlood"></i></a>
+      </div>
+    {{/each}}
+  </div>
 </section>
-

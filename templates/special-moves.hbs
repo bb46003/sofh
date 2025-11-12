@@ -1,0 +1,120 @@
+<section class="main-move tab" style="overflow: auto;">
+  <div class="moves-top-grid">
+    <img src="{{item.img}}" alt="{{item.name}}" class="borderless" data-action="editImage" data-edit="img"/>
+    <div class="move-questions">
+      <div class="moves-question-labels">
+        <label for="name">{{localize "sofh.ui.moves.name"}}</label>
+        {{formInput item.schema.fields.name value=source.name placeholder="Item Name"}}
+      </div>
+    </div>
+  </div>
+  <div>
+    <label>{{localize "sofh.item.specialMoves.selectMoveAction"}}</label>
+    <div class="special-move-types">
+      {{#each system.action as |action key|}}
+        <div class="special-move-entry">
+          <label for="action-{{key}}">{{localize action.label}}</label>
+          <input type="checkbox" name="system.action.{{key}}.isUse" id="action-{{key}}" {{#if action.isUse}}checked{{/if}}>
+        </div>
+        {{#if (and (eq key "riseRollResults") action.isUse)}}
+        <div class="special-move-entry">
+          <div class="column">
+            <label for="action-riseRollResults">{{localize "sofh.item.specialMove.causeComplication"}}</label>
+            <input type="checkbox" name="system.action.riseRollResults.causeComplication" id="action-riseRollResults-causeComplication" {{#if action.causeComplication}}checked{{/if}}>
+          </div>
+          <div class="column">
+            {{log action}}
+            <label for="action-riseRollResults">{{localize "sofh.item.specialMove.afteHowManyUse"}}</label>
+            <input type="number" name="system.action.riseRollResults.useNumber" id="action-riseRollResults-useNumber" value="{{action.useNumber}}">
+          </div>
+        </div>
+    {{/if}}
+      {{/each}}
+    </div>
+    {{#if system.action.isRolable.isUse}}
+    <div>
+      <div class="special-move-types">
+        <label for="house">{{localize 'sofh.move.isRaltedToHouse'}}</label>
+        <input type="checkbox" name="system.isHouseRelated" id="action-isHouseRelated" {{#if system.isHouseRelated}}checked{{/if}}>
+      </div>
+      <div class="special-move-types">
+        <label for="relation">{{localize 'sofh.move.isRelationRelated'}}</label>
+        <input type="checkbox" name="system.relationRelated" id="action-relationRelated" {{#if system.relationRelated}}checked{{/if}}>
+      </div>
+      <div class="special-move-types">
+        <label for="strings">{{localize 'sofh.move.isStringsRelated'}}</label>
+        <input type="checkbox" name="system.stringRelated" id="action-stringRelated" {{#if system.stringRelated}}checked{{/if}}>
+      </div>
+      <div class="special-move-types">
+        <label for="clue">{{localize 'sofh.move.isRelatedToClue'}}</label>
+        <input type="checkbox" name="system.culeRelated" id="action-culeRelated" {{#if system.culeRelated}}checked{{/if}}> 
+    </div>    
+  </div>
+    {{/if}}
+
+        <div class="move-elements">
+        <div class="trigers-sheet"> 
+          <h2 class="move_type trigger-label ">{{localize "sofh.item.trigerlabel"}}</h2> 
+          <div class="">
+            {{formInput triggers.field value=triggers.value enriched=triggers.enriched toggled="true"}}
+          </div>      
+        </div>        
+        <div class="description-sheet"> 
+          <h2 class="move_type description-label ">{{localize "sofh.item.descriptionlabel"}}</h2>
+          <div class="">
+            {{formInput description.field value=description.value enriched=description.enriched toggled="true"}}      
+          </div>       
+        </div>
+    </div>
+    {{#if system.action.isRealeted.isUse}}
+      <div id="relatedMoves">
+        <h2 class="special-move">
+          {{localize "sofh.item.specialMoves.relatedMoves"}}
+          <i class="fa fa-plus" data-action="addRelatedMove"></i>
+        </h2>
+        {{#each system.relatedMoves as |move index|}}
+        <div class="reletedMove">
+          <select id="related-move" data-name="system.relatedMoves.{{index}}.moves" data-id="{{index}}">
+            <option value="">{{localize "sofh.item.selectMovr"}}</option>
+            {{selectOptions (allItems) selected=move.moves localize=false}}
+          </select>
+          <i class="fa fa-trash" data-action="removeRelatedMove" data-id="{{index}}"></i>
+          </div>
+        {{/each}}
+      </div>
+    {{/if}}
+
+    {{#if (or system.action.modifyEffect.isUse system.action.isRolable.isUse)}}
+      <h2 class="move_type description-label">
+        {{localize "sofh.item.isrolled"}}
+      </h2>
+      <div class="moves-isrolled">
+        <div class="row">
+          <label for="above10">{{localize 'sofh.ui.move.resultAbove12'}}</label>
+          {{formInput above12.field value=above12.value enriched=above12.enriched toggled="true"}}      
+        </div>
+        <div class="row">
+          <label for="above10">{{localize 'sofh.ui.move.resultAbove10'}}</label>
+          {{formInput above10.field value=above10.value enriched=above10.enriched toggled="true"}}      
+        </div>
+        <div class="row">
+          <label for="7to9">{{localize 'sofh.ui.move.result7to9'}}</label>
+          {{formInput 7to9.field value=7to9.value enriched=7to9.enriched toggled="true"}}      
+        </div>
+        <div class="row">
+          <label for="below7">{{localize 'sofh.ui.move.resultBelow7'}}</label> 
+          {{formInput below7.field value=below7.value enriched=below7.enriched toggled="true"}}      
+        </div>  
+      </div>
+    {{/if}}
+    {{#if system.action.addQuestion.isUse}}
+    <h2 class="special-move">{{localize "sofh.item.addQuestion"}}<i class="fa fa-plus" data-action="addQuestion"></i></h2>    
+    {{#each additionalQuestions as |question index|}}
+      <div>
+        {{formInput question.field value=question.value enriched=question.enriched name=(concat "additionalQuestion[" index "]")toggled="true"}}      
+        <i class="fa fa-trash" data-action="removeQuestion" data-id="{{index}}"></i>
+      </div>
+      {{/each}}
+    {{/if}}
+  </div>
+</section>

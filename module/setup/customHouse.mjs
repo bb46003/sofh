@@ -25,7 +25,7 @@ export class customHouse extends foundry.applications.api.ApplicationV2 {
       removeHouseEq: customHouse.#removeHouseEq,
       removeBlood: customHouse.#removeBlood,
       removeTopic1: customHouse.#removeTopic1,
-      removeTopic2: customHouse.#removeTopic2
+      removeTopic2: customHouse.#removeTopic2,
     },
   };
 
@@ -88,7 +88,9 @@ export class customHouse extends foundry.applications.api.ApplicationV2 {
   }
   async _renderHTML() {
     const data = game.settings.get("SofH", "customConfig") || {};
-    let html = await sofh_Utility.renderTemplate(this.options.template, {data:data});
+    let html = await sofh_Utility.renderTemplate(this.options.template, {
+      data: data,
+    });
     let partsHtml = "";
     for (const part of Object.values(this.constructor.PARTS)) {
       let templateData = {};
@@ -113,7 +115,10 @@ export class customHouse extends foundry.applications.api.ApplicationV2 {
         data: templateData,
       });
     }
-    html = html.replace(/(<nav class="sheet-tabs[^>]*">[\s\S]*?<\/nav>)/, `$1${partsHtml}`);
+    html = html.replace(
+      /(<nav class="sheet-tabs[^>]*">[\s\S]*?<\/nav>)/,
+      `$1${partsHtml}`,
+    );
 
     return html;
   }
@@ -123,7 +128,9 @@ export class customHouse extends foundry.applications.api.ApplicationV2 {
   }
   static async #addHouse() {
     const element = this.element;
-    const html = await sofh_Utility.renderTemplate("systems/SofH/templates/app/part/tab/new-house.hbs");
+    const html = await sofh_Utility.renderTemplate(
+      "systems/SofH/templates/app/part/tab/new-house.hbs",
+    );
     const container = element.querySelector(".custom-houses");
     const lastSection = container.querySelector("section:last-of-type");
     if (lastSection) {
@@ -150,23 +157,30 @@ export class customHouse extends foundry.applications.api.ApplicationV2 {
     // --- Houses ---
     const houseSections = element.querySelectorAll(".custom-house");
     houseSections.forEach((section) => {
-      const houseName = section.querySelector('input[name="houseName"]')?.value.trim() || null;
-      const equipment = section.querySelector('input[name="equipment"]')?.value.trim() || null;
+      const houseName =
+        section.querySelector('input[name="houseName"]')?.value.trim() || null;
+      const equipment =
+        section.querySelector('input[name="equipment"]')?.value.trim() || null;
 
       const eqInputs = section.querySelectorAll('input[name="houseEq"]');
 
       const houseEq = Array.from(eqInputs)
         .map((i) => i.value.trim())
         .filter((v) => v !== "");
-      const questionInputs = section.querySelectorAll('input[name="houseQuestion"]');
+      const questionInputs = section.querySelectorAll(
+        'input[name="houseQuestion"]',
+      );
       const questions = Array.from(questionInputs)
         .map((i) => i.value.trim())
         .filter((v) => v !== "");
 
       const question1 = questions[0] || null;
       const question2 = questions[1] || null;
-      const goal = section.querySelector(`input[name="timeToShine"]`)?.value.trim() || null;
-      const timeToShine = section.querySelector(`input[name="houseGoal"]`)?.value.trim() || null;
+      const goal =
+        section.querySelector(`input[name="timeToShine"]`)?.value.trim() ||
+        null;
+      const timeToShine =
+        section.querySelector(`input[name="houseGoal"]`)?.value.trim() || null;
       if (houseName || equipment || houseEq.length > 0) {
         data.houses.push({
           name: houseName,
@@ -192,13 +206,17 @@ export class customHouse extends foundry.applications.api.ApplicationV2 {
     });
 
     // --- Blood Types ---
-    const bloodInputs = element.querySelectorAll(".custom-blood input[type='text']");
+    const bloodInputs = element.querySelectorAll(
+      ".custom-blood input[type='text']",
+    );
     bloodInputs.forEach((input) => {
       const val = input.value.trim();
       if (val) data.bloodTypes.push(val);
     });
 
-    const topicReplace = element.querySelector(`input[name="replaceTopics"]`).checked;
+    const topicReplace = element.querySelector(
+      `input[name="replaceTopics"]`,
+    ).checked;
     data.replaceTopic = topicReplace;
     // --- Save to settings ---
     await game.settings.set("SofH", "customConfig", data);
@@ -220,9 +238,13 @@ export class customHouse extends foundry.applications.api.ApplicationV2 {
         CONFIG.SOFHCONFIG.House[key] = house.name;
 
         // House equipment
-        if (!CONFIG.SOFHCONFIG.houseeq[key]) CONFIG.SOFHCONFIG.houseeq[key] = {};
+        if (!CONFIG.SOFHCONFIG.houseeq[key])
+          CONFIG.SOFHCONFIG.houseeq[key] = {};
         house.houseEq.forEach((eq) => {
-          if (eq) CONFIG.SOFHCONFIG.houseeq[key][eq.toLowerCase().replace(/\s+/g, "_")] = eq;
+          if (eq)
+            CONFIG.SOFHCONFIG.houseeq[key][
+              eq.toLowerCase().replace(/\s+/g, "_")
+            ] = eq;
         });
 
         // General equipment
@@ -258,7 +280,9 @@ export class customHouse extends foundry.applications.api.ApplicationV2 {
     if (lastSection) {
       lastSection.insertAdjacentHTML("afterend", html);
     } else {
-      const bloodContainer = element.querySelector(".custom-house-header.addBlood");
+      const bloodContainer = element.querySelector(
+        ".custom-house-header.addBlood",
+      );
       if (bloodContainer) bloodContainer.insertAdjacentHTML("beforeend", html);
     }
   }
@@ -273,7 +297,9 @@ export class customHouse extends foundry.applications.api.ApplicationV2 {
     if (lastSection) {
       lastSection.insertAdjacentHTML("afterend", html);
     } else {
-      const bloodContainer = element.querySelector(".custom-house-header.subject2");
+      const bloodContainer = element.querySelector(
+        ".custom-house-header.subject2",
+      );
       if (bloodContainer) bloodContainer.insertAdjacentHTML("beforeend", html);
     }
   }
@@ -288,7 +314,9 @@ export class customHouse extends foundry.applications.api.ApplicationV2 {
     if (lastSection) {
       lastSection.insertAdjacentHTML("afterend", html);
     } else {
-      const bloodContainer = element.querySelector(".custom-house-header.subject1");
+      const bloodContainer = element.querySelector(
+        ".custom-house-header.subject1",
+      );
       if (bloodContainer) bloodContainer.insertAdjacentHTML("beforeend", html);
     }
   }
@@ -307,48 +335,47 @@ export class customHouse extends foundry.applications.api.ApplicationV2 {
     }
   }
 
-  static #removeHouseEq(event){
+  static #removeHouseEq(event) {
     const target = event.target;
-    const element = target.parentElement.parentElement.parentElement
+    const element = target.parentElement.parentElement.parentElement;
     const houseName = element.querySelector('input[name="houseName"]').value;
     if (CONFIG.SOFHCONFIG.House?.[houseName]) {
       delete CONFIG.SOFHCONFIG.House[houseName];
-       delete CONFIG.SOFHCONFIG.goal["goal"+houseName]
-       delete CONFIG.SOFHCONFIG.timeToShine[houseName+"TimeToShine"];
-       delete CONFIG.SOFHCONFIG.houseeq[houseName]
+      delete CONFIG.SOFHCONFIG.goal["goal" + houseName];
+      delete CONFIG.SOFHCONFIG.timeToShine[houseName + "TimeToShine"];
+      delete CONFIG.SOFHCONFIG.houseeq[houseName];
 
-    console.log(`Removed house: ${houseName}`);
-  } else {
-    console.warn(`House "${houseName}" not found.`);
+      console.log(`Removed house: ${houseName}`);
+    } else {
+      console.warn(`House "${houseName}" not found.`);
+    }
+
+    // Optional: update UI or re-render
+    element.remove();
   }
 
-  // Optional: update UI or re-render
-  element.remove();
-
-  }
-
-  static #removeBlood(event){
+  static #removeBlood(event) {
     const element = event.target.parentElement.parentElement;
-    const blood = element.querySelector(`input[type="text"]`).value
-    if(blood !== ""){
+    const blood = element.querySelector(`input[type="text"]`).value;
+    if (blood !== "") {
       delete CONFIG.SOFHCONFIG.bloodType[blood];
-      element.remove()
+      element.remove();
     }
   }
-  static #removeTopic1(event){
+  static #removeTopic1(event) {
     const element = event.target.parentElement.parentElement;
-    const tipic = element.querySelector(`input[type="text"]`).value
-    if(tipic !== ""){
+    const tipic = element.querySelector(`input[type="text"]`).value;
+    if (tipic !== "") {
       delete CONFIG.SOFHCONFIG.favoriteTopic[tipic];
-      element.remove()
+      element.remove();
     }
   }
-    static #removeTopic2(event){
+  static #removeTopic2(event) {
     const element = event.target.parentElement.parentElement;
-    const tipic = element.querySelector(`input[type="text"]`).value
-    if(tipic !== ""){
+    const tipic = element.querySelector(`input[type="text"]`).value;
+    if (tipic !== "") {
       delete CONFIG.SOFHCONFIG.favoriteTopic2[tipic];
-      element.remove()
+      element.remove();
     }
   }
 }
