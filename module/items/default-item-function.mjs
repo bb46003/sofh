@@ -1,4 +1,6 @@
-export default class MOVES extends foundry.documents.Item {
+const BaseItem = foundry.documents?.Item ?? foundry.documents?.BaseItem;
+
+export default class MOVES extends Item{
   /* -------------------------------------------- */
   /*  Item Attributes                             */
   /* -------------------------------------------- */

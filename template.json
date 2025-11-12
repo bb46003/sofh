@@ -129,13 +129,6 @@
     },
     "endOfSessionMoves": {
       "templates": ["base"]
-    },
-    "specialPlaybookMoves": {
-      "action": {},
-      "description": "",
-      "resultsChange": "",
-      "additionalQuestion": {},
-      "relatedMoves": {}
     }
   }
 }

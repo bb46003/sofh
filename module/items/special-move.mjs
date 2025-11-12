@@ -39,7 +39,8 @@ export class sofhSpecialMovesSheet extends api.HandlebarsApplicationMixin(
     const itemData = this.document.toObject(false);
     context.system = itemData.system;
     context.fields = this.document.system?.schema?.fields ?? {};
-    const { enrichHTML } = foundry.applications.ux.TextEditor;
+  const enrichHTML = (foundry.applications?.ux?.TextEditor?.enrichHTML)
+  || TextEditor.enrichHTML;
     context["7to9"] = {
       value: itemData.system.resultsChange["7to9"],
       enriched: await enrichHTML(itemData.system.resultsChange["7to9"]),
