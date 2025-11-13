@@ -8,7 +8,7 @@
       </div>
     </div>
   </div>
-  <div>
+  <div style="width:90%">
     <label>{{localize "sofh.item.specialMoves.selectMoveAction"}}</label>
     <div class="special-move-types">
       {{#each system.action as |action key|}}
@@ -23,12 +23,24 @@
             <input type="checkbox" name="system.action.riseRollResults.causeComplication" id="action-riseRollResults-causeComplication" {{#if action.causeComplication}}checked{{/if}}>
           </div>
           <div class="column">
-            {{log action}}
             <label for="action-riseRollResults">{{localize "sofh.item.specialMove.afteHowManyUse"}}</label>
             <input type="number" name="system.action.riseRollResults.useNumber" id="action-riseRollResults-useNumber" value="{{action.useNumber}}">
           </div>
+          <div class="column">
+            <label for="action-riseRollResults">{{localize "sofh.item.specialMove.riseresultBelo6to7to9"}}</label>
+            <input type="checkbox" name='system.action.riseRollResults.7to9' id="action-riseRollResults-useNumber" value="{{action.7to9}}">
+          </div>
+          <div class="column">
+            <label for="action-riseRollResults">{{localize "sofh.item.specialMove.riseresult7to9toabove10"}}</label>
+            <input type="checkbox" name="system.action.riseRollResults.above10" id="action-riseRollResults-above10" value="{{action.above10}}">
+          </div>
+          <div class="column">
+            <label for="action-riseRollResults">{{localize "sofh.item.specialMove.riseResultabove10toabove12"}}</label>
+            <input type="checkbox" name="system.action.riseRollResults.above12" id="action-riseRollResults-above12" value="{{action.above12}}">
+          </div>
         </div>
     {{/if}}
+    
       {{/each}}
     </div>
     {{#if system.action.isRolable.isUse}}
@@ -66,6 +78,7 @@
           </div>       
         </div>
     </div>
+    {{log system.action.isRealeted.isUse}}
     {{#if system.action.isRealeted.isUse}}
       <div id="relatedMoves">
         <h2 class="special-move">

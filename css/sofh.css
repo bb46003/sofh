@@ -1214,3 +1214,8 @@ h2.special-move {
   align-items: center;
   gap: 10px;
 }
+.additional-subject{
+    display: grid;
+    grid-template-columns: 1fr 0.1fr;
+    align-items: center;
+}

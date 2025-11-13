@@ -90,7 +90,7 @@
         "deleteMoveTitle": "Delete Move: {name}",
         "other_factor": "Other factor impacting roll, click to open",
         "other_factor_close": "Other factor impacting roll, click to close",
-        "deleteMoveAndTopic": "You want to delet additional Topic and Special Move <strong>{name}</strong>"
+        "deleteMoveAndTopic": "You want to delet additional Subject and Special Move <strong>{name}</strong>"
       },
       "relationships": {
         "caught_breaking_rules_with": "You got caught breaking the rules with:",
@@ -277,7 +277,8 @@
         "condition.fixed": "Fixed?",
         "reputation_questions": "Reputation Questionm",
         "pickYourAdvancements": "Pick your Advancements",
-        "additionaNewTopicFromMove": "Additional favorit Topic from Special Moves"
+        "additionaNewTopicFromMove": "Additional favorit core subject from Special Moves",
+        "additionaNewTopic2FromMove": "Additional favorit elective subject from Special Moves"
       },
       "selectOption": "Select any option!",
       "move": {
@@ -396,8 +397,9 @@
       "lowerRelation": "Lower Relation",
       "breakthroughText": "You face a breakthrough in your relationship",
       "rollBreakthrough": "Random Table for breakthrough",
-      "selectNewFavoriteTopic": "Select Yor additional favorit Topic ",
-      "selectNewTopic": "-- New Topic --"
+      "selectNewFavoriteTopic": "Select Yor additional favorit core subjects",
+      "selectNewTopic": "-- New Subject --",
+      "selectNewFavoriteTopic2": "Select Yor additional favorit elective subject (years 3-7)"
     },
     "UI": {
       "OK": "Apply",
@@ -406,14 +408,15 @@
     "actor": "Character",
     "moves": "Moves",
     "dilog": {
-      "addNewTopic": "Add new topic from Special Move",
-      "removeTopic": "Remove aditional Topic and Special Move"
+      "addNewTopic": "Add new core subject from Special Move",
+      "removeTopic": "Remove aditional Subject and Special Move",
+      "addNewTopic2": "Add new elective subject from Special Move"
     },
     "items": {
       "specialMoveType": {
         "addQuestion": "Add Question to Move",
         "isRolable": "You can roll for this Move?",
-        "addFavoriteTopic": "Move add new favorit Topic?",
+        "addFavoriteTopic": "Move add new favorit Subject?",
         "riseRollResults": "Move rise result of related Move?",
         "modifEffect": "Move modify results of related Move?",
         "isRelated": "Move is related to other Move?"

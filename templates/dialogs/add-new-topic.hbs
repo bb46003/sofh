@@ -1,7 +1,12 @@
 <div>
   <h2>{{localize "sofh.dialog.selectNewFavoriteTopic"}}</h2>
-  <select class="new-topic">
+  <select class="new-topic" name="core">
     <option value="">{{localize "sofh.dialog.selectNewTopic"}}</option>
-    {{selectOptions (allTopic) localize=true}}
+    {{selectOptions (coreTopic) localize=true}}
+  </select>
+  <h2>{{localize "sofh.dialog.selectNewFavoriteTopic2"}}</h2>
+  <select class="new-topic" name="elective">
+    <option value="">{{localize "sofh.dialog.selectNewTopic"}}</option>
+    {{selectOptions (electiveTopic) localize=true}}
   </select>
 </div>

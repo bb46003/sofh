@@ -1,6 +1,6 @@
 const BaseItem = foundry.documents?.Item ?? foundry.documents?.BaseItem;
 
-export default class MOVES extends Item{
+export default class MOVES extends Item {
   /* -------------------------------------------- */
   /*  Item Attributes                             */
   /* -------------------------------------------- */

@@ -28,6 +28,17 @@ export default class SpecialMovesDataModel extends BaseDataModel {
             label: "Is Used",
             initial: false,
           }),
+          "7to9": new fields.BooleanField({
+            initial: false,
+          }),
+          above10: new fields.BooleanField({
+            label: "Is Used",
+            initial: false,
+          }),
+          abov12: new fields.BooleanField({
+            label: "Is Used",
+            initial: false,
+          }),
         });
       } else {
         actionFields[key] = new fields.SchemaField({

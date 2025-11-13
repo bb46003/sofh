@@ -251,7 +251,10 @@ export class moveRoll extends Dialog {
     riseResults.forEach(async (riseResult) => {
       const isApply = riseResult.querySelector(".circle-checkbox-isapply");
       if (isApply.checked) {
-        stepOfRise[i] = isApply.dataset.movename;
+        stepOfRise[i] = {
+          moveid: isApply.dataset.moveId,
+          name: isApply.dataset.name,
+        };
         complication[i] = await this.checkComplication(
           isApply.dataset.moveId,
           actor,
@@ -351,18 +354,27 @@ export class moveRoll extends Dialog {
 
     // Apply the step-raising logic
     if (stepOfRise.length > 0) {
-      switch (resultTier) {
-        case "below7":
+      stepOfRise.forEach(async (move) => {
+        const moveItem = await actor.items.get(move.moveid);
+        const riseBelow7To7to9 = moveItem.system.action.riseRollResults["7to9"];
+        const rise7to9ToAbove10 =
+          moveItem.system.action.riseRollResults.above10;
+        const riseAbove10ToAbove12 =
+          moveItem.system.action.riseRollResults.above12;
+        if (riseBelow7To7to9 && resultTier === "below7") {
           resultTier = "7to9";
-          break;
-        case "7to9":
+        }
+        if (rise7to9ToAbove10 && resultTier === "7to9") {
           resultTier = "above10";
-          break;
-        case "above10":
-          // Only raise to above12 if it exists
-          if (item.system?.above12 !== undefined) resultTier = "above12";
-          break;
-      }
+        }
+        if (
+          riseAbove10ToAbove12 &&
+          resultTier === "above10" &&
+          item.system?.above12
+        ) {
+          resultTier = "above12";
+        }
+      });
     }
 
     // Then set the content
@@ -410,7 +422,7 @@ export class moveRoll extends Dialog {
         content +=
           `<br>` +
           game.i18n.format("sofh.ui.chat.relatedMoveRiseEffect", {
-            name: move,
+            name: move.name,
           }) +
           `<br>`;
 

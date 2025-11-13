@@ -389,10 +389,14 @@ export function registerHandlebarsHelpers() {
     }
   });
 
-  Handlebars.registerHelper("allTopic", function () {
+  Handlebars.registerHelper("electiveTopic", function () {
+    return {
+      ...CONFIG.SOFHCONFIG.favoriteTopic2,
+    };
+  });
+  Handlebars.registerHelper("coreTopic", function () {
     return {
       ...CONFIG.SOFHCONFIG.favoriteTopic,
-      ...CONFIG.SOFHCONFIG.favoriteTopic2,
     };
   });
 

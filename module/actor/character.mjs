@@ -160,6 +160,9 @@ export class sofhCharacterSheet extends BaseActorSheet {
     );
     html.on("click", "#advamcmentDialog", (ev) => this.advamcmentDialog(ev));
     html.on("click", "i.fa.fa-trash", (ev) => this.removeAdditionalTopic(ev));
+    html.on("change", ".additional-subject", (ev) =>
+      this.changeAditionalSubjectFromMove(ev),
+    );
   }
 
   async handleReputationChange(ev) {
@@ -841,7 +844,6 @@ export class sofhCharacterSheet extends BaseActorSheet {
           });
         }
         if (itemData.system.action.addFavoriteTopic.isUse) {
-          //addFavoriteTopic
           const content = await sofh_Utility.renderTemplate(
             "systems/SofH/templates/dialogs/add-new-topic.hbs",
           );
@@ -855,18 +857,20 @@ export class sofhCharacterSheet extends BaseActorSheet {
                 action: "ok",
                 callback: async (event, html) => {
                   const selected =
-                    html.offsetParent.querySelector(".new-topic");
+                    html.offsetParent.querySelectorAll(".new-topic");
                   if (!selected) {
                     ui.notifications.warn(
                       game.i18n.localize("sofh.ui.selectOption"),
                     );
                     return false;
                   }
-                  const choice = selected.selectedOptions[0].outerText;
+                  const choice1 = selected[0].selectedOptions[0].outerText;
+                  const choice2 = selected[1].selectedOptions[0].outerText;
                   ChatMessage.create({
                     user: game.user.id,
                     speaker: game.user.name,
-                    content: `${game.i18n.localize("sofh.dilog.addNewTopic")}: <b>${choice}</b>`,
+                    content: `${game.i18n.localize("sofh.dilog.addNewTopic")}: <b>${choice1}</b><br>
+                    ${game.i18n.localize("sofh.dilog.addNewTopic2")}: <b>${choice2}</b><br>`,
                   });
                   const currentTopics =
                     this.actor.system?.additionalTopic ?? {};
@@ -879,7 +883,16 @@ export class sofhCharacterSheet extends BaseActorSheet {
                   if (currentTopics) {
                     size = Object.keys(currentTopics).length;
                   }
-                  currentTopics[size] = { name: choice, id: createdItem.id };
+                  currentTopics[size] = {
+                    name: selected[0].value,
+                    id: createdItem.id,
+                    type: "core",
+                  };
+                  currentTopics[size + 1] = {
+                    name: selected[1].value,
+                    id: createdItem.id,
+                    type: "elective",
+                  };
                   const updateData = {};
                   updateData["system.additionalTopic"] = currentTopics;
                   await this.actor.update(updateData);
@@ -888,7 +901,26 @@ export class sofhCharacterSheet extends BaseActorSheet {
             ],
             defaultButton: "ok",
           });
-          addNewTopic.render(true, { width: 600 });
+          addNewTopic.render(true, { width: 600 }).then(() => {
+            const html = addNewTopic.element;
+            const selects = html.querySelectorAll(".new-topic");
+            const okButton = html.querySelector('button[data-action="ok"]');
+            okButton.disabled = true;
+            function checkValid() {
+              const coreValue = selects[0].value;
+              const electiveValue = selects[1].value;
+              const valid =
+                coreValue &&
+                coreValue.trim() !== "" &&
+                electiveValue &&
+                electiveValue.trim() !== "";
+
+              okButton.disabled = !valid;
+            }
+            selects.forEach((sel) =>
+              sel.addEventListener("change", checkValid),
+            );
+          });
         }
       }
     }
@@ -897,7 +929,6 @@ export class sofhCharacterSheet extends BaseActorSheet {
     const target = ev.target;
     const input = target.parentElement.previousElementSibling;
     const moveID = input.dataset.id;
-    const topicID = Number(input.dataset.topicid);
     const actor = this.actor;
     const additionalTopic = foundry.utils.deepClone(
       actor.system.additionalTopic,
@@ -915,9 +946,8 @@ export class sofhCharacterSheet extends BaseActorSheet {
           icon: "fa-solid fa-check",
           action: "ok",
           callback: async () => {
-            delete additionalTopic[topicID];
-            const cleanedTopics = Object.values(additionalTopic).filter(
-              (topic) => topic?.id && topic?.name,
+            const cleanedTopics = Array.from(additionalTopic).filter(
+              (topic) => topic.id !== moveID,
             );
             await actor.update({ "system.additionalTopic": cleanedTopics });
             await actor.deleteEmbeddedDocuments("Item", [moveID]);
@@ -928,5 +958,19 @@ export class sofhCharacterSheet extends BaseActorSheet {
       defaultButton: "ok",
     });
     removeTopic.render(true, { width: 600 });
+  }
+
+  async changeAditionalSubjectFromMove(ev) {
+    const target = ev.target;
+    const topicid = target.dataset.topicid;
+    const id = target.dataset.id;
+    const type = target.dataset.type;
+    await this.actor.update({
+      [`system.additionalTopic[${topicid}]`]: {
+        type: type,
+        name: target.value,
+        id: id,
+      },
+    });
   }
 }
