@@ -318,7 +318,10 @@
       },
       "specialMove": {
         "causeComplication": "Move cause Complication on sequential use ? ",
-        "afteHowManyUse": "After how mny use couse Complication"
+        "afteHowManyUse": "After how mny use couse Complication",
+        "riseresultBelo6to7to9": "Allow rise results from below 6 to 7 to 9",
+        "riseresult7to9toabove10": "Alow rise result from 7 to 9 to above 10",
+        "riseResultabove10toabove12": "Allow to rise result from above 10 to above 12"
       },
       "selectMovr": "- Select Move -",
       "addQuestion": "Add Move Question"
