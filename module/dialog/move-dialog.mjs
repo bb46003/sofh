@@ -248,6 +248,7 @@ export class moveRoll extends Dialog {
     let stepOfRise = [];
     let complication = [];
     let i = 0;
+    let unUsedRise = [];
     riseResults.forEach(async (riseResult) => {
       const isApply = riseResult.querySelector(".circle-checkbox-isapply");
       if (isApply.checked) {
@@ -259,8 +260,10 @@ export class moveRoll extends Dialog {
           isApply.dataset.moveId,
           actor,
         );
-        i++;
+      } else {
+        unUsedRise[i] = isApply.dataset.moveid;
       }
+      i++;
     });
     const modifyEffects = element.querySelectorAll(".modifyEffect");
     let usedRelatedMove = [];
@@ -285,6 +288,7 @@ export class moveRoll extends Dialog {
       stepOfRise,
       usedRelatedMove,
       complication,
+      unUsedRise,
     );
     if (stringsSelect !== undefined) {
       if (stringsSelect.value !== "") {
@@ -335,13 +339,13 @@ export class moveRoll extends Dialog {
     stepOfRise,
     usedRelatedMove,
     complication,
+    unUsedRise,
   ) {
     const rollResult = await new Roll(formula).evaluate();
     const total = rollResult.total;
     const label = item.name;
     let content = "";
     let resultTier = "";
-
     if (total >= 12 && item.system?.above12 !== undefined) {
       resultTier = "above12";
     } else if (total >= 10) {
@@ -364,10 +368,10 @@ export class moveRoll extends Dialog {
         if (riseBelow7To7to9 && resultTier === "below7") {
           resultTier = "7to9";
         }
-        if (rise7to9ToAbove10 && resultTier === "7to9") {
+        else if (rise7to9ToAbove10 && resultTier === "7to9") {
           resultTier = "above10";
         }
-        if (
+        else if (
           riseAbove10ToAbove12 &&
           resultTier === "above10" &&
           item.system?.above12
@@ -461,19 +465,56 @@ export class moveRoll extends Dialog {
             </div>
       `;
     }
+    console.log(advantagesSelect)
     if (advantagesSelect !== undefined) {
       content += `
       <h3></h3>
-      <p style="font-family: 'IM Fell English SC', serif>${game.i18n.format("sofh.ui.chat.actorUseAdvantages", { actor: actor.name, advantage: advantagesSelect })}</p>
+      <p style="font-family: 'IM Fell English SC', serif">${game.i18n.format("sofh.ui.chat.actorUseAdvantages", { actor: actor.name, advantage: advantagesSelect })}</p>
       </div>`;
     } else {
       content += `</div>`;
     }
-
+    if (unUsedRise.length !== 0) {
+      unUsedRise.forEach((moveID, index) => {
+        const reladedMove = actor.items.get(moveID);
+        const flag = reladedMove.flags?.SofH?.complication;
+        let complication = false;
+        if (flag === undefined) {
+          reladedMove.setFlag("SofH", "complication.usedtime", new Date());
+          reladedMove.setFlag("SofH", "complication.useNumber", 1);
+          complication = false;
+        } else {
+          const delta = new Date() - new Date(flag);
+          const useCount = flag.useNumber + 1;
+          const twelveHours = 12 * 60 * 60 * 1000;
+          reladedMove.setFlag("SofH", "complication.useNumber", useCount);
+          if (
+            delta < twelveHours &&
+            useCount === reladedMove.system.action.riseRollResults.useNumber
+          ) {
+            complication = true;
+          } else if (delta > twelveHours) {
+            reladedMove.setFlag("SofH", "complication.usedtime", new Date());
+            reladedMove.setFlag("SofH", "complication.useNumber", 1);
+          }
+          complication = false;
+        }
+        content += `<br>
+    <button class="rise-with-move" data-id="${index}">${game.i18n.format("sofh.ui.chat.useMoveToRiseResult", { name: reladedMove.name })}</button> <br>`;
+      });
+    }
     rollResult.toMessage({
       user: game.user.id,
       speaker: ChatMessage.getSpeaker({ actor }),
       flavor: content,
+      system: {
+        unUsedRise: unUsedRise,
+        actor: actor.id,
+        move: item.id,
+        resultTier: resultTier,
+        roll: rollResult,
+        flavor: content,
+      },
     });
     if (rollResult.total < 6 && clueID !== "") {
       const clue = game.actors.get(clueID);

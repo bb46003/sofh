@@ -28,15 +28,15 @@
           </div>
           <div class="column">
             <label for="action-riseRollResults">{{localize "sofh.item.specialMove.riseresultBelo6to7to9"}}</label>
-            <input type="checkbox" name='system.action.riseRollResults.7to9' id="action-riseRollResults-useNumber" value="{{action.7to9}}">
+            <input type="checkbox" name='system.action.riseRollResults.7to9' id="action-riseRollResults-useNumber" {{#if action.7to9}}checked{{/if}}>
           </div>
           <div class="column">
             <label for="action-riseRollResults">{{localize "sofh.item.specialMove.riseresult7to9toabove10"}}</label>
-            <input type="checkbox" name="system.action.riseRollResults.above10" id="action-riseRollResults-above10" value="{{action.above10}}">
+            <input type="checkbox" name="system.action.riseRollResults.above10" id="action-riseRollResults-above10" {{#if action.above10}}checked{{/if}}>
           </div>
           <div class="column">
             <label for="action-riseRollResults">{{localize "sofh.item.specialMove.riseResultabove10toabove12"}}</label>
-            <input type="checkbox" name="system.action.riseRollResults.above12" id="action-riseRollResults-above12" value="{{action.above12}}">
+            <input type="checkbox" name="system.action.riseRollResults.above12" id="action-riseRollResults-above12" {{#if action.above12}}checked{{/if}}>
           </div>
         </div>
     {{/if}}

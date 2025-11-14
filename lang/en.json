@@ -47,7 +47,8 @@
         "gainRep": "{actor} gains {gainRep} Reputation!`",
         "additionalResults": "Additional results from related move <strong>{name}</strong>",
         "relatedMoveRiseEffect": "Move <strong>{name}</strong> rise roll result.",
-        "relatedMoveCauseComplication": "You use Move {name} to many times on this session, prepare for Complication"
+        "relatedMoveCauseComplication": "You use Move {name} to many times on this session, prepare for Complication",
+        "useMoveToRiseResult": "Use Special Move: {name} to rise result"
       },
       "moves": {
         "name": "Name of move:",

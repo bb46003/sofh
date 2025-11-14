@@ -503,8 +503,8 @@ Hooks.on("preCreateScene", (scene) => {
     },
   });
 });
-Hooks.on("renderChatMessageHTML", (message, html) => {
-  // Use querySelectorAll to get all matching buttons
+Hooks.on("renderChatMessageHTML", async (message, html) => {
+  const unUsedRiseButton = html.querySelectorAll(".rise-with-move");
   const buttons = html.querySelectorAll(".roll-breakthrough");
 
   buttons.forEach((button) => {
@@ -527,8 +527,57 @@ Hooks.on("renderChatMessageHTML", (message, html) => {
       }
     });
   });
-});
+  const actor = await game.actors.get(message.system.actor);
+  const reladedMoves = message?.system.unUsedRise;
+  const coreMove = actor?.items.get(message.system.move);
+  let resultTier = message?.system.resultTier;
+  unUsedRiseButton.forEach((button) => {
+    button.addEventListener("click", async (ev) => {
+      const id = button.dataset.id;
+      const reladedMove = await actor.items.get(reladedMoves[id]);
+      const riseBelow7To7to9 =
+        reladedMove.system.action.riseRollResults["7to9"];
+      const rise7to9ToAbove10 =
+        reladedMove.system.action.riseRollResults.above10;
+      const riseAbove10ToAbove12 =
+        reladedMove.system.action.riseRollResults.above12;
+      if (riseBelow7To7to9 && resultTier === "below7") {
+        resultTier = "7to9";
+      }
+      else if (rise7to9ToAbove10 && resultTier === "7to9") {
+        resultTier = "above10";
+      }
+      else if (
+        riseAbove10ToAbove12 &&
+        resultTier === "above10" &&
+        coreMove.system?.above12
+      ) {
+        resultTier = "above12";
+      }
+      const newResults = coreMove.system[resultTier];
+      const roll = Roll.fromData(message.system.roll);;
+      let flavor =`<p>${game.i18n.format("sofh.ui.chat.relatedMoveRiseEffect",{name:reladedMove.name})}` + message.system.flavor;
 
+      const buttonRegex = new RegExp(
+        `<button\\s+class="rise-with-move"\\s+data-id="${id}".*?<\\/button>`,
+        "s",
+      );
+
+const rollResultsRegex =
+  /<div class="roll-results">([\s\S]*?)<\/div>/g;
+      flavor = flavor.replace(
+        rollResultsRegex,
+        `<div class="roll-results">${newResults}</div>`,
+      );
+      flavor = flavor.replace(buttonRegex, "");
+      roll.toMessage({
+        user: game.user.id,
+        speaker: ChatMessage.getSpeaker({ actor }),
+        flavor:flavor
+      });
+    });
+  });
+});
 async function nestObject(flatObj) {
   const nestedObj = {};
 
