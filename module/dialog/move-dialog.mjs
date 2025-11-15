@@ -367,11 +367,9 @@ export class moveRoll extends Dialog {
           moveItem.system.action.riseRollResults.above12;
         if (riseBelow7To7to9 && resultTier === "below7") {
           resultTier = "7to9";
-        }
-        else if (rise7to9ToAbove10 && resultTier === "7to9") {
+        } else if (rise7to9ToAbove10 && resultTier === "7to9") {
           resultTier = "above10";
-        }
-        else if (
+        } else if (
           riseAbove10ToAbove12 &&
           resultTier === "above10" &&
           item.system?.above12
@@ -465,7 +463,6 @@ export class moveRoll extends Dialog {
             </div>
       `;
     }
-    console.log(advantagesSelect)
     if (advantagesSelect !== undefined) {
       content += `
       <h3></h3>
@@ -723,7 +720,7 @@ export class moveRoll extends Dialog {
     } else {
       const delta = new Date() - new Date(flag);
       const useCount = flag.useNumber + 1;
-      const twelveHours = 12 * 60 * 60 * 1000;
+      const twelveHours = 5 * 60 * 60 * 1000;
       move.setFlag("SofH", "complication.useNumber", useCount);
       if (
         delta < twelveHours &&

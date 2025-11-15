@@ -543,11 +543,9 @@ Hooks.on("renderChatMessageHTML", async (message, html) => {
         reladedMove.system.action.riseRollResults.above12;
       if (riseBelow7To7to9 && resultTier === "below7") {
         resultTier = "7to9";
-      }
-      else if (rise7to9ToAbove10 && resultTier === "7to9") {
+      } else if (rise7to9ToAbove10 && resultTier === "7to9") {
         resultTier = "above10";
-      }
-      else if (
+      } else if (
         riseAbove10ToAbove12 &&
         resultTier === "above10" &&
         coreMove.system?.above12
@@ -555,25 +553,39 @@ Hooks.on("renderChatMessageHTML", async (message, html) => {
         resultTier = "above12";
       }
       const newResults = coreMove.system[resultTier];
-      const roll = Roll.fromData(message.system.roll);;
-      let flavor =`<p>${game.i18n.format("sofh.ui.chat.relatedMoveRiseEffect",{name:reladedMove.name})}` + message.system.flavor;
+      const roll = Roll.fromData(message.system.roll);
+      let flavor =
+        `<p>${game.i18n.format("sofh.ui.chat.relatedMoveRiseEffect", { name: reladedMove.name })}` +
+        message.system.flavor;
 
       const buttonRegex = new RegExp(
         `<button\\s+class="rise-with-move"\\s+data-id="${id}".*?<\\/button>`,
         "s",
       );
 
-const rollResultsRegex =
-  /<div class="roll-results">([\s\S]*?)<\/div>/g;
+      const rollResultsRegex = /<div class="roll-results">([\s\S]*?)<\/div>/g;
       flavor = flavor.replace(
         rollResultsRegex,
         `<div class="roll-results">${newResults}</div>`,
       );
       flavor = flavor.replace(buttonRegex, "");
+      const complication = checkComplication(
+        reladedMoves[id],
+        message.system.actor,
+      );
+
+      if (complication) {
+        flavor +=
+          "<br>" +
+          game.i18n.format("sofh.ui.chat.relatedMoveCauseComplication", {
+            name: reladedMove.name,
+          }) +
+          "<br>";
+      }
       roll.toMessage({
         user: game.user.id,
         speaker: ChatMessage.getSpeaker({ actor }),
-        flavor:flavor
+        flavor: flavor,
       });
     });
   });
@@ -636,4 +648,29 @@ async function customStyle(type, newValue) {
       right: ${right}px !important;
     }
   `;
+}
+async function checkComplication(moveID, actor) {
+  const move = actor.items.get(moveID);
+  const flag = move.flags?.SofH?.complication;
+
+  if (flag === undefined) {
+    move.setFlag("SofH", "complication.usedtime", new Date());
+    move.setFlag("SofH", "complication.useNumber", 1);
+    return false;
+  } else {
+    const delta = new Date() - new Date(flag);
+    const useCount = flag.useNumber + 1;
+    const twelveHours = 5 * 60 * 60 * 1000;
+    move.setFlag("SofH", "complication.useNumber", useCount);
+    if (
+      delta < twelveHours &&
+      useCount === move.system.action.riseRollResults.useNumber
+    ) {
+      return true;
+    } else if (delta > twelveHours) {
+      move.setFlag("SofH", "complication.usedtime", new Date());
+      move.setFlag("SofH", "complication.useNumber", 1);
+    }
+    return false;
+  }
 }
