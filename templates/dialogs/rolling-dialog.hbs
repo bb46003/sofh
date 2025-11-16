@@ -1,5 +1,4 @@
 <form class="sofh{{cssClass}}" autocomplete="off">
-    {{log item}}
     {{#if item.system.housequestion}}
     <h2 class="h2-roll">{{localize 'sofh.ui.rolldialog.houseQuestionTitle'}}</h2>
 
@@ -69,7 +68,6 @@
     {{#each relatedMoves as |relatedMove|}}
         {{#if relatedMove.system.action.addQuestion.isUse}}
             <h2 class="h2-roll special">{{{localize  "sofh.ui.rolldialog.additionQuestionFromReletedMoves" name=relatedMove.name}}}</h2>
-            {{log relatedMove.system.additionalQuestion }}
             {{#each relatedMove.system.additionalQuestion as |question|}}
                 <div class="question-sheet-roll">
                     <div class="question description">{{{question.question}}}</div>
