@@ -66,6 +66,34 @@ export class ReputationQuestion extends foundry.applications.api.ApplicationV2 {
   async _replaceHTML(result, html) {
     html.innerHTML = result;
   }
+async _onRender() {
+  const element = this.element;
+
+  const button = element.querySelector('.footer button[data-action="submit"]');
+
+  let inputs = element.querySelectorAll('input[type="checkbox"]');
+  if (inputs.length === 0) {
+    inputs = element.querySelectorAll('input[type="text"]');
+  }
+  const checkInputs = () => {
+    let activeCount = 0;
+
+    inputs.forEach(input => {
+      if (input.type === "checkbox" && input.checked) {
+        activeCount++;
+      }
+      if (input.type === "text" && input.value.trim() !== "") {
+        activeCount++;
+      }
+    });
+    button.disabled = activeCount < 2;
+  };
+  inputs.forEach(input => {
+    input.addEventListener("change", checkInputs);
+    input.addEventListener("input", checkInputs);
+  });
+  checkInputs();
+}
 
   static #questionChecked(ev) {
     // select all checkboxes inside the element
