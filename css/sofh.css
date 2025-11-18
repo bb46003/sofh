@@ -9,7 +9,16 @@
   flex-direction: column;
   gap: 20px; /* Adds spacing between sections */
 }
-
+.SofH.home-score-tracker {
+  min-width: 200px;
+  min-height: 250px;
+  background: none;
+  border: none;
+  box-shadow: none;
+}
+.SofH.home-score-tracker .window-content {
+  padding: 5px;
+}
 .sofh .title-section {
   display: flex;
   flex-direction: column;

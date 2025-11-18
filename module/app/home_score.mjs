@@ -1,6 +1,6 @@
 const { api } = foundry.applications;
 
-export class HomeScore extends api.HandlebarsApplicationMixin(api.Application)  {
+export class HomeScore extends api.HandlebarsApplicationMixin(api.Application) {
   constructor(options = {}) {
     if (HomeScore._instance) {
       throw new Error("Home Score already has an instance!!!");
@@ -15,33 +15,25 @@ export class HomeScore extends api.HandlebarsApplicationMixin(api.Application)  
   }
 
   static DEFAULT_OPTIONS = {
-      classes: ["SofH", "home-score-tracker"],    
-      window:{
-      title: "Home Score",    
+    classes: ["SofH", "home-score-tracker"],
+    window: {
+      title: "Home Score",
       popOut: false,
       resizable: true,
-      },
-     position:{width:"auto", height:"auto"}
-      
-    };
+    },
+  };
   static PARTS = {
     main: {
       id: "home-score-app",
       template: "systems/SofH/templates/app/home_score-tracker.hbs",
-    }
-  }
+    },
+  };
 
   _prepareContext() {
     const context = {};
     const SYSTEM_ID = "SofH";
-    context.points_slytherin = game.settings.get(
-      SYSTEM_ID,
-      "points_slytherin",
-    );
-    context.points_ravenclaw = game.settings.get(
-      SYSTEM_ID,
-      "points_ravenclaw",
-    );
+    context.points_slytherin = game.settings.get(SYSTEM_ID, "points_slytherin");
+    context.points_ravenclaw = game.settings.get(SYSTEM_ID, "points_ravenclaw");
     context.points_hufflepuff = game.settings.get(
       SYSTEM_ID,
       "points_hufflepuff",
@@ -66,7 +58,6 @@ export class HomeScore extends api.HandlebarsApplicationMixin(api.Application)  
       SYSTEM_ID,
       "gryffindor_on_leed",
     );
-    
 
     const userID = game.user.id;
     const right = game.settings.get("SofH", "HomeScorePositionX");
@@ -75,13 +66,14 @@ export class HomeScore extends api.HandlebarsApplicationMixin(api.Application)  
     context.class = "house-scores-container-" + userID;
     context.style = `
         display: flex;
-        align-items: center;
+        align-items: flex-end;
         justify-content: space-evenly;
         transform-origin: top left;
-        transform: scale(var(--scale, 1));
+        zoom: var(--scale, 1);
         margin: 5px;
         --scale:${scale}
     `;
+
     return context;
   }
 
@@ -91,49 +83,77 @@ export class HomeScore extends api.HandlebarsApplicationMixin(api.Application)  
     this.renderHomeScore();
   }
 
-
-
   async render(force = false, options = {}) {
     await super.render(force, options);
-   
-     const el = this.element;
- this.window.onResize = () => this._onResize(el);
-      const userID = game.user.id;
+    const left = game.settings.get("SofH", "HomeScorePositionX");
+    const top = game.settings.get("SofH", "HomeScorePositionY");
+
+    const el = this.element;
+    const close = el.querySelector(".header-control.icon.fa-solid.fa-xmark");
+    if (close) {
+      close.remove();
+    }
+
+    el.style.top = top + "px";
+    el.style.left = left + "px";
+    const originalOnResize = this.window.onResize?.bind(this.window);
+    this.window.onResize = (...args) => {
+      if (originalOnResize) {
+        originalOnResize(...args);
+      }
+      this._onResize(el, ...args);
+    };
+
+    const originalOnDrag = this.window.onDrag?.bind(this.window);
+    this.window.onDrag = (...args) => {
+      if (originalOnDrag) {
+        originalOnDrag(...args);
+      }
+      this._onDrag(el, ...args);
+    };
     const buttons = el?.querySelectorAll(".some-box.resolve");
-    if(el){
-    Array.from(buttons).forEach(button =>{
-      button.addEventListener("click", async (ev) =>{   
-      const clickedElementId = $(ev.currentTarget).attr("id");
-      await HomeScore.resolvePoints(clickedElementId, el);
-    });
-     
-  })
+    if (el) {
+      Array.from(buttons).forEach((button) => {
+        button.addEventListener("click", async (ev) => {
+          const clickedElementId = $(ev.currentTarget).attr("id");
+          await HomeScore.resolvePoints(clickedElementId, el);
+        });
+      });
+    }
+  }
+  _onResize(entry) {
+    const userID = game.user.id;
+    const container = this.element;
 
-  
+    const element = container.querySelector(
+      ".house-scores-container-" + userID,
+    );
+    if (!element) return;
 
+    const width = parseInt(entry.style.width, 10)
+      ? parseInt(entry.style.width, 10)
+      : entry.clientWidth;
 
-}
-}
-_onResize(entry) {
-  
-  const userID = game.user.id;
-  const container = this.element;
-  
-  const element = container.querySelector(".house-scores-container-" + userID);
-  if (!element) return;
-  const width = parseInt(entry.style.width, 10)? parseInt(entry.style.width, 10) : entry.clientWidth
-  const newScale =width  / 900;
-  element.style.setProperty("--scale", newScale);
-
-  game.settings.set("SofH", "HomeScoreSize", newScale);
-}
-
+    const height = parseInt(entry.style.height, 10)
+      ? parseInt(entry.style.height, 10)
+      : entry.clientHeight;
+    const scaleW = width / 878;
+    const scaleH = height / 791;
+    const newScale = Math.min(scaleW, scaleH);
+    element.style.setProperty("--scale", newScale);
+    game.settings.set("SofH", "HomeScoreSize", newScale);
+  }
+  _onDrag(entry) {
+    const top = entry.offsetTop;
+    const left = entry.offsetLeft;
+    game.settings.set("SofH", "HomeScorePositionX", left);
+    game.settings.set("SofH", "HomeScorePositionY", top);
+  }
 
   static async renderHomeScore() {
     if (HomeScore._instance) {
       HomeScore._instance.render(true);
     }
-  
   }
 
   static async resolvePoints(house, html) {
@@ -144,8 +164,10 @@ _onResize(entry) {
       return;
     }
 
-    const inputScoreElement = html.find(`.input-score#${house.toLowerCase()}`);
-    let inputScore = parseInt(inputScoreElement.val(), 10) || 0;
+    const inputScoreElement = html.querySelector(
+      `.input-score#${house.toLowerCase()}`,
+    );
+    let inputScore = parseInt(inputScoreElement.value, 10) || 0;
 
     let currentPoints = game.settings.get(
       "SofH",
@@ -222,23 +244,10 @@ _onResize(entry) {
       }
     });
   }
-    async close(options = {}) {
+  async close(options = {}) {
     if (options.closeKey) {
       return false;
     }
     return super.close(options);
   }
- autoscale(element, designWidth = 900, designHeight = 600) {
-    const parent = element.parentElement;
-
-    const availableWidth = parent.clientWidth;
-    const availableHeight = parent.clientHeight;
-
-    const scaleX = availableWidth / designWidth;
-    const scaleY = availableHeight / designHeight;
-
-    const scale = Math.min(scaleX, scaleY);
-
-    element.style.setProperty("--scale", scale);
-}
 }
