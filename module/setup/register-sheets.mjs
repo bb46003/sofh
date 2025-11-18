@@ -25,7 +25,7 @@ export function registerSheets() {
     types: ["clue"],
     makeDefault: true,
   });
-
+  const Items = foundry.documents.collections.Items;
   SOFHCONFIG.Items.unregisterSheet("core", SOFHCONFIG.ItemSheet);
 
   SOFHCONFIG.Items.registerSheet("sofh", sofhMovesSheet, {

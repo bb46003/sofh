@@ -12,6 +12,7 @@ import { EndSessionDialog } from "./dialog/end-session.mjs";
 import SocketHandler from "./setup/socket-handler.mjs";
 import MOVES from "./items/default-item-function.mjs";
 import SpecialMovesDataModel from "./datamodel/special-move-datamodel.mjs";
+  const fields = foundry.data.fields;
 
 export default function registerSettings() {
   // -------------------
@@ -25,14 +26,13 @@ export default function registerSettings() {
     default: 0,
     config: false,
     is_on_leed: false,
-    type: Number,
+    type: new fields.NumberField({initial:0}),
   });
   game.settings.register(SYSTEM_ID, "slytherin_on_leed", {
     name: "slytherin_on_leed",
     scope: "world",
-    default: false,
     config: false,
-    type: Boolean,
+    type: new fields.BooleanField({initial: false}),
   });
   game.settings.register(SYSTEM_ID, "points_ravenclaw", {
     name: "points_ravenclaw",
@@ -40,14 +40,14 @@ export default function registerSettings() {
     default: 0,
     config: false,
     is_on_leed: false,
-    type: Number,
+    type: new fields.NumberField({initial:0}),
   });
   game.settings.register(SYSTEM_ID, "ravenclaw_on_leed", {
     name: "ravenclaw_on_leed",
     scope: "world",
     default: false,
     config: false,
-    type: Boolean,
+    type: new fields.BooleanField({initial: false}),
   });
   game.settings.register(SYSTEM_ID, "points_hufflepuff", {
     name: "points_hufflepuff",
@@ -55,28 +55,28 @@ export default function registerSettings() {
     default: 0,
     config: false,
     is_on_leed: false,
-    type: Number,
+    type: new fields.NumberField({initial:0}),
   });
   game.settings.register(SYSTEM_ID, "hufflepuff_on_leed", {
     name: "hufflepuff_on_leed",
     scope: "world",
     default: false,
     config: false,
-    type: Boolean,
+    type: new fields.BooleanField({initial: false}),
   });
   game.settings.register(SYSTEM_ID, "points_gryffindor", {
     name: "points_gryffindor",
     scope: "world",
     default: 0,
     config: false,
-    type: Number,
+    type: new fields.NumberField({initial:0}),
   });
   game.settings.register(SYSTEM_ID, "gryffindor_on_leed", {
     name: "gryffindor_on_leed",
     scope: "world",
     default: false,
     config: false,
-    type: Boolean,
+    type: new fields.BooleanField({initial: false}),
   });
   game.settings.register("SofH", "showHousePoints", {
     name: "sofh.SETTINGS.showHousePoint",
@@ -85,14 +85,13 @@ export default function registerSettings() {
     config: true,
     default: true,
     requiresReload: true,
-    type: Boolean,
+    type: new fields.BooleanField({initial: false}),
   });
   // Most recent data format version
   game.settings.register("SofH", "systemMigrationVersion", {
     config: false,
     scope: "world",
-    type: String,
-    default: "",
+    type: new fields.StringField({initial:""})
   });
   if (game.settings.get("SofH", "showHousePoints")) {
     game.settings.register("SofH", "HomeScoreSize", {
@@ -101,11 +100,10 @@ export default function registerSettings() {
       scope: "client",
       config: true,
       requiresReload: false,
-      type: Number,
-      default: 0.45,
+      type: new fields.NumberField({initial:0.45}),
       onChange: (newValue) => {
         const type = "HomeScoreSize";
-        customStyle(type, newValue); // Automatically called whenever the value changes
+        //customStyle(type, newValue); // Automatically called whenever the value changes
       },
     });
     game.settings.register("SofH", "HomeScorePositionY", {
@@ -114,11 +112,10 @@ export default function registerSettings() {
       scope: "client",
       config: true,
       requiresReload: false,
-      type: Number,
-      default: -150,
+      type: new fields.NumberField({initial:-150}),
       onChange: (newValue) => {
         const type = "HomeScorePositionY";
-        customStyle(type, newValue); // Automatically called whenever the value changes
+        //customStyle(type, newValue); // Automatically called whenever the value changes
       },
     });
     game.settings.register("SofH", "HomeScorePositionX", {
@@ -127,11 +124,10 @@ export default function registerSettings() {
       scope: "client",
       config: true,
       requiresReload: false,
-      type: Number,
-      default: 70,
+      type:  new fields.NumberField({initial:70}),
       onChange: (newValue) => {
         const type = "HomeScorePositionX";
-        customStyle(type, newValue); // Automatically called whenever the value changes
+        //customStyle(type, newValue); // Automatically called whenever the value changes
       },
     });
   }
@@ -245,7 +241,7 @@ Hooks.on("updateSetting", (setting) => {
       setting.key,
     )
   ) {
-    customStyle();
+   // customStyle();
   }
 });
 

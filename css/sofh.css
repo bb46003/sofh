@@ -717,11 +717,9 @@ select.question-impact:disabled {
   align-items: center;
   justify-content: space-evenly;
   width: 900px;
+  transform-origin: top left;
   transform: scale(0.45);
-  position: absolute;
   margin: 5px;
-  bottom: -150px !important;
-  right: 70px !important;
   /* Skalą się pobaw bom pewny nie jest */
 }
 

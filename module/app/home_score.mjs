@@ -1,4 +1,6 @@
-export class HomeScore extends Application {
+const { api } = foundry.applications;
+
+export class HomeScore extends api.HandlebarsApplicationMixin(api.Application)  {
   constructor(options = {}) {
     if (HomeScore._instance) {
       throw new Error("Home Score already has an instance!!!");
@@ -12,55 +14,75 @@ export class HomeScore extends Application {
     this.data = {};
   }
 
-  static get defaultOptions() {
-    return foundry.utils.mergeObject(super.defaultOptions, {
-      classes: ["SofH", "home-score-tracker"],
-      height: "200",
-      id: "home-score-app",
+  static DEFAULT_OPTIONS = {
+      classes: ["SofH", "home-score-tracker"],    
+      window:{
+      title: "Home Score",    
       popOut: false,
-      resizable: false,
+      resizable: true,
+      },
+     position:{width:"auto", height:"auto"}
+      
+    };
+  static PARTS = {
+    main: {
+      id: "home-score-app",
       template: "systems/SofH/templates/app/home_score-tracker.hbs",
-      title: "Home Score",
-      width: "auto",
-    });
+    }
   }
 
-  getData() {
-    super.getData();
+  _prepareContext() {
+    const context = {};
     const SYSTEM_ID = "SofH";
-    this.data.points_slytherin = game.settings.get(
+    context.points_slytherin = game.settings.get(
       SYSTEM_ID,
       "points_slytherin",
     );
-    this.data.points_ravenclaw = game.settings.get(
+    context.points_ravenclaw = game.settings.get(
       SYSTEM_ID,
       "points_ravenclaw",
     );
-    this.data.points_hufflepuff = game.settings.get(
+    context.points_hufflepuff = game.settings.get(
       SYSTEM_ID,
       "points_hufflepuff",
     );
-    this.data.points_gryffindor = game.settings.get(
+    context.points_gryffindor = game.settings.get(
       SYSTEM_ID,
       "points_gryffindor",
     );
-    this.data.slytherin_on_leed = game.settings.get(
+    context.slytherin_on_leed = game.settings.get(
       SYSTEM_ID,
       "slytherin_on_leed",
     );
-    this.data.ravenclaw_on_leed = game.settings.get(
+    context.ravenclaw_on_leed = game.settings.get(
       SYSTEM_ID,
       "ravenclaw_on_leed",
     );
-    this.data.hufflepuff_on_leed = game.settings.get(
+    context.hufflepuff_on_leed = game.settings.get(
       SYSTEM_ID,
       "hufflepuff_on_leed",
     );
-    this.data.gryffindor_on_leed = game.settings.get(
+    context.gryffindor_on_leed = game.settings.get(
       SYSTEM_ID,
       "gryffindor_on_leed",
     );
-    return this.data;
+    
+
+    const userID = game.user.id;
+    const right = game.settings.get("SofH", "HomeScorePositionX");
+    const bottom = game.settings.get("SofH", "HomeScorePositionY");
+    const scale = game.settings.get("SofH", "HomeScoreSize");
+    context.class = "house-scores-container-" + userID;
+    context.style = `
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        transform-origin: top left;
+        transform: scale(var(--scale, 1));
+        margin: 5px;
+        --scale:${scale}
+    `;
+    return context;
   }
 
   static async initialise() {
@@ -69,18 +91,49 @@ export class HomeScore extends Application {
     this.renderHomeScore();
   }
 
-  activateListeners(html) {
-    super.activateListeners(html);
-    html.find(".some-box.resolve").click(async (ev) => {
+
+
+  async render(force = false, options = {}) {
+    await super.render(force, options);
+   
+     const el = this.element;
+ this.window.onResize = () => this._onResize(el);
+      const userID = game.user.id;
+    const buttons = el?.querySelectorAll(".some-box.resolve");
+    if(el){
+    Array.from(buttons).forEach(button =>{
+      button.addEventListener("click", async (ev) =>{   
       const clickedElementId = $(ev.currentTarget).attr("id");
-      await HomeScore.resolvePoints(clickedElementId, html);
+      await HomeScore.resolvePoints(clickedElementId, el);
     });
-  }
+     
+  })
+
+  
+
+
+}
+}
+_onResize(entry) {
+  
+  const userID = game.user.id;
+  const container = this.element;
+  
+  const element = container.querySelector(".house-scores-container-" + userID);
+  if (!element) return;
+  const width = parseInt(entry.style.width, 10)? parseInt(entry.style.width, 10) : entry.clientWidth
+  const newScale =width  / 900;
+  element.style.setProperty("--scale", newScale);
+
+  game.settings.set("SofH", "HomeScoreSize", newScale);
+}
+
 
   static async renderHomeScore() {
     if (HomeScore._instance) {
       HomeScore._instance.render(true);
     }
+  
   }
 
   static async resolvePoints(house, html) {
@@ -169,4 +222,23 @@ export class HomeScore extends Application {
       }
     });
   }
+    async close(options = {}) {
+    if (options.closeKey) {
+      return false;
+    }
+    return super.close(options);
+  }
+ autoscale(element, designWidth = 900, designHeight = 600) {
+    const parent = element.parentElement;
+
+    const availableWidth = parent.clientWidth;
+    const availableHeight = parent.clientHeight;
+
+    const scaleX = availableWidth / designWidth;
+    const scaleY = availableHeight / designHeight;
+
+    const scale = Math.min(scaleX, scaleY);
+
+    element.style.setProperty("--scale", scale);
+}
 }

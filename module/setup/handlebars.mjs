@@ -279,11 +279,9 @@ export function registerHandlebarsHelpers() {
       align-items: center;
       justify-content: space-evenly;
       width: 900px;
+      transform-origin: top left;
       transform: scale(${scale});
-      position: absolute;
       margin: 5px;
-      bottom: ${bottom}px !important;
-      right: ${right}px !important;
     }
   `;
 
