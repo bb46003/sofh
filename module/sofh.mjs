@@ -95,40 +95,23 @@ export default function registerSettings() {
   });
   if (game.settings.get("SofH", "showHousePoints")) {
     game.settings.register("SofH", "HomeScoreSize", {
-      name: "sofh.SETTINGS.homeScoreSize",
-      hint: "sofh.SETTINGS.homeScoreSizeHnt",
       scope: "client",
-      config: true,
+      config: false,
       requiresReload: false,
       type: new fields.NumberField({ initial: 0.45 }),
-      onChange: (newValue) => {
-        const type = "HomeScoreSize";
-        //customStyle(type, newValue); // Automatically called whenever the value changes
-      },
+      
     });
     game.settings.register("SofH", "HomeScorePositionY", {
-      name: "sofh.SETTINGS.HomeScorePositionY",
-      hint: "sofh.SETTINGS.HomeScorePositionYHint",
       scope: "client",
-      config: true,
+      config: false,
       requiresReload: false,
       type: new fields.NumberField({ initial: -150 }),
-      onChange: (newValue) => {
-        const type = "HomeScorePositionY";
-        //customStyle(type, newValue); // Automatically called whenever the value changes
-      },
     });
     game.settings.register("SofH", "HomeScorePositionX", {
-      name: "sofh.SETTINGS.HomeScorePositionX",
-      hint: "sofh.SETTINGS.HomeScorePositionXHint",
       scope: "client",
-      config: true,
+      config: false,
       requiresReload: false,
       type: new fields.NumberField({ initial: 70 }),
-      onChange: (newValue) => {
-        const type = "HomeScorePositionX";
-        //customStyle(type, newValue); // Automatically called whenever the value changes
-      },
     });
   }
   game.settings.register("SofH", "customConfig", {
