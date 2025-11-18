@@ -138,7 +138,8 @@
         "gryffindor2": "Your fiercest rival, always trying to one-up you: ",
         "gryffindor3": "Someone who betrayed your trust and you are still not over \nit: ",
         "gryffindor4": "Your crush, making your life significantly more \ncomplicated: ",
-        "question": "Input your relation question"
+        "question": "Input your relation question",
+        "yourInvention": "They helped you with one of your inventions when you were\nstuck:"
       },
       "clue": {
         "clue_table": "Clues and who knows about them",
@@ -276,7 +277,7 @@
         "condition.type": "Type",
         "condition.name": "Short description",
         "condition.fixed": "Fixed?",
-        "reputation_questions": "Reputation Questionm",
+        "reputation_questions": "Reputation Question",
         "pickYourAdvancements": "Pick your Advancements",
         "additionaNewTopicFromMove": "Additional favorit core subject from Special Moves",
         "additionaNewTopic2FromMove": "Additional favorit elective subject from Special Moves"

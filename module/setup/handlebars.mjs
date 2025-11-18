@@ -355,20 +355,23 @@ export function registerHandlebarsHelpers() {
   Handlebars.registerHelper(
     "checkReputation",
     function (checkReputation, index) {
+      const number1 = Number(checkReputation[0]) ? Number(checkReputation[0]) : undefined
+      const number2 = Number(checkReputation[1]) ? Number(checkReputation[1]) : undefined
       if (
-        Number(checkReputation[0]) === index ||
-        Number(checkReputation[1]) === index
+        number1 === index ||
+        number2 === index
       ) {
         return "checked";
       }
       if (
-        Number(checkReputation[0]) !== undefined &&
-        Number(checkReputation[1]) !== undefined
+        number1 !== undefined &&
+        number2 !== undefined
       ) {
         return "disabled";
       }
     },
   );
+
   Handlebars.registerHelper("getActorName", function (id) {
     if (id !== "") {
       const actor = game.actors.get(id);

@@ -1,5 +1,6 @@
 <div>
   <h4>{{localize "sofh.dialog.reputation-heder"}}</h4>
+  {{log isOther}}
   {{#if isOther}}
     {{#each questions as |question index|}}
       <div class="reputation-question flex">
