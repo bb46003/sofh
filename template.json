@@ -98,10 +98,10 @@
   "Item": {
     "types": [
       "basicMoves",
-      "houseMoves",
-      "peripheralMoves",
-      "endOfSessionMoves",
-      "specialPlaybookMoves"
+      "specialPlaybookMoves",
+      "comingOfAgeMoves",
+      "customMoves",
+      "optionalMoves"
     ],
     "templates": {
       "base": {
@@ -121,13 +121,7 @@
     "basicMoves": {
       "templates": ["base"]
     },
-    "houseMoves": {
-      "templates": ["base"]
-    },
-    "peripheralMoves": {
-      "templates": ["base"]
-    },
-    "endOfSessionMoves": {
+    "comingOfAgeMoves": {
       "templates": ["base"]
     }
   }

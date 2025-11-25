@@ -29,12 +29,12 @@ export function registerSheets() {
   SOFHCONFIG.Items.unregisterSheet("core", SOFHCONFIG.ItemSheet);
 
   SOFHCONFIG.Items.registerSheet("sofh", sofhMovesSheet, {
-    types: ["basicMoves", "houseMoves", "peripheralMoves", "endOfSessionMoves"],
+    types: ["basicMoves", "comingOfAgeMoves"],
     makeDefault: true,
   });
   (SOFHCONFIG,
     Items.registerSheet("sofh", sofhSpecialMovesSheet, {
-      types: ["specialPlaybookMoves"],
+      types: ["specialPlaybookMoves", "optionalMoves", "customMoves"],
       makeDefault: true,
     }));
 }

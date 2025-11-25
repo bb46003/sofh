@@ -141,7 +141,7 @@ Hooks.once("init", async function () {
   CONFIG.Item.documentClass = MOVES;
   CONFIG.Actor.documentClass = sofhActor;
   CONFIG.SOFHCONFIG = SOFHCONFIG;
-  CONFIG.Item.dataModels = { specialPlaybookMoves: SpecialMovesDataModel };
+  CONFIG.Item.dataModels = { specialPlaybookMoves: SpecialMovesDataModel, customMoves: SpecialMovesDataModel, optionalMoves:SpecialMovesDataModel };
   // --- Load previously saved custom config ---
   const savedData = game.settings.get("SofH", "customConfig");
   if (savedData) {

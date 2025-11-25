@@ -2,10 +2,10 @@
   "TYPES": {
     "Item": {
       "basicMoves": "Basic Moves",
-      "houseMoves": "House Moves",
-      "peripheralMoves": "Peripheral Moves",
-      "endOfSessionMoves": "End of Session Moves",
-      "specialPlaybookMoves": "Special Playbook Moves"
+      "specialPlaybookMoves": "House Moves",
+      "comingOfAgeMoves": "Coming Of Age Moves",
+      "customMoves": "Custom Moves",
+      "optionalMoves": "Optional Moves"
     }
   },
   "sofh": {
