@@ -1,85 +1,140 @@
-  {{#customIDStyle}}
-  {{/customIDStyle}}
-        <!-- Gryffindor -->
-        <div class="score-Column red">
-            <div class="are-Ya-Winning-Son">
-                {{#if gryffindor_on_leed}}
-                <img class="imgflag"  id="gryffindor" src="systems/SofH/img/areYaWinningSon.png">  
-                {{else}}
-                <img class="imgflag"  id="gryffindor" src="systems/SofH/img/areYaWinningSon.png" style="display: none;">  
-                {{/if}}
-                
-            </div>
-            <div class="score some-box red">
-                {{points_gryffindor}}
-            </div>
-            <div class="modify-section red">
-                <input type="number" class="input-score red" id="gryffindor" >
-                <hr class="red">
-                <input class="some-box resolve red"  id="gryffindor" type="button" value="{{localize "sofh.ui.submit"}}">
-            </div>
-            <div class="just-black-space"></div>
-            <img class="imgflag" src="systems/SofH/img/gryfbanner.png">   
-        </div>
-        <!-- Slytherin -->
-        <div class="score-Column green">
-            <div class="are-Ya-Winning-Son">
-                 {{#if slytherin_on_leed}}
-                <img class="imgflag"  id="slytherin" src="systems/SofH/img/areYaWinningSon.png">  
-                {{else}}
-                <img class="imgflag"  id="slytherin" src="systems/SofH/img/areYaWinningSon.png" style="display: none;">  
-                {{/if}}    
-            </div>
-            <div class="score some-box green">
-                {{points_slytherin}}
-            </div>
-            <div class="modify-section green">
-                <input class="input-score green"  id="slytherin" type="number">
-                <hr class="green">
-                <input class="some-box resolve green" id="slytherin" type="button"  value="{{localize "sofh.ui.submit"}}">
-            </div>
-            <div class="just-black-space"></div>
-            <img class="imgflag" src="systems/SofH/img/slybanner.png">   
-        </div>
-        <!-- Hufflepuff -->
-        <div class="score-Column yellow">
-             <div class="are-Ya-Winning-Son">
-            {{#if hufflepuff_on_leed}}
-                <img class="imgflag"  id="hufflepuff" src="systems/SofH/img/areYaWinningSon.png">  
-                {{else}}
-                <img class="imgflag"  id="hufflepuff" src="systems/SofH/img/areYaWinningSon.png" style="display: none;">  
-                {{/if}}
+<div class="{{class}}" style="{{style}}">
+  <!-- Gryffindor -->
+  <div class="score-Column red">
+    <div class="are-Ya-Winning-Son">
+      {{#if gryffindor_on_leed}}
+        <img
+          class="imgflag"
+          id="gryffindor"
+          src="systems/SofH/img/areYaWinningSon.png"
+        />
+      {{else}}
+        <img
+          class="imgflag"
+          id="gryffindor"
+          src="systems/SofH/img/areYaWinningSon.png"
+          style="display: none;"
+        />
+      {{/if}}
+
     </div>
-            <div class="score some-box yellow">
-               {{points_hufflepuff}}
-            </div>
-            <div class="modify-section yellow">
-                <input class="input-score resolve yellow" id="hufflepuff" type="number">
-                <hr class="yellow">
-                <input class="some-box resolve yellow" id="hufflepuff" type="button" value="{{localize "sofh.ui.submit"}}">
-            </div>
-            <div class="just-black-space"></div>
-            <img class="imgflag" src="systems/SofH/img/huffbanner.png">   
-        </div>
-        <!-- Ravenclaw -->
-        <div class="score-Column blue">
-            <div class="are-Ya-Winning-Son">
-                {{#if ravenclaw_on_leed}}
-                <img class="imgflag"  id="ravenclaw" src="systems/SofH/img/areYaWinningSon.png">  
-                {{else}}
-                <img class="imgflag"  id="ravenclaw" src="systems/SofH/img/areYaWinningSon.png" style="display: none;">  
-                {{/if}}
-            </div>
-            <div class="score some-box blue">
-                {{points_ravenclaw}}
-            </div>
-            <div class="modify-section blue">
-                <input class="input-score blue"   id="ravenclaw" type="number">
-                <hr class="blue">
-                <input class="some-box resolve blue" id="ravenclaw" type="button"  value="{{localize "sofh.ui.submit"}}">
-            </div>
-            <div class="just-black-space"></div>
-            <img class="imgflag" src="systems/SofH/img/ravebanner.png">   
-           
-        </div>
+    <div class="score some-box red">
+      {{points_gryffindor}}
     </div>
+    <div class="modify-section red">
+      <input type="number" class="input-score red" id="gryffindor" />
+      <hr class="red" />
+      <input
+        class="some-box resolve red"
+        id="gryffindor"
+        type="button"
+        value="{{localize 'sofh.ui.submit'}}"
+      />
+    </div>
+    <div class="just-black-space"></div>
+    <img class="imgflag" src="systems/SofH/img/gryfbanner.png" />
+  </div>
+  <!-- Slytherin -->
+  <div class="score-Column green">
+    <div class="are-Ya-Winning-Son">
+      {{#if slytherin_on_leed}}
+        <img
+          class="imgflag"
+          id="slytherin"
+          src="systems/SofH/img/areYaWinningSon.png"
+        />
+      {{else}}
+        <img
+          class="imgflag"
+          id="slytherin"
+          src="systems/SofH/img/areYaWinningSon.png"
+          style="display: none;"
+        />
+      {{/if}}
+    </div>
+    <div class="score some-box green">
+      {{points_slytherin}}
+    </div>
+    <div class="modify-section green">
+      <input class="input-score green" id="slytherin" type="number" />
+      <hr class="green" />
+      <input
+        class="some-box resolve green"
+        id="slytherin"
+        type="button"
+        value="{{localize 'sofh.ui.submit'}}"
+      />
+    </div>
+    <div class="just-black-space"></div>
+    <img class="imgflag" src="systems/SofH/img/slybanner.png" />
+  </div>
+  <!-- Hufflepuff -->
+  <div class="score-Column yellow">
+    <div class="are-Ya-Winning-Son">
+      {{#if hufflepuff_on_leed}}
+        <img
+          class="imgflag"
+          id="hufflepuff"
+          src="systems/SofH/img/areYaWinningSon.png"
+        />
+      {{else}}
+        <img
+          class="imgflag"
+          id="hufflepuff"
+          src="systems/SofH/img/areYaWinningSon.png"
+          style="display: none;"
+        />
+      {{/if}}
+    </div>
+    <div class="score some-box yellow">
+      {{points_hufflepuff}}
+    </div>
+    <div class="modify-section yellow">
+      <input class="input-score resolve yellow" id="hufflepuff" type="number" />
+      <hr class="yellow" />
+      <input
+        class="some-box resolve yellow"
+        id="hufflepuff"
+        type="button"
+        value="{{localize 'sofh.ui.submit'}}"
+      />
+    </div>
+    <div class="just-black-space"></div>
+    <img class="imgflag" src="systems/SofH/img/huffbanner.png" />
+  </div>
+  <!-- Ravenclaw -->
+  <div class="score-Column blue">
+    <div class="are-Ya-Winning-Son">
+      {{#if ravenclaw_on_leed}}
+        <img
+          class="imgflag"
+          id="ravenclaw"
+          src="systems/SofH/img/areYaWinningSon.png"
+        />
+      {{else}}
+        <img
+          class="imgflag"
+          id="ravenclaw"
+          src="systems/SofH/img/areYaWinningSon.png"
+          style="display: none;"
+        />
+      {{/if}}
+    </div>
+    <div class="score some-box blue">
+      {{points_ravenclaw}}
+    </div>
+    <div class="modify-section blue">
+      <input class="input-score blue" id="ravenclaw" type="number" />
+      <hr class="blue" />
+      <input
+        class="some-box resolve blue"
+        id="ravenclaw"
+        type="button"
+        value="{{localize 'sofh.ui.submit'}}"
+      />
+    </div>
+    <div class="just-black-space"></div>
+    <img class="imgflag" src="systems/SofH/img/ravebanner.png" />
+
+  </div>
+</div>

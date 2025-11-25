@@ -279,11 +279,9 @@ export function registerHandlebarsHelpers() {
       align-items: center;
       justify-content: space-evenly;
       width: 900px;
+      transform-origin: top left;
       transform: scale(${scale});
-      position: absolute;
       margin: 5px;
-      bottom: ${bottom}px !important;
-      right: ${right}px !important;
     }
   `;
 
@@ -355,18 +353,16 @@ export function registerHandlebarsHelpers() {
   Handlebars.registerHelper(
     "checkReputation",
     function (checkReputation, index) {
-      const number1 = Number(checkReputation[0]) ? Number(checkReputation[0]) : undefined
-      const number2 = Number(checkReputation[1]) ? Number(checkReputation[1]) : undefined
-      if (
-        number1 === index ||
-        number2 === index
-      ) {
+      const number1 = Number(checkReputation[0])
+        ? Number(checkReputation[0])
+        : undefined;
+      const number2 = Number(checkReputation[1])
+        ? Number(checkReputation[1])
+        : undefined;
+      if (number1 === index || number2 === index) {
         return "checked";
       }
-      if (
-        number1 !== undefined &&
-        number2 !== undefined
-      ) {
+      if (number1 !== undefined && number2 !== undefined) {
         return "disabled";
       }
     },

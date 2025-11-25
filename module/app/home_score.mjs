@@ -1,4 +1,6 @@
-export class HomeScore extends Application {
+const { api } = foundry.applications;
+
+export class HomeScore extends api.HandlebarsApplicationMixin(api.Application) {
   constructor(options = {}) {
     if (HomeScore._instance) {
       throw new Error("Home Score already has an instance!!!");
@@ -12,55 +14,67 @@ export class HomeScore extends Application {
     this.data = {};
   }
 
-  static get defaultOptions() {
-    return foundry.utils.mergeObject(super.defaultOptions, {
-      classes: ["SofH", "home-score-tracker"],
-      height: "200",
-      id: "home-score-app",
-      popOut: false,
-      resizable: false,
-      template: "systems/SofH/templates/app/home_score-tracker.hbs",
+  static DEFAULT_OPTIONS = {
+    classes: ["SofH", "home-score-tracker"],
+    window: {
       title: "Home Score",
-      width: "auto",
-    });
-  }
+      popOut: false,
+      resizable: true,
+    },
+  };
+  static PARTS = {
+    main: {
+      id: "home-score-app",
+      template: "systems/SofH/templates/app/home_score-tracker.hbs",
+    },
+  };
 
-  getData() {
-    super.getData();
+  _prepareContext() {
+    const context = {};
     const SYSTEM_ID = "SofH";
-    this.data.points_slytherin = game.settings.get(
-      SYSTEM_ID,
-      "points_slytherin",
-    );
-    this.data.points_ravenclaw = game.settings.get(
-      SYSTEM_ID,
-      "points_ravenclaw",
-    );
-    this.data.points_hufflepuff = game.settings.get(
+    context.points_slytherin = game.settings.get(SYSTEM_ID, "points_slytherin");
+    context.points_ravenclaw = game.settings.get(SYSTEM_ID, "points_ravenclaw");
+    context.points_hufflepuff = game.settings.get(
       SYSTEM_ID,
       "points_hufflepuff",
     );
-    this.data.points_gryffindor = game.settings.get(
+    context.points_gryffindor = game.settings.get(
       SYSTEM_ID,
       "points_gryffindor",
     );
-    this.data.slytherin_on_leed = game.settings.get(
+    context.slytherin_on_leed = game.settings.get(
       SYSTEM_ID,
       "slytherin_on_leed",
     );
-    this.data.ravenclaw_on_leed = game.settings.get(
+    context.ravenclaw_on_leed = game.settings.get(
       SYSTEM_ID,
       "ravenclaw_on_leed",
     );
-    this.data.hufflepuff_on_leed = game.settings.get(
+    context.hufflepuff_on_leed = game.settings.get(
       SYSTEM_ID,
       "hufflepuff_on_leed",
     );
-    this.data.gryffindor_on_leed = game.settings.get(
+    context.gryffindor_on_leed = game.settings.get(
       SYSTEM_ID,
       "gryffindor_on_leed",
     );
-    return this.data;
+
+    const userID = game.user.id;
+    const right = game.settings.get("SofH", "HomeScorePositionX");
+    const bottom = game.settings.get("SofH", "HomeScorePositionY");
+    const scale = game.settings.get("SofH", "HomeScoreSize");
+    context.class = "house-scores-container-" + userID;
+    context.style = `
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-evenly;
+        transform-origin: top left;
+        zoom: var(--scale, 1);
+        margin: 5px;
+        --scale:${scale}
+    `;
+
+    return context;
   }
 
   static async initialise() {
@@ -69,12 +83,71 @@ export class HomeScore extends Application {
     this.renderHomeScore();
   }
 
-  activateListeners(html) {
-    super.activateListeners(html);
-    html.find(".some-box.resolve").click(async (ev) => {
-      const clickedElementId = $(ev.currentTarget).attr("id");
-      await HomeScore.resolvePoints(clickedElementId, html);
-    });
+  async render(force = false, options = {}) {
+    await super.render(force, options);
+    const left = game.settings.get("SofH", "HomeScorePositionX");
+    const top = game.settings.get("SofH", "HomeScorePositionY");
+
+    const el = this.element;
+    const close = el.querySelector(".header-control.icon.fa-solid.fa-xmark");
+    if (close) {
+      close.remove();
+    }
+
+    el.style.top = top + "px";
+    el.style.left = left + "px";
+    const originalOnResize = this.window.onResize?.bind(this.window);
+    this.window.onResize = (...args) => {
+      if (originalOnResize) {
+        originalOnResize(...args);
+      }
+      this._onResize(el, ...args);
+    };
+
+    const originalOnDrag = this.window.onDrag?.bind(this.window);
+    this.window.onDrag = (...args) => {
+      if (originalOnDrag) {
+        originalOnDrag(...args);
+      }
+      this._onDrag(el, ...args);
+    };
+    const buttons = el?.querySelectorAll(".some-box.resolve");
+    if (el) {
+      Array.from(buttons).forEach((button) => {
+        button.addEventListener("click", async (ev) => {
+          const clickedElementId = $(ev.currentTarget).attr("id");
+          await HomeScore.resolvePoints(clickedElementId, el);
+        });
+      });
+    }
+  }
+  _onResize(entry) {
+    const userID = game.user.id;
+    const container = this.element;
+
+    const element = container.querySelector(
+      ".house-scores-container-" + userID,
+    );
+    if (!element) return;
+
+    const width = parseInt(entry.style.width, 10)
+      ? parseInt(entry.style.width, 10)
+      : entry.clientWidth;
+
+    const height = parseInt(entry.style.height, 10)
+      ? parseInt(entry.style.height, 10)
+      : entry.clientHeight;
+    const scaleW = width / 878;
+    const scaleH = height / 791;
+    const newScale = Math.min(scaleW, scaleH);
+    element.style.setProperty("--scale", newScale);
+    game.settings.set("SofH", "HomeScoreSize", newScale);
+  }
+  _onDrag(entry) {
+    const top = entry.offsetTop;
+    const left = entry.offsetLeft;
+    game.settings.set("SofH", "HomeScorePositionX", left);
+    game.settings.set("SofH", "HomeScorePositionY", top);
   }
 
   static async renderHomeScore() {
@@ -91,8 +164,10 @@ export class HomeScore extends Application {
       return;
     }
 
-    const inputScoreElement = html.find(`.input-score#${house.toLowerCase()}`);
-    let inputScore = parseInt(inputScoreElement.val(), 10) || 0;
+    const inputScoreElement = html.querySelector(
+      `.input-score#${house.toLowerCase()}`,
+    );
+    let inputScore = parseInt(inputScoreElement.value, 10) || 0;
 
     let currentPoints = game.settings.get(
       "SofH",
@@ -168,5 +243,11 @@ export class HomeScore extends Application {
         }
       }
     });
+  }
+  async close(options = {}) {
+    if (options.closeKey) {
+      return false;
+    }
+    return super.close(options);
   }
 }
