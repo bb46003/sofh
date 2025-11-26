@@ -133,16 +133,15 @@ export default function registerSettings() {
 
 Hooks.once("init", async function () {
   console.log("Secret of Hogwarts Initialising");
-
-  registerSheets();
-  registerHandlebarsHelpers();
-  registerSettings();
-  loadPolishLocalization();
   CONFIG.Item.documentClass = MOVES;
   CONFIG.Actor.documentClass = sofhActor;
   CONFIG.SOFHCONFIG = SOFHCONFIG;
   CONFIG.Item.dataModels = { specialPlaybookMoves: SpecialMovesDataModel, customMoves: SpecialMovesDataModel, optionalMoves:SpecialMovesDataModel, advancedMoves: SpecialMovesDataModel, houseMoves: SpecialMovesDataModel };
-  // --- Load previously saved custom config ---
+  registerHandlebarsHelpers();
+  registerSettings();
+  loadPolishLocalization();
+  registerSheets();
+ // --- Load previously saved custom config ---
   const savedData = game.settings.get("SofH", "customConfig");
   if (savedData) {
     // Merge blood types
