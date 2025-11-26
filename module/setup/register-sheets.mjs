@@ -34,7 +34,7 @@ export function registerSheets() {
   });
   (SOFHCONFIG,
     Items.registerSheet("sofh", sofhSpecialMovesSheet, {
-      types: ["specialPlaybookMoves", "optionalMoves", "customMoves"],
+      types: ["specialPlaybookMoves", "optionalMoves", "customMoves", "advancedMoves", "houseMoves"],
       makeDefault: true,
     }));
 }
