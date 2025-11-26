@@ -2,10 +2,12 @@
   "TYPES": {
     "Item": {
       "basicMoves": "Basic Moves",
-      "specialPlaybookMoves": "House Moves",
+      "specialPlaybookMoves": "Special Playbook Moves",
       "comingOfAgeMoves": "Coming Of Age Moves",
       "customMoves": "Custom Moves",
-      "optionalMoves": "Optional Moves"
+      "optionalMoves": "Optional Moves",
+      "houseMoves": "House Moves",
+      "advancedMoves": "Advanced Moves"
     }
   },
   "sofh": {
