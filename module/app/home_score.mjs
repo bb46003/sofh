@@ -1,6 +1,6 @@
 const { api } = foundry.applications;
 
-export class HomeScore extends api.HandlebarsApplicationMixin(api.Application) {
+export class HomeScore extends api.HandlebarsApplicationMixin(api.Application ?? api.ApplicationV2) {
   constructor(options = {}) {
     if (HomeScore._instance) {
       throw new Error("Home Score already has an instance!!!");
