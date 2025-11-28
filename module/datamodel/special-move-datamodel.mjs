@@ -35,7 +35,7 @@ export default class SpecialMovesDataModel extends BaseDataModel {
             label: "Is Used",
             initial: false,
           }),
-          abov12: new fields.BooleanField({
+          above12: new fields.BooleanField({
             label: "Is Used",
             initial: false,
           }),

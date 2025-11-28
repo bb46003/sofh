@@ -6,7 +6,9 @@ import { sofhSpecialMovesSheet } from "../items/special-move.mjs";
 
 export function registerSheets() {
   SOFHCONFIG.Actors =
-    game.release.generation < 13 ? Actors : foundry.documents.collections.Actors;
+    game.release.generation < 13
+      ? Actors
+      : foundry.documents.collections.Actors;
   SOFHCONFIG.ActorSheet =
     game.release.generation < 13 ? ActorSheet : foundry.appv1.sheets.ActorSheet;
   SOFHCONFIG.Items =
@@ -30,8 +32,14 @@ export function registerSheets() {
     types: ["basicMoves", "comingOfAgeMoves"],
     makeDefault: true,
   });
-  (SOFHCONFIG.Items.registerSheet("sofh", sofhSpecialMovesSheet, {
-      types: ["specialPlaybookMoves", "optionalMoves", "customMoves", "advancedMoves", "houseMoves"],
-      makeDefault: true,
-    }));
+  SOFHCONFIG.Items.registerSheet("sofh", sofhSpecialMovesSheet, {
+    types: [
+      "specialPlaybookMoves",
+      "optionalMoves",
+      "customMoves",
+      "advancedMoves",
+      "houseMoves",
+    ],
+    makeDefault: true,
+  });
 }

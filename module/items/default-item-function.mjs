@@ -51,7 +51,8 @@ export default class MOVES extends Item {
     } else if (
       element === "system.action.riseRollResults.7to9" ||
       element === "system.action.riseRollResults.above10" ||
-      element === "system.action.riseRollResults.above12"
+      element === "system.action.riseRollResults.above12" ||
+      element === "system.action.riseRollResults.causeComplication"
     ) {
       updates[element] = target.checked;
     }

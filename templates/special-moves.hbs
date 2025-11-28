@@ -17,24 +17,24 @@
           <input type="checkbox" name="system.action.{{key}}.isUse" id="action-{{key}}" {{#if action.isUse}}checked{{/if}}>
         </div>
         {{#if (and (eq key "riseRollResults") action.isUse)}}
-        <div class="special-move-entry">
-          <div class="column">
+        <div class="special-move-entry open">
+          <div class="special-move-entry">
             <label for="action-riseRollResults">{{localize "sofh.item.specialMove.causeComplication"}}</label>
             <input type="checkbox" name="system.action.riseRollResults.causeComplication" id="action-riseRollResults-causeComplication" {{#if action.causeComplication}}checked{{/if}}>
           </div>
-          <div class="column">
+          <div class="special-move-entry">
             <label for="action-riseRollResults">{{localize "sofh.item.specialMove.afteHowManyUse"}}</label>
             <input type="number" name="system.action.riseRollResults.useNumber" id="action-riseRollResults-useNumber" value="{{action.useNumber}}">
           </div>
-          <div class="column">
+          <div class="special-move-entry">
             <label for="action-riseRollResults">{{localize "sofh.item.specialMove.riseresultBelo6to7to9"}}</label>
             <input type="checkbox" name='system.action.riseRollResults.7to9' id="action-riseRollResults-useNumber" {{#if action.7to9}}checked{{/if}}>
           </div>
-          <div class="column">
+          <div class="special-move-entry">
             <label for="action-riseRollResults">{{localize "sofh.item.specialMove.riseresult7to9toabove10"}}</label>
             <input type="checkbox" name="system.action.riseRollResults.above10" id="action-riseRollResults-above10" {{#if action.above10}}checked{{/if}}>
           </div>
-          <div class="column">
+          <div class="special-move-entry">
             <label for="action-riseRollResults">{{localize "sofh.item.specialMove.riseResultabove10toabove12"}}</label>
             <input type="checkbox" name="system.action.riseRollResults.above12" id="action-riseRollResults-above12" {{#if action.above12}}checked{{/if}}>
           </div>
@@ -42,25 +42,26 @@
     {{/if}}
     
       {{/each}}
-    </div>
+    
     {{#if system.action.isRolable.isUse}}
-    <div>
-      <div class="special-move-types">
+    <div class="special-move-entry open">
+      <div class="special-move-entry">
         <label for="house">{{localize 'sofh.move.isRaltedToHouse'}}</label>
         <input type="checkbox" name="system.isHouseRelated" id="action-isHouseRelated" {{#if system.isHouseRelated}}checked{{/if}}>
       </div>
-      <div class="special-move-types">
+      <div class="special-move-entry">
         <label for="relation">{{localize 'sofh.move.isRelationRelated'}}</label>
         <input type="checkbox" name="system.relationRelated" id="action-relationRelated" {{#if system.relationRelated}}checked{{/if}}>
       </div>
-      <div class="special-move-types">
+      <div class="special-move-entry">
         <label for="strings">{{localize 'sofh.move.isStringsRelated'}}</label>
         <input type="checkbox" name="system.stringRelated" id="action-stringRelated" {{#if system.stringRelated}}checked{{/if}}>
       </div>
-      <div class="special-move-types">
+      <div class="special-move-entry">
         <label for="clue">{{localize 'sofh.move.isRelatedToClue'}}</label>
         <input type="checkbox" name="system.culeRelated" id="action-culeRelated" {{#if system.culeRelated}}checked{{/if}}> 
     </div>    
+  </div>
   </div>
     {{/if}}
 

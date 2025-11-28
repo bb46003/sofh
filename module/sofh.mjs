@@ -99,7 +99,6 @@ export default function registerSettings() {
       config: false,
       requiresReload: false,
       type: new fields.NumberField({ initial: 0.45 }),
-      
     });
     game.settings.register("SofH", "HomeScorePositionY", {
       scope: "client",
@@ -136,12 +135,18 @@ Hooks.once("init", async function () {
   CONFIG.Item.documentClass = MOVES;
   CONFIG.Actor.documentClass = sofhActor;
   CONFIG.SOFHCONFIG = SOFHCONFIG;
-  CONFIG.Item.dataModels = { specialPlaybookMoves: SpecialMovesDataModel, customMoves: SpecialMovesDataModel, optionalMoves:SpecialMovesDataModel, advancedMoves: SpecialMovesDataModel, houseMoves: SpecialMovesDataModel };
+  CONFIG.Item.dataModels = {
+    specialPlaybookMoves: SpecialMovesDataModel,
+    customMoves: SpecialMovesDataModel,
+    optionalMoves: SpecialMovesDataModel,
+    advancedMoves: SpecialMovesDataModel,
+    houseMoves: SpecialMovesDataModel,
+  };
   registerHandlebarsHelpers();
   registerSettings();
   loadPolishLocalization();
   registerSheets();
- // --- Load previously saved custom config ---
+  // --- Load previously saved custom config ---
   const savedData = game.settings.get("SofH", "customConfig");
   if (savedData) {
     // Merge blood types

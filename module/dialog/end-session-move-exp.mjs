@@ -1,8 +1,9 @@
 import sofh_Utility from "../utility.mjs";
 import { EndSessionYourReputation } from "./end-session-move-reputation.mjs";
 
-export class EndSessionLearnFromExperience extends foundry.applications.api
-  .ApplicationV2 {
+export class EndSessionLearnFromExperience
+  extends foundry.applications.api.ApplicationV2
+{
   static DEFAULT_OPTIONS = {
     actions: {
       next: EndSessionLearnFromExperience.#next,

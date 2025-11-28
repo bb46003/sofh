@@ -1,6 +1,8 @@
 const { api } = foundry.applications;
 
-export class HomeScore extends api.HandlebarsApplicationMixin(api.Application ?? api.ApplicationV2) {
+export class HomeScore extends api.HandlebarsApplicationMixin(
+  api.Application ?? api.ApplicationV2,
+) {
   constructor(options = {}) {
     if (HomeScore._instance) {
       throw new Error("Home Score already has an instance!!!");
@@ -186,32 +188,29 @@ export class HomeScore extends api.HandlebarsApplicationMixin(api.Application ??
     const houseSettings = [
       {
         name: "gryffindor",
-        value: HomeScore._instance.data.points_gryffindor || 0,
+        value: game.settings.get(SYSTEM_ID, "points_gryffindor") || 0,
       },
       {
         name: "slytherin",
-        value: HomeScore._instance.data.points_slytherin || 0,
+        value: game.settings.get(SYSTEM_ID, "points_slytherin") || 0,
       },
       {
         name: "hufflepuff",
-        value: HomeScore._instance.data.points_hufflepuff || 0,
+        value: game.settings.get(SYSTEM_ID, "points_hufflepuff") || 0,
       },
       {
         name: "ravenclaw",
-        value: HomeScore._instance.data.points_ravenclaw || 0,
+        value: game.settings.get(SYSTEM_ID, "points_ravenclaw") || 0,
       },
     ];
-
     const houseWithHighestPoints = houseSettings.reduce(
       (maxHouse, currentHouse) => {
         return currentHouse.value > maxHouse.value ? currentHouse : maxHouse;
       },
       houseSettings[0],
     );
-
     for (let house of houseSettings) {
       let onLeed = house.name === houseWithHighestPoints.name;
-      HomeScore._instance.data[`${house.name}_on_leed`] = onLeed;
       await game.settings.set(SYSTEM_ID, `${house.name}_on_leed`, onLeed);
     }
     await game.system.socketHandler.emit({ operation: "updatePoints" });

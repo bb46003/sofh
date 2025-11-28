@@ -10,6 +10,9 @@ export class sofhSpecialMovesSheet extends api.HandlebarsApplicationMixin(
       width: 560,
       height: 695,
     },
+    window: {
+      resizable: true,
+    },
     form: {
       handler: sofhSpecialMovesSheet.myFormHandler,
       submitOnChange: true,
@@ -39,8 +42,18 @@ export class sofhSpecialMovesSheet extends api.HandlebarsApplicationMixin(
     const itemData = this.document.toObject(false);
     context.system = itemData.system;
     context.fields = this.document.system?.schema?.fields ?? {};
+    async function enrich(html) {
+      if (html) {
+        return await TextEditor.enrichHTML(html, {
+          secrets: game.user.isOwner,
+          async: true,
+        });
+      } else {
+        return html;
+      }
+    }
     const enrichHTML =
-      foundry.applications?.ux?.TextEditor?.enrichHTML || TextEditor.enrichHTML;
+      foundry.applications?.ux?.TextEditor?.enrichHTML || enrich;
     context["7to9"] = {
       value: itemData.system.resultsChange["7to9"],
       enriched: await enrichHTML(itemData.system.resultsChange["7to9"]),

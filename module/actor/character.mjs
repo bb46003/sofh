@@ -159,7 +159,9 @@ export class sofhCharacterSheet extends BaseActorSheet {
       this.changeReputationQuestions(ev),
     );
     html.on("click", "#advamcmentDialog", (ev) => this.advamcmentDialog(ev));
-    html.on("click", "i.fa.fa-trash", (ev) => this.removeAdditionalTopic(ev));
+    html.on("click", "i.fa.fa-trash.remove-additional-subject", (ev) =>
+      this.removeAdditionalTopic(ev),
+    );
     html.on("change", ".additional-subject", (ev) =>
       this.changeAditionalSubjectFromMove(ev),
     );
@@ -574,13 +576,14 @@ export class sofhCharacterSheet extends BaseActorSheet {
 
   async addStringItem(ev) {
     const actor = this.actor;
-    let strings = actor.system.strings || [];
-    let i = Object.keys(strings).length + 1;
+    let strings = actor.system.strings || {};
+    const keys = Object.keys(strings).map((k) => Number(k));
+    const nextKey = keys.length ? Math.max(...keys) + 1 : 0;
     const stringElement = {
       name: "",
       description: "",
     };
-    strings[i] = stringElement;
+    strings[nextKey] = stringElement;
     await actor.update({ "system.strings": strings });
   }
 

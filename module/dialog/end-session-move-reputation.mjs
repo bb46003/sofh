@@ -1,7 +1,8 @@
 import sofh_Utility from "../utility.mjs";
 
-export class EndSessionYourReputation extends foundry.applications.api
-  .ApplicationV2 {
+export class EndSessionYourReputation
+  extends foundry.applications.api.ApplicationV2
+{
   static DEFAULT_OPTIONS = {
     actions: {
       next: EndSessionYourReputation.#next,
