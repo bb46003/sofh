@@ -827,8 +827,15 @@ export class sofhCharacterSheet extends BaseActorSheet {
           itemData,
         ]);
         const createdItem = createdItems[0];
+        const allowedTypes = [
+          "specialPlaybookMoves",
+          "optionalMoves",
+          "customMoves",
+          "advancedMoves",
+          "houseMoves",
+        ];
         if (
-          itemData.type === "specialPlaybookMoves" &&
+          allowedTypes.includes(itemData.type) &&
           itemData.system.action.isRealeted.isUse
         ) {
           const relatedMoves = itemData.system.relatedMoves ?? [];

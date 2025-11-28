@@ -8,7 +8,9 @@ export class moveRoll extends Dialog {
 
   async activateListeners(html) {
     super.activateListeners(html);
-    html.on("click", ".other-factor-h3", this.collapsOtherFactor.bind(this));
+    const h3 = this.element[0].querySelector(".other-factor-h3");
+    h3?.addEventListener("click", this.collapsOtherFactor.bind(html));
+
     html.on(
       "change",
       ".question-sheet-roll-muptiple .circle-checkbox-isapply",
@@ -463,7 +465,7 @@ export class moveRoll extends Dialog {
             </div>
       `;
     }
-    if (advantagesSelect !== undefined) {
+    if (advantagesSelect) {
       content += `
       <h3></h3>
       <p style="font-family: 'IM Fell English SC', serif">${game.i18n.format("sofh.ui.chat.actorUseAdvantages", { actor: actor.name, advantage: advantagesSelect })}</p>
@@ -608,6 +610,7 @@ export class moveRoll extends Dialog {
       } else if (item.type === "basicMoves") {
         customItem = item;
       }
+      console.log(relatedMoves, question);
       let content = await sofh_Utility.renderTemplate(
         "systems/SofH/templates/dialogs/rolling-dialog.hbs",
         {
@@ -709,7 +712,8 @@ export class moveRoll extends Dialog {
       .querySelector(".complexity-numer");
     complexityInput.value = complexity;
   }
-  async checkComplication(moveID, actor) {
+  async checkComplication(moveID, actorID) {
+    const actor = await fromUuid(actorID);
     const move = actor.items.get(moveID);
     const flag = move.flags?.SofH?.complication;
 

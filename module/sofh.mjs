@@ -104,13 +104,13 @@ export default function registerSettings() {
       scope: "client",
       config: false,
       requiresReload: false,
-      type: new fields.NumberField({ initial: -150 }),
+      type: new fields.NumberField({ initial: 550 }),
     });
     game.settings.register("SofH", "HomeScorePositionX", {
       scope: "client",
       config: false,
       requiresReload: false,
-      type: new fields.NumberField({ initial: 70 }),
+      type: new fields.NumberField({ initial: 50 }),
     });
   }
   game.settings.register("SofH", "customConfig", {
@@ -146,6 +146,15 @@ Hooks.once("init", async function () {
   registerSettings();
   loadPolishLocalization();
   registerSheets();
+  if (game.release.generation < 13) {
+    Hooks.on("renderChatMessage", async (message, html) => {
+      await chatListiniers(message, html[0]);
+    });
+  } else {
+    Hooks.on("renderChatMessageHTML", async (message, html) => {
+      await chatListiniers(message, html);
+    });
+  }
   // --- Load previously saved custom config ---
   const savedData = game.settings.get("SofH", "customConfig");
   if (savedData) {
@@ -486,7 +495,8 @@ Hooks.on("preCreateScene", (scene) => {
     },
   });
 });
-Hooks.on("renderChatMessageHTML", async (message, html) => {
+
+async function chatListiniers(message, html) {
   const unUsedRiseButton = html.querySelectorAll(".rise-with-move");
   const buttons = html.querySelectorAll(".roll-breakthrough");
 
@@ -510,69 +520,71 @@ Hooks.on("renderChatMessageHTML", async (message, html) => {
       }
     });
   });
-  const actor = await game.actors.get(message.system.actor);
-  const reladedMoves = message?.system.unUsedRise;
-  const coreMove = actor?.items.get(message.system.move);
-  let resultTier = message?.system.resultTier;
-  unUsedRiseButton.forEach((button) => {
-    button.addEventListener("click", async (ev) => {
-      const id = button.dataset.id;
-      const reladedMove = await actor.items.get(reladedMoves[id]);
-      const riseBelow7To7to9 =
-        reladedMove.system.action.riseRollResults["7to9"];
-      const rise7to9ToAbove10 =
-        reladedMove.system.action.riseRollResults.above10;
-      const riseAbove10ToAbove12 =
-        reladedMove.system.action.riseRollResults.above12;
-      if (riseBelow7To7to9 && resultTier === "below7") {
-        resultTier = "7to9";
-      } else if (rise7to9ToAbove10 && resultTier === "7to9") {
-        resultTier = "above10";
-      } else if (
-        riseAbove10ToAbove12 &&
-        resultTier === "above10" &&
-        coreMove.system?.above12
-      ) {
-        resultTier = "above12";
-      }
-      const newResults = coreMove.system[resultTier];
-      const roll = Roll.fromData(message.system.roll);
-      let flavor =
-        `<p>${game.i18n.format("sofh.ui.chat.relatedMoveRiseEffect", { name: reladedMove.name })}` +
-        message.system.flavor;
+  const actor = await game.actors.get(message?.system?.actor);
+  const reladedMoves = message?.system?.unUsedRise;
+  const coreMove = actor?.items.get(message?.system?.move);
+  let resultTier = message?.system?.resultTier;
+  if (actor && reladedMoves && coreMove && resultTier) {
+    unUsedRiseButton.forEach((button) => {
+      button.addEventListener("click", async (ev) => {
+        const id = button.dataset.id;
+        const reladedMove = await actor.items.get(reladedMoves[id]);
+        const riseBelow7To7to9 =
+          reladedMove.system.action.riseRollResults["7to9"];
+        const rise7to9ToAbove10 =
+          reladedMove.system.action.riseRollResults.above10;
+        const riseAbove10ToAbove12 =
+          reladedMove.system.action.riseRollResults.above12;
+        if (riseBelow7To7to9 && resultTier === "below7") {
+          resultTier = "7to9";
+        } else if (rise7to9ToAbove10 && resultTier === "7to9") {
+          resultTier = "above10";
+        } else if (
+          riseAbove10ToAbove12 &&
+          resultTier === "above10" &&
+          coreMove.system?.above12
+        ) {
+          resultTier = "above12";
+        }
+        const newResults = coreMove.system[resultTier];
+        const roll = Roll.fromData(message.system.roll);
+        let flavor =
+          `<p>${game.i18n.format("sofh.ui.chat.relatedMoveRiseEffect", { name: reladedMove.name })}` +
+          message.system.flavor;
 
-      const buttonRegex = new RegExp(
-        `<button\\s+class="rise-with-move"\\s+data-id="${id}".*?<\\/button>`,
-        "s",
-      );
+        const buttonRegex = new RegExp(
+          `<button\\s+class="rise-with-move"\\s+data-id="${id}".*?<\\/button>`,
+          "s",
+        );
 
-      const rollResultsRegex = /<div class="roll-results">([\s\S]*?)<\/div>/g;
-      flavor = flavor.replace(
-        rollResultsRegex,
-        `<div class="roll-results">${newResults}</div>`,
-      );
-      flavor = flavor.replace(buttonRegex, "");
-      const complication = checkComplication(
-        reladedMoves[id],
-        message.system.actor,
-      );
+        const rollResultsRegex = /<div class="roll-results">([\s\S]*?)<\/div>/g;
+        flavor = flavor.replace(
+          rollResultsRegex,
+          `<div class="roll-results">${newResults}</div>`,
+        );
+        flavor = flavor.replace(buttonRegex, "");
+        const complication = checkComplication(
+          reladedMoves[id],
+          message.system.actor,
+        );
 
-      if (complication) {
-        flavor +=
-          "<br>" +
-          game.i18n.format("sofh.ui.chat.relatedMoveCauseComplication", {
-            name: reladedMove.name,
-          }) +
-          "<br>";
-      }
-      roll.toMessage({
-        user: game.user.id,
-        speaker: ChatMessage.getSpeaker({ actor }),
-        flavor: flavor,
+        if (complication) {
+          flavor +=
+            "<br>" +
+            game.i18n.format("sofh.ui.chat.relatedMoveCauseComplication", {
+              name: reladedMove.name,
+            }) +
+            "<br>";
+        }
+        roll.toMessage({
+          user: game.user.id,
+          speaker: ChatMessage.getSpeaker({ actor }),
+          flavor: flavor,
+        });
       });
     });
-  });
-});
+  }
+}
 async function nestObject(flatObj) {
   const nestedObj = {};
 
@@ -632,7 +644,8 @@ async function customStyle(type, newValue) {
     }
   `;
 }
-async function checkComplication(moveID, actor) {
+async function checkComplication(moveID, actorID) {
+  const actor = await game.actors.get(actorID);
   const move = actor.items.get(moveID);
   const flag = move.flags?.SofH?.complication;
 

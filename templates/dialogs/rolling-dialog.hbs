@@ -103,6 +103,7 @@
     {{#if areRelatedMoves}}
         <h2 class="h2-roll">{{localize 'sofh.ui.rolldialog.relatedMoves'}}</h2>
     {{/if}}
+    <div style="margin-bottom:20px">
     {{#each relatedMoves as |relatedMove|}}
         {{#if relatedMove.system.action.riseRollResults.isUse}}
         <div class="riseResult">
@@ -117,6 +118,7 @@
         </div>
         {{/if}}
     {{/each}}
+    </div>
     {{#if (eq item.system.cluerelated false)}}
         <h3 class="other-factor-h3">{{localize "sofh.ui.dialog.other_factor"}}</h3>
         <div class="other-factor" style="display: none">
