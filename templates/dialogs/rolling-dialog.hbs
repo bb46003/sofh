@@ -19,7 +19,7 @@
             {{#each item.system.question as |question index|}}
     
                 <div class="question-sheet-roll">
-                    <div class="question description">{{question.description}}</div>
+                    <div class="question description">{{{question.description}}}</div>
                     <select class="question-impact" name="system.question.{{@index}}.impact" disabled>
                         <option value="true" {{#if (eq question.impact "true")}}selected{{/if}}>{{localize 'sofh.ui.rolldialog.positiveOption'}}</option>
                         <option value="false" {{#if (eq question.impact "false")}}selected{{/if}}>{{localize 'sofh.ui.rolldialog.negativeOption'}}</option>
@@ -53,8 +53,8 @@
                     <div class="question-sheet-roll-muptiple">
                         <div class="question description">{{question.description}}</div>
                         <select class="question-impact" name="system.question.{{@index}}.impact" disabled>
-                            <option value="true" {{#if (eq question.impact "true")}}selected{{/if}}>{{localize 'sofh.ui.rolldialog.positiveOption'}}</option>
-                            <option value="false" {{#if (eq question.impact "false")}}selected{{/if}}>{{localize 'sofh.ui.rolldialog.negativeOption'}}</option>
+                            <option value="true" {{#if (or (eq question.impact "true") question.impact)}}selected{{/if}}>{{localize 'sofh.ui.rolldialog.positiveOption'}}</option>
+                            <option value="false" {{#if (or (eq question.impact "false") (not question.impact))}}selected{{/if}}>{{localize 'sofh.ui.rolldialog.negativeOption'}}</option>
                         </select>
                         <div class="questionc- hcekbox">
                             <label class="question-isapply">{{localize 'sofh.ui.rolldialog.isApplyLabel'}}</label>
@@ -119,6 +119,7 @@
         {{/if}}
     {{/each}}
     </div>
+    {{log item.system.cluerelated}}
     {{#if (eq item.system.cluerelated false)}}
         <h3 class="other-factor-h3">{{localize "sofh.ui.dialog.other_factor"}}</h3>
         <div class="other-factor" style="display: none">

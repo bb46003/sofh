@@ -307,7 +307,9 @@
       "isRaltedToHouse": "Move is related do House",
       "haseResult12": "Move have results 12+",
       "namePulltheStrings": "Pull the Strings",
-      "endSesionMove": "End Sesion Moves"
+      "endSesionMove": "End Sesion Moves",
+      "removeQuestion": "Remove Question",
+      "impactType": "How question impact on roll"
     },
     "item": {
       "descriptionlabel": "Move description",

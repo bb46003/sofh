@@ -574,7 +574,14 @@ export class moveRoll extends Dialog {
     let customItem = {};
     const areRelatedMoves = relatedMoves.length > 0;
     if (!is7conditions) {
-      if (item.type === "specialPlaybookMoves") {
+      const allowedTypes = [
+        "specialPlaybookMoves",
+        "optionalMoves",
+        "customMoves",
+        "advancedMoves",
+        "houseMoves",
+      ];
+      if (allowedTypes.includes(item.type)) {
         const questions = {};
 
         if (
@@ -584,7 +591,7 @@ export class moveRoll extends Dialog {
           item.system.additionalQuestion.forEach((element, index) => {
             questions[index] = {
               description: element.question,
-              impact: "true",
+              impact: String(element.impact),
             };
           });
         }

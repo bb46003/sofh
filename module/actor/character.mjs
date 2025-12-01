@@ -853,7 +853,10 @@ export class sofhCharacterSheet extends BaseActorSheet {
             }
           });
         }
-        if (itemData.system.action.addFavoriteTopic.isUse) {
+        const addTopic = itemData.system?.action?.addFavoriteTopic.isUse
+          ? itemData.system?.action.addFavoriteTopic.isUse
+          : false;
+        if (addTopic) {
           const content = await sofh_Utility.renderTemplate(
             "systems/SofH/templates/dialogs/add-new-topic.hbs",
           );

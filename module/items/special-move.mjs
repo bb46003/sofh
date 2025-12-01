@@ -21,6 +21,7 @@ export class sofhSpecialMovesSheet extends api.HandlebarsApplicationMixin(
       addRelatedMove: sofhSpecialMovesSheet.#addRelatedMove,
       removeRelatedMove: sofhSpecialMovesSheet.#removeRelatedMove,
       addQuestion: sofhSpecialMovesSheet.#addQuestion,
+      removeQuestion: sofhSpecialMovesSheet.#removeQuestion,
     },
     item: {
       type: "specialPlaybookMoves",
@@ -87,6 +88,7 @@ export class sofhSpecialMovesSheet extends api.HandlebarsApplicationMixin(
     context.additionalQuestions = await Promise.all(
       itemData.system.additionalQuestion.map(async (q, i) => ({
         value: q.question,
+        impact: q.impact,
         enriched: await enrichHTML(q.question),
         field: context.fields.additionalQuestion.element.fields.question,
       })),
@@ -127,5 +129,10 @@ export class sofhSpecialMovesSheet extends api.HandlebarsApplicationMixin(
   }
   static async #addQuestion() {
     this.item.addQuestion();
+  }
+  static async #removeQuestion(event) {
+    const target = event.target;
+    const id = target.dataset.id;
+    this.item.removeRelatedQuestion(id);
   }
 }

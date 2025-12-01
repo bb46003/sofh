@@ -1250,3 +1250,18 @@ h2.special-move {
   margin-top: 10px;
   margin-bottom: 10px;
 }
+.additional-question-moves {
+  display: grid;
+  grid-template-columns: 6fr 2fr;
+  align-items: start;
+  gap: 5px;
+}
+.additional-question-moves select#question-type {
+  max-height: 30%;
+}
+.additional-question-moves .flex {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}

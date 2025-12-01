@@ -123,9 +123,17 @@
     {{#if system.action.addQuestion.isUse}}
     <h2 class="special-move">{{localize "sofh.item.addQuestion"}}<i class="fa fa-plus" data-action="addQuestion"></i></h2>    
     {{#each additionalQuestions as |question index|}}
-      <div>
-        {{formInput question.field value=question.value enriched=question.enriched name=(concat "additionalQuestion[" index "]")toggled="true"}}      
-        <i class="fa fa-trash" data-action="removeQuestion" data-id="{{index}}"></i>
+      <div class="additional-question-moves">
+        {{formInput question.field value=question.value enriched=question.enriched name=(concat "additionalQuestion[" index "]")toggled="true"}}
+        <div class="flex">
+
+        <label>{{localize "sofh.move.impactType"}}</label>
+        <select id="question-type" data-name="system.additionalQuestions.{{index}}.impact">
+            <option value="true" {{#if question.impact}}selected{{/if}}>{{localize 'sofh.ui.rolldialog.positiveOption'}}</option>
+            <option value="false" {{#if (not question.impact) }}selected{{/if}}>{{localize 'sofh.ui.rolldialog.negativeOption'}}</option>
+        </select>      
+        <i class="fa fa-trash" data-action="removeQuestion" data-tooltip="{{localize "sofh.move.removeQuestion"}}" data-id="{{index}}"></i>
+      </div>
       </div>
       {{/each}}
     {{/if}}

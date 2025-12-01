@@ -69,6 +69,7 @@ export default class SpecialMovesDataModel extends BaseDataModel {
     schema.additionalQuestion = new fields.ArrayField(
       new fields.SchemaField({
         question: new fields.HTMLField({ initial: "" }),
+        impact: new fields.BooleanField({ initial: true }),
       }),
     );
     schema.relatedMoves = new fields.ArrayField(

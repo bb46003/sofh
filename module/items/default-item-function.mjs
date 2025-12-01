@@ -55,6 +55,12 @@ export default class MOVES extends Item {
       element === "system.action.riseRollResults.causeComplication"
     ) {
       updates[element] = target.checked;
+    } else if (name.includes("additionalQuestion")) {
+      const questions = foundry.utils.deepClone(this.system.additionalQuestion);
+      const value = newValue === "true" ? true : false;
+      const index = name.split(".");
+      questions[parseInt(index[2])].impact = value;
+      updates["system.additionalQuestion"] = questions;
     }
 
     if (Object.keys(updates).length > 0) {
@@ -73,6 +79,22 @@ export default class MOVES extends Item {
 
     await item.update({
       "system.relatedMoves": updatedMoves,
+    });
+
+    item.sheet.render(true);
+  }
+
+  async removeRelatedQuestion(questionID) {
+    const item = this;
+    const additionalQuestion = item.system.additionalQuestion || [];
+    const questionToRemove = additionalQuestion[questionID];
+    // Filter out the move with the given ID
+    const updatedQuestions = additionalQuestion.filter(
+      (q) => q !== questionToRemove,
+    );
+
+    await item.update({
+      "system.additionalQuestion": updatedQuestions,
     });
 
     item.sheet.render(true);

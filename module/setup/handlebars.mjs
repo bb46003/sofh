@@ -12,6 +12,7 @@ export function registerHandlebarsHelpers() {
     or() {
       return Array.prototype.slice.call(arguments, 0, -1).some(Boolean);
     },
+    not: (v1) => !v1,
   });
   Handlebars.registerHelper("ifCondition", function (condition) {
     const conditionArray = Object.values(condition);
