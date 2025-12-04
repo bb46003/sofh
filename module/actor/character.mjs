@@ -105,8 +105,10 @@ export class sofhCharacterSheet extends BaseActorSheet {
           break;
         case "advancedMoves":
           advancedMoves.push(item)
+          break;
         case "houseMoves":
           houseMoves.push(item)
+          break;
         default:
           console.warn(`Unknown item type: ${item.type}`);
           break;
@@ -128,7 +130,7 @@ export class sofhCharacterSheet extends BaseActorSheet {
     context.specialPlaybookMoves = specialPlaybookMoves;
     context.advancedMoves = advancedMoves;
     context.optionalMoves= optionalMoves;
-
+    console.log(context)
   }
 
   async activateListeners(html) {

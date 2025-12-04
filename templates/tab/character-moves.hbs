@@ -43,7 +43,7 @@
     {{/if}}
                 {{#if (ne advancedMoves.length 0)}}
         <h1 class="move_type" id="{{advancedMoves.[0].type}}" >{{localize (concat 'TYPES.Item.' advancedMoves.[0].type )}}</h1>
-        <div class="all-moves {{customMoves.[0].type}} " >
+        <div class="all-moves {{advancedMoves.[0].type}} " >
         {{#each advancedMoves as |item itemId|}}
             {{> "systems/SofH/templates/tab/partial/move-title.hbs"  item=item}}
         {{/each}}
@@ -51,7 +51,7 @@
     {{/if}}
                 {{#if (ne comingOfAgeMoves.length 0)}}
         <h1 class="move_type" id="{{comingOfAgeMoves.[0].type}}" >{{localize (concat 'TYPES.Item.' comingOfAgeMoves.[0].type )}}</h1>
-        <div class="all-moves {{customMoves.[0].type}} " >
+        <div class="all-moves {{comingOfAgeMoves.[0].type}} " >
         {{#each comingOfAgeMoves as |item itemId|}}
             {{> "systems/SofH/templates/tab/partial/move-title.hbs"  item=item}}
         {{/each}}
