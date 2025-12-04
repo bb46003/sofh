@@ -1,4 +1,5 @@
-2025/12/03-22:31:19.985 5cac Recovering log #271
-2025/12/03-22:31:19.999 5cac Delete type=0 #271
-2025/12/03-22:31:19.999 5cac Delete type=3 #261
-2025/12/03-22:31:19.999 5cac Delete type=3 #269
+2025/12/04-18:50:38.570 52bc Recovering log #3
+2025/12/04-18:50:38.571 52bc Level-0 table #5: started
+2025/12/04-18:50:38.579 52bc Level-0 table #5: 55540 bytes OK
+2025/12/04-18:50:38.582 52bc Delete type=0 #3
+2025/12/04-18:50:38.583 52bc Delete type=3 #2
