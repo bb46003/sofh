@@ -17,15 +17,6 @@
         </div>
     {{/if}}
 
-    {{#if (ne peripheralMoves.length 0)}}
-        <h1 class="move_type" id="{{peripheralMoves.[0].type}}">{{localize (concat 'TYPES.Item.' peripheralMoves.[0].type )}}</h1>
-        <div class="all-moves {{peripheralMoves.[0].type}} " >
-        {{#each peripheralMoves as |item itemId|}}
-            {{> "systems/SofH/templates/tab/partial/move-title.hbs"  item=item}}
-        {{/each}}
-        </div>
-    {{/if}}
-
     {{#if (ne specialPlaybookMoves.length 0)}}
         <h1 class="move_type" id="{{specialPlaybookMoves.[0].type}}" >{{localize (concat 'TYPES.Item.' specialPlaybookMoves.[0].type )}}</h1>
         <div class="all-moves {{specialPlaybookMoves.[0].type}} " >
@@ -34,14 +25,40 @@
         {{/each}}
         </div>
     {{/if}}
-
-    {{#if (ne endOfSessionMoves.length 0)}}
-        <h1 class="move_type" id="{{endOfSessionMoves.[0].type}}">{{localize (concat 'TYPES.Item.' endOfSessionMoves.[0].type )}}</h1>
-        <div class="all-moves {{endOfSessionMoves.[0].type}} " >
-        {{#each endOfSessionMoves as |item itemId|}}
-           {{> "systems/SofH/templates/tab/partial/move-title.hbs"  item=item}}
+        {{#if (ne optionalMoves.length 0)}}
+        <h1 class="move_type" id="{{optionalMoves.[0].type}}" >{{localize (concat 'TYPES.Item.' optionalMoves.[0].type )}}</h1>
+        <div class="all-moves {{optionalMoves.[0].type}} " >
+        {{#each optionalMoves as |item itemId|}}
+            {{> "systems/SofH/templates/tab/partial/move-title.hbs"  item=item}}
         {{/each}}
         </div>
     {{/if}}
+            {{#if (ne customMoves.length 0)}}
+        <h1 class="move_type" id="{{customMoves.[0].type}}" >{{localize (concat 'TYPES.Item.' customMoves.[0].type )}}</h1>
+        <div class="all-moves {{customMoves.[0].type}} " >
+        {{#each customMoves as |item itemId|}}
+            {{> "systems/SofH/templates/tab/partial/move-title.hbs"  item=item}}
+        {{/each}}
+        </div>
+    {{/if}}
+                {{#if (ne advancedMoves.length 0)}}
+        <h1 class="move_type" id="{{advancedMoves.[0].type}}" >{{localize (concat 'TYPES.Item.' advancedMoves.[0].type )}}</h1>
+        <div class="all-moves {{customMoves.[0].type}} " >
+        {{#each advancedMoves as |item itemId|}}
+            {{> "systems/SofH/templates/tab/partial/move-title.hbs"  item=item}}
+        {{/each}}
+        </div>
+    {{/if}}
+                {{#if (ne comingOfAgeMoves.length 0)}}
+        <h1 class="move_type" id="{{comingOfAgeMoves.[0].type}}" >{{localize (concat 'TYPES.Item.' comingOfAgeMoves.[0].type )}}</h1>
+        <div class="all-moves {{customMoves.[0].type}} " >
+        {{#each comingOfAgeMoves as |item itemId|}}
+            {{> "systems/SofH/templates/tab/partial/move-title.hbs"  item=item}}
+        {{/each}}
+        </div>
+    {{/if}}
+
+
+
 </div>
 

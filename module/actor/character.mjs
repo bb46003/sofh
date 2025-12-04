@@ -80,27 +80,33 @@ export class sofhCharacterSheet extends BaseActorSheet {
   _prepareMoves(context) {
     const basicMoves = [];
     const houseMoves = [];
-    const peripheralMoves = [];
-    const endOfSessionMoves = [];
+    const comingOfAgeMoves = [];
+    const optionalMoves = [];
+    const customMoves = [];
     const specialPlaybookMoves = [];
+    const advancedMoves = [];
 
     for (let item of context.actor.items) {
       switch (item.type) {
         case "basicMoves":
           basicMoves.push(item);
           break;
-        case "houseMoves":
-          houseMoves.push(item);
+        case "comingOfAgeMoves":
+          comingOfAgeMoves.push(item);
           break;
-        case "peripheralMoves":
-          peripheralMoves.push(item);
+        case "optionalMoves":
+          optionalMoves.push(item);
           break;
-        case "endOfSessionMoves":
-          endOfSessionMoves.push(item);
+        case "customMoves":
+          customMoves.push(item);
           break;
         case "specialPlaybookMoves":
           specialPlaybookMoves.push(item);
           break;
+        case "advancedMoves":
+          advancedMoves.push(item)
+        case "houseMoves":
+          houseMoves.push(item)
         default:
           console.warn(`Unknown item type: ${item.type}`);
           break;
@@ -108,16 +114,21 @@ export class sofhCharacterSheet extends BaseActorSheet {
     }
     basicMoves.sort((a, b) => a.name.localeCompare(b.name));
     houseMoves.sort((a, b) => a.name.localeCompare(b.name));
-    peripheralMoves.sort((a, b) => a.name.localeCompare(b.name));
-    endOfSessionMoves.sort((a, b) => a.name.localeCompare(b.name));
+    comingOfAgeMoves.sort((a, b) => a.name.localeCompare(b.name));
+    customMoves.sort((a, b) => a.name.localeCompare(b.name));
     specialPlaybookMoves.sort((a, b) => a.name.localeCompare(b.name));
+    advancedMoves.sort((a, b) => a.name.localeCompare(b.name));
+    optionalMoves.sort((a, b) => a.name.localeCompare(b.name));
 
     // After assigning the items to each array, assign these arrays to the context object
     context.basicMoves = basicMoves;
     context.houseMoves = houseMoves;
-    context.peripheralMoves = peripheralMoves;
-    context.endOfSessionMoves = endOfSessionMoves;
+    context.comingOfAgeMoves = comingOfAgeMoves;
+    context.customMoves = customMoves;
     context.specialPlaybookMoves = specialPlaybookMoves;
+    context.advancedMoves = advancedMoves;
+    context.optionalMoves= optionalMoves;
+
   }
 
   async activateListeners(html) {
