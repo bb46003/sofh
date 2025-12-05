@@ -1265,3 +1265,45 @@ h2.special-move {
   align-items: center;
   gap: 10px;
 }
+.change-relation[type="radio"] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+
+  border: 2px solid #1e90ff;  /* blue border */
+  background: #cfcfcf;         /* grey fill when NOT selected */
+
+  display: inline-grid;
+  place-content: center;
+
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+}
+
+/* inner dot (hidden by default) */
+.change-relation[type="radio"]::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+
+  border-radius: 50%;
+  background: #ff7a18;         /* orange dot when checked */
+
+  transform: scale(0);
+  transition: transform 0.15s ease-in-out;
+}
+
+/* SELECTED radio */
+.change-relation[type="radio"]:checked {
+  background: #ffffff;
+  border-color: #ff7a18;       /* orange border */
+}
+
+/* show inner dot when selected */
+.change-relation[type="radio"]:checked::before {
+  transform: scale(1);
+}
