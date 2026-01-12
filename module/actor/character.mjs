@@ -130,7 +130,6 @@ export class sofhCharacterSheet extends BaseActorSheet {
     context.specialPlaybookMoves = specialPlaybookMoves;
     context.advancedMoves = advancedMoves;
     context.optionalMoves= optionalMoves;
-    console.log(context)
   }
 
   async activateListeners(html) {

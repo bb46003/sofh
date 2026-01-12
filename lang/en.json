@@ -430,6 +430,8 @@
         "modifEffect": "Move modify results of related Move?",
         "isRelated": "Move is related to other Move?"
       }
-    }
+    },
+    "moveMigration": "Update Moves",
+    "migrationApprove": "<strong>Basic Moves in the Compendium have been updated.</strong> Do you want to update Basic Moves for all <strong>Player Characters</strong>?<br><strong>WARNING:</strong> This will overwrite all custom changes made to the <strong>system data</strong> of those moves.<strong>This action cannot be reverted.</strong>\n"
   }
 }

@@ -301,14 +301,12 @@ Hooks.once("ready", async function () {
 
   // Migration
   if (game.user.isGM) {
-    const SYSTEM_MIGRATION_VERSION = game.world.systemVersion;
+    const SYSTEM_MIGRATION_VERSION = game.system.version
     const currentVersion = game.settings.get("SofH", "systemMigrationVersion");
-    const needsMigration =
-      !currentVersion ||
-      foundry.utils.isNewerVersion(SYSTEM_MIGRATION_VERSION, currentVersion);
+    const needsMigration = SYSTEM_MIGRATION_VERSION !== currentVersion
 
     if (needsMigration) {
-      SofHMigrate.migrateWorld();
+      await SofHMigrate.migrateWorld();
       game.settings.set(
         "SofH",
         "systemMigrationVersion",
