@@ -23,7 +23,6 @@ export async function migrateWorld() {
       const updateData = migrateActorData(actor);
 
       if (!foundry.utils.isEmpty(updateData)) {
-        console.log(`Migrating Actor ${actor.name}`);
         const empty = { ["system.condition"]: null };
         await actor.update(empty);
         await actor.update(updateData);
@@ -56,8 +55,7 @@ export async function migrateWorld() {
 
         if (!baseMove) continue;
 
-        const sameSystem =  actorMove.system === baseMove.system;
-
+        const sameSystem =  foundry.utils.objectsEqual(actorMove.system,baseMove.system)
         if (!sameSystem) {
           console.log(
             `Move difference detected: ${actor.name} → ${actorMove.name}`
