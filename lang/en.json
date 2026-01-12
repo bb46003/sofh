@@ -8,6 +8,11 @@
       "optionalMoves": "Optional Moves",
       "houseMoves": "House Moves",
       "advancedMoves": "Advanced Moves"
+    },
+    "Actor":{
+      "character": "Studen",
+      "clue": "Mistery",
+      "npc": "NPC"
     }
   },
   "sofh": {
