@@ -6,7 +6,7 @@ const BaseActorSheet =
     ? foundry.appv1.sheets.ActorSheet
     : ActorSheet;
 
-export class SofhClue extends BaseActorSheet {
+export class SofhClue extends foundry.documents.Actor {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["sofh"],
