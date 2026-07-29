@@ -1,3 +1,5 @@
+        <section class="tab moves flexcol {{tabs.moves.cssClass}}"  data-action="tab" data-group="primary" data-tab="moves">
+
 <div class="moves-sheet">
     {{#if (ne basicMoves.length 0)}}
         <h1 class="move_type" id="{{basicMoves.[0].type}}">{{localize (concat 'TYPES.Item.' basicMoves.[0].type )}}</h1>
@@ -61,4 +63,4 @@
 
 
 </div>
-
+        </section>

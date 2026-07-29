@@ -2,82 +2,307 @@ import { moveRoll } from "../dialog/move-dialog.mjs";
 import sofh_Utility from "../utility.mjs";
 import { ReputationQuestion } from "../dialog/reputation-question.mjs";
 
-const BaseActorSheet =
-  typeof foundry?.appv1?.sheets?.ActorSheet !== "undefined"
-    ? foundry.appv1.sheets.ActorSheet
-    : ActorSheet;
-export class sofhCharacterSheet extends BaseActorSheet {
-  static get defaultOptions() {
-    return foundry.utils.mergeObject(super.defaultOptions, {
-      classes: ["sofh", "sheet", "actor", "character", "dialog-button"],
-      template: "systems/SofH/templates/character-sheet.hbs",
-      width: 800,
-      height: 960,
-      tabs: [
-        {
-          navSelector: ".sheet-tabs",
-          contentSelector: ".sheet-body",
-          initial: "characteristic",
-        },
-      ],
-    });
+const { api, sheets } = foundry.applications;
+const DialogV2 = foundry.applications.api.DialogV2;
+
+export class sofhCharacterSheet extends api.HandlebarsApplicationMixin(
+  sheets.ActorSheetV2,
+) {
+  constructor(...args) {
+    super(...args);
+
+    /** @type {CharacterActor} */
+    this.actor;
   }
+  /* -------------------------------------------- */
+  /*  OPTIONS
+  /* -------------------------------------------- */
 
-  async getData() {
-    const context = super.getData();
-    const actorData = this.actor.toObject(false);
-    context.system = actorData.system;
-    const {
-      bloodType,
-      favoriteTopic,
-      favoriteTopic2,
-      House,
-      conditionstype,
-      equipment,
-      houseeq,
-      characterRelation,
-      goal,
-      timeToShine,
-    } = CONFIG.SOFHCONFIG;
+  static DEFAULT_OPTIONS = {
+    classes: ["sofh", "sheet", "actor", "character"],
+  position: { width: 1020, height: 850 },
+    form: {
+      submitOnChange: true,
+    },
+    actions:{}
+  };
 
-    Object.assign(context, {
-      bloodType,
-      favoriteTopic,
-      favoriteTopic2,
-      House,
-      conditionstype,
-      equipment,
-      houseeq,
-      characterRelation,
-      goal,
-      timeToShine,
-    });
-
-    async function enrich(html) {
-      if (html) {
-        if (game.release.generation < 13) {
-          return await TextEditor.enrichHTML(html, {
-            secrets: context.actor.isOwner,
-            async: true,
-          });
-        } else {
-          return await foundry.applications.ux.TextEditor.enrichHTML(html, {
-            secrets: context.actor.isOwner,
-            async: true,
-          });
-        }
-      } else {
-        return html;
-      }
+  static PARTS = {
+    main: {
+      template: "systems/SofH/templates/character-sheet.hbs",
+    },
+    characteristic: {
+      id: "characteristic",
+      template: "systems/SofH/templates/tab/character-characteristic.hbs",
+    },
+    relations: {
+      id: "relations",
+      template: "systems/SofH/templates/tab/relations.hbs",
+    },
+    strings: {
+      id: "strings",
+      template: "systems/SofH/templates/tab/strings.hbs",
+    },
+    moves: {
+      id: "moves",
+      template: "systems/SofH/templates/tab/character-moves.hbs",
+    },
+    equipment: {
+      id: "equipment",
+      template: "systems/SofH/templates/tab/equipment.hbs",
     }
 
-    context.system.equipment = await enrich(context.system.equipment);
+  };
+static TABS = {
+    primary: {
+      tabs: [
+      
+        {id: "characteristic", group: "primary"},
+        {id: "relations", group: "primary"},
+        {id: "strings", group: "primary"},
+        {id: "equipment", group: "primary"},
+        {id: "moves", group: "primary"},
+      
+    ],
+    initial: "characteristic",
+  }
+}
+  /* -------------------------------------------- */
+  /*  DATA
+  /* -------------------------------------------- */
+
+  async _prepareContext(options) {
+    const context = await super._prepareContext(options);
+
+    const actorData = this.actor.toObject(false);
+    context.system = actorData.system;
+
+    const config = CONFIG.SOFHCONFIG;
+
+    Object.assign(context, {
+      bloodType: config.bloodType,
+      favoriteTopic: config.favoriteTopic,
+      favoriteTopic2: config.favoriteTopic2,
+      House: config.House,
+      conditionstype: config.conditionstype,
+      equipment: config.equipment,
+      houseeq: config.houseeq,
+      characterRelation: config.characterRelation,
+      goal: config.goal,
+      timeToShine: config.timeToShine,
+      actor: this.actor,
+      items: this.actor.items,
+    });
+
+    context.system.equipment = await this._enrich(context.system.equipment);
+
     this._prepareMoves(context);
 
     return context;
   }
 
-  _prepareMoves(context) {
+  async _enrich(html) {
+    if (!html) return html;
+    return await foundry.applications.ux.TextEditor.enrichHTML(html, {
+      secrets: this.actor.isOwner,
+      async: true,
+    });
+  }
+
+  /* -------------------------------------------- */
+  /*  RENDER LISTENERS (DELEGATED)
+  /* -------------------------------------------- */
+
+async _onRender(context, options) {
+  await super._onRender(context, options);
+
+  const element = this.element;
+
+  // --- CHANGE EVENTS ---
+  element.querySelectorAll(".circle-checkbox-reputation").forEach(el => {
+    el.addEventListener("change", ev => this.handleReputationChange(ev));
+  });
+
+  element.querySelectorAll(".circle-checkbox-xp").forEach(el => {
+    el.addEventListener("change", ev => this.handleXpChange(ev));
+  });
+
+  element.querySelectorAll(".house").forEach(el => {
+    el.addEventListener("change", ev => this.handleHouseChange(ev));
+  });
+
+  element.querySelectorAll(".condition-text, .condition-type").forEach(el => {
+    el.addEventListener("change", ev => this.updateActorCondition(ev));
+  });
+
+  element.querySelector("#schoolyear")?.addEventListener("change", ev =>
+    this.changeYear(ev)
+  );
+
+  element.querySelectorAll(".additional-subject").forEach(el => {
+    el.addEventListener("change", ev =>
+      this.changeAditionalSubjectFromMove(ev)
+    );
+  });
+
+  // --- CLICK EVENTS ---
+  element.querySelectorAll(".decrease-btn").forEach(el => {
+    el.addEventListener("click", () => this.lowerReputationRank());
+  });
+
+  element.querySelectorAll(".hover-label-question").forEach(el => {
+    el.addEventListener("click", () =>
+      this.assignHouseQuestions(this.actor.system.home, false)
+    );
+  });
+
+  element.addEventListener("click", ev => this.handleDiamondClick(ev));
+
+  element.querySelector("#add-string-btn")?.addEventListener("click", ev =>
+    this.addStringItem(ev)
+  );
+
+  element.querySelectorAll(".remove-string-btn").forEach(el => {
+    el.addEventListener("click", ev => this.removeStringItem(ev));
+  });
+
+  element.querySelector("#add-advantage-btn")?.addEventListener("click", ev =>
+    this.addAdvantagItem(ev)
+  );
+
+  element.querySelectorAll(".remove-advanatage-btn").forEach(el => {
+    el.addEventListener("click", ev => this.removeAdvantageItem(ev));
+  });
+
+  element.querySelectorAll(".move_type").forEach(el => {
+    el.addEventListener("click", ev => this.showMoves(ev));
+  });
+
+  element.querySelectorAll(".moves").forEach(el => {
+    el.addEventListener("click", ev => this.collapsAllMoves(ev));
+  });
+
+  element.querySelectorAll(".remove-moves-btn").forEach(el => {
+    el.addEventListener("click", ev => this.removeMoves(ev));
+  });
+
+  element.querySelectorAll(".moves-edit").forEach(el => {
+    el.addEventListener("contextmenu", ev => this.openMoves(ev));
+     el.addEventListener("click", ev => this.openMoves(ev));
+  });
+
+  element.querySelectorAll(".roll-moves-btn").forEach(el => {
+    el.addEventListener("click", ev => this.rollForMove(ev));
+  });
+
+  element.querySelectorAll(".moves-description-open").forEach(el => {
+    el.addEventListener("click", ev => this.openMovesFromTriggers(ev));
+  });
+
+  element.querySelectorAll(".send-to-chat-moves-btn").forEach(el => {
+    el.addEventListener("click", ev => this.openMovesFromTriggers(ev));
+  });
+
+  element.querySelectorAll(".time_to_shine").forEach(el => {
+    el.addEventListener("click", ev => this.showTimeToShine(ev));
+  });
+
+  element.querySelector("#reputationQuestions")?.addEventListener("click", ev =>
+    this.changeReputationQuestions(ev)
+  );
+
+  element.querySelector("#advamcmentDialog")?.addEventListener("click", ev =>
+    this.advamcmentDialog(ev)
+  );
+
+  element
+    .querySelectorAll("i.fa.fa-trash.remove-additional-subject")
+    .forEach(el => {
+      el.addEventListener("click", ev => this.removeAdditionalTopic(ev));
+    });
+}
+
+  /* -------------------------------------------- */
+  /*  SAMPLE HANDLERS (UPDATED)
+  /* -------------------------------------------- */
+
+  async handleReputationChange(ev) {
+    const checked = ev.target.checked;
+    console.log("Reputation changed:", checked);
+  }
+
+  async handleXpChange(ev) {
+    const checked = ev.target.checked;
+    console.log("XP changed:", checked);
+  }
+
+  /* -------------------------------------------- */
+  /*  DIALOGS (V2)
+  /* -------------------------------------------- */
+
+  async advamcmentDialog() {
+    const result = await DialogV2.wait({
+      title: "Advancement",
+      content: `<p>Choose advancement type:</p>`,
+      buttons: {
+        xp: {
+          label: "Gain XP",
+          callback: () => "xp",
+        },
+        stat: {
+          label: "Increase Stat",
+          callback: () => "stat",
+        },
+        cancel: {
+          label: "Cancel",
+          callback: () => null,
+        },
+      },
+    });
+
+    if (result === "xp") {
+      console.log("XP selected");
+    }
+
+    if (result === "stat") {
+      console.log("Stat increase selected");
+    }
+  }
+
+  async changeReputationQuestions() {
+    const value = await DialogV2.prompt({
+      title: "Reputation Question",
+      content: `<p>Enter new reputation:</p>
+                <input type="text" name="rep" />`,
+      ok: {
+        label: "Save",
+        callback: (html) => {
+          return html.querySelector("input[name='rep']").value;
+        },
+      },
+    });
+
+    if (value) {
+      await this.actor.update({
+        "system.reputation.custom": value,
+      });
+    }
+  }
+
+  async showTimeToShine() {
+    await DialogV2.prompt({
+      title: "Time to Shine",
+      content: `<p>Your special moment activates!</p>`,
+      ok: { label: "Nice!" },
+    });
+  }
+
+  /* -------------------------------------------- */
+  /*  PLACEHOLDER METHODS (KEEP YOUR ORIGINAL LOGIC)
+  /* -------------------------------------------- */
+
+
+    _prepareMoves(context) {
     const basicMoves = [];
     const houseMoves = [];
     const comingOfAgeMoves = [];
@@ -130,8 +355,9 @@ export class sofhCharacterSheet extends BaseActorSheet {
     context.specialPlaybookMoves = specialPlaybookMoves;
     context.advancedMoves = advancedMoves;
     context.optionalMoves= optionalMoves;
+   
   }
-
+/*
   async activateListeners(html) {
     super.activateListeners(html);
 
@@ -178,7 +404,7 @@ export class sofhCharacterSheet extends BaseActorSheet {
       this.changeAditionalSubjectFromMove(ev),
     );
   }
-
+*/
   async handleReputationChange(ev) {
     const isChecked = $(ev.target).prop("checked");
     const ID = ev.target.id[0];
@@ -652,11 +878,11 @@ export class sofhCharacterSheet extends BaseActorSheet {
         `.remove-moves-btn[id='${move.id}']`,
       );
       let decription = document.querySelector(".second-row");
-      let titleDiv = document.querySelector(`.first-row[id='${move.id}']`);
+      let titleDiv = itemRow.querySelector(`.first-row[id='${move.id}']`);
       if (!decription || !titleDiv) {
-        const closestWindowApp = $(event.currentTarget).closest(".window-app");
-        decription = closestWindowApp.find(".second-row")[0] || null; // Use the DOM element
-        titleDiv = closestWindowApp.find(`.first-row[id='${move.id}']`)[0]; // Use the DOM element
+        const closestWindowApp = event.currentTarget.offsetParent;
+        decription = closestWindowApp.querySelector(".second-row") || null; // Use the DOM element
+        titleDiv = closestWindowApp.querySelector(`.first-row[id='${move.id}']`); // Use the DOM element
       }
 
       if (decription === null) {
@@ -676,26 +902,24 @@ export class sofhCharacterSheet extends BaseActorSheet {
   async showMoves(event) {
     const moveType = event.target.id;
     if (moveType !== "") {
-      const closestWindowApp = $(event.currentTarget).closest(".window-app");
-      const movesElement = closestWindowApp.find(".all-moves." + moveType);
+      const closestWindowApp = event.target.offsetParent;
+      const movesElement = closestWindowApp.querySelector(".all-moves." + moveType);
 
-      if (movesElement.css("display") === "none") {
-        movesElement.css("display", "");
+      if (movesElement.style.display === "none") {
+        movesElement.style.display = "";
       } else {
-        movesElement.css("display", "none");
+        movesElement.style.display = "none";
       }
     }
   }
 
   async collapsAllMoves(event) {
     const target = event.target.classList.value;
-    const closestWindowApp = $(event.currentTarget).closest(".window-app");
+    const closestWindowApp =  event.target.offsetParent;
 
     if (target === "moves active") {
-      const movesElements = closestWindowApp
-        .find(".all-moves")
-        .not(".basicMoves");
-      movesElements.css("display", "none");
+const movesElements = closestWindowApp.querySelector(".all-moves:not(.basicMoves)");
+      movesElements.style.display = "none";
     }
   }
 
@@ -835,10 +1059,6 @@ export class sofhCharacterSheet extends BaseActorSheet {
       const droppedType = droppedItem.type;
       if (droppedType === "Item") {
         const itemData = await fromUuid(droppedItem.uuid);
-        if(droppedItem.uuidc.includes("Compendium"))
-        itemData.flags.SofH = {
-          compendiumSource: droppedItem.uuid,
-        };
         const createdItems = await actor.createEmbeddedDocuments("Item", [
           itemData,
         ]);

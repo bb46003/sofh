@@ -127,8 +127,11 @@ async function migrateMoves(actors, basicMoves) {
     for (const actorMove of actorMoves) {
       const sourceId = actorMove.flags?.SofH?.compendiumSource;
       const updateMove = basicMoves.filter(move =>{return ((move.uuid === sourceId)||(move.name === actorMove.name))})[0]
-      await actorMove.update({['system']:updateMove.system})
-      actorMove.setFlag("SofH", "compendiumSource", updateMove.uuid)
+      if(updateMove?.system){
+        await actorMove.update({['system']:updateMove.system})
+        await actorMove.setFlag("SofH", "compendiumSource", updateMove.uuid)
+      }
+
     }
     
   }

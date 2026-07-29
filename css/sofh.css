@@ -121,6 +121,20 @@ input#settings-config-SofH\.HomeScorePositionX {
   gap: 5px; /* Space between columns */
   padding: 5px;
   border: 10px solid black;
+  height: 100%;
+}
+.application.sheet.sofh.actor.character {
+  .tab{
+    overflow: auto;
+    height: 100%;
+  }
+  .relationship.flexrow {
+    gap: 10px;
+    p{
+      display: flex;
+      align-items: center;
+    }
+  }
 }
 .sofh .char-grid-feature {
   padding: 5px;

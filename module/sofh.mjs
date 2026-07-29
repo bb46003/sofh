@@ -12,6 +12,8 @@ import { EndSessionDialog } from "./dialog/end-session.mjs";
 import SocketHandler from "./setup/socket-handler.mjs";
 import MOVES from "./items/default-item-function.mjs";
 import SpecialMovesDataModel from "./datamodel/special-move-datamodel.mjs";
+import MoveDataModel from "./datamodel/move-datamodel.mjs";
+import ActorDataModel from "./datamodel/actor-datamodel.mjs";
 const fields = foundry.data.fields;
 
 export default function registerSettings() {
@@ -141,7 +143,10 @@ Hooks.once("init", async function () {
     optionalMoves: SpecialMovesDataModel,
     advancedMoves: SpecialMovesDataModel,
     houseMoves: SpecialMovesDataModel,
+    basicMoves: MoveDataModel,
+    comingOfAgeMoves: MoveDataModel,
   };
+    CONFIG.Actor.dataModels = {character:ActorDataModel};
   registerHandlebarsHelpers();
   registerSettings();
   loadPolishLocalization();
