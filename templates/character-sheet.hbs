@@ -11,7 +11,7 @@
             <label for="home">{{localize "sofh.ui.actor.house"}}</label>
             <select name="system.home" class="house">
               <option value="">None</option>
-                {{selectOptions House selected=system.home localize=true}}
+                {{selectOptions House selected=(lowercase system.home) localize=true}}
             </select>
           </div>
           <div class="stat-grid">

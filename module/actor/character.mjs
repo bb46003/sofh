@@ -10,6 +10,7 @@ export class sofhCharacterSheet extends api.HandlebarsApplicationMixin(
 ) {
   constructor(...args) {
     super(...args);
+        this.y = 0;
 
     /** @type {CharacterActor} */
     this.actor;
@@ -505,7 +506,6 @@ async _onRender(context, options) {
   async handleHouseChange(ev) {
     const house = ev.target.value;
     await this.actor.update({ [`system.home`]: house.toLowerCase() });
-    await this.actor.update({ [`system.house`]: house.toLowerCase() });
     if (house !== "") {
       this.actor.sheet.render();
       await this.assignGoal(house);
@@ -1221,5 +1221,23 @@ const movesElements = closestWindowApp.querySelector(".all-moves:not(.basicMoves
         id: id,
       },
     });
+  }
+  _processFormData(event, form, formData) {
+      const target = event?.target;
+  const name = target?.name;
+
+  const data = { object: {} };
+    if (typeof name === "string") {
+    data.object[name] = target?.value;
+  }
+    
+    const scrollEl = target.closest(".tab.active");
+    if (scrollEl) {
+      this._scrollTarget = scrollEl;
+      this.y = scrollEl.scrollTop;
+    }
+  const process =  super._processFormData(event, form, data);
+    this.actor.sheet.render({force: true})
+  return process
   }
 }

@@ -1,16 +1,16 @@
         <section class="tab relations flexcol {{tabs.relations.cssClass}}"  data-action="tab" data-group="primary" data-tab="relations">
 
 <div class="sofh reputation-sheet"> 
-   {{#if (eq system.home (lowercase (localize "sofh.ui.actor.gryffindor")))}}
+   {{#if (eq (lowercase system.home) (lowercase (localize "sofh.ui.actor.gryffindor")))}}
         {{> "systems/SofH/templates/tab/partial/relation-griffindor.hbs" }}
 
-    {{else if (eq system.home (lowercase (localize "sofh.ui.actor.hufflepuff")))}}
+    {{else if (eq (lowercase system.home)(lowercase (localize "sofh.ui.actor.hufflepuff")))}}
         {{> "systems/SofH/templates/tab/partial/relation-hufflepuff.hbs" }}
 
-    {{else if (eq system.home (lowercase (localize "sofh.ui.actor.ravenclaw")))}}
+    {{else if (eq (lowercase system.home)(lowercase (localize "sofh.ui.actor.ravenclaw")))}}
         {{> "systems/SofH/templates/tab/partial/relation-ravenclaw.hbs" }}
 
-    {{else if (eq system.home (lowercase (localize "sofh.ui.actor.slytherin")))}}
+    {{else if (eq (lowercase system.home)(lowercase (localize "sofh.ui.actor.slytherin")))}}
         {{> "systems/SofH/templates/tab/partial/relation-slytherin.hbs" }}
     {{else}}
         {{> "systems/SofH/templates/tab/partial/relation-empty.hbs" }}

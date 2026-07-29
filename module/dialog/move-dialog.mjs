@@ -625,7 +625,7 @@ export class moveRoll extends Dialog {
           actor: actor,
           clueID: clueID,
           complexity: complexity,
-          question: question,
+          question: question ?? {},
           relatedMoves: relatedMoves,
           areRelatedMoves: areRelatedMoves,
         },
