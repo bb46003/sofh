@@ -14,7 +14,13 @@ export default class ActorDataModel extends foundry.abstract.TypeDataModel {
       bloodType: new StringField({
         initial: "0",
       }),
-
+      advancement: new BooleanField({
+        initial: false,
+      }),
+      amountOfAdvancement: new NumberField({
+        initial: 0,
+        integer: true,
+      }),
       favoriteTopic: new StringField({
         initial: "",
       }),
@@ -45,7 +51,7 @@ export default class ActorDataModel extends foundry.abstract.TypeDataModel {
       }),
 
       changedYear: new BooleanField({
-        initial: true,
+        initial: false,
       }),
 
       condition: new SchemaField({

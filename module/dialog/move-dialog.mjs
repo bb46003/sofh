@@ -318,16 +318,23 @@ export class moveRoll extends Dialog {
   }
 
   async removeAdvantageAfterRoll(advanatageDes) {
-    const advanatage = this.actor.system.advanatage;
+    const advanatage = this.actor.system.advantage;
     for (const key in advanatage) {
       if (advanatage[key].description === advanatageDes) {
         delete advanatage[key];
         break;
       }
-    }
+    }   
 
-    await this.actor.update({ "system.advanatage": [{}] });
-    await this.actor.update({ "system.advanatage": advanatage });
+
+const reindexed = {};
+advanatage.forEach(([_, value], index) => {
+  reindexed[index] = value;
+});
+
+await this.actor.update({
+  "system.advantage": reindexed
+});
   }
 
   async rolling(

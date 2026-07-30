@@ -30,6 +30,9 @@ export function registerHandlebarsHelpers() {
   });
 
   Handlebars.registerHelper("lowercase", function (str) {
+    if(str === undefined || str === null) {
+      return "";
+    }
     return str.toLowerCase();
   });
 

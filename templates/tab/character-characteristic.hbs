@@ -91,10 +91,8 @@
                 {{#each system.xp.value as |value index|}}
                 <input type="checkbox" id="{{@index}}" class="circle-checkbox-xp" name="system.xp.value.{{@index}}" {{#if value}}checked{{/if}} />
               {{/each}}
-              {{#if system.advancement}}
               </div>
                 <a id="advamcmentDialog">{{localize "sofh.ui.actor.pickYourAdvancements"}}</a>
-              {{/if}}
             {{else}}
               {{#each system.xp.value as |value index|}}
                 <input type="checkbox" id="{{@index}}" class="circle-checkbox-xp" name="system.xp.value.{{@index}}" {{#if value}}checked{{/if}} />

@@ -171,7 +171,7 @@ async _onRender(context, options) {
     this.addAdvantagItem(ev)
   );
 
-  element.querySelectorAll(".remove-advanatage-btn").forEach(el => {
+  element.querySelectorAll(".remove-advantage-btn").forEach(el => {
     el.addEventListener("click", ev => this.removeAdvantageItem(ev));
   });
 
@@ -446,7 +446,14 @@ async _onRender(context, options) {
               speaker: game.user.name,
               content: `${game.i18n.localize("sofh.ui.gainxp")}: <b>${choice}</b>`,
             });
-            await this.actor.update({ ["system.advancement"]: false });
+            const actor = this.actor;
+            const amountOfAdvancement = actor.system.amountOfAdvancement - 1 ;
+            if(amountOfAdvancement < 0){
+              await this.actor.update({ ["system.advancement"]: false, ["system.amountOfAdvancement"]: 0 });
+            }else{
+              await this.actor.update({ ["system.amountOfAdvancement"]: amountOfAdvancement });
+            }
+            
           },
         },
       ],
@@ -579,6 +586,8 @@ async _onRender(context, options) {
       for (let i = 1; i <= 7; i++) {
         updateData[`system.xp.value.${i}`] = false;
       }
+      updateData["system.advancement"] = true;
+      updateData["system.amountOfAdvancement"] = actor.system.amountOfAdvancement + 1;
     } else {
       this.updateXpValues(updateData, index2, value);
     }
@@ -608,42 +617,51 @@ async _onRender(context, options) {
     });
   }
 
-  async assignHouseQuestions(house, changeHouse) {
-    let question = await this.getHouseQuestions(house);
-    const content = await sofh_Utility.renderTemplate(
-      "systems/SofH/templates/dialogs/house-question.hbs",
-      { question: question },
-    );
-    new Dialog({
-      title: game.i18n.localize("sofh.ui.house-question"),
-      content,
-      buttons: {
-        OK: {
-          icon: '<i class="fa fa-check"></i>',
-          label: `<div class="sofh-button">${game.i18n.localize("sofh.UI.OK")}</div>`,
-          callback: (html) => {
-            const selectedQuestion = html.find(
-              'input[name="housequestion"]:checked',
-            );
+async assignHouseQuestions(house, changeHouse) {
+  const question = await this.getHouseQuestions(house);
 
-            // Check if an option is selected
-            if (selectedQuestion.length === 0) {
-              ui.notifications.warn(
-                game.i18n.localize("sofh.ui.notSelectedHouseQuestion"),
-              );
-              this.assignHouseQuestions(house, changeHouse);
-            } else {
-              this.handleHouseQuestionSelection(html);
-              if (changeHouse) {
-                this.spefificHousEq(house);
-              }
-            }
-          },
-        },
+  const content = await sofh_Utility.renderTemplate(
+    "systems/SofH/templates/dialogs/house-question.hbs",
+    { question }
+  );
+
+  const result = await foundry.applications.api.DialogV2.prompt({
+    window: {
+      title: game.i18n.localize("sofh.ui.house-question"),
+    },
+    content,
+    ok: {
+      label: game.i18n.localize("sofh.UI.OK"),
+      icon: "fa-solid fa-check",
+      callback: (event, button, dialog) => {
+        // dialog.element is the root DOM element
+        const root = dialog.element;
+
+        const selectedQuestion = root.querySelector(
+          'input[name="housequestion"]:checked'
+        );
+
+        if (!selectedQuestion) {
+          ui.notifications.warn(
+            game.i18n.localize("sofh.ui.notSelectedHouseQuestion")
+          );
+
+          // reopen dialog
+          this.assignHouseQuestions(house, changeHouse);
+          return false; // prevents closing
+        }
+
+        this.handleHouseQuestionSelection(root);
+
+        if (changeHouse) {
+          this.spefificHousEq(house);
+        }
+
+        return true; // allow closing
       },
-      default: "OK",
-    }).render(true);
-  }
+    },
+  });
+}
   async getHouseQuestions(houseKey) {
     // Default: try translations
     let q1 = game.i18n.localize(`sofh.ui.actor.${houseKey}question1`);
@@ -681,91 +699,110 @@ async _onRender(context, options) {
     }
   }
 
-  async spefificHousEq(house) {
-    const houseEq = CONFIG.SOFHCONFIG.houseeq[house];
-    const actor = this.actor;
-    const header = game.i18n.localize("sofh.ui.eqquestion");
-    let content = `<h2 style="font-family: 'IM Fell English SC', serif;">${header}</h2><form id="equipmentForm">`;
-    let i = 0;
-    Object.keys(houseEq).forEach((key) => {
-      const value = houseEq[key];
-      const eq = game.i18n.localize(value);
+async spefificHousEq(house) {
+  const houseEq = CONFIG.SOFHCONFIG.houseeq[house];
+  const actor = this.actor;
 
-      content += `
-                <div class="sofh">
-                    <label class="select-eq">
-                        <input type="checkbox" name="equipment${i}" value="${eq}" class="equipment-option">
-                        ${eq}
-                    </label>
-                </div>`;
-      i++;
-    });
+  const header = game.i18n.localize("sofh.ui.eqquestion");
 
-    content += "</form>";
-    const title = game.i18n.localize("sofh.ui.dialog.houseeq");
+  let content = `<h2 style="font-family: 'IM Fell English SC', serif;">${header}</h2><form id="equipmentForm">`;
 
-    const d = new Dialog({
-      title: title,
-      content: content,
-      buttons: {
-        submit: {
-          label: `<div class ="sofh-button">${game.i18n.localize("sofh.ui.submit")}</div>`,
-          callback: async (html) => {
-            const selectedOptions = html.find('input[type="checkbox"]:checked');
-            const selectedValues = [];
-            selectedOptions.each(function () {
-              selectedValues.push($(this).val());
-            });
+  let i = 0;
+  for (const key of Object.keys(houseEq)) {
+    const value = houseEq[key];
+    const eq = game.i18n.localize(value);
 
-            if (selectedValues.length > 3) {
-              ui.notifications.error(
-                game.i18n.localize("sofh.ui.dialog.eqwarrning"),
-              );
-              return;
-            }
-            let currentEquipment = actor.system.equipment || "";
-            selectedValues.forEach((value) => {
-              currentEquipment += `<br>${value}`;
-            });
-            await actor.update({
-              "system.equipment": currentEquipment,
-            });
-            ui.notifications.info(
-              game.i18n.localize("sofh.ui.dialog.addeqconfirmation"),
-            );
-          },
-          class: "my-button",
-        },
-        cancel: {
-          label: `<div class ="sofh-button">${game.i18n.localize("sofh.ui.cancel")}</div>`,
-          class: "my-button",
-        },
-      },
-      default: "submit",
-      close: () => {},
-      render: (html) => {
-        const radioButtons = html.find(".equipment-option");
-        let selectedOptions = [];
-        radioButtons.each(function () {
-          $(this).on("change", function (event) {
-            if (event.target.checked) {
-              if (selectedOptions.length >= 3) {
-                event.target.checked = false;
-                ui.notifications.warn("You can only select up to 3 options!");
-              } else {
-                selectedOptions.push(event.target);
-              }
-            } else {
-              selectedOptions = selectedOptions.filter(
-                (item) => item !== event.target,
-              );
-            }
-          });
-        });
-      },
-    }).render(true);
+    content += `
+      <div class="sofh">
+        <label class="select-eq">
+          <input type="checkbox" name="equipment${i}" value="${eq}" class="equipment-option">
+          ${eq}
+        </label>
+      </div>`;
+    i++;
   }
 
+  content += "</form>";
+
+  await foundry.applications.api.DialogV2.prompt({
+    window: {
+      title: game.i18n.localize("sofh.ui.dialog.houseeq"),
+    },
+
+    content,
+
+    ok: {
+      label: game.i18n.localize("sofh.ui.submit"),
+      icon: "fa-solid fa-check",
+
+      callback: async (event, button, dialog) => {
+        const root = dialog.element;
+
+        const selectedOptions = root.querySelectorAll(
+          'input[type="checkbox"]:checked'
+        );
+
+        const selectedValues = Array.from(selectedOptions).map(
+          (el) => el.value
+        );
+
+        if (selectedValues.length > 3) {
+          ui.notifications.error(
+            game.i18n.localize("sofh.ui.dialog.eqwarrning")
+          );
+          return false; // keep dialog open
+        }
+
+        let currentEquipment = actor.system.equipment || "";
+
+        for (const value of selectedValues) {
+          currentEquipment += `<br>${value}`;
+        }
+
+        await actor.update({
+          "system.equipment": currentEquipment,
+        });
+
+        ui.notifications.info(
+          game.i18n.localize("sofh.ui.dialog.addeqconfirmation")
+        );
+
+        return true; // close dialog
+      },
+    },
+
+    cancel: {
+      label: game.i18n.localize("sofh.ui.cancel"),
+    },
+
+    render: (event, dialog) => {
+      const root = dialog.element;
+
+      const checkboxes = root.querySelectorAll(".equipment-option");
+
+      let selectedOptions = [];
+
+      checkboxes.forEach((checkbox) => {
+        checkbox.addEventListener("change", (event) => {
+          if (event.target.checked) {
+            if (selectedOptions.length >= 3) {
+              event.target.checked = false;
+              ui.notifications.warn(
+                "You can only select up to 3 options!"
+              );
+            } else {
+              selectedOptions.push(event.target);
+            }
+          } else {
+            selectedOptions = selectedOptions.filter(
+              (item) => item !== event.target
+            );
+          }
+        });
+      });
+    },
+  });
+}
   async processDiamondClick(element) {
     if (element.parentNode.className === "diamond") {
       if (element.dataset.clicked) return;
@@ -827,33 +864,56 @@ async _onRender(context, options) {
 
   async addAdvantagItem() {
     const actor = this.actor;
-    let advanatage = actor.system.advanatage || [];
-    let i = Object.keys(advanatage).length + 1;
-    const advanatageElement = {
+    let advantage = actor.system.advantage || [];
+    let i = Object.keys(advantage).length;
+    const advantageElement = {
       description: "",
     };
-    advanatage[i] = advanatageElement;
-    await actor.update({ "system.advanatage": advanatage });
+    advantage[i] = advantageElement;
+    await actor.update({ "system.advantage": advantage });
   }
 
   async removeStringItem(ev) {
-    const button = ev.target.closest(".remove-string-btn");
-    const ID = button.id;
-    let strings = this.actor.system.strings;
-    const newStrings = { ...strings };
-    delete newStrings[ID];
-    await this.actor.update({ "system.strings": [{}] });
-    await this.actor.update({ "system.strings": newStrings });
+const button = ev.target.closest(".remove-string-btn");
+const ID = button.id;
+
+let strings = this.actor.system.strings;
+
+const filtered = Object.entries(strings)
+  .filter(([key]) => key !== ID);
+
+const reindexed = {};
+filtered.forEach(([_, value], index) => {
+  reindexed[index] = value;
+});
+
+await this.actor.update({
+  "system.strings": reindexed
+});
+
+this.render(true);
   }
 
   async removeAdvantageItem(ev) {
-    const button = ev.target.closest(".remove-advanatage-btn");
-    const ID = button.id;
-    let advanatage = this.actor.system.advanatage;
-    const newAdvanatage = { ...advanatage };
-    delete newAdvanatage[ID];
-    await this.actor.update({ "system.advanatage": [{}] });
-    await this.actor.update({ "system.advanatage": newAdvanatage });
+
+    const button = ev.target.closest(".remove-advantage-btn");
+const ID = button.id;
+
+let advantage = this.actor.system.advantage;
+
+const filtered = Object.entries(advantage)
+  .filter(([key]) => key !== ID);
+
+const reindexed = {};
+filtered.forEach(([_, value], index) => {
+  reindexed[index] = value;
+});
+
+await this.actor.update({
+  "system.advantage": reindexed
+});
+
+this.render(true);
   }
 
   async updateActorCondition(ev) {
@@ -1228,6 +1288,18 @@ const movesElements = closestWindowApp.querySelector(".all-moves:not(.basicMoves
 
   const data = { object: {} };
     if (typeof name === "string") {
+      if(name.includes("system.strings")){
+        const match = name.split(".");
+        const strings = this.actor.system.strings || {};
+          const index = match[2];
+          const field = match[3];
+          if (!strings[index]) {
+            strings[index] = {};
+          }
+          strings[index][field] = target?.value;
+          data.object["system.strings"] = strings;
+        
+      }
     data.object[name] = target?.value;
   }
     
