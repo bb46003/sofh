@@ -124,13 +124,13 @@ input#settings-config-SofH\.HomeScorePositionX {
   height: 100%;
 }
 .application.sheet.sofh.actor.character {
-  .tab{
+  .tab {
     overflow: auto;
     height: 100%;
   }
   .relationship.flexrow {
     gap: 10px;
-    p{
+    p {
       display: flex;
       align-items: center;
     }
@@ -1316,5 +1316,5 @@ h2.special-move {
   transform: translate(-50%, -50%) scale(1);
 }
 .radio-group input[type="radio"]:checked::after {
-    content: none;
+  content: none;
 }

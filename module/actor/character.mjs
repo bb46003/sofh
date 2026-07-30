@@ -10,7 +10,7 @@ export class sofhCharacterSheet extends api.HandlebarsApplicationMixin(
 ) {
   constructor(...args) {
     super(...args);
-        this.y = 0;
+    this.y = 0;
 
     /** @type {CharacterActor} */
     this.actor;
@@ -21,11 +21,11 @@ export class sofhCharacterSheet extends api.HandlebarsApplicationMixin(
 
   static DEFAULT_OPTIONS = {
     classes: ["sofh", "sheet", "actor", "character"],
-  position: { width: 1020, height: 850 },
+    position: { width: 1020, height: 850 },
     form: {
       submitOnChange: true,
     },
-    actions:{}
+    actions: {},
   };
 
   static PARTS = {
@@ -51,23 +51,20 @@ export class sofhCharacterSheet extends api.HandlebarsApplicationMixin(
     equipment: {
       id: "equipment",
       template: "systems/SofH/templates/tab/equipment.hbs",
-    }
-
+    },
   };
-static TABS = {
+  static TABS = {
     primary: {
       tabs: [
-      
-        {id: "characteristic", group: "primary"},
-        {id: "relations", group: "primary"},
-        {id: "strings", group: "primary"},
-        {id: "equipment", group: "primary"},
-        {id: "moves", group: "primary"},
-      
-    ],
-    initial: "characteristic",
-  }
-}
+        { id: "characteristic", group: "primary" },
+        { id: "relations", group: "primary" },
+        { id: "strings", group: "primary" },
+        { id: "equipment", group: "primary" },
+        { id: "moves", group: "primary" },
+      ],
+      initial: "characteristic",
+    },
+  };
   /* -------------------------------------------- */
   /*  DATA
   /* -------------------------------------------- */
@@ -114,114 +111,116 @@ static TABS = {
   /*  RENDER LISTENERS (DELEGATED)
   /* -------------------------------------------- */
 
-async _onRender(context, options) {
-  await super._onRender(context, options);
+  async _onRender(context, options) {
+    await super._onRender(context, options);
 
-  const element = this.element;
+    const element = this.element;
 
-  // --- CHANGE EVENTS ---
-  element.querySelectorAll(".circle-checkbox-reputation").forEach(el => {
-    el.addEventListener("change", ev => this.handleReputationChange(ev));
-  });
-
-  element.querySelectorAll(".circle-checkbox-xp").forEach(el => {
-    el.addEventListener("change", ev => this.handleXpChange(ev));
-  });
-
-  element.querySelectorAll(".house").forEach(el => {
-    el.addEventListener("change", ev => this.handleHouseChange(ev));
-  });
-
-  element.querySelectorAll(".condition-text, .condition-type").forEach(el => {
-    el.addEventListener("change", ev => this.updateActorCondition(ev));
-  });
-
-  element.querySelector("#schoolyear")?.addEventListener("change", ev =>
-    this.changeYear(ev)
-  );
-
-  element.querySelectorAll(".additional-subject").forEach(el => {
-    el.addEventListener("change", ev =>
-      this.changeAditionalSubjectFromMove(ev)
-    );
-  });
-
-  // --- CLICK EVENTS ---
-  element.querySelectorAll(".decrease-btn").forEach(el => {
-    el.addEventListener("click", () => this.lowerReputationRank());
-  });
-
-  element.querySelectorAll(".hover-label-question").forEach(el => {
-    el.addEventListener("click", () =>
-      this.assignHouseQuestions(this.actor.system.home, false)
-    );
-  });
-
-  element.addEventListener("click", ev => this.handleDiamondClick(ev));
-
-  element.querySelector("#add-string-btn")?.addEventListener("click", ev =>
-    this.addStringItem(ev)
-  );
-
-  element.querySelectorAll(".remove-string-btn").forEach(el => {
-    el.addEventListener("click", ev => this.removeStringItem(ev));
-  });
-
-  element.querySelector("#add-advantage-btn")?.addEventListener("click", ev =>
-    this.addAdvantagItem(ev)
-  );
-
-  element.querySelectorAll(".remove-advantage-btn").forEach(el => {
-    el.addEventListener("click", ev => this.removeAdvantageItem(ev));
-  });
-
-  element.querySelectorAll(".move_type").forEach(el => {
-    el.addEventListener("click", ev => this.showMoves(ev));
-  });
-
-  element.querySelectorAll(".moves").forEach(el => {
-    el.addEventListener("click", ev => this.collapsAllMoves(ev));
-  });
-
-  element.querySelectorAll(".remove-moves-btn").forEach(el => {
-    el.addEventListener("click", ev => this.removeMoves(ev));
-  });
-
-  element.querySelectorAll(".moves-edit").forEach(el => {
-    el.addEventListener("contextmenu", ev => this.openMoves(ev));
-     el.addEventListener("click", ev => this.openMoves(ev));
-  });
-
-  element.querySelectorAll(".roll-moves-btn").forEach(el => {
-    el.addEventListener("click", ev => this.rollForMove(ev));
-  });
-
-  element.querySelectorAll(".moves-description-open").forEach(el => {
-    el.addEventListener("click", ev => this.openMovesFromTriggers(ev));
-  });
-
-  element.querySelectorAll(".send-to-chat-moves-btn").forEach(el => {
-    el.addEventListener("click", ev => this.openMovesFromTriggers(ev));
-  });
-
-  element.querySelectorAll(".time_to_shine").forEach(el => {
-    el.addEventListener("click", ev => this.showTimeToShine(ev));
-  });
-
-  element.querySelector("#reputationQuestions")?.addEventListener("click", ev =>
-    this.changeReputationQuestions(ev)
-  );
-
-  element.querySelector("#advamcmentDialog")?.addEventListener("click", ev =>
-    this.advamcmentDialog(ev)
-  );
-
-  element
-    .querySelectorAll("i.fa.fa-trash.remove-additional-subject")
-    .forEach(el => {
-      el.addEventListener("click", ev => this.removeAdditionalTopic(ev));
+    // --- CHANGE EVENTS ---
+    element.querySelectorAll(".circle-checkbox-reputation").forEach((el) => {
+      el.addEventListener("change", (ev) => this.handleReputationChange(ev));
     });
-}
+
+    element.querySelectorAll(".circle-checkbox-xp").forEach((el) => {
+      el.addEventListener("change", (ev) => this.handleXpChange(ev));
+    });
+
+    element.querySelectorAll(".house").forEach((el) => {
+      el.addEventListener("change", (ev) => this.handleHouseChange(ev));
+    });
+
+    element
+      .querySelectorAll(".condition-text, .condition-type")
+      .forEach((el) => {
+        el.addEventListener("change", (ev) => this.updateActorCondition(ev));
+      });
+
+    element
+      .querySelector("#schoolyear")
+      ?.addEventListener("change", (ev) => this.changeYear(ev));
+
+    element.querySelectorAll(".additional-subject").forEach((el) => {
+      el.addEventListener("change", (ev) =>
+        this.changeAditionalSubjectFromMove(ev),
+      );
+    });
+
+    // --- CLICK EVENTS ---
+    element.querySelectorAll(".decrease-btn").forEach((el) => {
+      el.addEventListener("click", () => this.lowerReputationRank());
+    });
+
+    element.querySelectorAll(".hover-label-question").forEach((el) => {
+      el.addEventListener("click", () =>
+        this.assignHouseQuestions(this.actor.system.home, false),
+      );
+    });
+
+    element.addEventListener("click", (ev) => this.handleDiamondClick(ev));
+
+    element
+      .querySelector("#add-string-btn")
+      ?.addEventListener("click", (ev) => this.addStringItem(ev));
+
+    element.querySelectorAll(".remove-string-btn").forEach((el) => {
+      el.addEventListener("click", (ev) => this.removeStringItem(ev));
+    });
+
+    element
+      .querySelector("#add-advantage-btn")
+      ?.addEventListener("click", (ev) => this.addAdvantagItem(ev));
+
+    element.querySelectorAll(".remove-advantage-btn").forEach((el) => {
+      el.addEventListener("click", (ev) => this.removeAdvantageItem(ev));
+    });
+
+    element.querySelectorAll(".move_type").forEach((el) => {
+      el.addEventListener("click", (ev) => this.showMoves(ev));
+    });
+
+    element.querySelectorAll(".moves").forEach((el) => {
+      el.addEventListener("click", (ev) => this.collapsAllMoves(ev));
+    });
+
+    element.querySelectorAll(".remove-moves-btn").forEach((el) => {
+      el.addEventListener("click", (ev) => this.removeMoves(ev));
+    });
+
+    element.querySelectorAll(".moves-edit").forEach((el) => {
+      el.addEventListener("contextmenu", (ev) => this.openMoves(ev));
+      el.addEventListener("click", (ev) => this.openMoves(ev));
+    });
+
+    element.querySelectorAll(".roll-moves-btn").forEach((el) => {
+      el.addEventListener("click", (ev) => this.rollForMove(ev));
+    });
+
+    element.querySelectorAll(".moves-description-open").forEach((el) => {
+      el.addEventListener("click", (ev) => this.openMovesFromTriggers(ev));
+    });
+
+    element.querySelectorAll(".send-to-chat-moves-btn").forEach((el) => {
+      el.addEventListener("click", (ev) => this.openMovesFromTriggers(ev));
+    });
+
+    element.querySelectorAll(".time_to_shine").forEach((el) => {
+      el.addEventListener("click", (ev) => this.showTimeToShine(ev));
+    });
+
+    element
+      .querySelector("#reputationQuestions")
+      ?.addEventListener("click", (ev) => this.changeReputationQuestions(ev));
+
+    element
+      .querySelector("#advamcmentDialog")
+      ?.addEventListener("click", (ev) => this.advamcmentDialog(ev));
+
+    element
+      .querySelectorAll("i.fa.fa-trash.remove-additional-subject")
+      .forEach((el) => {
+        el.addEventListener("click", (ev) => this.removeAdditionalTopic(ev));
+      });
+  }
 
   /* -------------------------------------------- */
   /*  SAMPLE HANDLERS (UPDATED)
@@ -302,8 +301,7 @@ async _onRender(context, options) {
   /*  PLACEHOLDER METHODS (KEEP YOUR ORIGINAL LOGIC)
   /* -------------------------------------------- */
 
-
-    _prepareMoves(context) {
+  _prepareMoves(context) {
     const basicMoves = [];
     const houseMoves = [];
     const comingOfAgeMoves = [];
@@ -330,10 +328,10 @@ async _onRender(context, options) {
           specialPlaybookMoves.push(item);
           break;
         case "advancedMoves":
-          advancedMoves.push(item)
+          advancedMoves.push(item);
           break;
         case "houseMoves":
-          houseMoves.push(item)
+          houseMoves.push(item);
           break;
         default:
           console.warn(`Unknown item type: ${item.type}`);
@@ -355,10 +353,9 @@ async _onRender(context, options) {
     context.customMoves = customMoves;
     context.specialPlaybookMoves = specialPlaybookMoves;
     context.advancedMoves = advancedMoves;
-    context.optionalMoves= optionalMoves;
-   
+    context.optionalMoves = optionalMoves;
   }
-/*
+  /*
   async activateListeners(html) {
     super.activateListeners(html);
 
@@ -447,13 +444,17 @@ async _onRender(context, options) {
               content: `${game.i18n.localize("sofh.ui.gainxp")}: <b>${choice}</b>`,
             });
             const actor = this.actor;
-            const amountOfAdvancement = actor.system.amountOfAdvancement - 1 ;
-            if(amountOfAdvancement < 0){
-              await this.actor.update({ ["system.advancement"]: false, ["system.amountOfAdvancement"]: 0 });
-            }else{
-              await this.actor.update({ ["system.amountOfAdvancement"]: amountOfAdvancement });
+            const amountOfAdvancement = actor.system.amountOfAdvancement - 1;
+            if (amountOfAdvancement < 0) {
+              await this.actor.update({
+                ["system.advancement"]: false,
+                ["system.amountOfAdvancement"]: 0,
+              });
+            } else {
+              await this.actor.update({
+                ["system.amountOfAdvancement"]: amountOfAdvancement,
+              });
             }
-            
           },
         },
       ],
@@ -587,7 +588,8 @@ async _onRender(context, options) {
         updateData[`system.xp.value.${i}`] = false;
       }
       updateData["system.advancement"] = true;
-      updateData["system.amountOfAdvancement"] = actor.system.amountOfAdvancement + 1;
+      updateData["system.amountOfAdvancement"] =
+        actor.system.amountOfAdvancement + 1;
     } else {
       this.updateXpValues(updateData, index2, value);
     }
@@ -617,51 +619,51 @@ async _onRender(context, options) {
     });
   }
 
-async assignHouseQuestions(house, changeHouse) {
-  const question = await this.getHouseQuestions(house);
+  async assignHouseQuestions(house, changeHouse) {
+    const question = await this.getHouseQuestions(house);
 
-  const content = await sofh_Utility.renderTemplate(
-    "systems/SofH/templates/dialogs/house-question.hbs",
-    { question }
-  );
+    const content = await sofh_Utility.renderTemplate(
+      "systems/SofH/templates/dialogs/house-question.hbs",
+      { question },
+    );
 
-  const result = await foundry.applications.api.DialogV2.prompt({
-    window: {
-      title: game.i18n.localize("sofh.ui.house-question"),
-    },
-    content,
-    ok: {
-      label: game.i18n.localize("sofh.UI.OK"),
-      icon: "fa-solid fa-check",
-      callback: (event, button, dialog) => {
-        // dialog.element is the root DOM element
-        const root = dialog.element;
+    const result = await foundry.applications.api.DialogV2.prompt({
+      window: {
+        title: game.i18n.localize("sofh.ui.house-question"),
+      },
+      content,
+      ok: {
+        label: game.i18n.localize("sofh.UI.OK"),
+        icon: "fa-solid fa-check",
+        callback: (event, button, dialog) => {
+          // dialog.element is the root DOM element
+          const root = dialog.element;
 
-        const selectedQuestion = root.querySelector(
-          'input[name="housequestion"]:checked'
-        );
-
-        if (!selectedQuestion) {
-          ui.notifications.warn(
-            game.i18n.localize("sofh.ui.notSelectedHouseQuestion")
+          const selectedQuestion = root.querySelector(
+            'input[name="housequestion"]:checked',
           );
 
-          // reopen dialog
-          this.assignHouseQuestions(house, changeHouse);
-          return false; // prevents closing
-        }
+          if (!selectedQuestion) {
+            ui.notifications.warn(
+              game.i18n.localize("sofh.ui.notSelectedHouseQuestion"),
+            );
 
-        this.handleHouseQuestionSelection(root);
+            // reopen dialog
+            this.assignHouseQuestions(house, changeHouse);
+            return false; // prevents closing
+          }
 
-        if (changeHouse) {
-          this.spefificHousEq(house);
-        }
+          this.handleHouseQuestionSelection(root);
 
-        return true; // allow closing
+          if (changeHouse) {
+            this.spefificHousEq(house);
+          }
+
+          return true; // allow closing
+        },
       },
-    },
-  });
-}
+    });
+  }
   async getHouseQuestions(houseKey) {
     // Default: try translations
     let q1 = game.i18n.localize(`sofh.ui.actor.${houseKey}question1`);
@@ -699,110 +701,108 @@ async assignHouseQuestions(house, changeHouse) {
     }
   }
 
-async spefificHousEq(house) {
-  const houseEq = CONFIG.SOFHCONFIG.houseeq[house];
-  const actor = this.actor;
+  async spefificHousEq(house) {
+    const houseEq = CONFIG.SOFHCONFIG.houseeq[house];
+    const actor = this.actor;
 
-  const header = game.i18n.localize("sofh.ui.eqquestion");
+    const header = game.i18n.localize("sofh.ui.eqquestion");
 
-  let content = `<h2 style="font-family: 'IM Fell English SC', serif;">${header}</h2><form id="equipmentForm">`;
+    let content = `<h2 style="font-family: 'IM Fell English SC', serif;">${header}</h2><form id="equipmentForm">`;
 
-  let i = 0;
-  for (const key of Object.keys(houseEq)) {
-    const value = houseEq[key];
-    const eq = game.i18n.localize(value);
+    let i = 0;
+    for (const key of Object.keys(houseEq)) {
+      const value = houseEq[key];
+      const eq = game.i18n.localize(value);
 
-    content += `
+      content += `
       <div class="sofh">
         <label class="select-eq">
           <input type="checkbox" name="equipment${i}" value="${eq}" class="equipment-option">
           ${eq}
         </label>
       </div>`;
-    i++;
-  }
+      i++;
+    }
 
-  content += "</form>";
+    content += "</form>";
 
-  await foundry.applications.api.DialogV2.prompt({
-    window: {
-      title: game.i18n.localize("sofh.ui.dialog.houseeq"),
-    },
+    await foundry.applications.api.DialogV2.prompt({
+      window: {
+        title: game.i18n.localize("sofh.ui.dialog.houseeq"),
+      },
 
-    content,
+      content,
 
-    ok: {
-      label: game.i18n.localize("sofh.ui.submit"),
-      icon: "fa-solid fa-check",
+      ok: {
+        label: game.i18n.localize("sofh.ui.submit"),
+        icon: "fa-solid fa-check",
 
-      callback: async (event, button, dialog) => {
+        callback: async (event, button, dialog) => {
+          const root = dialog.element;
+
+          const selectedOptions = root.querySelectorAll(
+            'input[type="checkbox"]:checked',
+          );
+
+          const selectedValues = Array.from(selectedOptions).map(
+            (el) => el.value,
+          );
+
+          if (selectedValues.length > 3) {
+            ui.notifications.error(
+              game.i18n.localize("sofh.ui.dialog.eqwarrning"),
+            );
+            return false; // keep dialog open
+          }
+
+          let currentEquipment = actor.system.equipment || "";
+
+          for (const value of selectedValues) {
+            currentEquipment += `<br>${value}`;
+          }
+
+          await actor.update({
+            "system.equipment": currentEquipment,
+          });
+
+          ui.notifications.info(
+            game.i18n.localize("sofh.ui.dialog.addeqconfirmation"),
+          );
+
+          return true; // close dialog
+        },
+      },
+
+      cancel: {
+        label: game.i18n.localize("sofh.ui.cancel"),
+      },
+
+      render: (event, dialog) => {
         const root = dialog.element;
 
-        const selectedOptions = root.querySelectorAll(
-          'input[type="checkbox"]:checked'
-        );
+        const checkboxes = root.querySelectorAll(".equipment-option");
 
-        const selectedValues = Array.from(selectedOptions).map(
-          (el) => el.value
-        );
+        let selectedOptions = [];
 
-        if (selectedValues.length > 3) {
-          ui.notifications.error(
-            game.i18n.localize("sofh.ui.dialog.eqwarrning")
-          );
-          return false; // keep dialog open
-        }
-
-        let currentEquipment = actor.system.equipment || "";
-
-        for (const value of selectedValues) {
-          currentEquipment += `<br>${value}`;
-        }
-
-        await actor.update({
-          "system.equipment": currentEquipment,
-        });
-
-        ui.notifications.info(
-          game.i18n.localize("sofh.ui.dialog.addeqconfirmation")
-        );
-
-        return true; // close dialog
-      },
-    },
-
-    cancel: {
-      label: game.i18n.localize("sofh.ui.cancel"),
-    },
-
-    render: (event, dialog) => {
-      const root = dialog.element;
-
-      const checkboxes = root.querySelectorAll(".equipment-option");
-
-      let selectedOptions = [];
-
-      checkboxes.forEach((checkbox) => {
-        checkbox.addEventListener("change", (event) => {
-          if (event.target.checked) {
-            if (selectedOptions.length >= 3) {
-              event.target.checked = false;
-              ui.notifications.warn(
-                "You can only select up to 3 options!"
-              );
+        checkboxes.forEach((checkbox) => {
+          checkbox.addEventListener("change", (event) => {
+            if (event.target.checked) {
+              if (selectedOptions.length >= 3) {
+                event.target.checked = false;
+                ui.notifications.warn("You can only select up to 3 options!");
+              } else {
+                selectedOptions.push(event.target);
+              }
             } else {
-              selectedOptions.push(event.target);
+              selectedOptions = selectedOptions.filter(
+                (item) => item !== event.target,
+              );
             }
-          } else {
-            selectedOptions = selectedOptions.filter(
-              (item) => item !== event.target
-            );
-          }
+          });
         });
-      });
-    },
-  });
-}
+      },
+    });
+  }
   async processDiamondClick(element) {
     if (element.parentNode.className === "diamond") {
       if (element.dataset.clicked) return;
@@ -874,46 +874,43 @@ async spefificHousEq(house) {
   }
 
   async removeStringItem(ev) {
-const button = ev.target.closest(".remove-string-btn");
-const ID = button.id;
+    const button = ev.target.closest(".remove-string-btn");
+    const ID = button.id;
 
-let strings = this.actor.system.strings;
+    let strings = this.actor.system.strings;
 
-const filtered = Object.entries(strings)
-  .filter(([key]) => key !== ID);
+    const filtered = Object.entries(strings).filter(([key]) => key !== ID);
 
-const reindexed = {};
-filtered.forEach(([_, value], index) => {
-  reindexed[index] = value;
-});
+    const reindexed = {};
+    filtered.forEach(([_, value], index) => {
+      reindexed[index] = value;
+    });
 
-await this.actor.update({
-  "system.strings": reindexed
-});
+    await this.actor.update({
+      "system.strings": reindexed,
+    });
 
-this.render(true);
+    this.render(true);
   }
 
   async removeAdvantageItem(ev) {
-
     const button = ev.target.closest(".remove-advantage-btn");
-const ID = button.id;
+    const ID = button.id;
 
-let advantage = this.actor.system.advantage;
+    let advantage = this.actor.system.advantage;
 
-const filtered = Object.entries(advantage)
-  .filter(([key]) => key !== ID);
+    const filtered = Object.entries(advantage).filter(([key]) => key !== ID);
 
-const reindexed = {};
-filtered.forEach(([_, value], index) => {
-  reindexed[index] = value;
-});
+    const reindexed = {};
+    filtered.forEach(([_, value], index) => {
+      reindexed[index] = value;
+    });
 
-await this.actor.update({
-  "system.advantage": reindexed
-});
+    await this.actor.update({
+      "system.advantage": reindexed,
+    });
 
-this.render(true);
+    this.render(true);
   }
 
   async updateActorCondition(ev) {
@@ -942,7 +939,9 @@ this.render(true);
       if (!decription || !titleDiv) {
         const closestWindowApp = event.currentTarget.offsetParent;
         decription = closestWindowApp.querySelector(".second-row") || null; // Use the DOM element
-        titleDiv = closestWindowApp.querySelector(`.first-row[id='${move.id}']`); // Use the DOM element
+        titleDiv = closestWindowApp.querySelector(
+          `.first-row[id='${move.id}']`,
+        ); // Use the DOM element
       }
 
       if (decription === null) {
@@ -963,7 +962,9 @@ this.render(true);
     const moveType = event.target.id;
     if (moveType !== "") {
       const closestWindowApp = event.target.offsetParent;
-      const movesElement = closestWindowApp.querySelector(".all-moves." + moveType);
+      const movesElement = closestWindowApp.querySelector(
+        ".all-moves." + moveType,
+      );
 
       if (movesElement.style.display === "none") {
         movesElement.style.display = "";
@@ -975,10 +976,12 @@ this.render(true);
 
   async collapsAllMoves(event) {
     const target = event.target.classList.value;
-    const closestWindowApp =  event.target.offsetParent;
+    const closestWindowApp = event.target.offsetParent;
 
     if (target === "moves active") {
-const movesElements = closestWindowApp.querySelector(".all-moves:not(.basicMoves)");
+      const movesElements = closestWindowApp.querySelector(
+        ".all-moves:not(.basicMoves)",
+      );
       movesElements.style.display = "none";
     }
   }
@@ -1283,33 +1286,32 @@ const movesElements = closestWindowApp.querySelector(".all-moves:not(.basicMoves
     });
   }
   _processFormData(event, form, formData) {
-      const target = event?.target;
-  const name = target?.name;
+    const target = event?.target;
+    const name = target?.name;
 
-  const data = { object: {} };
+    const data = { object: {} };
     if (typeof name === "string") {
-      if(name.includes("system.strings")){
+      if (name.includes("system.strings")) {
         const match = name.split(".");
         const strings = this.actor.system.strings || {};
-          const index = match[2];
-          const field = match[3];
-          if (!strings[index]) {
-            strings[index] = {};
-          }
-          strings[index][field] = target?.value;
-          data.object["system.strings"] = strings;
-        
+        const index = match[2];
+        const field = match[3];
+        if (!strings[index]) {
+          strings[index] = {};
+        }
+        strings[index][field] = target?.value;
+        data.object["system.strings"] = strings;
       }
-    data.object[name] = target?.value;
-  }
-    
+      data.object[name] = target?.value;
+    }
+
     const scrollEl = target.closest(".tab.active");
     if (scrollEl) {
       this._scrollTarget = scrollEl;
       this.y = scrollEl.scrollTop;
     }
-  const process =  super._processFormData(event, form, data);
-    this.actor.sheet.render({force: true})
-  return process
+    const process = super._processFormData(event, form, data);
+    this.actor.sheet.render({ force: true });
+    return process;
   }
 }

@@ -324,17 +324,16 @@ export class moveRoll extends Dialog {
         delete advanatage[key];
         break;
       }
-    }   
+    }
 
+    const reindexed = {};
+    advanatage.forEach(([_, value], index) => {
+      reindexed[index] = value;
+    });
 
-const reindexed = {};
-advanatage.forEach(([_, value], index) => {
-  reindexed[index] = value;
-});
-
-await this.actor.update({
-  "system.advantage": reindexed
-});
+    await this.actor.update({
+      "system.advantage": reindexed,
+    });
   }
 
   async rolling(

@@ -1,5 +1,3 @@
-
-
 export default class SpecialMovesDataModel extends foundry.abstract.DataModel {
   static defineSchema() {
     const fields = foundry.data.fields;
@@ -82,5 +80,4 @@ export default class SpecialMovesDataModel extends foundry.abstract.DataModel {
   prepareBaseData() {
     super.prepareBaseData();
   }
-
 }

@@ -1,10 +1,5 @@
-const {
-  StringField,
-  BooleanField,
-  NumberField,
-  SchemaField,
-  ArrayField,
-} = foundry.data.fields;
+const { StringField, BooleanField, NumberField, SchemaField, ArrayField } =
+  foundry.data.fields;
 
 export default class ActorDataModel extends foundry.abstract.TypeDataModel {
   static metadata = Object.freeze({});
@@ -55,11 +50,11 @@ export default class ActorDataModel extends foundry.abstract.TypeDataModel {
       }),
 
       condition: new SchemaField({
-        "1": conditionSchema(),
-        "2": conditionSchema(),
-        "3": conditionSchema(),
-        "4": conditionSchema(),
-        "5": conditionSchema(),
+        1: conditionSchema(),
+        2: conditionSchema(),
+        3: conditionSchema(),
+        4: conditionSchema(),
+        5: conditionSchema(),
       }),
 
       is7conditions: new BooleanField({
@@ -76,13 +71,13 @@ export default class ActorDataModel extends foundry.abstract.TypeDataModel {
 
       xp: new SchemaField({
         value: new SchemaField({
-          "1": new BooleanField({ initial: false }),
-          "2": new BooleanField({ initial: false }),
-          "3": new BooleanField({ initial: false }),
-          "4": new BooleanField({ initial: false }),
-          "5": new BooleanField({ initial: false }),
-          "6": new BooleanField({ initial: false }),
-          "7": new BooleanField({ initial: false }),
+          1: new BooleanField({ initial: false }),
+          2: new BooleanField({ initial: false }),
+          3: new BooleanField({ initial: false }),
+          4: new BooleanField({ initial: false }),
+          5: new BooleanField({ initial: false }),
+          6: new BooleanField({ initial: false }),
+          7: new BooleanField({ initial: false }),
         }),
       }),
 
@@ -102,13 +97,13 @@ export default class ActorDataModel extends foundry.abstract.TypeDataModel {
 
       reputation: new SchemaField({
         value: new SchemaField({
-          "1": new BooleanField({ initial: false }),
-          "2": new BooleanField({ initial: false }),
-          "3": new BooleanField({ initial: false }),
-          "4": new BooleanField({ initial: false }),
-          "5": new BooleanField({ initial: false }),
-          "6": new BooleanField({ initial: false }),
-          "7": new BooleanField({ initial: false }),
+          1: new BooleanField({ initial: false }),
+          2: new BooleanField({ initial: false }),
+          3: new BooleanField({ initial: false }),
+          4: new BooleanField({ initial: false }),
+          5: new BooleanField({ initial: false }),
+          6: new BooleanField({ initial: false }),
+          7: new BooleanField({ initial: false }),
         }),
 
         rank: new NumberField({
@@ -143,7 +138,7 @@ export default class ActorDataModel extends foundry.abstract.TypeDataModel {
           description: new StringField({
             initial: "",
           }),
-        })
+        }),
       ),
 
       advantage: new ArrayField(
@@ -151,7 +146,7 @@ export default class ActorDataModel extends foundry.abstract.TypeDataModel {
           description: new StringField({
             initial: "",
           }),
-        })
+        }),
       ),
     };
   }

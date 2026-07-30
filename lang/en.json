@@ -9,7 +9,7 @@
       "houseMoves": "House Moves",
       "advancedMoves": "Advanced Moves"
     },
-    "Actor":{
+    "Actor": {
       "character": "Studen",
       "clue": "Mistery",
       "npc": "NPC"

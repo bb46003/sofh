@@ -1,12 +1,40 @@
-        <section class="tab equipment flexcol {{tabs.equipment.cssClass}}"  data-action="tab" data-group="primary" data-tab="equipment">
+<section
+  class="tab equipment flexcol {{tabs.equipment.cssClass}}"
+  data-action="tab"
+  data-group="primary"
+  data-tab="equipment"
+>
 
-<div class="eq-sheet">
-  <div class="note-sheet">
-    <h2>{{localize "sofh.ui.actor.notes"}}</h2>
-    <div class="note-tab" data-group="primary" data-tab="note">
+  <div class="eq-sheet">
+    <div class="note-sheet">
+      <h2>{{localize "sofh.ui.actor.notes"}}</h2>
+      <div class="note-tab" data-group="primary" data-tab="note">
+        {{editor
+          system.notes
+          target="system.notes"
+          engine="prosemirror"
+          button=true
+          owner=owner
+          editable=editable
+        }}
+      </div>
+    </div>
+    <h2>{{localize "sofh.ui.actor.baseshooleq"}}</h2>
+    <div class="eq-tab" data-group="primary" data-tab="equipment">
       {{editor
-        system.notes
-        target="system.notes"
+        system.equipment
+        target="system.equipment"
+        engine="prosemirror"
+        button=true
+        owner=owner
+        editable=editable
+      }}
+    </div>
+    <h2>{{localize "sofh.ui.actor.pesonaleq"}}</h2>
+    <div class="eq-tab" data-group="primary" data-tab="equipment">
+      {{editor
+        system.equipmentpersonal
+        target="system.equipmentpersonal"
         engine="prosemirror"
         button=true
         owner=owner
@@ -14,27 +42,4 @@
       }}
     </div>
   </div>
-  <h2>{{localize "sofh.ui.actor.baseshooleq"}}</h2>
-  <div class="eq-tab" data-group="primary" data-tab="equipment">
-    {{editor
-      system.equipment
-      target="system.equipment"
-      engine="prosemirror"
-      button=true
-      owner=owner
-      editable=editable
-    }}
-  </div>
-  <h2>{{localize "sofh.ui.actor.pesonaleq"}}</h2>
-  <div class="eq-tab" data-group="primary" data-tab="equipment">
-    {{editor
-      system.equipmentpersonal
-      target="system.equipmentpersonal"
-      engine="prosemirror"
-      button=true
-      owner=owner
-      editable=editable
-    }}
-  </div>
-</div>
-        </section>
+</section>

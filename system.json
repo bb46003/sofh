@@ -57,17 +57,17 @@
     "Actor": {
       "character": {},
       "npc": {},
-      "clue":{}
+      "clue": {}
     },
 
     "Item": {
-      "basicMoves" :{},
-      "specialPlaybookMoves":{},
-      "advancedMoves":{},
-      "comingOfAgeMoves":{},
-      "customMoves":{},
-      "optionalMoves":{},
-      "houseMoves":{}
+      "basicMoves": {},
+      "specialPlaybookMoves": {},
+      "advancedMoves": {},
+      "comingOfAgeMoves": {},
+      "customMoves": {},
+      "optionalMoves": {},
+      "houseMoves": {}
     }
   },
   "socket": true,

@@ -3,7 +3,7 @@ export async function migrateWorld() {
 
   // --- Load compendium basic moves once ---
   const basicMovesPack = game.packs.find(
-    (pack) => pack.collection === "SofH.moves"
+    (pack) => pack.collection === "SofH.moves",
   );
 
   if (!basicMovesPack) {
@@ -35,7 +35,7 @@ export async function migrateWorld() {
     // --- Compare actor moves with compendium moves ---
     if (actor.type === "character") {
       const actorMoves = actor.items.filter(
-        (item) => item.type === "basicMoves"
+        (item) => item.type === "basicMoves",
       );
 
       for (const actorMove of actorMoves) {
@@ -55,10 +55,13 @@ export async function migrateWorld() {
 
         if (!baseMove) continue;
 
-        const sameSystem =  foundry.utils.objectsEqual(actorMove.system,baseMove.system)
+        const sameSystem = foundry.utils.objectsEqual(
+          actorMove.system,
+          baseMove.system,
+        );
         if (!sameSystem) {
           console.log(
-            `Move difference detected: ${actor.name} → ${actorMove.name}`
+            `Move difference detected: ${actor.name} → ${actorMove.name}`,
           );
           moveChange = true;
           break;
@@ -81,22 +84,23 @@ export async function migrateWorld() {
           action: "yes",
           label: game.i18n.localize("Yes"),
           callback: async () => {
-            const actors = game.actors.contents.filter(actor => { return actor.type === "character";});
+            const actors = game.actors.contents.filter((actor) => {
+              return actor.type === "character";
+            });
 
-            await migrateMoves(actors,basicMoves);
+            await migrateMoves(actors, basicMoves);
           },
         },
         {
           action: "no",
           label: game.i18n.localize("No"),
-        }
+        },
       ],
     });
 
     moveMigration.render(true);
   }
 }
-
 
 function migrateActorData(actor) {
   if (actor?.system?.condition) {
@@ -121,22 +125,19 @@ async function migrateMoves(actors, basicMoves) {
   for (const actor of actors) {
     if (actor.type !== "character") continue;
 
-    const actorMoves = actor.items.filter(
-      (item) => item.type === "basicMoves"
-    );
+    const actorMoves = actor.items.filter((item) => item.type === "basicMoves");
     for (const actorMove of actorMoves) {
       const sourceId = actorMove.flags?.SofH?.compendiumSource;
-      const updateMove = basicMoves.filter(move =>{return ((move.uuid === sourceId)||(move.name === actorMove.name))})[0]
-      if(updateMove?.system){
-        await actorMove.update({['system']:updateMove.system})
-        await actorMove.setFlag("SofH", "compendiumSource", updateMove.uuid)
+      const updateMove = basicMoves.filter((move) => {
+        return move.uuid === sourceId || move.name === actorMove.name;
+      })[0];
+      if (updateMove?.system) {
+        await actorMove.update({ ["system"]: updateMove.system });
+        await actorMove.setFlag("SofH", "compendiumSource", updateMove.uuid);
       }
-
     }
-    
   }
 }
-
 
 async function migrateRelation(actor) {
   const relation1 = actor.system.best_friend;

@@ -146,7 +146,7 @@ Hooks.once("init", async function () {
     basicMoves: BasicMoveDataModel,
     comingOfAgeMoves: BasicMoveDataModel,
   };
-    CONFIG.Actor.dataModels = {character:ActorDataModel};
+  CONFIG.Actor.dataModels = { character: ActorDataModel };
   registerHandlebarsHelpers();
   registerSettings();
   loadPolishLocalization();
@@ -306,9 +306,9 @@ Hooks.once("ready", async function () {
 
   // Migration
   if (game.user.isGM) {
-    const SYSTEM_MIGRATION_VERSION = game.system.version
+    const SYSTEM_MIGRATION_VERSION = game.system.version;
     const currentVersion = game.settings.get("SofH", "systemMigrationVersion");
-    const needsMigration = SYSTEM_MIGRATION_VERSION !== currentVersion
+    const needsMigration = SYSTEM_MIGRATION_VERSION !== currentVersion;
 
     if (needsMigration) {
       await SofHMigrate.migrateWorld();
