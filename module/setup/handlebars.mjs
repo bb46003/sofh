@@ -91,56 +91,79 @@ export function registerHandlebarsHelpers() {
     return new Handlebars.SafeString(styledContent);
   });
 
-  Handlebars.registerHelper("addCharacters", function (actor) {
-    const characters = actor.system.actorID;
-    let html = ``;
-    Object.keys(characters).forEach((actorId) => {
-      if (actorId !== "0") {
-        const name = characters[actorId].name;
-        const actor = game.actors.get(actorId);
-        const cluerelatedMoves = actor?.items.filter(
-          (move) => move.system.cluerelated === true,
-        );
-        const theorize = cluerelatedMoves[0];
-        if (theorize === undefined) {
-          html += `<th class="actor-known-clue" id="${actorId}">${name}<p>${game.i18n.localize("Character")} ${game.i18n.localize("sofh.ui.lack_of_move")}</p></th>`;
-        } else {
-          html += `
-    <th class="actor-known-clue" id="${actorId}">
-      <div class="actor-clue-headr">
-        <div class="clue-header-name">${name}</div>
-        <div class="clue-move-button">
-        <h3 class="clue-line"></h3>
-          <button class="theorize-move-roll" id="${theorize._id}">${theorize.name}</button>
-        </div>
-      </div>
-    </th>`;
-        }
-      }
-    });
+Handlebars.registerHelper("addCharacters", function (actor) {
+  const characters = actor.system.actorID ?? [];
+  let html = "";
 
-    return html;
-  });
+  characters.forEach((character) => {
+    const actorId = character.id;
+    const name = character.name;
 
-  Handlebars.registerHelper("addCharactersKnownsClue", function (index, actor) {
-    if (!actor || !actor.system || !actor.system.actorID) {
-      return ""; // Return an empty string if data is missing
+    const characterActor = game.actors.get(actorId);
+
+    if (!characterActor) return;
+
+    const cluerelatedMoves = characterActor.items.filter(
+      (move) => move.system.cluerelated === true,
+    );
+
+    const theorize = cluerelatedMoves[0];
+
+    if (!theorize) {
+      html += `
+        <th class="actor-known-clue" id="${actorId}">
+          ${name}
+          <p>
+            ${game.i18n.localize("Character")}
+            ${game.i18n.localize("sofh.ui.lack_of_move")}
+          </p>
+        </th>`;
+    } else {
+      html += `
+        <th class="actor-known-clue" id="${actorId}">
+          <div class="actor-clue-headr">
+            <div class="clue-header-name">${name}</div>
+            <div class="clue-move-button">
+              <h3 class="clue-line"></h3>
+              <button 
+                class="theorize-move-roll"
+                data-action="rollForTheorize"
+                id="${theorize.id}">
+                ${theorize.name}
+              </button>
+            </div>
+          </div>
+        </th>`;
     }
-
-    const characters = actor.system.actorID;
-    let html = ``;
-
-    // Iterate over each actor ID and create the input HTML
-    Object.keys(characters).forEach((actorId) => {
-      const name = characters[actorId].name;
-      const isChecked = characters[actorId][`have${index}`] ? "checked" : "";
-
-      html += `<th class="actor-known-clue"><input type="checkbox" class="circle-checkbox-condition" name="system.actorID.${actorId}.have${index}" ${isChecked} /></th>`;
-    });
-
-    // Return the generated HTML as a SafeString
-    return new Handlebars.SafeString(html);
   });
+
+  return html;
+});
+
+Handlebars.registerHelper("addCharactersKnownsClue", function (index, actor) {
+  if (!actor?.system?.actorID) {
+    return "";
+  }
+
+  const characters = actor.system.actorID;
+  let html = "";
+
+  characters.forEach((character, arrayIndex) => {
+    const isChecked = character[`have${index}`] ? "checked" : "";
+
+    html += `
+      <th class="actor-known-clue">
+        <input 
+          type="checkbox" 
+          class="circle-checkbox-condition"
+          name="system.actorID.${arrayIndex}.have${index}"
+          ${isChecked}
+        />
+      </th>`;
+  });
+
+  return new Handlebars.SafeString(html);
+});
 
   Handlebars.registerHelper("showAllKnownClue", function (clueID, complexity) {
     if (Array.isArray(clueID)) {
@@ -264,7 +287,7 @@ export function registerHandlebarsHelpers() {
         html += `<th class="actor-known-clue" id="${actor._id}">${name}<p>${game.i18n.localize("Character")} ${game.i18n.localize("sofh.ui.lack_of_move")}</p></th>`;
       } else {
         html += `
-    <button class="theorize-solution-roll" id="${theorize._id}">${theorize.name}</button>
+    <button class="theorize-solution-roll" data-action="rollForTheorize" id="${theorize._id}">${theorize.name}</button>
         `;
       }
       return html;

@@ -15,17 +15,16 @@ export function registerSheets() {
     game.release.generation < 13 ? Items : foundry.documents.collections.Items;
   SOFHCONFIG.ItemSheet =
     game.release.generation < 13 ? ItemSheet : foundry.appv1.sheets.ItemSheet;
-  foundry.applications.apps.DocumentSheetConfig.registerSheet(foundry.documents.Actor, sofhCharacterSheet, "character")
-  foundry.applications.apps.DocumentSheetConfig.registerSheet(foundry.documents.Actor, SofhClue, "clue")
 
-    foundry.applications.apps.DocumentSheetConfig.unregisterSheet(
-    foundry.documents.Actor,
-    "core",
-    foundry.applications.sheets.ActorSheet,
-  );
-  foundry.applications.apps.DocumentSheetConfig.registerSheet(foundry.documents.Actor, sofhCharacterSheet, "character")
-  foundry.applications.apps.DocumentSheetConfig.registerSheet(foundry.documents.Actor, SofhClue, "clue")
-
+  SOFHCONFIG.Actors.unregisterSheet("core", SOFHCONFIG.ActorSheet);
+  SOFHCONFIG.Actors.registerSheet("sofh", sofhCharacterSheet, {
+    types: ["character"],
+    makeDefault: true,
+  });
+  SOFHCONFIG.Actors.registerSheet("sofh", SofhClue, {
+    types: ["clue"],
+    makeDefault: true,
+  });
 
   SOFHCONFIG.Items.unregisterSheet("core", SOFHCONFIG.ItemSheet);
 

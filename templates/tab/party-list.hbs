@@ -1,25 +1,38 @@
-<div class="party-list">
-  <div class="party-list-header">
-    <h3 class="party-list">{{localize "sofh.ui.clue.add_member"}}</h3>
-    <button class="add-character"><i class="fa fa-plus"></i></button>
-  </div>
-  {{#each system.actorID as |ID key|}}
-    <div class="party-member">
-      <div class="single-party-member-img">
-        <img
-          class="borderless-partymember"
-          src="{{ID.img}}"
-          height="80"
-          width="80"
-        />
-      </div>
-      <div class="single-party-member">{{ID.name}}</div>
-      <div class="remove-single-party-member">
-        <button class="remove-single-party-member" id="{{key}}">
-          <i class="fa fa-minus" id="{{key}}"></i>
-        </button>
-      </div>
+<section
+  class="tab party-list flexcol {{tabs.party_list.cssClass}}"
+  data-action="tab"
+  data-group="primary"
+  data-tab="party_list"
+>
+  <div class="party-list">
+    <div class="party-list-header">
+      <h3 class="party-list">{{localize "sofh.ui.clue.add_member"}}</h3>
+      <button class="add-character" data-action="addPartyMember"><i
+          class="fa fa-plus"
+        ></i></button>
     </div>
-  {{/each}}
+    {{#each system.actorID as |ID key|}}
+      <div class="party-member">
+        <div class="single-party-member-img">
+          <img
+            class="borderless-partymember"
+            src="{{ID.img}}"
+            height="80"
+            width="80"
+          />
+        </div>
+        <div class="single-party-member">{{ID.name}}</div>
+        <div class="remove-single-party-member">
+          <button
+            class="remove-single-party-member"
+            data-action="removePartyMember"
+            data-id="{{ID.id}}"
+          >
+            <i class="fa fa-minus" id="{{ID.id}}"></i>
+          </button>
+        </div>
+      </div>
+    {{/each}}
 
-</div>
+  </div>
+</section>

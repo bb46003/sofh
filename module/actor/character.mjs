@@ -707,9 +707,12 @@ export class sofhCharacterSheet extends api.HandlebarsApplicationMixin(
     return { q1, q2 };
   }
   async handleHouseQuestionSelection(html) {
-    const selectedOption = html.querySelector('input[name="housequestion"]:checked');
+    const selectedOption = html.querySelector(
+      'input[name="housequestion"]:checked',
+    );
     if (selectedOption) {
-      const selectedLabel = selectedOption.nextElementSibling.textContent.trim();
+      const selectedLabel =
+        selectedOption.nextElementSibling.textContent.trim();
       await this.actor.update({ ["system.housequestion"]: selectedLabel });
     } else {
       ui.notifications.warn(game.i18n.localize("sofh.ui.warning.noSelection"));

@@ -1,63 +1,65 @@
 import { moveRoll } from "../dialog/move-dialog.mjs";
 import sofh_Utility from "../utility.mjs";
 
-const { api, sheets } = foundry.applications;
+const BaseActorSheet =
+  typeof foundry?.appv1?.sheets?.ActorSheet !== "undefined"
+    ? foundry.appv1.sheets.ActorSheet
+    : ActorSheet;
 
-export class SofhClue extends api.HandlebarsApplicationMixin(
-  sheets.ActorSheetV2,
-) {
-  static DEFAULT_OPTIONS = {
-    id: "sofh-clue",
-
-    position: { width: 800, height: 960 },
-    actions: {
-      addClue: SofhClue.#addClue,
-      removeClue: SofhClue.#removeClue,
-      rollForTheorize: SofhClue.#rollForTheorize,
-      addSolution: SofhClue.#addSolution,
-      removeSolution: SofhClue.#removeSolution,
-      solutionRollForTheorize: SofhClue.#solutionRollForTheorize,
-      removePartyMember: SofhClue.#removePartyMember,
-      addPartyMember: SofhClue.#addPartyMember,
-    },
-  };
-
-  static PARTS = {
-    main: {
+export class SofhClue extends BaseActorSheet {
+  static get defaultOptions() {
+    return foundry.utils.mergeObject(super.defaultOptions, {
+      classes: ["sofh"],
       template: "systems/SofH/templates/clue.hbs",
-    },
-    solve_list: {
-      id: "solve_list",
-      template: "systems/SofH/templates/tab/mistery-solve-list.hbs",
-    },
-    clue_list: {
-      id: "clue_list",
-      template: "systems/SofH/templates/tab/clue-list.hbs",
-    },
-    party_list: {
-      id: "party_list",
-      template: "systems/SofH/templates/tab/party-list.hbs",
-    },
-  };
-  static TABS = {
-    primary: {
+      width: 800,
+      height: 960,
       tabs: [
-        { id: "solve_list", group: "primary" },
-        { id: "clue_list", group: "primary" },
-        { id: "party_list", group: "primary" },
+        {
+          navSelector: ".sheet-tabs",
+          contentSelector: ".sheet-body",
+          initial: "clue-list",
+        },
       ],
-      initial: "solve_list",
-    },
-  };
+    });
+  }
 
-  async _prepareContext(options) {
-    const context = await super._prepareContext(options);
-    const actor = this.actor;
-    context.system = actor.system;
-    context.actor = actor;
+  async getData() {
+    const context = super.getData();
+    const actorData = this.actor.toObject(false);
+    context.system = actorData.system;
+
     return context;
   }
 
+  async activateListeners(html) {
+    super.activateListeners(html);
+    html.on("click", ".add-clue", this.addClue.bind(this));
+    html.on("click", ".remove-clue", this.removeClue.bind(this));
+    html.on("click", ".theorize-move-roll", this.rollForTheorize.bind(this));
+    html.on("click", ".solution-add", this.addSolution.bind(this));
+    html.on("click", ".remove-solution", this.removeSolution.bind(this));
+    html.on(
+      "click",
+      ".theorize-solution-roll",
+      this.solutionRollForTheorize.bind(this),
+    );
+
+    html.find(".character-sheet").on("dragover", this._onDragOver.bind(this));
+    html.find(".character-sheet").on("dragleave", this._onDragLeave.bind(this));
+    html.find(".character-sheet").on("drop", this._onDrop.bind(this));
+    html
+      .find(`.remove-single-party-member`)
+      .on("click", this.removePartyMember.bind(this));
+    html.find(`.add-character`).on("click", this.addPartyMember.bind(this));
+  }
+
+  _onDragOver(event) {
+    event.preventDefault();
+    event.currentTarget.classList.add("drag-over");
+  }
+  _onDragLeave(event) {
+    event.currentTarget.classList.remove("drag-over");
+  }
   _onDrop(event) {
     event.preventDefault();
     const data = event.dataTransfer;
@@ -80,30 +82,31 @@ export class SofhClue extends api.HandlebarsApplicationMixin(
     }
     event.currentTarget.classList.remove("drag-over");
   }
-static async #addClue(event) {
-  event.preventDefault();
+  async addClue(event) {
+    event.preventDefault();
 
-  const clues = this.actor.system.clue ?? {};
+    const clues = this.actor.system.clue;
 
-  const clueNumbers = Object.keys(clues).length;
+    let clueNumbers = 0;
+    if (clues && typeof clues === "object") {
+      clueNumbers = Object.keys(clues).length;
+    }
+    let updateData = {};
 
-  const updateData = {};
+    updateData[`system.clue.${clueNumbers}.description`] = " ";
 
-  updateData[`system.clue.${clueNumbers}.description`] = " ";
+    const actorID = this.actor.system.actorID;
 
-  const actorID = this.actor.system.actorID ?? [];
+    for (const actorId in actorID) {
+      if (actorID.hasOwnProperty(actorId)) {
+        updateData[`system.actorID.${actorId}.have${clueNumbers}`] = false;
+      }
+    }
 
-  const updatedActors = actorID.map((member) => ({
-    ...member,
-    [`have${clueNumbers}`]: false,
-  }));
-
-  updateData["system.actorID"] = updatedActors;
-
-  await this.actor.update(updateData);
-  this.actor.render(true);
-}
-  static async #removeClue(ev) {
+    this.actor.update(updateData);
+    this.actor.render(true);
+  }
+  async removeClue(ev) {
     const button = ev.target;
     const ID = Number(button.id);
     let clue = this.actor.system.clue;
@@ -126,87 +129,82 @@ static async #addClue(event) {
       });
     }
   }
-  static async #removePartyMember(event) {
+  async removePartyMember(event) {
     event.preventDefault();
-    const target = event.target.dataset.id;
+    const target = event.target.id;
     const actor = this.actor;
-    await actor.system.removeMember(target);
-    //await actor.update(updateData);
+    let partyMembers = actor.system.actorID;
+    if (partyMembers.hasOwnProperty(target)) {
+      delete partyMembers[target];
+    }
+    const updateData = partyMembers;
+    await actor.update({ "system.actorID": [{}] });
+
+    await actor.update({ "system.actorID": updateData });
     await this.removeOwnership(target);
 
     await actor.render(true);
   }
-static async #addPartyMember(event) {
-  const actors = game.actors.filter((actor) => actor.type === "character");
+  async addPartyMember(event) {
+    const actors = game.actors.filter((actor) => actor.type === "character");
+    const currentMember = this.actor.system.actorID;
+    const filteredActors = actors.filter(
+      (actor) => !Object.keys(currentMember).includes(actor.id),
+    );
+    const html = await sofh_Utility.renderTemplate(
+      "systems/SofH/templates/dialogs/add-patry-member.hbs",
+      { actors: filteredActors },
+    );
 
-  const currentMember = this.actor.system.actorID ?? {};
-
-  const filteredActors = actors.filter(
-    (actor) => !Object.keys(currentMember).includes(actor.id),
-  );
-
-  const html = await sofh_Utility.renderTemplate(
-    "systems/SofH/templates/dialogs/add-patry-member.hbs",
-    { actors: filteredActors },
-  );
-
-  await foundry.applications.api.DialogV2.wait({
-    window: {
+    new Dialog({
       title: game.i18n.localize("sofh.ui.clue.add-party-member"),
-      width: 200,
-    },
-    content: html,
-    buttons: [
-      {
-        action: "add",
-        label: game.i18n.localize("EFFECT.MODE_ADD"),
-        callback: async (event, button, dialog) => {
-          const element = dialog.element;
-
-          await this.addMembets(element);
+      content: html,
+      buttons: {
+        add: {
+          label: game.i18n.localize("EFFECT.MODE_ADD"),
+          callback: async () => {
+            await this.addMembets(html);
+          },
         },
       },
-    ],
-    default: "add",
-  });
-}
-async addMembets(html) {
-  const checkedInputs = html.querySelectorAll(
-    ".party-memeber-add input[type='checkbox']:checked",
-  );
-
-  if (!checkedInputs.length) return;
-
-  const partyMembers = [...(this.actor.system.actorID ?? [])];
-
-  for (const input of checkedInputs) {
-    const memberElement = input.closest(".party-memeber-add");
-    const actorId = memberElement?.id;
-
-    if (!actorId) continue;
-
-    const actor = game.actors.get(actorId);
-
-    if (!actor) continue;
-
-    // Prevent duplicates
-    if (partyMembers.some((member) => member.id === actorId)) {
-      continue;
-    }
-
-    partyMembers.push({
-      id: actor.id,
-      name: actor.name,
-      img: actor.img,
-    });
+      default: "Add",
+    }).render(true, { width: 200 });
   }
+  async addMembets(event) {
+    const containers = document.querySelectorAll(".party-memeber-add");
 
-  await this.actor.update({
-    "system.actorID": partyMembers,
-  });
+    const clue = this.actor;
+    const currentClues = clue.system?.clue
+      ? Object.keys(clue.system.clue).length
+      : 0;
+    let updateData = {};
+    containers.forEach(async (container) => {
+      const checkbox = container.querySelector('input[type="checkbox"]');
 
-  this.render(true);
-}
+      if (checkbox && checkbox.checked) {
+        let newMember = game.actors.get(container.id);
+        updateData = {
+          [container.id]: {
+            name: newMember.name,
+            img: newMember.img,
+          },
+        };
+
+        for (let i = 0; i < currentClues; i++) {
+          updateData[container.id] = {
+            ...updateData[container.id],
+            [`have${i}`]: false,
+          };
+        }
+        this.addOwnership(container.id);
+      }
+      await clue.update({
+        "system.actorID": updateData,
+      });
+    });
+
+    await clue.render(true);
+  }
 
   async addOwnership(characterID) {
     const users = Array.from(game.users.values());
@@ -231,7 +229,7 @@ async addMembets(html) {
     }
   }
 
-  static async #rollForTheorize(event) {
+  async rollForTheorize(event) {
     event.preventDefault();
     const user = game.user._id;
     const actor = game.actors.get(event.target.offsetParent.id);
@@ -246,7 +244,7 @@ async addMembets(html) {
       ui.notifications.warn(game.i18n.localize("sofh.you_are_not_owner"));
     }
   }
-  static async #addSolution(event) {
+  async addSolution(event) {
     if (game.user.isGM) {
       const clue = this.actor;
       const solutions = clue.system.solutions;
@@ -264,7 +262,7 @@ async addMembets(html) {
     }
   }
 
-  static async #removeSolution(ev) {
+  async removeSolution(ev) {
     ev.preventDefault();
     if (game.user.isGM) {
       const target = ev.target.id;
@@ -282,7 +280,7 @@ async addMembets(html) {
     }
   }
 
-  static async #solutionRollForTheorize(ev) {
+  async solutionRollForTheorize(ev) {
     ev.preventDefault();
     const user = game.user._id;
     const actor = game.user.character;

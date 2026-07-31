@@ -1,5 +1,11 @@
-const { StringField,HTMLField, BooleanField, NumberField, SchemaField, ArrayField } =
-  foundry.data.fields;
+const {
+  StringField,
+  HTMLField,
+  BooleanField,
+  NumberField,
+  SchemaField,
+  ArrayField,
+} = foundry.data.fields;
 
 export default class ActorDataModel extends foundry.abstract.TypeDataModel {
   static metadata = Object.freeze({});
@@ -132,10 +138,10 @@ export default class ActorDataModel extends foundry.abstract.TypeDataModel {
       notes: new HTMLField({
         initial: "",
       }),
-      
+
       equipmentpersonal: new HTMLField({
         initial: "",
-      }), 
+      }),
 
       strings: new ArrayField(
         new SchemaField({

@@ -1,7 +1,8 @@
+<section class="tab characteristic flexcol {{tabs.solve_list.cssClass}}"  data-action="tab" data-group="primary" data-tab="solve_list">
 
     <div class="header-solution">
         <label class="solution-label">{{localize "sofh.ui.clue.list_of_mistery_solutions"}}</label>
-        <button class="solution-add" ><i class="fa fa-plus clue"></i></button>
+        <button class="solution-add" data-action="addSolution"><i class="fa fa-plus clue"></i></button>
     </div>
     <div class="list-of-solutions">
         <div class="list-pf-solutuion-labels">
@@ -22,7 +23,7 @@
                  {{#if (isGM)}}
                 <input class="show-to-player"type="checkbox" name="system.solutions.{{@index}}.showToPlayer" {{#if solution.showToPlayer}}checked{{/if}} >
               
-                <button class="remove-solution" id="{{@index}}">
+                <button class="remove-solution" data-action="removeSolution" data-solution-id="{{@index}}">
                     <i class="fa fa-minus" id="{{@index}}"></i>
                 </button>
                   {{/if}}
@@ -32,3 +33,4 @@
         {{/each}}
 
     </div>
+</section>
