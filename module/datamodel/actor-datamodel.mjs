@@ -1,4 +1,4 @@
-const { StringField, BooleanField, NumberField, SchemaField, ArrayField } =
+const { StringField,HTMLField, BooleanField, NumberField, SchemaField, ArrayField } =
   foundry.data.fields;
 
 export default class ActorDataModel extends foundry.abstract.TypeDataModel {
@@ -125,9 +125,17 @@ export default class ActorDataModel extends foundry.abstract.TypeDataModel {
         initial: "",
       }),
 
-      equipment: new StringField({
+      equipment: new HTMLField({
         initial: "",
       }),
+
+      notes: new HTMLField({
+        initial: "",
+      }),
+      
+      equipmentpersonal: new HTMLField({
+        initial: "",
+      }), 
 
       strings: new ArrayField(
         new SchemaField({

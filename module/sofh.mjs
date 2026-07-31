@@ -14,6 +14,7 @@ import MOVES from "./items/default-item-function.mjs";
 import SpecialMovesDataModel from "./datamodel/special-move-datamodel.mjs";
 import BasicMoveDataModel from "./datamodel/move-datamodel.mjs";
 import ActorDataModel from "./datamodel/actor-datamodel.mjs";
+import ClueDataModel from "./datamodel/clue-datamodel.mjs";
 const fields = foundry.data.fields;
 
 export default function registerSettings() {
@@ -146,7 +147,10 @@ Hooks.once("init", async function () {
     basicMoves: BasicMoveDataModel,
     comingOfAgeMoves: BasicMoveDataModel,
   };
-  CONFIG.Actor.dataModels = { character: ActorDataModel };
+  CONFIG.Actor.dataModels = { 
+    character: ActorDataModel,
+    clue: ClueDataModel,
+  };
   registerHandlebarsHelpers();
   registerSettings();
   loadPolishLocalization();

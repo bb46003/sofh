@@ -90,9 +90,24 @@ export class sofhCharacterSheet extends api.HandlebarsApplicationMixin(
       timeToShine: config.timeToShine,
       actor: this.actor,
       items: this.actor.items,
+      systemFields: this.actor.system.schema.fields,
     });
 
-    context.system.equipment = await this._enrich(context.system.equipment);
+    context.equipmentpersonal = {
+      value: this.actor.system.equipmentpersonal,
+      enriched: await this._enrich(this.actor.system.equipmentpersonal),
+      field: this.actor.system.schema.fields.equipmentpersonal,
+    };
+    context.notes = {
+      value: this.actor.system.notes,
+      enriched: await this._enrich(this.actor.system.notes),
+      field: this.actor.system.schema.fields.notes,
+    };
+    context.equipment = {
+      value: this.actor.system.equipment,
+      enriched: await this._enrich(this.actor.system.equipment),
+      field: this.actor.system.schema.fields.equipment,
+    };
 
     this._prepareMoves(context);
 
@@ -692,9 +707,9 @@ export class sofhCharacterSheet extends api.HandlebarsApplicationMixin(
     return { q1, q2 };
   }
   async handleHouseQuestionSelection(html) {
-    const selectedOption = html.find('input[name="housequestion"]:checked');
-    if (selectedOption.length > 0) {
-      const selectedLabel = selectedOption.next("label").text().trim();
+    const selectedOption = html.querySelector('input[name="housequestion"]:checked');
+    if (selectedOption) {
+      const selectedLabel = selectedOption.nextElementSibling.textContent.trim();
       await this.actor.update({ ["system.housequestion"]: selectedLabel });
     } else {
       ui.notifications.warn(game.i18n.localize("sofh.ui.warning.noSelection"));

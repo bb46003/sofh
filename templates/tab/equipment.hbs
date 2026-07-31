@@ -9,37 +9,34 @@
     <div class="note-sheet">
       <h2>{{localize "sofh.ui.actor.notes"}}</h2>
       <div class="note-tab" data-group="primary" data-tab="note">
-        {{editor
-          system.notes
-          target="system.notes"
-          engine="prosemirror"
-          button=true
-          owner=owner
-          editable=editable
-        }}
+
+            {{formInput
+      notes.field
+      value=notes.value
+      enriched=notes.enriched
+      toggled="true"
+    }}
       </div>
     </div>
     <h2>{{localize "sofh.ui.actor.baseshooleq"}}</h2>
     <div class="eq-tab" data-group="primary" data-tab="equipment">
-      {{editor
-        system.equipment
-        target="system.equipment"
-        engine="prosemirror"
-        button=true
-        owner=owner
-        editable=editable
-      }}
+
+                  {{formInput
+      equipment.field
+      value=equipment.value
+      enriched=equipment.enriched
+      toggled="true"
+    }}
     </div>
     <h2>{{localize "sofh.ui.actor.pesonaleq"}}</h2>
     <div class="eq-tab" data-group="primary" data-tab="equipment">
-      {{editor
-        system.equipmentpersonal
-        target="system.equipmentpersonal"
-        engine="prosemirror"
-        button=true
-        owner=owner
-        editable=editable
-      }}
+
+                  {{formInput
+      equipmentpersonal.field
+      value=equipmentpersonal.value
+      enriched=equipmentpersonal.enriched
+      toggled="true"
+    }}
     </div>
   </div>
 </section>
