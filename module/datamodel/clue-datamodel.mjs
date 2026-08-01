@@ -42,15 +42,20 @@ export default class ClueDataModel extends foundry.abstract.TypeDataModel {
 async removeMember(actorId) {
   const partyMembers = [...this.actorID];
 
+  // Find index of member to remove
   const index = partyMembers.findIndex(member => member.id === actorId);
-
   if (index === -1) return;
 
+  // Remove selected member
   partyMembers.splice(index, 1);
 
-  // Remove empty objects
-  const cleanedMembers = partyMembers.filter(
-    member => member && Object.keys(member).length > 0
+  // Keep only valid members (must have id, name, img)
+  const cleanedMembers = partyMembers.filter(member =>
+    member &&
+    typeof member === "object" &&
+    member.id &&
+    member.name &&
+    member.img
   );
 
   await this.parent.update({

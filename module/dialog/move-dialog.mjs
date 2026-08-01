@@ -525,7 +525,8 @@ export class moveRoll extends Dialog {
       const clue = game.actors.get(clueID);
       if (game.user.isGM) {
         for (let actorKey in clue.system.actorID) {
-          const memberActor = game.actors.get(actorKey);
+          const actorId = clue.system.actorID[actorKey].id;
+          const memberActor = game.actors.get(actorId);
           const xpValues = memberActor.system.xp.value;
           let lastTrueKey = null;
           for (let key in xpValues) {

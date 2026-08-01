@@ -196,7 +196,9 @@ Handlebars.registerHelper("addCharactersKnownsClue", function (index, actor) {
       let html = "";
       const clueSheet = game.actors.get(clueID);
       const clueDescription = clueSheet.system.clue;
-      const actorClue = clueSheet.system.actorID[actorId];
+     const actorClue = clueSheet.system.actorID.find(
+  (actor) => actor.id === actorId
+);
       Object.keys(actorClue).forEach((key) => {
         if (key.startsWith("have") && actorClue[key] === true) {
           const index = key.slice(4);

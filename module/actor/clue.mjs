@@ -6,6 +6,13 @@ const { api, sheets } = foundry.applications;
 export class SofhClue extends api.HandlebarsApplicationMixin(
   sheets.ActorSheetV2,
 ) {
+    constructor(...args) {
+    super(...args);
+    this.y = 0;
+
+    /** @type {CharacterActor} */
+    this.actor;
+  }
   static DEFAULT_OPTIONS = {
     id: "sofh-clue",
 
@@ -19,6 +26,9 @@ export class SofhClue extends api.HandlebarsApplicationMixin(
       solutionRollForTheorize: SofhClue.#solutionRollForTheorize,
       removePartyMember: SofhClue.#removePartyMember,
       addPartyMember: SofhClue.#addPartyMember,
+    },
+        form: {
+      submitOnChange: true,
     },
   };
 
@@ -55,6 +65,7 @@ export class SofhClue extends api.HandlebarsApplicationMixin(
     const actor = this.actor;
     context.system = actor.system;
     context.actor = actor;
+    context.isGM = game.user.isGM;
     return context;
   }
 
@@ -246,23 +257,24 @@ async addMembets(html) {
       ui.notifications.warn(game.i18n.localize("sofh.you_are_not_owner"));
     }
   }
-  static async #addSolution(event) {
-    if (game.user.isGM) {
-      const clue = this.actor;
-      const solutions = clue.system.solutions;
-      let solutionsNumbers = 0;
-      if (solutions && typeof solutions === "object") {
-        solutionsNumbers = Object.keys(solutions).length;
-      }
-      let updateData = {};
-      updateData[`system.solutions.${solutionsNumbers}.solution`] = "";
-      updateData[`system.solutions.${solutionsNumbers}.question`] = "";
-      updateData[`system.solutions.${solutionsNumbers}.complexity`] = 0;
-      updateData[`system.solutions.${solutionsNumbers}.showToPlayer`] = false;
+static async #addSolution(event) {
+  if (!game.user.isGM) return;
 
-      await clue.update(updateData);
-    }
-  }
+  const clue = this.actor;
+
+  const solutions = [...(clue.system.solutions ?? [])];
+
+  solutions.push({
+    solution: "",
+    question: "",
+    complexity: 0,
+    showToPlayer: false,
+  });
+
+  await clue.update({
+    "system.solutions": solutions,
+  });
+}
 
   static async #removeSolution(ev) {
     ev.preventDefault();
@@ -311,4 +323,98 @@ async addMembets(html) {
       ui.notifications.warn(game.i18n.localize("sofh.you_are_not_owner"));
     }
   }
+
+_processFormData(event, form, formData) {
+  const target = event?.target;
+  const name = target?.name;
+
+  const data = { object: {} };
+
+  if (typeof name === "string") {
+
+  
+    if (name.includes("system.actorID")) {
+      const match = name.split(".");
+      const actorID = [...(this.actor.system.actorID || [])];
+
+      const index = Number(match[2]); // important: array index
+      const field = match[3];
+
+      if (!actorID[index]) {
+        actorID[index] = {};
+      }
+
+      // checkbox support
+      const value = target.type === "checkbox"
+        ? target.checked
+        : target.value;
+
+      actorID[index][field] = value;
+
+      // optional cleanup (keep only valid members)
+      const cleaned = actorID.filter(m =>
+        m &&
+        typeof m === "object" &&
+        m.id &&
+        m.name &&
+        m.img
+      );
+
+      data.object["system.actorID"] = cleaned;
+    }
+
+    // 🔹 KEEP your existing strings logic
+    if (name.includes("system.clue")) {
+      const match = name.split(".");
+      const clue = this.actor.system.clue || {};
+      const index = match[2];
+      const field = match[3];
+
+      if (!clue[index]) {
+        clue[index] = {};
+      }
+
+      clue[index][field] = target?.value;
+      data.object["system.clue"] = clue;
+    }
+    if (name.includes("system.solutions")) {
+  const match = name.split(".");
+  const solutions = [...(this.actor.system.solutions || [])];
+
+  const index = Number(match[2]);
+  const field = match[3];
+
+  if (!solutions[index]) {
+    solutions[index] = {};
+  }
+
+  // checkbox support
+  const value = target.type === "checkbox"
+    ? target.checked
+    : target.value;
+
+  solutions[index][field] = value;
+
+  data.object["system.solutions"] = solutions;
+}
+if (name.includes("name")) {
+  data.object["name"] = target.value;
+}
+
+
+  }
+
+  // 🔹 Preserve scroll (your logic)
+  const scrollEl = target.closest(".tab.active");
+  if (scrollEl) {
+    this._scrollTarget = scrollEl;
+    this.y = scrollEl.scrollTop;
+  }
+
+  const process = super._processFormData(event, form, data);
+
+  this.actor.sheet.render({ force: true });
+
+  return process;
+}
 }
