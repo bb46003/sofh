@@ -1015,21 +1015,21 @@ export class sofhCharacterSheet extends api.HandlebarsApplicationMixin(
     const clueRelated = item.system.cluerelated;
     const clueID = [];
     if (clueRelated) {
-      const clueActors = Array.from(game.actors.entries()).filter(
-        ([key, actor]) => actor.type === "clue",
-      );
+      const clueActors = game.actors.filter((a) => a.type === "clue");
 
-      clueActors.forEach((ID) => {
-        let hasMatchingKey = Object.keys(ID[1].system.actorID).some(
-          (key) => key === actor._id,
+      clueActors.forEach((clueActor) => {
+        const hasMatchingActor = (clueActor.system.actorID ?? []).some(
+          (entry) => entry.id === actor.id,
         );
-        if (hasMatchingKey) {
-          clueID.push(ID[0]);
+
+        if (hasMatchingActor) {
+          clueID.push(clueActor.id);
         }
       });
     }
+
     const dialogInstance = new moveRoll(actor, item, clueID);
-    dialogInstance.rollForMove(actor, item, clueID);
+    dialogInstance.render(true);
   }
   async showTimeToShine(ev) {
     const actor = this.actor;

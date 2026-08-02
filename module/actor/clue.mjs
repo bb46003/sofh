@@ -6,7 +6,7 @@ const { api, sheets } = foundry.applications;
 export class SofhClue extends api.HandlebarsApplicationMixin(
   sheets.ActorSheetV2,
 ) {
-    constructor(...args) {
+  constructor(...args) {
     super(...args);
     this.y = 0;
 
@@ -27,7 +27,7 @@ export class SofhClue extends api.HandlebarsApplicationMixin(
       removePartyMember: SofhClue.#removePartyMember,
       addPartyMember: SofhClue.#addPartyMember,
     },
-        form: {
+    form: {
       submitOnChange: true,
     },
   };
@@ -91,29 +91,29 @@ export class SofhClue extends api.HandlebarsApplicationMixin(
     }
     event.currentTarget.classList.remove("drag-over");
   }
-static async #addClue(event) {
-  event.preventDefault();
+  static async #addClue(event) {
+    event.preventDefault();
 
-  const clues = this.actor.system.clue ?? {};
+    const clues = this.actor.system.clue ?? {};
 
-  const clueNumbers = Object.keys(clues).length;
+    const clueNumbers = Object.keys(clues).length;
 
-  const updateData = {};
+    const updateData = {};
 
-  updateData[`system.clue.${clueNumbers}.description`] = " ";
+    updateData[`system.clue.${clueNumbers}.description`] = " ";
 
-  const actorID = this.actor.system.actorID ?? [];
+    const actorID = this.actor.system.actorID ?? [];
 
-  const updatedActors = actorID.map((member) => ({
-    ...member,
-    [`have${clueNumbers}`]: false,
-  }));
+    const updatedActors = actorID.map((member) => ({
+      ...member,
+      [`have${clueNumbers}`]: false,
+    }));
 
-  updateData["system.actorID"] = updatedActors;
+    updateData["system.actorID"] = updatedActors;
 
-  await this.actor.update(updateData);
-  this.actor.render(true);
-}
+    await this.actor.update(updateData);
+    this.actor.render(true);
+  }
   static async #removeClue(ev) {
     const button = ev.target;
     const ID = Number(button.id);
@@ -147,77 +147,77 @@ static async #addClue(event) {
 
     await actor.render(true);
   }
-static async #addPartyMember(event) {
-  const actors = game.actors.filter((actor) => actor.type === "character");
+  static async #addPartyMember(event) {
+    const actors = game.actors.filter((actor) => actor.type === "character");
 
-  const currentMember = this.actor.system.actorID ?? {};
+    const currentMember = this.actor.system.actorID ?? {};
 
-  const filteredActors = actors.filter(
-    (actor) => !Object.keys(currentMember).includes(actor.id),
-  );
+    const filteredActors = actors.filter(
+      (actor) => !Object.keys(currentMember).includes(actor.id),
+    );
 
-  const html = await sofh_Utility.renderTemplate(
-    "systems/SofH/templates/dialogs/add-patry-member.hbs",
-    { actors: filteredActors },
-  );
+    const html = await sofh_Utility.renderTemplate(
+      "systems/SofH/templates/dialogs/add-patry-member.hbs",
+      { actors: filteredActors },
+    );
 
-  await foundry.applications.api.DialogV2.wait({
-    window: {
-      title: game.i18n.localize("sofh.ui.clue.add-party-member"),
-      width: 200,
-    },
-    content: html,
-    buttons: [
-      {
-        action: "add",
-        label: game.i18n.localize("EFFECT.MODE_ADD"),
-        callback: async (event, button, dialog) => {
-          const element = dialog.element;
-
-          await this.addMembets(element);
-        },
+    await foundry.applications.api.DialogV2.wait({
+      window: {
+        title: game.i18n.localize("sofh.ui.clue.add-party-member"),
+        width: 200,
       },
-    ],
-    default: "add",
-  });
-}
-async addMembets(html) {
-  const checkedInputs = html.querySelectorAll(
-    ".party-memeber-add input[type='checkbox']:checked",
-  );
+      content: html,
+      buttons: [
+        {
+          action: "add",
+          label: game.i18n.localize("EFFECT.MODE_ADD"),
+          callback: async (event, button, dialog) => {
+            const element = dialog.element;
 
-  if (!checkedInputs.length) return;
-
-  const partyMembers = [...(this.actor.system.actorID ?? [])];
-
-  for (const input of checkedInputs) {
-    const memberElement = input.closest(".party-memeber-add");
-    const actorId = memberElement?.id;
-
-    if (!actorId) continue;
-
-    const actor = game.actors.get(actorId);
-
-    if (!actor) continue;
-
-    // Prevent duplicates
-    if (partyMembers.some((member) => member.id === actorId)) {
-      continue;
-    }
-
-    partyMembers.push({
-      id: actor.id,
-      name: actor.name,
-      img: actor.img,
+            await this.addMembets(element);
+          },
+        },
+      ],
+      default: "add",
     });
   }
+  async addMembets(html) {
+    const checkedInputs = html.querySelectorAll(
+      ".party-memeber-add input[type='checkbox']:checked",
+    );
 
-  await this.actor.update({
-    "system.actorID": partyMembers,
-  });
+    if (!checkedInputs.length) return;
 
-  this.render(true);
-}
+    const partyMembers = [...(this.actor.system.actorID ?? [])];
+
+    for (const input of checkedInputs) {
+      const memberElement = input.closest(".party-memeber-add");
+      const actorId = memberElement?.id;
+
+      if (!actorId) continue;
+
+      const actor = game.actors.get(actorId);
+
+      if (!actor) continue;
+
+      // Prevent duplicates
+      if (partyMembers.some((member) => member.id === actorId)) {
+        continue;
+      }
+
+      partyMembers.push({
+        id: actor.id,
+        name: actor.name,
+        img: actor.img,
+      });
+    }
+
+    await this.actor.update({
+      "system.actorID": partyMembers,
+    });
+
+    this.render(true);
+  }
 
   async addOwnership(characterID) {
     const users = Array.from(game.users.values());
@@ -257,24 +257,24 @@ async addMembets(html) {
       ui.notifications.warn(game.i18n.localize("sofh.you_are_not_owner"));
     }
   }
-static async #addSolution(event) {
-  if (!game.user.isGM) return;
+  static async #addSolution(event) {
+    if (!game.user.isGM) return;
 
-  const clue = this.actor;
+    const clue = this.actor;
 
-  const solutions = [...(clue.system.solutions ?? [])];
+    const solutions = [...(clue.system.solutions ?? [])];
 
-  solutions.push({
-    solution: "",
-    question: "",
-    complexity: 0,
-    showToPlayer: false,
-  });
+    solutions.push({
+      solution: "",
+      question: "",
+      complexity: 0,
+      showToPlayer: false,
+    });
 
-  await clue.update({
-    "system.solutions": solutions,
-  });
-}
+    await clue.update({
+      "system.solutions": solutions,
+    });
+  }
 
   static async #removeSolution(ev) {
     ev.preventDefault();
@@ -324,97 +324,87 @@ static async #addSolution(event) {
     }
   }
 
-_processFormData(event, form, formData) {
-  const target = event?.target;
-  const name = target?.name;
+  _processFormData(event, form, formData) {
+    const target = event?.target;
+    const name = target?.name;
 
-  const data = { object: {} };
+    const data = { object: {} };
 
-  if (typeof name === "string") {
+    if (typeof name === "string") {
+      if (name.includes("system.actorID")) {
+        const match = name.split(".");
+        const actorID = [...(this.actor.system.actorID || [])];
 
-  
-    if (name.includes("system.actorID")) {
-      const match = name.split(".");
-      const actorID = [...(this.actor.system.actorID || [])];
+        const index = Number(match[2]); // important: array index
+        const field = match[3];
 
-      const index = Number(match[2]); // important: array index
-      const field = match[3];
+        if (!actorID[index]) {
+          actorID[index] = {};
+        }
 
-      if (!actorID[index]) {
-        actorID[index] = {};
+        // checkbox support
+        const value =
+          target.type === "checkbox" ? target.checked : target.value;
+
+        actorID[index][field] = value;
+
+        // optional cleanup (keep only valid members)
+        const cleaned = actorID.filter(
+          (m) => m && typeof m === "object" && m.id && m.name && m.img,
+        );
+
+        data.object["system.actorID"] = cleaned;
       }
 
-      // checkbox support
-      const value = target.type === "checkbox"
-        ? target.checked
-        : target.value;
+      // 🔹 KEEP your existing strings logic
+      if (name.includes("system.clue")) {
+        const match = name.split(".");
+        const clue = this.actor.system.clue || {};
+        const index = match[2];
+        const field = match[3];
 
-      actorID[index][field] = value;
+        if (!clue[index]) {
+          clue[index] = {};
+        }
 
-      // optional cleanup (keep only valid members)
-      const cleaned = actorID.filter(m =>
-        m &&
-        typeof m === "object" &&
-        m.id &&
-        m.name &&
-        m.img
-      );
-
-      data.object["system.actorID"] = cleaned;
-    }
-
-    // 🔹 KEEP your existing strings logic
-    if (name.includes("system.clue")) {
-      const match = name.split(".");
-      const clue = this.actor.system.clue || {};
-      const index = match[2];
-      const field = match[3];
-
-      if (!clue[index]) {
-        clue[index] = {};
+        clue[index][field] = target?.value;
+        data.object["system.clue"] = clue;
       }
+      if (name.includes("system.solutions")) {
+        const match = name.split(".");
+        const solutions = [...(this.actor.system.solutions || [])];
 
-      clue[index][field] = target?.value;
-      data.object["system.clue"] = clue;
+        const index = Number(match[2]);
+        const field = match[3];
+
+        if (!solutions[index]) {
+          solutions[index] = {};
+        }
+
+        // checkbox support
+        const value =
+          target.type === "checkbox" ? target.checked : target.value;
+
+        solutions[index][field] = value;
+
+        data.object["system.solutions"] = solutions;
+      }
+      if (name.includes("name")) {
+        data.object["name"] = target.value;
+      }
     }
-    if (name.includes("system.solutions")) {
-  const match = name.split(".");
-  const solutions = [...(this.actor.system.solutions || [])];
 
-  const index = Number(match[2]);
-  const field = match[3];
+    // 🔹 Preserve scroll (your logic)
+    const scrollEl = target.closest(".tab.active");
+    if (scrollEl) {
+      this._scrollTarget = scrollEl;
+      this.y = scrollEl.scrollTop;
+    }
 
-  if (!solutions[index]) {
-    solutions[index] = {};
+    const process = super._processFormData(event, form, data);
+
+    this.actor.sheet.render({ force: true });
+
+    return process;
   }
-
-  // checkbox support
-  const value = target.type === "checkbox"
-    ? target.checked
-    : target.value;
-
-  solutions[index][field] = value;
-
-  data.object["system.solutions"] = solutions;
-}
-if (name.includes("name")) {
-  data.object["name"] = target.value;
-}
-
-
-  }
-
-  // 🔹 Preserve scroll (your logic)
-  const scrollEl = target.closest(".tab.active");
-  if (scrollEl) {
-    this._scrollTarget = scrollEl;
-    this.y = scrollEl.scrollTop;
-  }
-
-  const process = super._processFormData(event, form, data);
-
-  this.actor.sheet.render({ force: true });
-
-  return process;
-}
 }

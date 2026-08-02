@@ -91,26 +91,26 @@ export function registerHandlebarsHelpers() {
     return new Handlebars.SafeString(styledContent);
   });
 
-Handlebars.registerHelper("addCharacters", function (actor) {
-  const characters = actor.system.actorID ?? [];
-  let html = "";
+  Handlebars.registerHelper("addCharacters", function (actor) {
+    const characters = actor.system.actorID ?? [];
+    let html = "";
 
-  characters.forEach((character) => {
-    const actorId = character.id;
-    const name = character.name;
+    characters.forEach((character) => {
+      const actorId = character.id;
+      const name = character.name;
 
-    const characterActor = game.actors.get(actorId);
+      const characterActor = game.actors.get(actorId);
 
-    if (!characterActor) return;
+      if (!characterActor) return;
 
-    const cluerelatedMoves = characterActor.items.filter(
-      (move) => move.system.cluerelated === true,
-    );
+      const cluerelatedMoves = characterActor.items.filter(
+        (move) => move.system.cluerelated === true,
+      );
 
-    const theorize = cluerelatedMoves[0];
+      const theorize = cluerelatedMoves[0];
 
-    if (!theorize) {
-      html += `
+      if (!theorize) {
+        html += `
         <th class="actor-known-clue" id="${actorId}">
           ${name}
           <p>
@@ -118,8 +118,8 @@ Handlebars.registerHelper("addCharacters", function (actor) {
             ${game.i18n.localize("sofh.ui.lack_of_move")}
           </p>
         </th>`;
-    } else {
-      html += `
+      } else {
+        html += `
         <th class="actor-known-clue" id="${actorId}">
           <div class="actor-clue-headr">
             <div class="clue-header-name">${name}</div>
@@ -134,24 +134,24 @@ Handlebars.registerHelper("addCharacters", function (actor) {
             </div>
           </div>
         </th>`;
-    }
+      }
+    });
+
+    return html;
   });
 
-  return html;
-});
+  Handlebars.registerHelper("addCharactersKnownsClue", function (index, actor) {
+    if (!actor?.system?.actorID) {
+      return "";
+    }
 
-Handlebars.registerHelper("addCharactersKnownsClue", function (index, actor) {
-  if (!actor?.system?.actorID) {
-    return "";
-  }
+    const characters = actor.system.actorID;
+    let html = "";
 
-  const characters = actor.system.actorID;
-  let html = "";
+    characters.forEach((character, arrayIndex) => {
+      const isChecked = character[`have${index}`] ? "checked" : "";
 
-  characters.forEach((character, arrayIndex) => {
-    const isChecked = character[`have${index}`] ? "checked" : "";
-
-    html += `
+      html += `
       <th class="actor-known-clue">
         <input 
           type="checkbox" 
@@ -160,10 +160,10 @@ Handlebars.registerHelper("addCharactersKnownsClue", function (index, actor) {
           ${isChecked}
         />
       </th>`;
-  });
+    });
 
-  return new Handlebars.SafeString(html);
-});
+    return new Handlebars.SafeString(html);
+  });
 
   Handlebars.registerHelper("showAllKnownClue", function (clueID, complexity) {
     if (Array.isArray(clueID)) {
@@ -196,9 +196,9 @@ Handlebars.registerHelper("addCharactersKnownsClue", function (index, actor) {
       let html = "";
       const clueSheet = game.actors.get(clueID);
       const clueDescription = clueSheet.system.clue;
-     const actorClue = clueSheet.system.actorID.find(
-  (actor) => actor.id === actorId
-);
+      const actorClue = clueSheet.system.actorID.find(
+        (actor) => actor.id === actorId,
+      );
       Object.keys(actorClue).forEach((key) => {
         if (key.startsWith("have") && actorClue[key] === true) {
           const index = key.slice(4);

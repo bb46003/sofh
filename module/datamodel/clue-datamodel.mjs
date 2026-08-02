@@ -13,12 +13,11 @@ export default class ClueDataModel extends foundry.abstract.TypeDataModel {
 
   static defineSchema() {
     return {
-      actorID: 
-      new ArrayField(
+      actorID: new ArrayField(
         new ObjectField({
-        initial: {},
-      }),
-    ),
+          initial: {},
+        }),
+      ),
       // Clues list
       clue: new ArrayField(
         new SchemaField({
@@ -39,27 +38,28 @@ export default class ClueDataModel extends foundry.abstract.TypeDataModel {
     };
   }
 
-async removeMember(actorId) {
-  const partyMembers = [...this.actorID];
+  async removeMember(actorId) {
+    const partyMembers = [...this.actorID];
 
-  // Find index of member to remove
-  const index = partyMembers.findIndex(member => member.id === actorId);
-  if (index === -1) return;
+    // Find index of member to remove
+    const index = partyMembers.findIndex((member) => member.id === actorId);
+    if (index === -1) return;
 
-  // Remove selected member
-  partyMembers.splice(index, 1);
+    // Remove selected member
+    partyMembers.splice(index, 1);
 
-  // Keep only valid members (must have id, name, img)
-  const cleanedMembers = partyMembers.filter(member =>
-    member &&
-    typeof member === "object" &&
-    member.id &&
-    member.name &&
-    member.img
-  );
+    // Keep only valid members (must have id, name, img)
+    const cleanedMembers = partyMembers.filter(
+      (member) =>
+        member &&
+        typeof member === "object" &&
+        member.id &&
+        member.name &&
+        member.img,
+    );
 
-  await this.parent.update({
-    "system.actorID": cleanedMembers
-  });
-}
+    await this.parent.update({
+      "system.actorID": cleanedMembers,
+    });
+  }
 }

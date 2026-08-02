@@ -1047,12 +1047,12 @@ textarea.solution {
 }
 .solution-group,
 .list-pf-solutuion-labels {
-    display: grid;
-    align-items: center;
-    grid-template-columns: 280px 80px 250px 70px 50px;
-    grid-column-gap: 5px;
-    margin-bottom: 15px;
-    justify-items: center;
+  display: grid;
+  align-items: center;
+  grid-template-columns: 280px 80px 250px 70px 50px;
+  grid-column-gap: 5px;
+  margin-bottom: 15px;
+  justify-items: center;
 }
 input.complexity {
   min-width: 100%;
