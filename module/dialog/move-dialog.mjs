@@ -42,7 +42,13 @@ export class moveRoll extends api.HandlebarsApplicationMixin(
     context.actor = this.actor;
     context.item = this.item;
     context.clueID = this.clueID;
-
+    context.clueIsArray = Array.isArray(this.clueID);
+    if(!Array.isArray(this.clueID)){
+      context.questionSelector = await this.addQuestionSelector(this.clueID);
+    }else{
+      context.questionSelector = null;
+    }
+    
     return context;
   }
   static async #rollForMove(event, context) {
@@ -82,6 +88,10 @@ export class moveRoll extends api.HandlebarsApplicationMixin(
         }
       });
     });
+    const complexityInput = element?.querySelector(".selection-mistery-solutions");
+    if (complexityInput) {
+      complexityInput.addEventListener("input", (event) => this.onChangeMystery(event));
+    }
   }
 
   static async #selectMystery(event, context) {
@@ -90,4 +100,57 @@ export class moveRoll extends api.HandlebarsApplicationMixin(
     this.clueID = clueID;
     this.render(true);
   }
+
+ async addQuestionSelector(clueID) {
+  const clueSheet = game.actors.get(clueID);
+  const solutions = clueSheet.system.solutions;
+
+  const playerSolutions = Object.keys(solutions)
+    .filter((key) => solutions[key].showToPlayer === true)
+    .map((key) => solutions[key]);
+
+  let selectHTML = `
+    <div class="mistery-question">
+      <label class="mistery-label">
+        ${game.i18n.localize("sofh.dialog.select_mistery_question")}
+      </label>
+      <select class="selection-mistery-solutions">
+        <option value="" selected></option>
+  `;
+
+  playerSolutions.forEach((solution) => {
+    selectHTML += `
+      <option value="${solution.question}" data-complexity="${solution.complexity}">
+        ${solution.question}
+      </option>
+    `;
+  });
+
+  selectHTML += `
+      </select>
+    </div>
+  `;
+
+  return selectHTML;
+}
+onChangeMystery(event) {
+  // 1. Get app root
+  const app = event.target.offsetParent  // 2. Get selected option
+  const selectedOption = event.target.selectedOptions[0];
+
+  if (!selectedOption) return;
+
+  const complexity = selectedOption.dataset.complexity;
+
+  // 3. Find input
+  const input = app.querySelector(".complexity-numer");
+
+  if (!input) {
+    console.warn("Complexity input not found");
+    return;
+  }
+
+  // 4. Set value (fallback to 0)
+  input.value = complexity ?? 0;
+}
 }

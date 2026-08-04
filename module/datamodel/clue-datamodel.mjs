@@ -22,6 +22,7 @@ export default class ClueDataModel extends foundry.abstract.TypeDataModel {
       clue: new ArrayField(
         new SchemaField({
           description: new StringField({ initial: "" }),
+          
         }),
         { initial: [] },
       ),

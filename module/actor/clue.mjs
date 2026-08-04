@@ -252,8 +252,7 @@ export class SofhClue extends api.HandlebarsApplicationMixin(
     if (hasAccess) {
       const item = actor.items.filter((move) => move.id === event.target.id)[0];
       const dialogInstance = new moveRoll(actor, item, this.actor.id);
-      dialogInstance.rollForMove(actor, item, this.actor.id);
-    } else {
+      dialogInstance.render({force: true});
       ui.notifications.warn(game.i18n.localize("sofh.you_are_not_owner"));
     }
   }

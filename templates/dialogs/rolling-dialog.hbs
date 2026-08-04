@@ -99,8 +99,20 @@
         <div class="known-clue">            
             {{showAllKnownClue clueID complexity}}
         </div>
-        <button class="select-clue" data-action="selectMystery">{{localize 'sofh.ui.rolldialog.selectClueButton'}}</button>
+        {{#if questionSelector}}
+            {{{questionSelector}}}
+            <div class="complexity">
+            <label class="complexity-label">{{localize "sofh.ui.complexity_value"}}</label>
+            <input type="number" class="complexity-numer" value="0"></input>
+          </div>
+        {{/if}}
+        {{#if clueIsArray}}
+            <button class="select-clue" data-action="selectMystery">{{localize 'sofh.ui.rolldialog.selectClueButton'}}</button>
+        {{else}}
+            <button class="roll-move" data-action="rollMove">{{localize 'sofh.ui.rolldialog.rollButton'}}</button>
+        {{/if}}
     {{/if}}
+
     {{#if areRelatedMoves}}
         <h2 class="h2-roll">{{localize 'sofh.ui.rolldialog.relatedMoves'}}</h2>
     {{/if}}

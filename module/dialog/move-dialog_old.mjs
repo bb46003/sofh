@@ -754,37 +754,4 @@ export class moveRoll extends Dialog {
   }
 }
 
-async function addQuestionSelector(clueSheet) {
-  const solutions = clueSheet.system.solutions;
-  const playerSolutions = Object.keys(solutions)
-    .filter((key) => solutions[key].showToPlayer === true)
-    .map((key) => solutions[key]);
-  let selectElementSolution = document.createElement("select");
-  selectElementSolution.classList.add("selection-mistery-solutions");
 
-  playerSolutions.forEach((solution, index) => {
-    let optionElement = document.createElement("option");
-    optionElement.value = solution.question;
-    optionElement.textContent = solution.question;
-    optionElement.id = solution.complexity;
-    selectElementSolution.appendChild(optionElement);
-  });
-  let blankOption = document.createElement("option");
-  blankOption.value = "";
-  blankOption.textContent = "";
-  blankOption.selected = true;
-  selectElementSolution.prepend(blankOption);
-
-  let misteryQuestionDiv = document.createElement("div");
-  misteryQuestionDiv.classList.add("mistery-question");
-
-  const misteryLabel = document.createElement("label");
-  misteryLabel.textContent = game.i18n.localize(
-    "sofh.dialog.select_mistery_question",
-  );
-  misteryLabel.classList.add("mistery-label");
-  misteryQuestionDiv.appendChild(misteryLabel);
-  misteryQuestionDiv.appendChild(selectElementSolution);
-
-  return misteryQuestionDiv;
-}
