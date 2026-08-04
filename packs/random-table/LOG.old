@@ -1,3 +1,10 @@
-2025/12/04-18:50:38.586 6244 Recovering log #96
-2025/12/04-18:50:38.590 6244 Delete type=0 #96
-2025/12/04-18:50:38.590 6244 Delete type=3 #95
+2026/01/12-10:15:43.068 6d1c Log #100: 0 ops saved to Table #117 OK
+2026/01/12-10:15:43.069 6d1c Archiving C:\Users\bb46003\AppData\Local\FoundryVTT\Data\systems\SofH\packs\random-table/000100.log: OK
+2026/01/12-10:15:43.069 6d1c Log #116: 0 ops saved to Table #118 OK
+2026/01/12-10:15:43.070 6d1c Archiving C:\Users\bb46003\AppData\Local\FoundryVTT\Data\systems\SofH\packs\random-table/000116.log: OK
+2026/01/12-10:15:43.077 6d1c Table #78: 14 entries OK
+2026/01/12-10:15:43.078 6d1c Table #90: 14 entries OK
+2026/01/12-10:15:43.078 6d1c Table #99: 14 entries OK
+2026/01/12-10:15:43.081 6d1c Archiving C:\Users\bb46003\AppData\Local\FoundryVTT\Data\systems\SofH\packs\random-table/MANIFEST-000099: OK
+2026/01/12-10:15:43.083 6d1c Archiving C:\Users\bb46003\AppData\Local\FoundryVTT\Data\systems\SofH\packs\random-table/MANIFEST-000115: OK
+2026/01/12-10:15:43.085 6d1c **** Repaired leveldb C:\Users\bb46003\AppData\Local\FoundryVTT\Data\systems\SofH\packs\random-table; recovered 3 files; 7944 bytes. Some data may have been lost. ****

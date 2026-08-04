@@ -130,7 +130,6 @@ export class sofhCharacterSheet extends BaseActorSheet {
     context.specialPlaybookMoves = specialPlaybookMoves;
     context.advancedMoves = advancedMoves;
     context.optionalMoves= optionalMoves;
-    console.log(context)
   }
 
   async activateListeners(html) {
@@ -836,6 +835,10 @@ export class sofhCharacterSheet extends BaseActorSheet {
       const droppedType = droppedItem.type;
       if (droppedType === "Item") {
         const itemData = await fromUuid(droppedItem.uuid);
+        if(droppedItem.uuidc.includes("Compendium"))
+        itemData.flags.SofH = {
+          compendiumSource: droppedItem.uuid,
+        };
         const createdItems = await actor.createEmbeddedDocuments("Item", [
           itemData,
         ]);

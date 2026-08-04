@@ -34,7 +34,7 @@ export class sofhActor extends Actor {
           const itemObjects = itemsToAdd.map((item) => {
             const itemObj = item.toObject();
             let uuid = item.uuid;
-            itemObj.flags = {
+            itemObj.flags.SofH = {
               compendiumSource: uuid,
             };
             itemObj.ownership.default = 3;
