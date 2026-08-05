@@ -5,8 +5,8 @@
           <div class="question-sheet">
             <textarea class="question" name="system.question.{{@index}}.description">{{question.description}}</textarea>
             <select id="question-type" name="system.question.{{@index}}.impact">
-              <option value="true" {{#if (eq question.impact "true")}}selected{{/if}}>{{localize 'sofh.ui.rolldialog.positiveOption'}}</option>
-              <option value="false" {{#if (eq question.impact "false")}}selected{{/if}}>{{localize 'sofh.ui.rolldialog.negativeOption'}}</option>
+              <option value="true" {{#if (eq question.impact true)}}selected{{/if}}>{{localize 'sofh.ui.rolldialog.positiveOption'}}</option>
+              <option value="false" {{#if (eq question.impact false)}}selected{{/if}}>{{localize 'sofh.ui.rolldialog.negativeOption'}}</option>
             </select>
             <button class="remove-question-btn" id="{{@index}}" style="margin-left: 5px;">🗑️</button>
           </div>

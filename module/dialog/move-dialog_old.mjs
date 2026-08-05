@@ -592,8 +592,8 @@ export class moveRoll extends Dialog {
         const questions = {};
 
         if (
-          item.system.action.addQuestion.isUse &&
-          Array.isArray(item.system.additionalQuestion)
+          item.system?.action?.addQuestion?.isUse &&
+          Array.isArray(item.system?.additionalQuestion)
         ) {
           item.system.additionalQuestion.forEach((element, index) => {
             questions[index] = {

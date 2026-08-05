@@ -21,7 +21,7 @@ export class sofhCharacterSheet extends api.HandlebarsApplicationMixin(
 
   static DEFAULT_OPTIONS = {
     classes: ["sofh", "sheet", "actor", "character"],
-    position: { width: 1020, height: 850 },
+    position: { width: 1020, height: 850, zIndex: 10 },
     form: {
       submitOnChange: true,
     },
@@ -1005,6 +1005,7 @@ export class sofhCharacterSheet extends api.HandlebarsApplicationMixin(
   }
 
   async rollForMove(event) {
+    event.preventDefault();
     const button = event.target;
     let ID = button.id;
     if (ID === "") {
