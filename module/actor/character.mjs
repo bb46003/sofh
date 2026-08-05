@@ -1049,30 +1049,31 @@ export class sofhCharacterSheet extends api.HandlebarsApplicationMixin(
            ${game.i18n.localize("sofh.ui.actor.timeToShine")}</h2>       
             ${timeToShineText}
         </div>`;
-    const d = new Dialog({
-      title: title,
+    const d = new foundry.applications.api.DialogV2({
+      window: { title: title },
       content: content,
-      buttons: {
-        close: {
-          label: `<div class ="sofh-button">${game.i18n.localize("sofh.ui.close")}</div>`,
-          callback: () => {},
-        },
-        sendToChat: {
-          label: `<div class ="sofh-button">${game.i18n.localize("sofh.ui.send_to_chat")}</div>`,
-          callback: () => {
-            ChatMessage.create({
+      position: { width: 400, height: 300 },
+      buttons: [
+        {
+          action: "sendToChat",
+          class: ["send-to-chat-moves-btn"],
+          label: game.i18n.localize("sofh.ui.send_to_chat"),
+          callback: async () => {
+            await ChatMessage.create({
               user: game.user.id,
               speaker: ChatMessage.getSpeaker({ actor }),
               content: moveToChat,
             });
+
+            const updateData = {};
             updateData["system.reputation.timeToShine"] = currentTS - 1;
-            actor.update(updateData);
+
+            await actor.update(updateData);
           },
         },
-      },
-      default: "close",
+      ],
     });
-    d.render(true, { height: 800, width: 450 });
+    await d.render(true);
   }
 
   async openMovesFromTriggers(event) {
@@ -1094,17 +1095,20 @@ export class sofhCharacterSheet extends api.HandlebarsApplicationMixin(
            ${item.name}</h2>       
             <div class="chat-description">${item.system.description}</div>
         </div>`;
-      const d = new Dialog({
-        title: title,
+      const d = new foundry.applications.api.DialogV2({
+        window: { title: title },
         content: content,
-        buttons: {
-          close: {
-            label: `<div class ="sofh-button">${game.i18n.localize("sofh.ui.close")}</div>`,
+        buttons: [
+          {
+            action: "close",
+            class: ["sofh-button"],
+            label: game.i18n.localize("sofh.ui.close"),
             callback: () => {},
-            class: "my-button",
           },
-          sendToChat: {
-            label: `<div class ="sofh-button">${game.i18n.localize("sofh.ui.send_to_chat")}</div>`,
+          {
+            action: "sendToChat",
+            class: ["sofh-button"],
+            label: game.i18n.localize("sofh.ui.send_to_chat"),
             callback: () => {
               ChatMessage.create({
                 user: game.user.id,
@@ -1113,8 +1117,7 @@ export class sofhCharacterSheet extends api.HandlebarsApplicationMixin(
               });
             },
           },
-        },
-        default: "close",
+        ],
       });
       d.render(true, { height: 800, width: 450 });
     }
@@ -1271,6 +1274,7 @@ export class sofhCharacterSheet extends api.HandlebarsApplicationMixin(
     const removeTopic = new foundry.applications.api.DialogV2({
       widnow: { title: game.i18n.localize("sofh.dilog.removeTopic") },
       content: innerText,
+      position: { width: 600 },
       buttons: [
         {
           label: game.i18n.localize("sofh.UI.OK"),
@@ -1288,7 +1292,7 @@ export class sofhCharacterSheet extends api.HandlebarsApplicationMixin(
       ],
       defaultButton: "ok",
     });
-    removeTopic.render(true, { width: 600 });
+    removeTopic.render(true);
   }
 
   async changeAditionalSubjectFromMove(ev) {

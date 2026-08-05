@@ -1318,8 +1318,9 @@ h2.special-move {
 .radio-group input[type="radio"]:checked::after {
   content: none;
 }
-.roll-dialog .roll-move, .roll-dialog .select-clue{
+.roll-dialog .roll-move,
+.roll-dialog .select-clue {
   width: 100%;
-    margin-top: 15px;
-    font-size: X-LARGE;
+  margin-top: 15px;
+  font-size: X-LARGE;
 }

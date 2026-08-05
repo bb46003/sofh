@@ -16,7 +16,7 @@ export class SofhClue extends api.HandlebarsApplicationMixin(
   static DEFAULT_OPTIONS = {
     id: "sofh-clue",
 
-    position: { width: 800, height: 960 },
+    position: { width: 800, height: 960, zIndex: 90 },
     actions: {
       addClue: SofhClue.#addClue,
       removeClue: SofhClue.#removeClue,
@@ -252,10 +252,11 @@ export class SofhClue extends api.HandlebarsApplicationMixin(
     if (hasAccess) {
       const item = actor.items.filter((move) => move.id === event.target.id)[0];
       const dialogInstance = new moveRoll(actor, item, this.actor.id);
-      dialogInstance.render({force: true});
-    }else {
+      dialogInstance.render({ force: true });
+    } else {
       ui.notifications.warn(game.i18n.localize("sofh.you_are_not_owner"));
     }
+    this.form.style.zIndex = 1;
   }
   static async #addSolution(event) {
     if (!game.user.isGM) return;

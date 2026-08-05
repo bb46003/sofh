@@ -753,5 +753,3 @@ export class moveRoll extends Dialog {
     }
   }
 }
-
-

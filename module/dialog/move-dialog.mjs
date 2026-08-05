@@ -42,9 +42,9 @@ export class moveRoll extends api.HandlebarsApplicationMixin(
     context.item = this.item;
     context.clueID = this.clueID;
     context.clueIsArray = Array.isArray(this.clueID);
-    if(!Array.isArray(this.clueID)){
+    if (!Array.isArray(this.clueID)) {
       context.questionSelector = await this.addQuestionSelector(this.clueID);
-    }else{
+    } else {
       context.questionSelector = null;
     }
     let relatedMoveIds = this.item.flags?.SofH?.affectedby || [];
@@ -60,19 +60,27 @@ export class moveRoll extends api.HandlebarsApplicationMixin(
     const questions = {};
     const html = event.target.offsetParent;
     if (
-          item.system?.action?.addQuestion?.isUse &&
-          Array.isArray(item.system?.additionalQuestion)
-        ) {
-          item.system.additionalQuestion.forEach((element, index) => {
-            questions[index] = {
-              description: element.question,
-              impact: String(element.impact),
-            };
-          });
-        }
- 
-    const solution = html.querySelector(".selection-mistery-solutions")?.selectedOptions[0]?.textContent;
-    await this.defnieRollingFormula(actor, item, clueID, questions, solution, html);
+      item.system?.action?.addQuestion?.isUse &&
+      Array.isArray(item.system?.additionalQuestion)
+    ) {
+      item.system.additionalQuestion.forEach((element, index) => {
+        questions[index] = {
+          description: element.question,
+          impact: String(element.impact),
+        };
+      });
+    }
+
+    const solution = html.querySelector(".selection-mistery-solutions")
+      ?.selectedOptions[0]?.textContent;
+    await this.defnieRollingFormula(
+      actor,
+      item,
+      clueID,
+      questions,
+      solution,
+      html,
+    );
     this.close();
   }
 
@@ -85,7 +93,7 @@ export class moveRoll extends api.HandlebarsApplicationMixin(
 
   static async #allowOnlyOneAproach(event, context) {
     const element = event.target.offsetParent;
-        const checkboxes = element?.querySelectorAll(
+    const checkboxes = element?.querySelectorAll(
       ".question-sheet-roll-muptiple, .circle-checkbox-isapply",
     );
 
@@ -101,8 +109,6 @@ export class moveRoll extends api.HandlebarsApplicationMixin(
       });
     });
   }
-
-
 
   async _onRender(context, options) {
     await super._onRender(context, options);
@@ -121,28 +127,33 @@ export class moveRoll extends api.HandlebarsApplicationMixin(
         }
       });
     });
-    const complexityInput = element?.querySelector(".selection-mistery-solutions");
+    const complexityInput = element?.querySelector(
+      ".selection-mistery-solutions",
+    );
     if (complexityInput) {
-      complexityInput.addEventListener("input", (event) => this.onChangeMystery(event));
+      complexityInput.addEventListener("input", (event) =>
+        this.onChangeMystery(event),
+      );
     }
   }
 
   static async #selectMystery(event, context) {
-    const selectedMystery = event.target.offsetParent.querySelector(".selection-mistery");
+    const selectedMystery =
+      event.target.offsetParent.querySelector(".selection-mistery");
     const clueID = selectedMystery.selectedOptions[0].id;
     this.clueID = clueID;
     this.render(true);
   }
 
- async addQuestionSelector(clueID) {
-  const clueSheet = game.actors.get(clueID);
-  const solutions = clueSheet.system.solutions;
+  async addQuestionSelector(clueID) {
+    const clueSheet = game.actors.get(clueID);
+    const solutions = clueSheet.system.solutions;
 
-  const playerSolutions = Object.keys(solutions)
-    .filter((key) => solutions[key].showToPlayer === true)
-    .map((key) => solutions[key]);
+    const playerSolutions = Object.keys(solutions)
+      .filter((key) => solutions[key].showToPlayer === true)
+      .map((key) => solutions[key]);
 
-  let selectHTML = `
+    let selectHTML = `
     <div class="mistery-question">
       <label class="mistery-label">
         ${game.i18n.localize("sofh.dialog.select_mistery_question")}
@@ -151,35 +162,34 @@ export class moveRoll extends api.HandlebarsApplicationMixin(
         <option value="" selected></option>
   `;
 
-  playerSolutions.forEach((solution) => {
-    selectHTML += `
+    playerSolutions.forEach((solution) => {
+      selectHTML += `
       <option value="${solution.question}" data-complexity="${solution.complexity}">
         ${solution.question}
       </option>
     `;
-  });
+    });
 
-  selectHTML += `
+    selectHTML += `
       </select>
     </div>
   `;
 
-  return selectHTML;
-}
-onChangeMystery(event) {
-
-  const app = event.target.offsetParent  
-  const selectedOption = event.target.selectedOptions[0];
-  if (!selectedOption) return;
-  const complexity = selectedOption.dataset.complexity;
-  const input = app.querySelector(".complexity-numer");
-  if (!input) {
-    console.warn("Complexity input not found");
-    return;
+    return selectHTML;
   }
-  input.value = complexity ?? 0;
-}
- async defnieRollingFormula(actor, item, clueID, question, solution, html) {
+  onChangeMystery(event) {
+    const app = event.target.offsetParent;
+    const selectedOption = event.target.selectedOptions[0];
+    if (!selectedOption) return;
+    const complexity = selectedOption.dataset.complexity;
+    const input = app.querySelector(".complexity-numer");
+    if (!input) {
+      console.warn("Complexity input not found");
+      return;
+    }
+    input.value = complexity ?? 0;
+  }
+  async defnieRollingFormula(actor, item, clueID, question, solution, html) {
     const selections = {
       houseApply: null,
       conditions: [],
@@ -205,8 +215,9 @@ onChangeMystery(event) {
         rollmod = rollmod + 1;
       }
     }
-    const oponentcondition = html?.querySelector(".oponent-have-condition-checkbox")
-      ?.checked;
+    const oponentcondition = html?.querySelector(
+      ".oponent-have-condition-checkbox",
+    )?.checked;
     if (oponentcondition) {
       selections.oponentcondition = oponentcondition;
       if (selections.oponentcondition) {
@@ -243,8 +254,9 @@ onChangeMystery(event) {
         }
       }
     });
-    const aproachElements = html
-      ?.querySelectorAll(".question-sheet-roll-muptiple");
+    const aproachElements = html?.querySelectorAll(
+      ".question-sheet-roll-muptiple",
+    );
     aproachElements.forEach((question) => {
       const impact =
         question.querySelector(".question-impact").value === "true";
@@ -293,7 +305,7 @@ onChangeMystery(event) {
     if (knownClue.length > 0) {
       const selection = html?.querySelector(".selection-mistery-solutions");
       if (selection !== null) {
-        clueIDs = selection.value
+        clueIDs = selection.value;
       } else {
         clueIDs = clueID;
       }
@@ -398,7 +410,7 @@ onChangeMystery(event) {
     }
   }
 
-    async rolling(
+  async rolling(
     actor,
     item,
     formula,
@@ -619,7 +631,7 @@ onChangeMystery(event) {
       }
     }
   }
-    async removeStrinAfterRoll(stringName) {
+  async removeStrinAfterRoll(stringName) {
     const strings = this.actor.system.strings;
     for (const key in strings) {
       if (strings[key].name === stringName) {

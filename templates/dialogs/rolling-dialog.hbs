@@ -17,7 +17,7 @@
         {{#if (eq (numberOfQuestion item.system) false)}}
             <h2 class="h2-roll">{{localize 'sofh.ui.rolldialog.moveQuestionTitle'}}</h2>
             {{#each item.system.question as |question index|}}
-    {{log question}}
+  
                 <div class="question-sheet-roll">
                     <div class="question description">{{{question.description}}}</div>
                     <select class="question-impact" name="system.question.{{@index}}.impact" disabled>
@@ -33,7 +33,7 @@
         {{else}}
             <h2 class="h2-roll">{{localize 'sofh.ui.rolldialog.moveQuestionTitle'}}</h2>
             {{#each item.system.question as |question index|}}
-            {{log question}}
+          
                 {{#if (eq question.impact false)}}
                     <div class="question-sheet-roll">
                         <div class="question description">{{question.description}}</div>
@@ -50,7 +50,7 @@
             {{/each}}
             <h2 class="h2-roll">{{localize 'sofh.ui.rolldialog.pickOneAproach'}}</h2>
             {{#each item.system.question as |question index|}}
-                {{log question}}
+              
                 {{#if (eq question.impact true)}}
                     <div class="question-sheet-roll-muptiple">
                         <div class="question description">{{question.description}}</div>
@@ -71,7 +71,7 @@
         {{#if relatedMove.system.action.addQuestion.isUse}}
             <h2 class="h2-roll special">{{{localize  "sofh.ui.rolldialog.additionQuestionFromReletedMoves" name=relatedMove.name}}}</h2>
             {{#each relatedMove.system.additionalQuestion as |question|}}
-            {{log question}}
+          
                 <div class="question-sheet-roll">
                     <div class="question description">{{{question.question}}}</div>
                         <select class="question-impact" disabled>

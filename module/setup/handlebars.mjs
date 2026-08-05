@@ -200,7 +200,10 @@ export function registerHandlebarsHelpers() {
         (actor) => actor.id === actorId,
       );
       Object.keys(actorClue).forEach((key) => {
-        if (key.startsWith("have") && actorClue[key] === true || actorClue[key] === "on") {
+        if (
+          (key.startsWith("have") && actorClue[key] === true) ||
+          actorClue[key] === "on"
+        ) {
           const index = key.slice(4);
           if (clueDescription.hasOwnProperty(index)) {
             html += ` 
@@ -217,7 +220,6 @@ export function registerHandlebarsHelpers() {
           <label class="complexity-label">${game.i18n.localize("sofh.ui.complexity_value")}</label>
           <input type="number" class="complexity-numer" value="${complexity}"></input>
         </div>`;
-        
       }
       return new Handlebars.SafeString(html);
     }
