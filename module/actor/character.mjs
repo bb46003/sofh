@@ -485,15 +485,15 @@ export class sofhCharacterSheet extends api.HandlebarsApplicationMixin(
     const innerText = game.i18n.format("sofh.ui.dialog.deleteMove", {
       name: item.name,
     });
-    const d = new Dialog({
-      title: game.i18n.format("sofh.ui.dialog.deleteMoveTitle", {
-        name: item.name,
-      }),
+    const d = new foundry.applications.api.DialogV2({
+       window: { title: game.i18n.format("sofh.ui.dialog.deleteMoveTitle", {name: item.name,})
+       },
       content: `
         <p>${innerText}</p>
       `,
-      buttons: {
-        delete: {
+      buttons: [
+         {
+          action: "delete",
           label: game.i18n.localize("Delete"),
           callback: async () => {
             await this.actor.deleteEmbeddedDocuments("Item", [ID]);
@@ -513,15 +513,15 @@ export class sofhCharacterSheet extends api.HandlebarsApplicationMixin(
             }
           },
         },
-        cancel: {
+        {
+          action: "cancel",
           label: game.i18n.localize("Cancel"),
           callback: () => {
             ui.notifications.info("Deletion canceled.");
           },
+          default: true,
         },
-      },
-      default: "cancel",
-      close: () => {},
+      ],
     });
     d.render(true);
   }
