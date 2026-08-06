@@ -1,31 +1,30 @@
-<form class="{{cssClass}}" autocomplete="off">
+<section class="{{cssClass}}" autocomplete="off">
   <div class="clue-actor-name">
     <label for="name">{{localize "sofh.ui.clue.name"}}</label>
-    <input id="name" name="name" type="text" value="{{actor.name}}">
+    <input id="name" name="name" type="text" value="{{actor.name}}" />
 
   </div>
   <nav class="sheet-tabs tabs clue" data-group="primary">
-      <a class="party-list" data-tab="party-list">{{localize "sofh.ui.clue.party_list"}}</a>
-      <a class="clue-list" data-tab="clue-list">{{localize "sofh.ui.clue.clue_table"}}</a>
-      {{#if (chekSolution)}}
-      <a class="mistery-solve-list" data-tab="misterysolve">{{localize "sofh.ui.clue.solution_table"}}</a> 
-      {{/if}} 
-   </nav>
+    <a
+      class="party-list"
+      data-group="primary"
+      data-action="tab"
+      data-tab="party_list"
+    >{{localize "sofh.ui.clue.party_list"}}</a>
+    <a
+      class="clue-list"
+      data-group="primary"
+      data-action="tab"
+      data-tab="clue_list"
+    >{{localize "sofh.ui.clue.clue_table"}}</a>
+    {{#if isGM}}
+      <a
+        class="mistery-solve-list"
+        data-group="primary"
+        data-action="tab"
+        data-tab="solve_list"
+      >{{localize "sofh.ui.clue.solution_table"}}</a>
+    {{/if}}
+  </nav>
 
-   <section class="sheet-body">
-      <div class="tab mistery-solve flexcol" data-group="primary" data-tab="misterysolve">
-            {{> "systems/SofH/templates/tab/mistery-solve-list.hbs"}}
-        </div>
- 
-         <div class="tab party flexcol" data-group="primary" data-tab="party-list">
-            {{> "systems/SofH/templates/tab/party-list.hbs"}}
-        </div>        
-
-        <div class="tab clue flexcol" data-group="primary" data-tab="clue-list">
-            {{> "systems/SofH/templates/tab/clue-list.hbs"}}`
-        </div>
- 
-        
- 
-    </section> 
-</form>
+</section>

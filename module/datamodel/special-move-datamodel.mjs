@@ -1,7 +1,4 @@
-const BaseDataModel =
-  foundry.abstract?.TypeDataModel ?? foundry.data?.DataModel;
-
-export default class SpecialMovesDataModel extends BaseDataModel {
+export default class SpecialMovesDataModel extends foundry.abstract.DataModel {
   static defineSchema() {
     const fields = foundry.data.fields;
     const schema = {};
@@ -82,9 +79,5 @@ export default class SpecialMovesDataModel extends BaseDataModel {
   /** @override */
   prepareBaseData() {
     super.prepareBaseData();
-  }
-  /** @inheritDoc */
-  static migrateData(source) {
-    super.migrateData(source);
   }
 }

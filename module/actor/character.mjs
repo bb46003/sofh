@@ -2,80 +2,319 @@ import { moveRoll } from "../dialog/move-dialog.mjs";
 import sofh_Utility from "../utility.mjs";
 import { ReputationQuestion } from "../dialog/reputation-question.mjs";
 
-const BaseActorSheet =
-  typeof foundry?.appv1?.sheets?.ActorSheet !== "undefined"
-    ? foundry.appv1.sheets.ActorSheet
-    : ActorSheet;
-export class sofhCharacterSheet extends BaseActorSheet {
-  static get defaultOptions() {
-    return foundry.utils.mergeObject(super.defaultOptions, {
-      classes: ["sofh", "sheet", "actor", "character", "dialog-button"],
-      template: "systems/SofH/templates/character-sheet.hbs",
-      width: 800,
-      height: 960,
-      tabs: [
-        {
-          navSelector: ".sheet-tabs",
-          contentSelector: ".sheet-body",
-          initial: "characteristic",
-        },
-      ],
-    });
-  }
+const { api, sheets } = foundry.applications;
+const DialogV2 = foundry.applications.api.DialogV2;
 
-  async getData() {
-    const context = super.getData();
+export class sofhCharacterSheet extends api.HandlebarsApplicationMixin(
+  sheets.ActorSheetV2,
+) {
+  constructor(...args) {
+    super(...args);
+    this.y = 0;
+
+    /** @type {CharacterActor} */
+    this.actor;
+  }
+  /* -------------------------------------------- */
+  /*  OPTIONS
+  /* -------------------------------------------- */
+
+  static DEFAULT_OPTIONS = {
+    classes: ["sofh", "sheet", "actor", "character"],
+    position: { width: 1020, height: 850, zIndex: 10 },
+    form: {
+      submitOnChange: true,
+    },
+    actions: {},
+  };
+
+  static PARTS = {
+    main: {
+      template: "systems/SofH/templates/character-sheet.hbs",
+    },
+    characteristic: {
+      id: "characteristic",
+      template: "systems/SofH/templates/tab/character-characteristic.hbs",
+    },
+    relations: {
+      id: "relations",
+      template: "systems/SofH/templates/tab/relations.hbs",
+    },
+    strings: {
+      id: "strings",
+      template: "systems/SofH/templates/tab/strings.hbs",
+    },
+    moves: {
+      id: "moves",
+      template: "systems/SofH/templates/tab/character-moves.hbs",
+    },
+    equipment: {
+      id: "equipment",
+      template: "systems/SofH/templates/tab/equipment.hbs",
+    },
+  };
+  static TABS = {
+    primary: {
+      tabs: [
+        { id: "characteristic", group: "primary" },
+        { id: "relations", group: "primary" },
+        { id: "strings", group: "primary" },
+        { id: "equipment", group: "primary" },
+        { id: "moves", group: "primary" },
+      ],
+      initial: "characteristic",
+    },
+  };
+  /* -------------------------------------------- */
+  /*  DATA
+  /* -------------------------------------------- */
+
+  async _prepareContext(options) {
+    const context = await super._prepareContext(options);
+
     const actorData = this.actor.toObject(false);
     context.system = actorData.system;
-    const {
-      bloodType,
-      favoriteTopic,
-      favoriteTopic2,
-      House,
-      conditionstype,
-      equipment,
-      houseeq,
-      characterRelation,
-      goal,
-      timeToShine,
-    } = CONFIG.SOFHCONFIG;
+
+    const config = CONFIG.SOFHCONFIG;
 
     Object.assign(context, {
-      bloodType,
-      favoriteTopic,
-      favoriteTopic2,
-      House,
-      conditionstype,
-      equipment,
-      houseeq,
-      characterRelation,
-      goal,
-      timeToShine,
+      bloodType: config.bloodType,
+      favoriteTopic: config.favoriteTopic,
+      favoriteTopic2: config.favoriteTopic2,
+      House: config.House,
+      conditionstype: config.conditionstype,
+      equipment: config.equipment,
+      houseeq: config.houseeq,
+      characterRelation: config.characterRelation,
+      goal: config.goal,
+      timeToShine: config.timeToShine,
+      actor: this.actor,
+      items: this.actor.items,
+      systemFields: this.actor.system.schema.fields,
     });
 
-    async function enrich(html) {
-      if (html) {
-        if (game.release.generation < 13) {
-          return await TextEditor.enrichHTML(html, {
-            secrets: context.actor.isOwner,
-            async: true,
-          });
-        } else {
-          return await foundry.applications.ux.TextEditor.enrichHTML(html, {
-            secrets: context.actor.isOwner,
-            async: true,
-          });
-        }
-      } else {
-        return html;
-      }
-    }
+    context.equipmentpersonal = {
+      value: this.actor.system.equipmentpersonal,
+      enriched: await this._enrich(this.actor.system.equipmentpersonal),
+      field: this.actor.system.schema.fields.equipmentpersonal,
+    };
+    context.notes = {
+      value: this.actor.system.notes,
+      enriched: await this._enrich(this.actor.system.notes),
+      field: this.actor.system.schema.fields.notes,
+    };
+    context.equipment = {
+      value: this.actor.system.equipment,
+      enriched: await this._enrich(this.actor.system.equipment),
+      field: this.actor.system.schema.fields.equipment,
+    };
 
-    context.system.equipment = await enrich(context.system.equipment);
     this._prepareMoves(context);
 
     return context;
   }
+
+  async _enrich(html) {
+    if (!html) return html;
+    return await foundry.applications.ux.TextEditor.enrichHTML(html, {
+      secrets: this.actor.isOwner,
+      async: true,
+    });
+  }
+
+  /* -------------------------------------------- */
+  /*  RENDER LISTENERS (DELEGATED)
+  /* -------------------------------------------- */
+
+  async _onRender(context, options) {
+    await super._onRender(context, options);
+
+    const element = this.element;
+
+    // --- CHANGE EVENTS ---
+    element.querySelectorAll(".circle-checkbox-reputation").forEach((el) => {
+      el.addEventListener("change", (ev) => this.handleReputationChange(ev));
+    });
+
+    element.querySelectorAll(".circle-checkbox-xp").forEach((el) => {
+      el.addEventListener("change", (ev) => this.handleXpChange(ev));
+    });
+
+    element.querySelectorAll(".house").forEach((el) => {
+      el.addEventListener("change", (ev) => this.handleHouseChange(ev));
+    });
+
+    element
+      .querySelectorAll(".condition-text, .condition-type")
+      .forEach((el) => {
+        el.addEventListener("change", (ev) => this.updateActorCondition(ev));
+      });
+
+    element
+      .querySelector("#schoolyear")
+      ?.addEventListener("change", (ev) => this.changeYear(ev));
+
+    element.querySelectorAll(".additional-subject").forEach((el) => {
+      el.addEventListener("change", (ev) =>
+        this.changeAditionalSubjectFromMove(ev),
+      );
+    });
+
+    // --- CLICK EVENTS ---
+    element.querySelectorAll(".decrease-btn").forEach((el) => {
+      el.addEventListener("click", () => this.lowerReputationRank());
+    });
+
+    element.querySelectorAll(".hover-label-question").forEach((el) => {
+      el.addEventListener("click", () =>
+        this.assignHouseQuestions(this.actor.system.home, false),
+      );
+    });
+
+    element.addEventListener("click", (ev) => this.handleDiamondClick(ev));
+
+    element
+      .querySelector("#add-string-btn")
+      ?.addEventListener("click", (ev) => this.addStringItem(ev));
+
+    element.querySelectorAll(".remove-string-btn").forEach((el) => {
+      el.addEventListener("click", (ev) => this.removeStringItem(ev));
+    });
+
+    element
+      .querySelector("#add-advantage-btn")
+      ?.addEventListener("click", (ev) => this.addAdvantagItem(ev));
+
+    element.querySelectorAll(".remove-advantage-btn").forEach((el) => {
+      el.addEventListener("click", (ev) => this.removeAdvantageItem(ev));
+    });
+
+    element.querySelectorAll(".move_type").forEach((el) => {
+      el.addEventListener("click", (ev) => this.showMoves(ev));
+    });
+
+    element.querySelectorAll(".moves").forEach((el) => {
+      el.addEventListener("click", (ev) => this.collapsAllMoves(ev));
+    });
+
+    element.querySelectorAll(".remove-moves-btn").forEach((el) => {
+      el.addEventListener("click", (ev) => this.removeMoves(ev));
+    });
+
+    element.querySelectorAll(".moves-edit").forEach((el) => {
+      el.addEventListener("contextmenu", (ev) => this.openMoves(ev));
+      el.addEventListener("click", (ev) => this.openMoves(ev));
+    });
+
+    element.querySelectorAll(".roll-moves-btn").forEach((el) => {
+      el.addEventListener("click", (ev) => this.rollForMove(ev));
+    });
+
+    element.querySelectorAll(".moves-description-open").forEach((el) => {
+      el.addEventListener("click", (ev) => this.openMovesFromTriggers(ev));
+    });
+
+    element.querySelectorAll(".send-to-chat-moves-btn").forEach((el) => {
+      el.addEventListener("click", (ev) => this.openMovesFromTriggers(ev));
+    });
+
+    element.querySelectorAll(".time_to_shine").forEach((el) => {
+      el.addEventListener("click", (ev) => this.showTimeToShine(ev));
+    });
+
+    element
+      .querySelector("#reputationQuestions")
+      ?.addEventListener("click", (ev) => this.changeReputationQuestions(ev));
+
+    element
+      .querySelector("#advamcmentDialog")
+      ?.addEventListener("click", (ev) => this.advamcmentDialog(ev));
+
+    element
+      .querySelectorAll("i.fa.fa-trash.remove-additional-subject")
+      .forEach((el) => {
+        el.addEventListener("click", (ev) => this.removeAdditionalTopic(ev));
+      });
+  }
+
+  /* -------------------------------------------- */
+  /*  SAMPLE HANDLERS (UPDATED)
+  /* -------------------------------------------- */
+
+  async handleReputationChange(ev) {
+    const checked = ev.target.checked;
+    console.log("Reputation changed:", checked);
+  }
+
+  async handleXpChange(ev) {
+    const checked = ev.target.checked;
+    console.log("XP changed:", checked);
+  }
+
+  /* -------------------------------------------- */
+  /*  DIALOGS (V2)
+  /* -------------------------------------------- */
+
+  async advamcmentDialog() {
+    const result = await DialogV2.wait({
+      title: "Advancement",
+      content: `<p>Choose advancement type:</p>`,
+      buttons: {
+        xp: {
+          label: "Gain XP",
+          callback: () => "xp",
+        },
+        stat: {
+          label: "Increase Stat",
+          callback: () => "stat",
+        },
+        cancel: {
+          label: "Cancel",
+          callback: () => null,
+        },
+      },
+    });
+
+    if (result === "xp") {
+      console.log("XP selected");
+    }
+
+    if (result === "stat") {
+      console.log("Stat increase selected");
+    }
+  }
+
+  async changeReputationQuestions() {
+    const value = await DialogV2.prompt({
+      title: "Reputation Question",
+      content: `<p>Enter new reputation:</p>
+                <input type="text" name="rep" />`,
+      ok: {
+        label: "Save",
+        callback: (html) => {
+          return html.querySelector("input[name='rep']").value;
+        },
+      },
+    });
+
+    if (value) {
+      await this.actor.update({
+        "system.reputation.custom": value,
+      });
+    }
+  }
+
+  async showTimeToShine() {
+    await DialogV2.prompt({
+      title: "Time to Shine",
+      content: `<p>Your special moment activates!</p>`,
+      ok: { label: "Nice!" },
+    });
+  }
+
+  /* -------------------------------------------- */
+  /*  PLACEHOLDER METHODS (KEEP YOUR ORIGINAL LOGIC)
+  /* -------------------------------------------- */
 
   _prepareMoves(context) {
     const basicMoves = [];
@@ -104,10 +343,10 @@ export class sofhCharacterSheet extends BaseActorSheet {
           specialPlaybookMoves.push(item);
           break;
         case "advancedMoves":
-          advancedMoves.push(item)
+          advancedMoves.push(item);
           break;
         case "houseMoves":
-          houseMoves.push(item)
+          houseMoves.push(item);
           break;
         default:
           console.warn(`Unknown item type: ${item.type}`);
@@ -129,9 +368,9 @@ export class sofhCharacterSheet extends BaseActorSheet {
     context.customMoves = customMoves;
     context.specialPlaybookMoves = specialPlaybookMoves;
     context.advancedMoves = advancedMoves;
-    context.optionalMoves= optionalMoves;
+    context.optionalMoves = optionalMoves;
   }
-
+  /*
   async activateListeners(html) {
     super.activateListeners(html);
 
@@ -178,7 +417,7 @@ export class sofhCharacterSheet extends BaseActorSheet {
       this.changeAditionalSubjectFromMove(ev),
     );
   }
-
+*/
   async handleReputationChange(ev) {
     const isChecked = $(ev.target).prop("checked");
     const ID = ev.target.id[0];
@@ -219,7 +458,18 @@ export class sofhCharacterSheet extends BaseActorSheet {
               speaker: game.user.name,
               content: `${game.i18n.localize("sofh.ui.gainxp")}: <b>${choice}</b>`,
             });
-            await this.actor.update({ ["system.advancement"]: false });
+            const actor = this.actor;
+            const amountOfAdvancement = actor.system.amountOfAdvancement - 1;
+            if (amountOfAdvancement < 0) {
+              await this.actor.update({
+                ["system.advancement"]: false,
+                ["system.amountOfAdvancement"]: 0,
+              });
+            } else {
+              await this.actor.update({
+                ["system.amountOfAdvancement"]: amountOfAdvancement,
+              });
+            }
           },
         },
       ],
@@ -235,15 +485,15 @@ export class sofhCharacterSheet extends BaseActorSheet {
     const innerText = game.i18n.format("sofh.ui.dialog.deleteMove", {
       name: item.name,
     });
-    const d = new Dialog({
-      title: game.i18n.format("sofh.ui.dialog.deleteMoveTitle", {
-        name: item.name,
-      }),
+    const d = new foundry.applications.api.DialogV2({
+       window: { title: game.i18n.format("sofh.ui.dialog.deleteMoveTitle", {name: item.name,})
+       },
       content: `
         <p>${innerText}</p>
       `,
-      buttons: {
-        delete: {
+      buttons: [
+         {
+          action: "delete",
           label: game.i18n.localize("Delete"),
           callback: async () => {
             await this.actor.deleteEmbeddedDocuments("Item", [ID]);
@@ -263,15 +513,15 @@ export class sofhCharacterSheet extends BaseActorSheet {
             }
           },
         },
-        cancel: {
+        {
+          action: "cancel",
           label: game.i18n.localize("Cancel"),
           callback: () => {
             ui.notifications.info("Deletion canceled.");
           },
+          default: true,
         },
-      },
-      default: "cancel",
-      close: () => {},
+      ],
     });
     d.render(true);
   }
@@ -279,7 +529,6 @@ export class sofhCharacterSheet extends BaseActorSheet {
   async handleHouseChange(ev) {
     const house = ev.target.value;
     await this.actor.update({ [`system.home`]: house.toLowerCase() });
-    await this.actor.update({ [`system.house`]: house.toLowerCase() });
     if (house !== "") {
       this.actor.sheet.render();
       await this.assignGoal(house);
@@ -353,6 +602,9 @@ export class sofhCharacterSheet extends BaseActorSheet {
       for (let i = 1; i <= 7; i++) {
         updateData[`system.xp.value.${i}`] = false;
       }
+      updateData["system.advancement"] = true;
+      updateData["system.amountOfAdvancement"] =
+        actor.system.amountOfAdvancement + 1;
     } else {
       this.updateXpValues(updateData, index2, value);
     }
@@ -383,40 +635,49 @@ export class sofhCharacterSheet extends BaseActorSheet {
   }
 
   async assignHouseQuestions(house, changeHouse) {
-    let question = await this.getHouseQuestions(house);
+    const question = await this.getHouseQuestions(house);
+
     const content = await sofh_Utility.renderTemplate(
       "systems/SofH/templates/dialogs/house-question.hbs",
-      { question: question },
+      { question },
     );
-    new Dialog({
-      title: game.i18n.localize("sofh.ui.house-question"),
+
+    const result = await foundry.applications.api.DialogV2.prompt({
+      window: {
+        title: game.i18n.localize("sofh.ui.house-question"),
+      },
       content,
-      buttons: {
-        OK: {
-          icon: '<i class="fa fa-check"></i>',
-          label: `<div class="sofh-button">${game.i18n.localize("sofh.UI.OK")}</div>`,
-          callback: (html) => {
-            const selectedQuestion = html.find(
-              'input[name="housequestion"]:checked',
+      ok: {
+        label: game.i18n.localize("sofh.UI.OK"),
+        icon: "fa-solid fa-check",
+        callback: (event, button, dialog) => {
+          // dialog.element is the root DOM element
+          const root = dialog.element;
+
+          const selectedQuestion = root.querySelector(
+            'input[name="housequestion"]:checked',
+          );
+
+          if (!selectedQuestion) {
+            ui.notifications.warn(
+              game.i18n.localize("sofh.ui.notSelectedHouseQuestion"),
             );
 
-            // Check if an option is selected
-            if (selectedQuestion.length === 0) {
-              ui.notifications.warn(
-                game.i18n.localize("sofh.ui.notSelectedHouseQuestion"),
-              );
-              this.assignHouseQuestions(house, changeHouse);
-            } else {
-              this.handleHouseQuestionSelection(html);
-              if (changeHouse) {
-                this.spefificHousEq(house);
-              }
-            }
-          },
+            // reopen dialog
+            this.assignHouseQuestions(house, changeHouse);
+            return false; // prevents closing
+          }
+
+          this.handleHouseQuestionSelection(root);
+
+          if (changeHouse) {
+            this.spefificHousEq(house);
+          }
+
+          return true; // allow closing
         },
       },
-      default: "OK",
-    }).render(true);
+    });
   }
   async getHouseQuestions(houseKey) {
     // Default: try translations
@@ -446,9 +707,12 @@ export class sofhCharacterSheet extends BaseActorSheet {
     return { q1, q2 };
   }
   async handleHouseQuestionSelection(html) {
-    const selectedOption = html.find('input[name="housequestion"]:checked');
-    if (selectedOption.length > 0) {
-      const selectedLabel = selectedOption.next("label").text().trim();
+    const selectedOption = html.querySelector(
+      'input[name="housequestion"]:checked',
+    );
+    if (selectedOption) {
+      const selectedLabel =
+        selectedOption.nextElementSibling.textContent.trim();
       await this.actor.update({ ["system.housequestion"]: selectedLabel });
     } else {
       ui.notifications.warn(game.i18n.localize("sofh.ui.warning.noSelection"));
@@ -458,70 +722,88 @@ export class sofhCharacterSheet extends BaseActorSheet {
   async spefificHousEq(house) {
     const houseEq = CONFIG.SOFHCONFIG.houseeq[house];
     const actor = this.actor;
+
     const header = game.i18n.localize("sofh.ui.eqquestion");
+
     let content = `<h2 style="font-family: 'IM Fell English SC', serif;">${header}</h2><form id="equipmentForm">`;
+
     let i = 0;
-    Object.keys(houseEq).forEach((key) => {
+    for (const key of Object.keys(houseEq)) {
       const value = houseEq[key];
       const eq = game.i18n.localize(value);
 
       content += `
-                <div class="sofh">
-                    <label class="select-eq">
-                        <input type="checkbox" name="equipment${i}" value="${eq}" class="equipment-option">
-                        ${eq}
-                    </label>
-                </div>`;
+      <div class="sofh">
+        <label class="select-eq">
+          <input type="checkbox" name="equipment${i}" value="${eq}" class="equipment-option">
+          ${eq}
+        </label>
+      </div>`;
       i++;
-    });
+    }
 
     content += "</form>";
-    const title = game.i18n.localize("sofh.ui.dialog.houseeq");
 
-    const d = new Dialog({
-      title: title,
-      content: content,
-      buttons: {
-        submit: {
-          label: `<div class ="sofh-button">${game.i18n.localize("sofh.ui.submit")}</div>`,
-          callback: async (html) => {
-            const selectedOptions = html.find('input[type="checkbox"]:checked');
-            const selectedValues = [];
-            selectedOptions.each(function () {
-              selectedValues.push($(this).val());
-            });
+    await foundry.applications.api.DialogV2.prompt({
+      window: {
+        title: game.i18n.localize("sofh.ui.dialog.houseeq"),
+      },
 
-            if (selectedValues.length > 3) {
-              ui.notifications.error(
-                game.i18n.localize("sofh.ui.dialog.eqwarrning"),
-              );
-              return;
-            }
-            let currentEquipment = actor.system.equipment || "";
-            selectedValues.forEach((value) => {
-              currentEquipment += `<br>${value}`;
-            });
-            await actor.update({
-              "system.equipment": currentEquipment,
-            });
-            ui.notifications.info(
-              game.i18n.localize("sofh.ui.dialog.addeqconfirmation"),
+      content,
+
+      ok: {
+        label: game.i18n.localize("sofh.ui.submit"),
+        icon: "fa-solid fa-check",
+
+        callback: async (event, button, dialog) => {
+          const root = dialog.element;
+
+          const selectedOptions = root.querySelectorAll(
+            'input[type="checkbox"]:checked',
+          );
+
+          const selectedValues = Array.from(selectedOptions).map(
+            (el) => el.value,
+          );
+
+          if (selectedValues.length > 3) {
+            ui.notifications.error(
+              game.i18n.localize("sofh.ui.dialog.eqwarrning"),
             );
-          },
-          class: "my-button",
-        },
-        cancel: {
-          label: `<div class ="sofh-button">${game.i18n.localize("sofh.ui.cancel")}</div>`,
-          class: "my-button",
+            return false; // keep dialog open
+          }
+
+          let currentEquipment = actor.system.equipment || "";
+
+          for (const value of selectedValues) {
+            currentEquipment += `<br>${value}`;
+          }
+
+          await actor.update({
+            "system.equipment": currentEquipment,
+          });
+
+          ui.notifications.info(
+            game.i18n.localize("sofh.ui.dialog.addeqconfirmation"),
+          );
+
+          return true; // close dialog
         },
       },
-      default: "submit",
-      close: () => {},
-      render: (html) => {
-        const radioButtons = html.find(".equipment-option");
+
+      cancel: {
+        label: game.i18n.localize("sofh.ui.cancel"),
+      },
+
+      render: (event, dialog) => {
+        const root = dialog.element;
+
+        const checkboxes = root.querySelectorAll(".equipment-option");
+
         let selectedOptions = [];
-        radioButtons.each(function () {
-          $(this).on("change", function (event) {
+
+        checkboxes.forEach((checkbox) => {
+          checkbox.addEventListener("change", (event) => {
             if (event.target.checked) {
               if (selectedOptions.length >= 3) {
                 event.target.checked = false;
@@ -537,9 +819,8 @@ export class sofhCharacterSheet extends BaseActorSheet {
           });
         });
       },
-    }).render(true);
+    });
   }
-
   async processDiamondClick(element) {
     if (element.parentNode.className === "diamond") {
       if (element.dataset.clicked) return;
@@ -601,33 +882,53 @@ export class sofhCharacterSheet extends BaseActorSheet {
 
   async addAdvantagItem() {
     const actor = this.actor;
-    let advanatage = actor.system.advanatage || [];
-    let i = Object.keys(advanatage).length + 1;
-    const advanatageElement = {
+    let advantage = actor.system.advantage || [];
+    let i = Object.keys(advantage).length;
+    const advantageElement = {
       description: "",
     };
-    advanatage[i] = advanatageElement;
-    await actor.update({ "system.advanatage": advanatage });
+    advantage[i] = advantageElement;
+    await actor.update({ "system.advantage": advantage });
   }
 
   async removeStringItem(ev) {
     const button = ev.target.closest(".remove-string-btn");
     const ID = button.id;
+
     let strings = this.actor.system.strings;
-    const newStrings = { ...strings };
-    delete newStrings[ID];
-    await this.actor.update({ "system.strings": [{}] });
-    await this.actor.update({ "system.strings": newStrings });
+
+    const filtered = Object.entries(strings).filter(([key]) => key !== ID);
+
+    const reindexed = {};
+    filtered.forEach(([_, value], index) => {
+      reindexed[index] = value;
+    });
+
+    await this.actor.update({
+      "system.strings": reindexed,
+    });
+
+    this.render(true);
   }
 
   async removeAdvantageItem(ev) {
-    const button = ev.target.closest(".remove-advanatage-btn");
+    const button = ev.target.closest(".remove-advantage-btn");
     const ID = button.id;
-    let advanatage = this.actor.system.advanatage;
-    const newAdvanatage = { ...advanatage };
-    delete newAdvanatage[ID];
-    await this.actor.update({ "system.advanatage": [{}] });
-    await this.actor.update({ "system.advanatage": newAdvanatage });
+
+    let advantage = this.actor.system.advantage;
+
+    const filtered = Object.entries(advantage).filter(([key]) => key !== ID);
+
+    const reindexed = {};
+    filtered.forEach(([_, value], index) => {
+      reindexed[index] = value;
+    });
+
+    await this.actor.update({
+      "system.advantage": reindexed,
+    });
+
+    this.render(true);
   }
 
   async updateActorCondition(ev) {
@@ -652,11 +953,13 @@ export class sofhCharacterSheet extends BaseActorSheet {
         `.remove-moves-btn[id='${move.id}']`,
       );
       let decription = document.querySelector(".second-row");
-      let titleDiv = document.querySelector(`.first-row[id='${move.id}']`);
+      let titleDiv = itemRow.querySelector(`.first-row[id='${move.id}']`);
       if (!decription || !titleDiv) {
-        const closestWindowApp = $(event.currentTarget).closest(".window-app");
-        decription = closestWindowApp.find(".second-row")[0] || null; // Use the DOM element
-        titleDiv = closestWindowApp.find(`.first-row[id='${move.id}']`)[0]; // Use the DOM element
+        const closestWindowApp = event.currentTarget.offsetParent;
+        decription = closestWindowApp.querySelector(".second-row") || null; // Use the DOM element
+        titleDiv = closestWindowApp.querySelector(
+          `.first-row[id='${move.id}']`,
+        ); // Use the DOM element
       }
 
       if (decription === null) {
@@ -676,30 +979,33 @@ export class sofhCharacterSheet extends BaseActorSheet {
   async showMoves(event) {
     const moveType = event.target.id;
     if (moveType !== "") {
-      const closestWindowApp = $(event.currentTarget).closest(".window-app");
-      const movesElement = closestWindowApp.find(".all-moves." + moveType);
+      const closestWindowApp = event.target.offsetParent;
+      const movesElement = closestWindowApp.querySelector(
+        ".all-moves." + moveType,
+      );
 
-      if (movesElement.css("display") === "none") {
-        movesElement.css("display", "");
+      if (movesElement.style.display === "none") {
+        movesElement.style.display = "";
       } else {
-        movesElement.css("display", "none");
+        movesElement.style.display = "none";
       }
     }
   }
 
   async collapsAllMoves(event) {
     const target = event.target.classList.value;
-    const closestWindowApp = $(event.currentTarget).closest(".window-app");
+    const closestWindowApp = event.target.offsetParent;
 
     if (target === "moves active") {
-      const movesElements = closestWindowApp
-        .find(".all-moves")
-        .not(".basicMoves");
-      movesElements.css("display", "none");
+      const movesElements = closestWindowApp.querySelector(
+        ".all-moves:not(.basicMoves)",
+      );
+      movesElements.style.display = "none";
     }
   }
 
   async rollForMove(event) {
+    event.preventDefault();
     const button = event.target;
     let ID = button.id;
     if (ID === "") {
@@ -710,21 +1016,21 @@ export class sofhCharacterSheet extends BaseActorSheet {
     const clueRelated = item.system.cluerelated;
     const clueID = [];
     if (clueRelated) {
-      const clueActors = Array.from(game.actors.entries()).filter(
-        ([key, actor]) => actor.type === "clue",
-      );
+      const clueActors = game.actors.filter((a) => a.type === "clue");
 
-      clueActors.forEach((ID) => {
-        let hasMatchingKey = Object.keys(ID[1].system.actorID).some(
-          (key) => key === actor._id,
+      clueActors.forEach((clueActor) => {
+        const hasMatchingActor = (clueActor.system.actorID ?? []).some(
+          (entry) => entry.id === actor.id,
         );
-        if (hasMatchingKey) {
-          clueID.push(ID[0]);
+
+        if (hasMatchingActor) {
+          clueID.push(clueActor.id);
         }
       });
     }
+
     const dialogInstance = new moveRoll(actor, item, clueID);
-    dialogInstance.rollForMove(actor, item, clueID);
+    dialogInstance.render(true);
   }
   async showTimeToShine(ev) {
     const actor = this.actor;
@@ -743,30 +1049,31 @@ export class sofhCharacterSheet extends BaseActorSheet {
            ${game.i18n.localize("sofh.ui.actor.timeToShine")}</h2>       
             ${timeToShineText}
         </div>`;
-    const d = new Dialog({
-      title: title,
+    const d = new foundry.applications.api.DialogV2({
+      window: { title: title },
       content: content,
-      buttons: {
-        close: {
-          label: `<div class ="sofh-button">${game.i18n.localize("sofh.ui.close")}</div>`,
-          callback: () => {},
-        },
-        sendToChat: {
-          label: `<div class ="sofh-button">${game.i18n.localize("sofh.ui.send_to_chat")}</div>`,
-          callback: () => {
-            ChatMessage.create({
+      position: { width: 400, height: 300 },
+      buttons: [
+        {
+          action: "sendToChat",
+          class: ["send-to-chat-moves-btn"],
+          label: game.i18n.localize("sofh.ui.send_to_chat"),
+          callback: async () => {
+            await ChatMessage.create({
               user: game.user.id,
               speaker: ChatMessage.getSpeaker({ actor }),
               content: moveToChat,
             });
+
+            const updateData = {};
             updateData["system.reputation.timeToShine"] = currentTS - 1;
-            actor.update(updateData);
+
+            await actor.update(updateData);
           },
         },
-      },
-      default: "close",
+      ],
     });
-    d.render(true, { height: 800, width: 450 });
+    await d.render(true);
   }
 
   async openMovesFromTriggers(event) {
@@ -788,17 +1095,20 @@ export class sofhCharacterSheet extends BaseActorSheet {
            ${item.name}</h2>       
             <div class="chat-description">${item.system.description}</div>
         </div>`;
-      const d = new Dialog({
-        title: title,
+      const d = new foundry.applications.api.DialogV2({
+        window: { title: title },
         content: content,
-        buttons: {
-          close: {
-            label: `<div class ="sofh-button">${game.i18n.localize("sofh.ui.close")}</div>`,
+        buttons: [
+          {
+            action: "close",
+            class: ["sofh-button"],
+            label: game.i18n.localize("sofh.ui.close"),
             callback: () => {},
-            class: "my-button",
           },
-          sendToChat: {
-            label: `<div class ="sofh-button">${game.i18n.localize("sofh.ui.send_to_chat")}</div>`,
+          {
+            action: "sendToChat",
+            class: ["sofh-button"],
+            label: game.i18n.localize("sofh.ui.send_to_chat"),
             callback: () => {
               ChatMessage.create({
                 user: game.user.id,
@@ -807,8 +1117,7 @@ export class sofhCharacterSheet extends BaseActorSheet {
               });
             },
           },
-        },
-        default: "close",
+        ],
       });
       d.render(true, { height: 800, width: 450 });
     }
@@ -835,10 +1144,6 @@ export class sofhCharacterSheet extends BaseActorSheet {
       const droppedType = droppedItem.type;
       if (droppedType === "Item") {
         const itemData = await fromUuid(droppedItem.uuid);
-        if(droppedItem.uuidc.includes("Compendium"))
-        itemData.flags.SofH = {
-          compendiumSource: droppedItem.uuid,
-        };
         const createdItems = await actor.createEmbeddedDocuments("Item", [
           itemData,
         ]);
@@ -969,6 +1274,7 @@ export class sofhCharacterSheet extends BaseActorSheet {
     const removeTopic = new foundry.applications.api.DialogV2({
       widnow: { title: game.i18n.localize("sofh.dilog.removeTopic") },
       content: innerText,
+      position: { width: 600 },
       buttons: [
         {
           label: game.i18n.localize("sofh.UI.OK"),
@@ -986,7 +1292,7 @@ export class sofhCharacterSheet extends BaseActorSheet {
       ],
       defaultButton: "ok",
     });
-    removeTopic.render(true, { width: 600 });
+    removeTopic.render(true);
   }
 
   async changeAditionalSubjectFromMove(ev) {
@@ -1001,5 +1307,34 @@ export class sofhCharacterSheet extends BaseActorSheet {
         id: id,
       },
     });
+  }
+  _processFormData(event, form, formData) {
+    const target = event?.target;
+    const name = target?.name;
+
+    const data = { object: {} };
+    if (typeof name === "string") {
+      if (name.includes("system.strings")) {
+        const match = name.split(".");
+        const strings = this.actor.system.strings || {};
+        const index = match[2];
+        const field = match[3];
+        if (!strings[index]) {
+          strings[index] = {};
+        }
+        strings[index][field] = target?.value;
+        data.object["system.strings"] = strings;
+      }
+      data.object[name] = target?.value;
+    }
+
+    const scrollEl = target.closest(".tab.active");
+    if (scrollEl) {
+      this._scrollTarget = scrollEl;
+      this.y = scrollEl.scrollTop;
+    }
+    const process = super._processFormData(event, form, data);
+    this.actor.sheet.render({ force: true });
+    return process;
   }
 }

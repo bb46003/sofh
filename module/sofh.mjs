@@ -12,6 +12,10 @@ import { EndSessionDialog } from "./dialog/end-session.mjs";
 import SocketHandler from "./setup/socket-handler.mjs";
 import MOVES from "./items/default-item-function.mjs";
 import SpecialMovesDataModel from "./datamodel/special-move-datamodel.mjs";
+import BasicMoveDataModel from "./datamodel/move-datamodel.mjs";
+import ActorDataModel from "./datamodel/actor-datamodel.mjs";
+import ClueDataModel from "./datamodel/clue-datamodel.mjs";
+
 const fields = foundry.data.fields;
 
 export default function registerSettings() {
@@ -141,6 +145,12 @@ Hooks.once("init", async function () {
     optionalMoves: SpecialMovesDataModel,
     advancedMoves: SpecialMovesDataModel,
     houseMoves: SpecialMovesDataModel,
+    basicMoves: BasicMoveDataModel,
+    comingOfAgeMoves: BasicMoveDataModel,
+  };
+  CONFIG.Actor.dataModels = {
+    character: ActorDataModel,
+    clue: ClueDataModel,
   };
   registerHandlebarsHelpers();
   registerSettings();
@@ -301,9 +311,9 @@ Hooks.once("ready", async function () {
 
   // Migration
   if (game.user.isGM) {
-    const SYSTEM_MIGRATION_VERSION = game.system.version
+    const SYSTEM_MIGRATION_VERSION = game.system.version;
     const currentVersion = game.settings.get("SofH", "systemMigrationVersion");
-    const needsMigration = SYSTEM_MIGRATION_VERSION !== currentVersion
+    const needsMigration = SYSTEM_MIGRATION_VERSION !== currentVersion;
 
     if (needsMigration) {
       await SofHMigrate.migrateWorld();

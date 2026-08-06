@@ -42,17 +42,18 @@ export class ReputationQuestion extends foundry.applications.api.ApplicationV2 {
         "sofh.dialog.reputation.default2",
       ],
     };
+    const house = data.home.toLowerCase();
     const isOther = [
       "gryffindor",
       "hufflepuff",
       "ravenclaw",
       "slytherin",
-    ].includes(data.house);
+    ].includes(house);
     const reputationQuestion = [
       data?.reputationQuestion1,
       data?.reputationQuestion2,
     ];
-    const questions = isOther ? repTable[data.house] : repTable.other;
+    const questions = isOther ? repTable[house] : repTable.other;
     const template = "systems/SofH/templates/dialogs/reputation-questions.hbs";
     let html = await sofh_Utility.renderTemplate(template, {
       questions: questions,
@@ -120,12 +121,13 @@ export class ReputationQuestion extends foundry.applications.api.ApplicationV2 {
     const checkedBoxes = this.element.querySelectorAll(
       'input[type="checkbox"]:checked',
     );
+    const house = this.options.system.home.toLowerCase();
     const isOther = [
       "gryffindor",
       "hufflepuff",
       "ravenclaw",
       "slytherin",
-    ].includes(this.options.system.house);
+    ].includes(house);
     let updateData = {};
     if (isOther) {
       updateData["system.reputationQuestion1"] = checkedBoxes[0].id;

@@ -2,10 +2,10 @@
   "id": "SofH",
   "title": "Secrets of Hogwarts",
   "description": "Stół do playtestów gtry Secrets of Hogwarts na silniku PBTA ",
-  "version": "0.51",
+  "version": "0.60",
   "compatibility": {
-    "minimum": "12",
-    "verified": "14.359"
+    "minimum": "13",
+    "verified": "14.363"
   },
   "authors": [
     {
@@ -53,7 +53,23 @@
       "flags": {}
     }
   ],
+  "documentTypes": {
+    "Actor": {
+      "character": {},
+      "npc": {},
+      "clue": {}
+    },
 
+    "Item": {
+      "basicMoves": {},
+      "specialPlaybookMoves": {},
+      "advancedMoves": {},
+      "comingOfAgeMoves": {},
+      "customMoves": {},
+      "optionalMoves": {},
+      "houseMoves": {}
+    }
+  },
   "socket": true,
   "manifest": "https://raw.githubusercontent.com/bb46003/sofh/refs/heads/main/system.json",
   "download": "https://github.com/bb46003/sofh/archive/refs/heads/main.zip"

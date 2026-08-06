@@ -1,6 +1,5 @@
-<form class="{{cssClass}}" autocomplete="off">
-  <section class="main-sheet">
-    <section class="title-section">
+<section class="main-sheet">
+    <div class="title-section">
       <div class="main-info">
         <img class="borderless" src="{{actor.img}}" data-edit="img">
         <div class="form-grid">
@@ -12,18 +11,18 @@
             <label for="home">{{localize "sofh.ui.actor.house"}}</label>
             <select name="system.home" class="house">
               <option value="">None</option>
-                {{selectOptions House selected=system.house localize=true}}
+                {{selectOptions House selected=(lowercase system.home) localize=true}}
             </select>
           </div>
           <div class="stat-grid">
             <label for="year">{{localize "sofh.ui.actor.years"}}</label>
             {{#if actor.system.changedYear}}
               <div class="flex">
-                <input id="schoolyear"  type="number" value="{{system.schoolyear.value}}" min="1" max="7" step="1">
+                <input id="schoolyear"  name="system.schoolyear.value" type="number" value="{{system.schoolyear.value}}" min="1" max="7" step="1">
                 <a id="reputationQuestions">{{localize "sofh.ui.actor.reputation_questions"}}</a>
               </div> 
             {{else}}
-              <input id="schoolyear"  type="number" value="{{system.schoolyear.value}}" min="1" max="7" step="1">    
+              <input id="schoolyear"  name="system.schoolyear.value" type="number" value="{{system.schoolyear.value}}" min="1" max="7" step="1">    
             {{/if}}            
           </div>
           <div class="stat-grid"></div>
@@ -33,57 +32,29 @@
           </div>
         
         <div class="empty-column">
-           {{#if (eq system.house (lowercase (localize "sofh.ui.actor.gryffindor")))}}
+           {{#if (eq (lowercase @root.system.home) (lowercase (localize "sofh.ui.actor.gryffindor")))}}
               <img class="home-flag" src="systems/SofH/img/gryfbanner.png">  
             {{/if}}
-            {{#if (eq system.house (lowercase (localize "sofh.ui.actor.hufflepuff")))}}
+            {{#if (eq (lowercase @root.system.home) (lowercase (localize "sofh.ui.actor.hufflepuff")))}}
               <img class="home-flag" src="systems/SofH/img/huffbanner.png">
             {{/if}}
-            {{#if (eq system.house (lowercase (localize "sofh.ui.actor.ravenclaw")))}}
+            {{#if (eq (lowercase @root.system.home) (lowercase (localize "sofh.ui.actor.ravenclaw")))}}
               <img class="home-flag" src="systems/SofH/img/ravebanner.png">  
             {{/if}}
-            {{#if (eq system.house (lowercase (localize "sofh.ui.actor.slytherin")))}}
+            {{#if (eq (lowercase @root.system.home) (lowercase (localize "sofh.ui.actor.slytherin")))}}
               <img class="home-flag" src="systems/SofH/img/slybanner.png">   
             {{/if}}        
         </div> 
         </div>
       </div>
-    </section>
+    </div>
 
     <nav class="sheet-tabs tabs" data-group="primary">
-      <a class="characteristic" data-tab="characteristic">{{localize "sofh.ui.actor.characteristic"}}</a>
-      <a class="relations" data-tab="relations">{{localize "sofh.ui.actor.relationships"}}</a>
-      <a class="strings" data-tab="strings">{{localize "sofh.ui.actor.strings"}}</a>
-      <a class="moves" data-tab="moves">{{localize "sofh.ui.actor.moves"}}</a>
-      <a class="equipment" data-tab="equipment">{{localize "sofh.ui.actor.eq"}}</a>    
+      <a class="characteristic" data-group="primary" data-action="tab" data-tab="characteristic">{{localize "sofh.ui.actor.characteristic"}}</a>
+      <a class="relations"  data-group="primary" data-action="tab" data-tab="relations">{{localize "sofh.ui.actor.relationships"}}</a>
+      <a class="strings"  data-group="primary" data-action="tab" data-tab="strings">{{localize "sofh.ui.actor.strings"}}</a>
+      <a class="moves"  data-group="primary" data-action="tab" data-tab="moves">{{localize "sofh.ui.actor.moves"}}</a>
+      <a class="equipment"  data-group="primary" data-action="tab" data-tab="equipment">{{localize "sofh.ui.actor.eq"}}</a>    
     </nav>
-<section class="bottom-panel">
-    <section class="sheet-body">
-        {{!-- Characteristic Tab --}}
-         <div class="tab characteristic flexcol" data-group="primary" data-tab="characteristic">
-            {{> "systems/SofH/templates/tab/character-characteristic.hbs"}}
-        </div>
-        
-        {{!-- Relation Tab --}}
-        <div class="tab relations flexcol" data-group="primary" data-tab="relations">
-            {{> "systems/SofH/templates/tab/relations.hbs"}}
-        </div>
-        {{!-- Strings Tab --}}
-        <div class="tab strings flexcol" data-group="primary" data-tab="strings">
-            {{> "systems/SofH/templates/tab/strings.hbs"}}
-        </div>
-        {{!-- Moves Tab --}}
-        <div class="tab moves flexcol" data-group="primary" data-tab="moves">
-            {{> "systems/SofH/templates/tab/character-moves.hbs"}}
-        </div>
-        {{!-- Equipment Tab --}}
-        <div class="tab equipment flexcol" data-group="primary" data-tab="equipment">
-            {{> "systems/SofH/templates/tab/equipment.hbs"}}
-        </div>
-    </section>
+
 </section>
-
-
-    </section>
-  </section>
-</form>

@@ -121,6 +121,20 @@ input#settings-config-SofH\.HomeScorePositionX {
   gap: 5px; /* Space between columns */
   padding: 5px;
   border: 10px solid black;
+  height: 100%;
+}
+.application.sheet.sofh.actor.character {
+  .tab {
+    overflow: auto;
+    height: 100%;
+  }
+  .relationship.flexrow {
+    gap: 10px;
+    p {
+      display: flex;
+      align-items: center;
+    }
+  }
 }
 .sofh .char-grid-feature {
   padding: 5px;
@@ -986,7 +1000,7 @@ button.add-character {
 
 a.party-list,
 a.clue-list,
-a.solution-list {
+a.mistery-solve-list {
   font-size: x-large;
 }
 
@@ -1035,13 +1049,13 @@ textarea.solution {
 .list-pf-solutuion-labels {
   display: grid;
   align-items: center;
-  grid-template-columns: 1.5fr 0.2fr 1fr 0.2fr 0.2fr;
+  grid-template-columns: 280px 80px 250px 70px 50px;
   grid-column-gap: 5px;
   margin-bottom: 15px;
   justify-items: center;
 }
 input.complexity {
-  width: 100%;
+  min-width: 100%;
   height: 100%;
   align-content: center;
   text-align: center;
@@ -1265,45 +1279,48 @@ h2.special-move {
   align-items: center;
   gap: 10px;
 }
-.change-relation[type="radio"] {
+.radio-group input[type="radio"] {
   appearance: none;
   -webkit-appearance: none;
-  -moz-appearance: none;
 
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
+
+  border: 2px solid #444;
   border-radius: 50%;
 
-  border: 2px solid #1e90ff;  /* blue border */
-  background: #cfcfcf;         /* grey fill when NOT selected */
-
-  display: inline-grid;
-  place-content: center;
-
+  position: relative; /* important */
   cursor: pointer;
-  transition: all 0.15s ease-in-out;
 }
 
-/* inner dot (hidden by default) */
-.change-relation[type="radio"]::before {
+/* inner dot */
+.radio-group input[type="radio"]::before {
   content: "";
+
+  position: absolute; /* key fix */
+  top: 50%;
+  left: 50%;
+
   width: 10px;
   height: 10px;
 
+  background: #444;
   border-radius: 50%;
-  background: #ff7a18;         /* orange dot when checked */
 
-  transform: scale(0);
-  transition: transform 0.15s ease-in-out;
+  transform: translate(-50%, -50%) scale(0); /* perfect centering */
+  transition: transform 0.1s ease-in-out;
 }
 
-/* SELECTED radio */
-.change-relation[type="radio"]:checked {
-  background: #ffffff;
-  border-color: #ff7a18;       /* orange border */
+/* checked */
+.radio-group input[type="radio"]:checked::before {
+  transform: translate(-50%, -50%) scale(1);
 }
-
-/* show inner dot when selected */
-.change-relation[type="radio"]:checked::before {
-  transform: scale(1);
+.radio-group input[type="radio"]:checked::after {
+  content: none;
+}
+.roll-dialog .roll-move,
+.roll-dialog .select-clue {
+  width: 100%;
+  margin-top: 15px;
+  font-size: X-LARGE;
 }

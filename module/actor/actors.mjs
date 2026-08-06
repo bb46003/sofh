@@ -1,4 +1,4 @@
-export class sofhActor extends Actor {
+export class sofhActor extends foundry.documents.Actor {
   /** @override */
   async _preCreate(data, options, user) {
     await super._preCreate(data, options, user);
