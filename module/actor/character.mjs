@@ -1333,6 +1333,14 @@ export class sofhCharacterSheet extends api.HandlebarsApplicationMixin(
       this._scrollTarget = scrollEl;
       this.y = scrollEl.scrollTop;
     }
+    const img = formData.get("img");
+    if (img) {
+      data.object["img"] = img;
+    }
+    const actorName = formData.get("name");
+    if (actorName) {
+      data.object["name"] = actorName;
+    }
     const process = super._processFormData(event, form, data);
     this.actor.sheet.render({ force: true });
     return process;

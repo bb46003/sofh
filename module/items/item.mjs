@@ -24,7 +24,7 @@ export class sofhMovesSheet extends api.HandlebarsApplicationMixin(
     },
   };
   async _prepareContext(partId, context) {
-    context = super._prepareContext(partId, context);
+    context =await super._prepareContext(partId, context);
     async function enrich(html) {
       if (html) {
         if (html) {
@@ -44,9 +44,9 @@ export class sofhMovesSheet extends api.HandlebarsApplicationMixin(
         }
       }
     }
-    context.system.description = await enrich(context.system.description);
-    context.system.triggers = await enrich(context.system.triggers);
-    context.system.relatedmoves = await enrich(context.system.relatedmoves);
+     Object.assign(context, { system: { ...context.system, description: await enrich(context.model.system.description) } });
+    Object.assign(context, { system: { ...context.system, triggers: await enrich(context.model.system.triggers) } });
+    Object.assign(context, { system: { ...context.system, relatedmoves: await enrich(context.model.system.relatedmoves) } });
     const itemData = this.item.toObject(false);
     context.system = itemData.system;
     const { House } = CONFIG.SOFHCONFIG;
