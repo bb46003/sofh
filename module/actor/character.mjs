@@ -166,11 +166,12 @@ export class sofhCharacterSheet extends api.HandlebarsApplicationMixin(
     });
 
     element.querySelectorAll(".hover-label-question").forEach((el) => {
-      el.addEventListener("click", () =>
-        this.assignHouseQuestions(this.actor.system.home, false),
-      );
+      el.addEventListener("click", () =>{
+        const home = this.actor.system.home.toLowerCase();
+        this.assignHouseQuestions(home, false);
+        });
     });
-
+    
     element.addEventListener("click", (ev) => this.handleDiamondClick(ev));
 
     element

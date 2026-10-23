@@ -162,6 +162,54 @@ export default class ActorDataModel extends foundry.abstract.TypeDataModel {
           }),
         }),
       ),
+      relation_question1: new StringField({
+        initial: "",
+      }),
+      relation_question2: new StringField({
+        initial: "",
+      }),
+      relation_question3: new StringField({
+        initial: "",
+      }), 
+      relation_question4: new StringField({
+        initial: "",
+      }),
+      relation_question5: new StringField({
+        initial: "",
+      }),
+      relation_question6: new StringField({
+        initial: "",
+      }),
+      relation_question7: new StringField({
+        initial: "",
+      }),
+      relation_question8: new StringField({
+        initial: "",
+      }),
+      relation_answer1: new StringField({
+        initial: "",
+      }),
+      relation_answer2: new StringField({
+        initial: "",
+      }),
+      relation_answer3: new StringField({
+        initial: "",
+      }),
+      relation_answer4: new StringField({
+        initial: "",
+      }),
+      relation_answer5: new StringField({
+        initial: "",
+      }),
+      relation_answer6: new StringField({   
+      initial: "",
+      }),
+      relation_answer7: new StringField({
+        initial: "",
+      }), 
+      relation_answer8: new StringField({
+        initial: "",
+      }),
     };
   }
 }

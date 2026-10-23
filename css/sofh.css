@@ -501,6 +501,9 @@ textarea.house-question {
 .move_type {
   text-align: center;
   font-family: "IM Fell English", serif;
+  padding: 0px;
+    margin: 0px;
+    font-size: 2rem;
 }
 
 .description-sheet {
@@ -1323,4 +1326,7 @@ h2.special-move {
   width: 100%;
   margin-top: 15px;
   font-size: X-LARGE;
+}
+.sofh-rolling-dialog{
+  overflow: auto;
 }
