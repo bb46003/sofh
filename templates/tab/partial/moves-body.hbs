@@ -32,12 +32,17 @@
     <h4 class="move_type description-label">{{localize
         "sofh.item.realtedtoothermoves"
       }}</h4>
-    {{formInput
-      relatedmoves.field
-      value=relatedmoves.value
-      enriched=relatedmoves.enriched
-      toggled="true"
-    }}
+      <label>{{localize "sofh.item.relatedToOtherMovesInfo"}}</label>
+      <i class="fa fa-plus" data-action="addRelatedMove"></i>
+        {{#each system.relatedMoves as |move index|}}
+        <div class="reletedMove">
+          <select id="related-move" name="system.relatedMoves.{{index}}.moves" data-id="{{index}}">
+            <option value="">{{localize "sofh.item.selectMovr"}}</option>
+            {{selectOptions (allItems) selected=move.moves localize=false}}
+          </select>
+          <i class="fa fa-trash" data-action="removeRelatedMove" data-id="{{index}}"></i>
+          </div>
+        {{/each}}
   </div>
 {{/if}}
 {{#if (eq system.isrolled true)}}

@@ -50,6 +50,7 @@ export class moveRoll extends api.HandlebarsApplicationMixin(
     let relatedMoveIds = this.item.flags?.SofH?.affectedby || [];
     context.relatedMoves = relatedMoveIds;
     context.areRelatedMoves = relatedMoveIds.length > 0;
+    context.bar = 0;
     return context;
   }
   static async #rollForMove(event) {
@@ -320,7 +321,12 @@ export class moveRoll extends api.HandlebarsApplicationMixin(
     selections.numericModifier = numericInput ? numericInput[0].value : null;
     const otherMod = Number(selections.numericModifier);
     rollmod = rollmod + otherMod;
-    selections.otherrolltype = html?.querySelector('[name="ad-disad"]')?.value;
+    
+const radioAdvantage = html?.querySelector('[name="ad-disad"]:checked');
+
+const advantageMod = Number(radioAdvantage?.value ?? 0);
+
+     selections.otherrolltype = advantageMod
     let diceMod = Number(selections.otherrolltype);
     if (diceMod > 3) {
       diceMod = 3;
@@ -337,11 +343,11 @@ export class moveRoll extends api.HandlebarsApplicationMixin(
     }
 
     if (dicenumber > 0) {
-      formula = "3d6kh4";
+      formula = "3d6kh2";
       if (rollmod.toString() > 0) {
-        formula = "3d6kh4 +" + rollmod.toString();
+        formula = "3d6kh2 +" + rollmod.toString();
       } else if (rollmod.toString() < 0) {
-        formula = "3d6kh4" + rollmod.toString();
+        formula = "3d6kh2" + rollmod.toString();
       }
     } else if (dicenumber < 0) {
       formula = "3d6kl2";

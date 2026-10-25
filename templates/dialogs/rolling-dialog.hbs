@@ -189,18 +189,22 @@
                 </div>
                 <h4 class="h4-roll">{{localize 'sofh.ui.rolldialog.otherModsTitle'}}</h4>
                 <div class="others-mods"></div>
-                <div class="roll-mod-other">
-                    <label class="disadvantage">{{localize 'sofh.ui.rolldialog.disadvantageLabel'}}</label>
-                    <label class="normal">{{localize 'sofh.ui.rolldialog.normalLabel'}}</label>
-                    <label class="advantage">{{localize 'sofh.ui.rolldialog.advantageLabel'}}</label>
-                </div>
-                <range-picker
-  name="ad-disad"
-  value="{{bar}}"
-  min="-1"
-  max="1"
-  step="1">
-</range-picker>
+
+<fieldset class="ad-disad">
+  <label>
+    <input type="radio" name="ad-disad" value="-1" {{#if (eq bar -1)}}checked{{/if}}>
+ {{localize 'sofh.ui.rolldialog.disadvantageLabel'}}
+  </label>
+
+  <label>
+    <input type="radio" name="ad-disad" value="0" {{#if (eq bar 0)}}checked{{/if}}>
+    {{localize 'sofh.ui.rolldialog.normalLabel'}}
+  </label>
+
+  <label>
+    <input type="radio" name="ad-disad" value="1" {{#if (eq bar 1)}}checked{{/if}}>
+{{localize 'sofh.ui.rolldialog.advantageLabel'}}  </label>
+</fieldset>
             </div>
         </div>
 

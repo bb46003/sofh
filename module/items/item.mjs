@@ -18,7 +18,9 @@ export class sofhMovesSheet extends api.HandlebarsApplicationMixin(
     actions: {
       addquestion: sofhMovesSheet.#addquestion,
       isrolled: sofhMovesSheet.#rollingguestions,
-      removeQuestion: sofhMovesSheet.#removequestion
+      removeQuestion: sofhMovesSheet.#removequestion,
+      addRelatedMove: sofhMovesSheet.#addRelatedMove,
+      removeRelatedMove: sofhMovesSheet.#removeRelatedMove
     },
   };
   static PARTS = {
@@ -82,6 +84,7 @@ export class sofhMovesSheet extends api.HandlebarsApplicationMixin(
       field: this.item.system.schema.fields.above12,
     };
     context.item = this.item;
+    context.relatedmoves = await this._prepareRelatedMoves()
     return context;
   }
   async _enrich(html) {
@@ -90,6 +93,14 @@ export class sofhMovesSheet extends api.HandlebarsApplicationMixin(
       secrets: this.item.isOwner,
       async: true,
     });
+  }
+  async _prepareRelatedMoves(){
+    const relatedMoves = this.item.system.relatedMoves;
+    const moves = [];
+    relatedMoves.forEach( async move =>{
+        moves.push({name: move}) 
+    })
+    return moves
   }
   static async #addquestion() {
     const item = this.item;
@@ -132,13 +143,17 @@ export class sofhMovesSheet extends api.HandlebarsApplicationMixin(
       }
     });
   }
-  static async #relatedmoves(ev) {
-    const updateData = { [ev.target.name]: ev.target.value };
-    await this.item.update(updateData);
-  }
 
   static async #rollingguestions(ev) {
     await this.changeRollingoption(ev.target.checked)
+  }
+  static #addRelatedMove() {
+    this.item.addRelatedMove();
+  }
+  static async #removeRelatedMove(event) {
+    const target = event.target;
+    const id = target.dataset.id;
+    this.item.removeRelatedMove(id);
   }
   async changeRollingoption(isRolled) {
     if (!isRolled) {
@@ -177,4 +192,26 @@ _processFormData(event, form, formData) {
 
   return super._processFormData(event, form, data);
 }
+_canDragDrop(selector) {
+    return this.item.isOwner
+  }
+  _canDragStart(selector) {
+    return this.item.isOwner
+  }
+
+  _onDragOver(event) {}
+  async _onDrop(event) {
+    const data = event.dataTransfer;
+    const move = this.item;
+    if (data) {
+      const droppedItem = JSON.parse(data.getData("text/plain"));
+      const item = await fromUuid(droppedItem.uuid);
+      if (item.type === "basicMoves") {
+        const relatedMoves = move.system.relatedMoves;
+        const newRelatedMoves = [...relatedMoves];
+        newRelatedMoves.push({moves:item.name});
+        await move.update({['system.relatedMoves']:newRelatedMoves})
+      }
+    }
+  }
 }

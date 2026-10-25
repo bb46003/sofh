@@ -339,7 +339,8 @@
         "riseResultabove10toabove12": "Allow to rise result from above 10 to above 12"
       },
       "selectMovr": "- Select Move -",
-      "addQuestion": "Add Move Question"
+      "addQuestion": "Add Move Question",
+      "relatedToOtherMovesInfo": "Drop related Move to this one to creat link or clik plus button"
     },
     "SETTINGS": {
       "showHousePoint": "Display House Points",

@@ -25,9 +25,9 @@ export default class BasicMoveDataModel extends foundry.abstract.DataModel {
         blank: true,
         initial: "",
       }),
-      relatedmoves: new foundry.data.fields.HTMLField({
-        initial: "",
-      }),
+      relatedMoves : new foundry.data.fields.ArrayField(
+        new foundry.data.fields.SchemaField({ moves: new foundry.data.fields.StringField() }),
+      ),
       home: new foundry.data.fields.StringField({
         initial: "",
       }),

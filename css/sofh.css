@@ -63,6 +63,10 @@ input#settings-config-SofH\.HomeScorePositionX {
 
 .sofh .stat-grid {
   display: contents; /* Ensure individual elements follow the grid structure */
+  #schoolyear {
+    min-width: 25px;
+    max-width: 40px;
+  }
 }
 .stat-grid a {
   margin-left: 10px;

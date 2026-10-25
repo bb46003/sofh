@@ -29,8 +29,11 @@
        {{/if}}
         {{#if (eq system.realtedtoothermoves true)}} 
             <h4 class="move_type description-label ">{{localize "sofh.item.realtedtoothermoves"}}</h4>
+            
             <div class="moves-realtedtoothermoves">
-                <textarea class="relatedmoves" name="system.relatedmoves" disabled>{{system.relatedmoves}}</textarea>
+                {{#each system.relatedMoves}}
+                <label>{{this.moves}}</label>
+                {{/each}}
             </div>
         {{/if}}
         {{#if (eq system.isrolled true)}} 
