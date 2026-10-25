@@ -1,21 +1,21 @@
 <div class="second-row">
     <div class="move-elements">
         <div class="trigers-sheet-limited"> 
-           <h2 class="move_type trigger-label ">{{localize "sofh.item.trigerlabel"}}</h2>       
+           <h4 class="move_type trigger-label ">{{localize "sofh.item.trigerlabel"}}</h4>       
             {{injectHtml system.triggers}}
         </div>     
         <div class="description-sheet-limited"> 
-           <h2 class="move_type description-label ">{{localize "sofh.item.descriptionlabel"}}</h2>       
+           <h4 class="move_type description-label ">{{localize "sofh.item.descriptionlabel"}}</h4>       
             {{#injectHtml system.description}}{{/injectHtml}}
         </div>
         {{#if system.housequestion}}
         <div class="move-is-ralted-to-house-guestion">
-            <h2>{{localize "sofh.move.isRaltedToHouse"}}</h2>
+            <h4>{{localize "sofh.move.isRaltedToHouse"}}</h4>
         </div>    
         {{/if}}
         {{#if (eq system.havequestion true)}} 
             <div class="moves-question">
-                <h2 class="move_type description-label ">{{localize "sofh.item.question"}}</h2>
+                <h4 class="move_type description-label ">{{localize "sofh.item.question"}}</h4>
                 {{#each system.question as |question index|}}
                 <div class="question-sheet">
                     <textarea class="question" name="system.question.{{@index}}.description" disabled>{{question.description}}</textarea>
@@ -28,13 +28,13 @@
             </div>
        {{/if}}
         {{#if (eq system.realtedtoothermoves true)}} 
-            <h2 class="move_type description-label ">{{localize "sofh.item.realtedtoothermoves"}}</h2>
+            <h4 class="move_type description-label ">{{localize "sofh.item.realtedtoothermoves"}}</h4>
             <div class="moves-realtedtoothermoves">
                 <textarea class="relatedmoves" name="system.relatedmoves" disabled>{{system.relatedmoves}}</textarea>
             </div>
         {{/if}}
         {{#if (eq system.isrolled true)}} 
-        <h2 class="move_type description-label ">{{localize "sofh.item.isrolled"}}</h2>
+        <h4 class="move_type description-label ">{{localize "sofh.item.isrolled"}}</h4>
 <div class="moves-isrolled">
   {{#if (eq system.result12 true)}}
     <div class="row">

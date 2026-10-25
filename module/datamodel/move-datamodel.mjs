@@ -14,18 +14,23 @@ export default class BasicMoveDataModel extends foundry.abstract.DataModel {
     });
 
     return {
-      triggers: new foundry.data.fields.StringField({
+      triggers: new foundry.data.fields.HTMLField({
         required: true,
         blank: true,
         initial: "",
       }),
 
-      description: new foundry.data.fields.StringField({
+      description: new foundry.data.fields.HTMLField({
         required: true,
         blank: true,
         initial: "",
       }),
-
+      relatedmoves: new foundry.data.fields.HTMLField({
+        initial: "",
+      }),
+      home: new foundry.data.fields.StringField({
+        initial: "",
+      }),
       // Options
       housequestion: new foundry.data.fields.BooleanField({
         initial: false,
@@ -69,21 +74,29 @@ export default class BasicMoveDataModel extends foundry.abstract.DataModel {
       }),
 
       // Results
-      above10: new foundry.data.fields.StringField({
+      above12: new foundry.data.fields.HTMLField({
+        required: true,
+        blank: true,
+        initial: "",
+      }),
+      above10: new foundry.data.fields.HTMLField({
         required: true,
         blank: true,
         initial: "",
       }),
 
-      "7to9": new foundry.data.fields.StringField({
+      "7to9": new foundry.data.fields.HTMLField({
         required: true,
         blank: true,
         initial: "",
       }),
 
-      below7: new foundry.data.fields.StringField({
+      below7: new foundry.data.fields.HTMLField({
         required: true,
         blank: true,
+        initial: "",
+      }),
+      "designer-comment": new foundry.data.fields.HTMLField({
         initial: "",
       }),
     };

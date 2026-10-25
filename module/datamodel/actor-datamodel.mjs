@@ -170,7 +170,7 @@ export default class ActorDataModel extends foundry.abstract.TypeDataModel {
       }),
       relation_question3: new StringField({
         initial: "",
-      }), 
+      }),
       relation_question4: new StringField({
         initial: "",
       }),
@@ -201,12 +201,12 @@ export default class ActorDataModel extends foundry.abstract.TypeDataModel {
       relation_answer5: new StringField({
         initial: "",
       }),
-      relation_answer6: new StringField({   
-      initial: "",
+      relation_answer6: new StringField({
+        initial: "",
       }),
       relation_answer7: new StringField({
         initial: "",
-      }), 
+      }),
       relation_answer8: new StringField({
         initial: "",
       }),

@@ -1,5 +1,5 @@
-<h2 class="move_type description-label ">{{localize "sofh.item.question"}}</h2>
-    <button id="add-question-btn" style="margin-left: 10px; padding: 5px 10px;">{{localize "sofh.ui.moves.questionaddbutton"}}</button>
+<h4 class="move_type description-label ">{{localize "sofh.item.question"}}</h4>
+    <button id="add-question-btn" data-action="addquestion" style="margin-left: 10px; padding: 5px 10px;">{{localize "sofh.move.questionaddbutton"}}</button>
  
       {{#each system.question as |question index|}}
           <div class="question-sheet">
@@ -8,6 +8,6 @@
               <option value="true" {{#if (eq question.impact true)}}selected{{/if}}>{{localize 'sofh.ui.rolldialog.positiveOption'}}</option>
               <option value="false" {{#if (eq question.impact false)}}selected{{/if}}>{{localize 'sofh.ui.rolldialog.negativeOption'}}</option>
             </select>
-            <button class="remove-question-btn" id="{{@index}}" style="margin-left: 5px;">🗑️</button>
+            <button class="remove-question-btn" id="{{@index}}" style="margin-left: 5px;" data-action="removeQuestion">🗑️</button>
           </div>
       {{/each}}

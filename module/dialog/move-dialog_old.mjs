@@ -231,11 +231,11 @@ export class moveRoll extends Dialog {
     }
 
     if (dicenumber > 0) {
-      formula = "3d6kh2";
+      formula = "3d6kh4";
       if (rollmod.toString() > 0) {
-        formula = "3d6kh2 +" + rollmod.toString();
+        formula = "3d6kh4 +" + rollmod.toString();
       } else if (rollmod.toString() < 0) {
-        formula = "3d6kh2" + rollmod.toString();
+        formula = "3d6kh4" + rollmod.toString();
       }
     } else if (dicenumber < 0) {
       formula = "3d6kl2";
@@ -450,7 +450,7 @@ export class moveRoll extends Dialog {
           <div class="sofh">
           <h3 style="font-family: 'IM Fell English SC', serif;font-size: large;">${label}</h3><br>
           <div class="move-description-chat">${item.system.description}</div><br>
-          <h2 class="move_type description-label ">${game.i18n.localize("sofh.ui.chat.rollesult")}</h2>  
+          <h4 class="move_type description-label ">${game.i18n.localize("sofh.ui.chat.rollesult")}</h4>  
           <div class="roll-results">${content}</div><br>
           </div>
       `;
@@ -466,7 +466,7 @@ export class moveRoll extends Dialog {
               <div class="mistery-question_solution">
                 <p>${questionlabel}${question}</p>
               </div>
-              <h2 class="move_type description-label ">${game.i18n.localize("sofh.ui.chat.rollesult")}</h2>  
+              <h4 class="move_type description-label ">${game.i18n.localize("sofh.ui.chat.rollesult")}</h4>  
               <div class="roll-results">${content}</div><br>
             </div>
       `;

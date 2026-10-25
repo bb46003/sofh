@@ -67,13 +67,13 @@
 
         <div class="move-elements">
         <div class="trigers-sheet"> 
-          <h2 class="move_type trigger-label ">{{localize "sofh.item.trigerlabel"}}</h2> 
+          <h4 class="move_type trigger-label ">{{localize "sofh.item.trigerlabel"}}</h4> 
           <div class="">
             {{formInput triggers.field value=triggers.value enriched=triggers.enriched toggled="true"}}
           </div>      
         </div>        
         <div class="description-sheet"> 
-          <h2 class="move_type description-label ">{{localize "sofh.item.descriptionlabel"}}</h2>
+          <h4 class="move_type description-label ">{{localize "sofh.item.descriptionlabel"}}</h4>
           <div class="">
             {{formInput description.field value=description.value enriched=description.enriched toggled="true"}}      
           </div>       
@@ -81,10 +81,10 @@
     </div>
     {{#if system.action.isRealeted.isUse}}
       <div id="relatedMoves">
-        <h2 class="special-move">
+        <h4 class="special-move">
           {{localize "sofh.item.specialMoves.relatedMoves"}}
           <i class="fa fa-plus" data-action="addRelatedMove"></i>
-        </h2>
+        </h4>
         {{#each system.relatedMoves as |move index|}}
         <div class="reletedMove">
           <select id="related-move" data-name="system.relatedMoves.{{index}}.moves" data-id="{{index}}">
@@ -98,9 +98,9 @@
     {{/if}}
 
     {{#if (or system.action.modifyEffect.isUse system.action.isRolable.isUse)}}
-      <h2 class="move_type description-label">
+      <h4 class="move_type description-label">
         {{localize "sofh.item.isrolled"}}
-      </h2>
+      </h4>
       <div class="moves-isrolled">
         <div class="row">
           <label for="above10">{{localize 'sofh.ui.move.resultAbove12'}}</label>
@@ -121,7 +121,7 @@
       </div>
     {{/if}}
     {{#if system.action.addQuestion.isUse}}
-    <h2 class="special-move">{{localize "sofh.item.addQuestion"}}<i class="fa fa-plus" data-action="addQuestion"></i></h2>    
+    <h4 class="special-move">{{localize "sofh.item.addQuestion"}}<i class="fa fa-plus" data-action="addQuestion"></i></h4>    
     {{#each additionalQuestions as |question index|}}
       <div class="additional-question-moves">
         {{formInput question.field value=question.value enriched=question.enriched name=(concat "additionalQuestion[" index "]")toggled="true"}}

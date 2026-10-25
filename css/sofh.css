@@ -492,7 +492,6 @@ textarea.house-question {
 }
 .moves-realtedtoothermoves {
   width: calc(100% - 15px);
-  max-height: 70px;
 }
 .editor:has(.relatedmoves) {
   max-height: 50px;
@@ -502,8 +501,8 @@ textarea.house-question {
   text-align: center;
   font-family: "IM Fell English", serif;
   padding: 0px;
-    margin: 0px;
-    font-size: 2rem;
+  margin: 0px;
+  font-size: 1rem;
 }
 
 .description-sheet {
@@ -545,17 +544,16 @@ textarea.question {
 }
 .question-sheet {
   display: grid;
-  grid-template-columns: 2fr 0.2fr 0.2fr;
+  grid-template-columns: 1.5fr 0.5fr 0.2fr;
   height: 60px;
   column-gap: 5px;
   padding: 5px;
+  margin-bottom: 10px;
 }
 select#question-type {
   height: 100%;
 }
-button#\30 {
-  height: 100%;
-}
+
 .move-image {
   width: 20%;
   border: none;
@@ -563,13 +561,9 @@ button#\30 {
 input.fake-box {
   visibility: hidden;
 }
-form.moves-tab {
-  overflow: hidden;
-}
+
 .body-move {
-  height: calc(100% - 310px);
   width: 100%;
-  overflow: auto;
 }
 .moves-isrolled {
   display: grid;
@@ -938,7 +932,7 @@ button.dialog-button {
 button.add-clue {
   border: none;
   background: #a7a68d;
-  width: 2rem;
+  width: 1rem;
 
   display: grid;
   justify-content: center;
@@ -956,7 +950,7 @@ th.actor-known-clue {
   align-items: center;
 }
 button.remove-clue {
-  width: 2rem;
+  width: 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -972,7 +966,7 @@ textarea.clue-description-text {
   justify-content: space-between;
 }
 input[type="number"] {
-  max-width: 2rem;
+  max-width: 1rem;
 }
 .party-list-header {
   font-size: 1.25em;
@@ -1261,7 +1255,7 @@ h2.special-move {
   padding: 5px;
 }
 .special-move-types {
-  margin-bottom: 2em;
+  margin-bottom: 1em;
 }
 #relatedMoves {
   margin-top: 10px;
@@ -1275,6 +1269,7 @@ h2.special-move {
 }
 .additional-question-moves select#question-type {
   max-height: 30%;
+  width: 140px;
 }
 .additional-question-moves .flex {
   display: flex;
@@ -1327,6 +1322,11 @@ h2.special-move {
   margin-top: 15px;
   font-size: X-LARGE;
 }
-.sofh-rolling-dialog{
+.sofh-rolling-dialog {
   overflow: auto;
+}
+.application.sheet.sofh.item {
+  .window-content {
+    overflow: auto;
+  }
 }

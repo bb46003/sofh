@@ -55,7 +55,7 @@ export async function migrateWorld() {
 
         if (!baseMove) continue;
 
-        const sameSystem =  foundry.utils.equals(
+        const sameSystem = foundry.utils.equals(
           actorMove.system,
           baseMove.system,
         );

@@ -21,7 +21,7 @@ export class sofhCharacterSheet extends api.HandlebarsApplicationMixin(
 
   static DEFAULT_OPTIONS = {
     classes: ["sofh", "sheet", "actor", "character"],
-    position: { width: 1020, height: 850, zIndex: 10 },
+    position: { width: 1020, height: 850 },
     form: {
       submitOnChange: true,
     },
@@ -166,12 +166,12 @@ export class sofhCharacterSheet extends api.HandlebarsApplicationMixin(
     });
 
     element.querySelectorAll(".hover-label-question").forEach((el) => {
-      el.addEventListener("click", () =>{
+      el.addEventListener("click", () => {
         const home = this.actor.system.home.toLowerCase();
         this.assignHouseQuestions(home, false);
-        });
+      });
     });
-    
+
     element.addEventListener("click", (ev) => this.handleDiamondClick(ev));
 
     element
@@ -487,20 +487,24 @@ export class sofhCharacterSheet extends api.HandlebarsApplicationMixin(
       name: item.name,
     });
     const d = new foundry.applications.api.DialogV2({
-       window: { title: game.i18n.format("sofh.ui.dialog.deleteMoveTitle", {name: item.name,})
-       },
+      window: {
+        title: game.i18n.format("sofh.ui.dialog.deleteMoveTitle", {
+          name: item.name,
+        }),
+      },
+
       content: `
         <p>${innerText}</p>
       `,
       buttons: [
-         {
+        {
           action: "delete",
           label: game.i18n.localize("Delete"),
           callback: async () => {
             await this.actor.deleteEmbeddedDocuments("Item", [ID]);
             const movesElement = $(".all-moves." + item.type);
             await movesElement.css("display", "");
-            if (item.system?.action.addFavoriteTopic.isUse) {
+            if (item.system?.action?.addFavoriteTopic?.isUse) {
               const additionalTopic = foundry.utils.deepClone(
                 this.actor.system.additionalTopic,
               );
@@ -524,7 +528,7 @@ export class sofhCharacterSheet extends api.HandlebarsApplicationMixin(
         },
       ],
     });
-    d.render(true);
+    d.render({ force: true });
   }
 
   async handleHouseChange(ev) {
@@ -726,7 +730,7 @@ export class sofhCharacterSheet extends api.HandlebarsApplicationMixin(
 
     const header = game.i18n.localize("sofh.ui.eqquestion");
 
-    let content = `<h2 style="font-family: 'IM Fell English SC', serif;">${header}</h2><form id="equipmentForm">`;
+    let content = `<h4 style="font-family: 'IM Fell English SC', serif;">${header}</h4><form id="equipmentForm">`;
 
     let i = 0;
     for (const key of Object.keys(houseEq)) {
@@ -823,7 +827,7 @@ export class sofhCharacterSheet extends api.HandlebarsApplicationMixin(
     });
   }
   async processDiamondClick(element) {
-    if (element.parentNode.className === "diamond") {
+    if (element?.parentNode?.className === "diamond") {
       if (element.dataset.clicked) return;
       element.dataset.clicked = true;
 
@@ -1041,13 +1045,13 @@ export class sofhCharacterSheet extends api.HandlebarsApplicationMixin(
     const timeToShineText = game.i18n.localize(
       CONFIG.SOFHCONFIG.timeToShine[house + "TimeToShine"],
     );
-    const content = `<div class="sofh"><h2 style="font-family: 'IM Fell English', serif;">${game.i18n.localize("sofh.ui.actor.timeToShine")}</h2>
+    const content = `<div class="sofh"><h4 style="font-family: 'IM Fell English', serif;">${game.i18n.localize("sofh.ui.actor.timeToShine")}</h4>
         <p>${timeToShineText}</p></div>
         `;
     const title = game.i18n.localize("sofh.ui.actor.timeToShine");
     const moveToChat = `<div class="sofh description-sheet"> 
-           <h2 class="move_type description-label-notrrolabe">${game.i18n.localize("sofh.ui.chat.use_move")}<br>
-           ${game.i18n.localize("sofh.ui.actor.timeToShine")}</h2>       
+           <h4 class="move_type description-label-notrrolabe">${game.i18n.localize("sofh.ui.chat.use_move")}<br>
+           ${game.i18n.localize("sofh.ui.actor.timeToShine")}</h4>       
             ${timeToShineText}
         </div>`;
     const d = new foundry.applications.api.DialogV2({
@@ -1092,8 +1096,8 @@ export class sofhCharacterSheet extends api.HandlebarsApplicationMixin(
       const actor = this.actor;
 
       const moveToChat = `<div class="description-sheet"> 
-           <h2 class="move_type description-label-notrrolabe">${game.i18n.localize("sofh.ui.chat.use_move")}<br>
-           ${item.name}</h2>       
+           <h4 class="move_type description-label-notrrolabe">${game.i18n.localize("sofh.ui.chat.use_move")}<br>
+           ${item.name}</h4>       
             <div class="chat-description">${item.system.description}</div>
         </div>`;
       const d = new foundry.applications.api.DialogV2({
@@ -1333,6 +1337,7 @@ export class sofhCharacterSheet extends api.HandlebarsApplicationMixin(
     if (scrollEl) {
       this._scrollTarget = scrollEl;
       this.y = scrollEl.scrollTop;
+      this.actor.sheet.render({ force: true });
     }
     const img = formData.get("img");
     if (img) {
@@ -1343,7 +1348,7 @@ export class sofhCharacterSheet extends api.HandlebarsApplicationMixin(
       data.object["name"] = actorName;
     }
     const process = super._processFormData(event, form, data);
-    this.actor.sheet.render({ force: true });
+
     return process;
   }
 }

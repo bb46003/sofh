@@ -1,6 +1,6 @@
 <section class="sofh-rolling-dialog {{cssClass}}" autocomplete="off">
     {{#if item.system.housequestion}}
-    <h2 class="h2-roll">{{localize 'sofh.ui.rolldialog.houseQuestionTitle'}}</h2>
+    <h4 class="h2-roll">{{localize 'sofh.ui.rolldialog.houseQuestionTitle'}}</h4>
 
     <div class="house-question-application">
         <div class="actor">{{actor.system.housequestion}}</div>
@@ -15,7 +15,7 @@
     <div class="item">
     {{#if item.system.havequestion}}    
         {{#if (eq (numberOfQuestion item.system) false)}}
-            <h2 class="h2-roll">{{localize 'sofh.ui.rolldialog.moveQuestionTitle'}}</h2>
+            <h4 class="h2-roll">{{localize 'sofh.ui.rolldialog.moveQuestionTitle'}}</h4>
             {{#each item.system.question as |question index|}}
   
                 <div class="question-sheet-roll">
@@ -31,7 +31,7 @@
                 </div>
             {{/each}}
         {{else}}
-            <h2 class="h2-roll">{{localize 'sofh.ui.rolldialog.moveQuestionTitle'}}</h2>
+            <h4 class="h4-roll">{{localize 'sofh.ui.rolldialog.moveQuestionTitle'}}</h4>
             {{#each item.system.question as |question index|}}
           
                 {{#if (eq question.impact false)}}
@@ -48,7 +48,7 @@
                     </div>
                 {{/if}}
             {{/each}}
-            <h2 class="h2-roll">{{localize 'sofh.ui.rolldialog.pickOneAproach'}}</h2>
+            <h4 class="h4-roll">{{localize 'sofh.ui.rolldialog.pickOneAproach'}}</h4>
             {{#each item.system.question as |question index|}}
               
                 {{#if (eq question.impact true)}}
@@ -69,7 +69,7 @@
     {{/if}}
     {{#each relatedMoves as |relatedMove|}}
         {{#if relatedMove.system.action.addQuestion.isUse}}
-            <h2 class="h2-roll special">{{{localize  "sofh.ui.rolldialog.additionQuestionFromReletedMoves" name=relatedMove.name}}}</h2>
+            <h4 class="h4-roll special">{{{localize  "sofh.ui.rolldialog.additionQuestionFromReletedMoves" name=relatedMove.name}}}</h4>
             {{#each relatedMove.system.additionalQuestion as |question|}}
           
                 <div class="question-sheet-roll">
@@ -88,7 +88,7 @@
     {{/each}}
     </div>
     {{#if item.system.relationrelated}}
-        <h2 class="h2-roll">{{localize 'sofh.ui.rolldialog.relevantRelationTitle'}}</h2>
+        <h4 class="h4-roll">{{localize 'sofh.ui.rolldialog.relevantRelationTitle'}}</h4>
         <div class="relation-roll">
             <select class="relation-chosen" value="key" name="value">
                 <option value="">{{localize 'sofh.ui.rolldialog.noneOption'}}</option>
@@ -98,7 +98,7 @@
         </div>
     {{/if}}
     {{#if item.system.cluerelated}}
-        <h2 class="h2-roll">{{localize 'sofh.ui.rolldialog.relatedClue'}}</h2>
+        <h4 class="h4-roll">{{localize 'sofh.ui.rolldialog.relatedClue'}}</h4>
         <div class="known-clue">            
             {{showAllKnownClue clueID complexity}}
         </div>
@@ -113,7 +113,7 @@
     {{/if}}
 
     {{#if areRelatedMoves}}
-        <h2 class="h2-roll">{{localize 'sofh.ui.rolldialog.relatedMoves'}}</h2>
+        <h4 class="h4-roll">{{localize 'sofh.ui.rolldialog.relatedMoves'}}</h4>
     {{/if}}
     <div style="margin-bottom:20px">
     {{#each relatedMoves as |relatedMove|}}
@@ -135,7 +135,7 @@
         <h3 class="other-factor-h3" data-action="toggleOther">{{localize "sofh.ui.dialog.other_factor"}}</h3>
         <div class="other-factor" style="display: none">
             <div class="condition-impact">
-                <h2 class="h2-roll-first">{{localize 'sofh.ui.rolldialog.conditionImpactTitle'}}</h2>
+                <h4 class="h4-roll-first">{{localize 'sofh.ui.rolldialog.conditionImpactTitle'}}</h4>
                 <div class="oponent-have-condition">
                     <label class="oponent-have-condition-label">{{localize "sofh.ui.rolldialog.youroponenthavecondidtion"}}</label>
                     <input type="checkbox" class="oponent-have-condition-checkbox">
@@ -156,7 +156,7 @@
                 {{/if}}
                 <div class="item">
                 {{#if item.system.stringsrelated}}
-                    <h2 class="h2-roll">{{localize 'sofh.ui.rolldialog.relevantStringsTitle'}}</h2>
+                    <h4 class="h4-roll">{{localize 'sofh.ui.rolldialog.relevantStringsTitle'}}</h4>
                     <div class="strings-sheet-roll">
                         <select class="roll-strings">
                             <option value="">{{localize 'sofh.ui.rolldialog.noneOption'}}</option>
@@ -167,7 +167,7 @@
 
              
                 {{#if (haveAdvantages actor.system.advantage)}}
-                    <h2 class="h2-roll">{{localize 'sofh.ui.rolldialog.relevantAdvantages'}}</h2>
+                    <h4 class="h4-roll">{{localize 'sofh.ui.rolldialog.relevantAdvantages'}}</h4>
                     <div class="advantages-sheet-roll">
                         <select class="roll-advantages">
                             <option value="">{{localize 'sofh.ui.rolldialog.noneOption'}}</option>
@@ -177,7 +177,7 @@
 
                 {{/if}}
                 {{#if (haveAdvantages actor.system.advantage)}}
-                <h2 class="h2-roll">{{localize 'sofh.ui.rolldialog.relevantAdvantages'}}</h2>
+                <h4 class="h4-roll">{{localize 'sofh.ui.rolldialog.relevantAdvantages'}}</h4>
                     <div class="advantages-sheet-roll">
                         <select class="roll-advantages">
                             <option value="">{{localize 'sofh.ui.rolldialog.noneOption'}}</option>
@@ -187,7 +187,7 @@
 
                 {{/if}}
                 </div>
-                <h2 class="h2-roll">{{localize 'sofh.ui.rolldialog.otherModsTitle'}}</h2>
+                <h4 class="h4-roll">{{localize 'sofh.ui.rolldialog.otherModsTitle'}}</h4>
                 <div class="others-mods"></div>
                 <div class="roll-mod-other">
                     <label class="disadvantage">{{localize 'sofh.ui.rolldialog.disadvantageLabel'}}</label>

@@ -1,57 +1,99 @@
-      <div class="move-elements">
-        <div class="trigers-sheet"> 
-           <h2 class="move_type trigger-label ">{{localize "sofh.item.trigerlabel"}}</h2>       
-            {{editor system.triggers target="system.triggers" engine="prosemirror" button=true owner=owner editable=editable}}
-        </div>        
-        <div class="description-sheet"> 
-           <h2 class="move_type description-label ">{{localize "sofh.item.descriptionlabel"}}</h2>       
-            {{editor system.description target="system.description" engine="prosemirror" button=true owner=owner editable=editable}}
-        </div>
-    </div>
-    {{#if (eq system.havequestion true)}} 
-        <div class="moves-question">
-            {{> "systems/SofH/templates/tab/partial/moves-question.hbs"}}
-        </div>
-    {{/if}}
-    {{#if (eq system.realtedtoothermoves true)}} 
-      <div class="moves-realtedtoothermoves">
-            <h2 class="move_type description-label ">{{localize "sofh.item.realtedtoothermoves"}}</h2>
-      
-            {{editor system.relatedmoves target="system.relatedmoves" engine="prosemirror" button=true owner=owner editable=editable class="relatedmoves"}}
-        </div>
-    {{/if}}
-    {{#if (eq system.isrolled true)}} 
-    <h2 class="move_type description-label ">{{localize "sofh.item.isrolled"}}</h2>
-        <div class="moves-isrolled">
-            
-          
-                {{#if (eq system.result12 true)}}
-                    <div class="row">
-                        <label for="above10">{{localize 'sofh.ui.move.resultAbove12'}}</label>
-                        {{editor system.above12 target="system.above12" engine="prosemirror" button=true owner=owner editable=editable  class="roll-resoult-above12"}}
-                    </div>
-                {{/if}}
-                  <div class="row">
-                    <label for="above10">{{localize 'sofh.ui.move.resultAbove10'}}</label>
-                    {{editor system.above10 target="system.above10"  engine="prosemirror" button=true owner=owner editable=editable class="roll-resoult-above10"}}
-                  </div>
-                  <div class="row">
-                    <label for="7to9">{{localize 'sofh.ui.move.result7to9'}}</label>
-                    {{editor system.7to9 target="system.7to9"  engine="prosemirror" button=true owner=owner editable=editable class="roll-resoult-7to9"}}
-                  </div>
-
-                    <div class="row">
-                        <label for="below7">{{localize 'sofh.ui.move.resultBelow7'}}</label> 
-                        {{editor system.below7 target="system.below7" engine="prosemirror" button=true owner=owner editable=editable  class="roll-resoult-below7"}}
-                    </div>        
-            </div>
-
-            </div>
-        </div>
-    {{/if}}
-<div class="designer-comment">
-    <h2 class="move_type trigger-label">{{localize "sofh.item.designerComment"}}</h2>
-    {{editor system.designer-comment target="system.designer-comment" engine="prosemirror" button=true owner=owner editable=editable  class="designer-comment"}}
-
+<div class="move-elements">
+  <div class="trigers-sheet">
+    <h4 class="move_type trigger-label">{{localize
+        "sofh.item.trigerlabel"
+      }}</h4>
+    {{formInput
+      triggers.field
+      value=triggers.value
+      enriched=triggers.enriched
+      toggled="true"
+    }}
+  </div>
+  <div class="description-sheet">
+    <h4 class="move_type description-label">{{localize
+        "sofh.item.descriptionlabel"
+      }}</h4>
+    {{formInput
+      description.field
+      value=description.value
+      enriched=description.enriched
+      toggled="true"
+    }}
+  </div>
 </div>
-   
+{{#if (eq system.havequestion true)}}
+  <div class="moves-question">
+    {{> "systems/SofH/templates/tab/partial/moves-question.hbs"}}
+  </div>
+{{/if}}
+{{#if (eq system.realtedtoothermoves true)}}
+  <div class="moves-realtedtoothermoves">
+    <h4 class="move_type description-label">{{localize
+        "sofh.item.realtedtoothermoves"
+      }}</h4>
+    {{formInput
+      relatedmoves.field
+      value=relatedmoves.value
+      enriched=relatedmoves.enriched
+      toggled="true"
+    }}
+  </div>
+{{/if}}
+{{#if (eq system.isrolled true)}}
+  <h4 class="move_type description-label">{{localize "sofh.item.isrolled"}}</h4>
+  <div class="moves-isrolled">
+
+    {{#if (eq system.result12 true)}}
+      <div class="row">
+        <label for="above10">{{localize "sofh.ui.move.resultAbove12"}}</label>
+        {{formInput
+          above12.field
+          value=above12.value
+          enriched=above12.enriched
+          toggled="true"
+        }}
+      </div>
+    {{/if}}
+    <div class="row">
+      <label for="above10">{{localize "sofh.ui.move.resultAbove10"}}</label>
+      {{formInput
+        above10.field
+        value=above10.value
+        enriched=above10.enriched
+        toggled="true"
+      }}
+    </div>
+    <div class="row">
+      <label for="7to9">{{localize "sofh.ui.move.result7to9"}}</label>
+      {{formInput
+        [7to9].field
+        value=[7to9].value
+        enriched=[7to9].enriched
+        toggled="true"
+      }}
+    </div>
+
+    <div class="row">
+      <label for="below7">{{localize "sofh.ui.move.resultBelow7"}}</label>
+      {{formInput
+        below7.field
+        value=below7.value
+        enriched=below7.enriched
+        toggled="true"
+      }}
+    </div>
+
+  </div>
+{{/if}}
+<div class="designer-comment">
+  <h4 class="move_type trigger-label">{{localize
+      "sofh.item.designerComment"
+    }}</h4>
+  {{formInput
+    designer-comment.field
+    value=designer-comment.value
+    enriched=designer-comment.enriched
+    toggled="true"
+  }}
+</div>
