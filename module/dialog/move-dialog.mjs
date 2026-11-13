@@ -470,10 +470,10 @@ const advantageMod = Number(radioAdvantage?.value ?? 0);
     // Then set the content
     switch (resultTier) {
       case "above12":
-        content = item.system?.above12 || "No content for above 12.";
+        content = item.system?.above12 || item.system?.above10;
         break;
       case "above10":
-        content = item.system?.above10 || "No content for above 10.";
+        content = item.system?.above10 || item.system?.["7to9"];
         break;
       case "7to9":
         content = item.system?.["7to9"] || "No content for 7 to 9.";
@@ -506,6 +506,9 @@ const advantageMod = Number(radioAdvantage?.value ?? 0);
             : "";
       }
     });
+    if(resultTier !== "below7" && item.system.haveSpotlight){
+      content += "<br><h4 class=\"\move_type description-label\"\>"+game.i18n.localize("sofh.ui.moves.spotlight")+"</h4><br>" + item.system.spotlight
+    }
     if (stepOfRise.length > 0) {
       let i = 0;
       stepOfRise.forEach((move) => {

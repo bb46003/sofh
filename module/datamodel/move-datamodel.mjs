@@ -99,6 +99,12 @@ export default class BasicMoveDataModel extends foundry.abstract.DataModel {
       "designer-comment": new foundry.data.fields.HTMLField({
         initial: "",
       }),
+      haveSpotlight: new foundry.data.fields.BooleanField({
+        initial: false
+      }),
+      spotlight: new foundry.data.fields.HTMLField({
+        initial: "",
+      }),
     };
   }
 }

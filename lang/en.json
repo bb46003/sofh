@@ -62,7 +62,8 @@
         "resultAbove10": "Result of roll is +10",
         "result7to9": "Result of roll is 7 to 9",
         "resultBelow7": "Result of roll is 6 and below",
-        "resultAbove12": "Results 12+"
+        "resultAbove12": "Results 12+",
+        "spotlight": "Spotlight"
       },
       "rolldialog": {
         "houseQuestionTitle": "House Question",
@@ -297,7 +298,8 @@
         "resultAbove12": "Results on roll 12+",
         "resultAbove10": "Results on 10+",
         "result7to9": "Results on 7 to 9",
-        "resultBelow7": "Results on 6 and below"
+        "resultBelow7": "Results on 6 and below",
+        "spotlight": "Spotlight"
       }
     },
     "rolling": "Rolling dialog",
@@ -318,7 +320,8 @@
       "endSesionMove": "End Sesion Moves",
       "removeQuestion": "Remove Question",
       "impactType": "How question impact on roll",
-      "questionaddbutton": "Add Question"
+      "questionaddbutton": "Add Question",
+      "haveSpotlight": "Have Spotlight"
     },
     "item": {
       "descriptionlabel": "Move description",

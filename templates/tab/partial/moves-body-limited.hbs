@@ -39,6 +39,12 @@
         {{#if (eq system.isrolled true)}} 
         <h4 class="move_type description-label ">{{localize "sofh.item.isrolled"}}</h4>
 <div class="moves-isrolled">
+    {{#if (eq system.haveSpotlight)}}
+    <div class="row">
+      <label for="above12">{{localize 'sofh.ui.moves.spotlight'}}</label>
+      {{editor system.spotlight target="system.spotlight" engine="prosemirror" button=false owner=owner editable=false class="roll-resoult-above12"}}
+    </div>
+    {{/if}}
   {{#if (eq system.result12 true)}}
     <div class="row">
       <label for="above12">{{localize 'sofh.ui.moves.resultAbove12'}}</label>

@@ -48,7 +48,17 @@
 {{#if (eq system.isrolled true)}}
   <h4 class="move_type description-label">{{localize "sofh.item.isrolled"}}</h4>
   <div class="moves-isrolled">
-
+    {{#if system.haveSpotlight}}
+      <div class="row">
+        <label for="above10">{{localize "sofh.ui.move.spotlight"}}</label>
+        {{formInput
+          spotlight.field
+          value=spotlight.value
+          enriched=spotlight.enriched
+          toggled="true"
+        }}
+      </div>
+    {{/if}}
     {{#if (eq system.result12 true)}}
       <div class="row">
         <label for="above10">{{localize "sofh.ui.move.resultAbove12"}}</label>

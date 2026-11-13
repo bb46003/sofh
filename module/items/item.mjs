@@ -54,6 +54,11 @@ export class sofhMovesSheet extends api.HandlebarsApplicationMixin(
       enriched: await this._enrich(this.item.system.relatedmoves),
       field: this.item.system.schema.fields.relatedmoves,
     };
+    context.spotlight = {
+      value: this.item.system.spotlight,
+      enriched: await this._enrich(this.item.system.spotlight),
+      field: this.item.system.schema.fields.spotlight,
+    };
     Object.assign(context, {
       ["designer-comment"]: {
         value: this.item.system["designer-comment"],
@@ -180,7 +185,8 @@ _processFormData(event, form, formData) {
     "description",
     "designer-comment",
     "relatedmoves",
-    "triggers"
+    "triggers",
+    "spotlight"
   ];
 
   for (const key of klucze) {
