@@ -210,6 +210,12 @@ export default class ActorDataModel extends foundry.abstract.TypeDataModel {
       relation_answer8: new StringField({
         initial: "",
       }),
+      reputationQuestion1: new StringField({
+        initial: ""
+      }),
+      reputationQuestion2: new StringField({
+        initial:""
+      })
     };
   }
 }

@@ -70,6 +70,15 @@
             <input type="checkbox" id="{{@index}}" class="circle-checkbox-reputation" name="system.reputation.value.{{@index}}" {{#if value}}checked{{/if}}/>
             {{/each}}
           </div>
+          <div class="flexrow">
+            <label>{{localize "sofh.ui.actor.reputationQuestion"}}</label>
+            </div>
+            <div class="flexcol">
+            <span>{{localize system.reputationQuestion1}}</span>
+            <br>
+             <span>{{localize system.reputationQuestion2}}</span>
+             </div>
+          
           </div>
 
           {{#if (gt system.reputation.rank 0)}}

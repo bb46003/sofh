@@ -128,10 +128,38 @@ export class ReputationQuestion extends foundry.applications.api.ApplicationV2 {
       "ravenclaw",
       "slytherin",
     ].includes(house);
+        const repTable = {
+      gryffindor: [
+        "sofh.dialog.reputation.gryffindor1",
+        "sofh.dialog.reputation.gryffindor2",
+        "sofh.dialog.reputation.gryffindor3",
+        "sofh.dialog.reputation.gryffindor4",
+      ],
+      hufflepuff: [
+        "sofh.dialog.reputation.hufflepuff1",
+        "sofh.dialog.reputation.hufflepuff2",
+        "sofh.dialog.reputation.hufflepuff3",
+        "sofh.dialog.reputation.hufflepuff4",
+      ],
+      ravenclaw: [
+        "sofh.dialog.reputation.ravenclaw1",
+        "sofh.dialog.reputation.ravenclaw2",
+        "sofh.dialog.reputation.ravenclaw3",
+      ],
+      slytherin: [
+        "sofh.dialog.reputation.slytherin1",
+        "sofh.dialog.reputation.slytherin2",
+        "sofh.dialog.reputation.slytherin3",
+      ],
+      other: [
+        "sofh.dialog.reputation.default1",
+        "sofh.dialog.reputation.default2",
+      ],
+    };
     let updateData = {};
     if (isOther) {
-      updateData["system.reputationQuestion1"] = checkedBoxes[0].id;
-      updateData["system.reputationQuestion2"] = checkedBoxes[1].id;
+      updateData["system.reputationQuestion1"] = repTable[house][checkedBoxes[0].id];
+      updateData["system.reputationQuestion2"] = repTable[house][checkedBoxes[1].id];
     } else {
       const questionInput = this.element.querySelectorAll('input[type="text"]');
       updateData["system.reputationQuestion1"] = questionInput[0].value;
